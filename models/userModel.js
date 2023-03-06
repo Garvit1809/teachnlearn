@@ -3,10 +3,13 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 
+const blankProfile = require('../assets/black-profile.webp')
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'Please tell us your name!']
+    required: [true, 'Please tell us your name!'],
+    trim: true,
   },
   email: {
     type: String,
@@ -15,12 +18,25 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, 'Please provide a valid email']
   },
-  photo: String,
+  photo: {
+    type: String,
+    default: blankProfile,
+  },
+  phoneNumber: {
+    type: String,
+    required: [true, 'Please provide a contact number']
+  },
   role: {
     type: String,
-    enum: ['user', 'guide', 'lead-guide', 'admin'],
-    default: 'user'
+    enum: ['teach', 'learn'],
+    default: 'learn'
   },
+  coins: {
+    type: Number,
+    default: 10000
+  },
+//   teachCards:
+// learnCards: 
   password: {
     type: String,
     required: [true, 'Please provide a password'],
@@ -31,7 +47,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please confirm your password'],
     validate: {
-      // This only works on CREATE and SAVE!!!
       validator: function(el) {
         return el === this.password;
       },
