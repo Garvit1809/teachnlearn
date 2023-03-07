@@ -5,9 +5,9 @@ const teachingCardSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: "User",
   },
-  setsFilled: {
-    type: Number,
-    default: 0,
+  subject: {
+    type: String,
+    required: [true, "Please provide the subject you need to learn from"],
   },
   topic: {
     type: String,
@@ -23,7 +23,41 @@ const teachingCardSchema = new mongoose.Schema({
   },
   date: {
     type: Date,
-    required: [true, "Please provide date for the Class"],
+    required: [true, "Please provide date for the class"],
+  },
+  classStartsAt: {
+    type: Date,
+    required: [true, "Please provide the timing for the class start"],
+  },
+  classEndsAt: {
+    type: Date,
+    required: [true, "Please provide the timing for the class start"],
+    validate: [
+      function (value) {
+        return this.classStartsAt <= value;
+      },
+    ],
+  },
+  description: {
+    type: String,
+    required: [
+      true,
+      "Please provide a whole description for the learning card",
+    ],
+  },
+  expectations: [
+    {
+      type: String,
+      required: [true, "Please provide what you expect from the tutor"],
+    },
+  ],
+  price: {
+    type: Number,
+    required: [true, "Please specify the price of this class"],
+  },
+  seatsFilled: {
+    type: Number,
+    default: 0,
   },
 });
 
