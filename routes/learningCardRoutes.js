@@ -2,7 +2,6 @@
 // get one learning route
 // create learning card
 // get teaching cards spoecific to one learning route
-
 // create teach card on learning card
 
 const express = require("express");

@@ -1,9 +1,9 @@
 // get all teach cards
 // get one teach card
 // create teach card
+// enroll in class
 
 // update teach card
-// enroll in class
 
 const express = require("express");
 const teachingCardController = require("../controllers/teachingCardController");
@@ -17,6 +17,10 @@ router
   .post(teachingCardController.createTeachCard);
 
 router.get('/:id', teachingCardController.getOneTeachCard);
+
+router.use(protect);
+
+router.patch('/:id/enroll', teachingCardController.enrollInClass);
 
 module.exports = router;
 

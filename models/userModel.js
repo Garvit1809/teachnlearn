@@ -35,6 +35,12 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 10000,
   },
+  classesEnrolled: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "TeachingCard",
+    },
+  ],
   password: {
     type: String,
     required: [true, "Please provide a password"],
@@ -61,7 +67,6 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-// for hashing password
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
 
@@ -112,7 +117,7 @@ userSchema.methods.createPasswordResetToken = function () {
 
   console.log({ resetToken }, this.passwordResetToken);
 
-//    to be seen afterwards --> the expiry date
+  //    to be seen afterwards --> the expiry date
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
 
   return resetToken;

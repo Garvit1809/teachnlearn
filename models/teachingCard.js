@@ -59,6 +59,12 @@ const teachingCardSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  studentsEnrolled: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
+    },
+  ],
 });
 
 const TeachingCard = mongoose.model("TeachingCard", teachingCardSchema);
