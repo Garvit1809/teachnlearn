@@ -2,8 +2,8 @@ const catchAsync = require("../utils/catchAsync");
 const factory = require("./handlerFactory");
 const AppError = require("../utils/appError");
 
-const LearningCard = require("../models/learningCard");
-const TeachingCard = require("../models/teachingCard");
+const LearningCard = require("../models/learningCardModel");
+const TeachingCard = require("../models/teachingCardModel");
 const User = require("../models/userModel");
 
 exports.getAllTeachCards = factory.getAll(TeachingCard);
