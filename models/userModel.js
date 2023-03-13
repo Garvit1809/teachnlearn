@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 
-const blankProfile = require("../assets/black-profile.webp");
+// const blankProfile = require("../assets/");
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
   },
   photo: {
     type: String,
-    default: blankProfile,
+    default: "https://w7.pngwing.com/pngs/442/477/png-transparent-computer-icons-user-profile-avatar-profile-heroes-profile-user.png",
   },
   phoneNumber: {
     type: String,
@@ -50,7 +50,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, "Please provide a password"],
-    minlength: 8,
+    minlength: process.env.PASSWORD_MIN_LENGTH,
     select: false,
   },
   passwordConfirm: {
@@ -73,6 +73,7 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+// hashing password
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
 
@@ -123,7 +124,7 @@ userSchema.methods.createPasswordResetToken = function () {
 
   console.log({ resetToken }, this.passwordResetToken);
 
-  //    to be seen afterwards --> the expiry date
+  // 10 min password reset limit
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
 
   return resetToken;
