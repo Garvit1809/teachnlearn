@@ -86,6 +86,7 @@ exports.createTeachCard = catchAsync(async (req, res, next) => {
 // --> ceate a class once teach card is created
 // add students to teach card after theuy enroll
 
+// to be worked on
 // the class that has been completed wont be deleted from user side until he gives reviews
 
 exports.enrollInClass = catchAsync(async (req, res, next) => {

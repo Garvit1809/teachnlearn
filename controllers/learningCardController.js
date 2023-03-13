@@ -11,7 +11,7 @@ exports.getTeachCardsOnLearnCard = factory.getAll(TeachingCard);
 
 exports.createTeachCardOnLearnCard = catchAsync(async (req, res, next) => {
   const learnCardID = req.params.id;
-  const userId = req.user.id;
+  const userID = req.user.id;
 
   const {
     subject,
@@ -24,12 +24,25 @@ exports.createTeachCardOnLearnCard = catchAsync(async (req, res, next) => {
     price,
   } = req.body;
 
-  if (!subject && !topic && !date && !classStartsAt && !classEndsAt && !description && !expectations && !price) {
-    return next(new AppError('Please fill in sufficient information about the Teach Card!!'))
+  if (
+    !subject &&
+    !topic &&
+    !date &&
+    !classStartsAt &&
+    !classEndsAt &&
+    !description &&
+    !expectations &&
+    !price
+  ) {
+    return next(
+      new AppError(
+        "Please fill in sufficient information about the Teach Card!!"
+      )
+    );
   }
 
-  const teachCard = await TeachingCard.create({
-    createdBy: userId,
+  const newTeachCard = await TeachingCard.create({
+    createdBy: userID,
     subject,
     topic,
     isLearningCardReferred: true,
@@ -39,15 +52,30 @@ exports.createTeachCardOnLearnCard = catchAsync(async (req, res, next) => {
     classEndsAt,
     description,
     expectations,
-    price
-  })
+    price,
+  });
 
-  if (!teachCard) {
-    return next(new AppError('Teach Card couldnt be created, Try Again!!'))
+  if (!newTeachCard) {
+    return next(new AppError("Teach Card couldnt be created, Try Again!!"));
+  }
+
+  const newClassroom = await Classroom.create({
+    admin: userID,
+    teachingCard: newTeachCard.id,
+    chatName: newTeachCard.topic,
+    classStartsAt: newTeachCard.classStartsAt,
+    classEndsAt: newTeachCard.classEndsAt,
+  });
+
+  if (!newClassroom) {
+    return next(
+      new AppError("Couldnt create the classroom!! Please file a report!")
+    );
   }
 
   res.status(201).json({
     status: success,
-    teachCard
-  })
+    newTeachCard,
+    newClassroom,
+  });
 });

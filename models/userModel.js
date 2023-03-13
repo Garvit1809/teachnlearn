@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema({
     {
       class: {
         type: mongoose.Schema.ObjectId,
-        ref: "TeachingCard",
+        ref: "Classroom",
       },
       isReviewed: {
         type: Boolean,
