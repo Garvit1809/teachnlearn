@@ -2,20 +2,91 @@ const catchAsync = require("../utils/catchAsync");
 const factory = require("./handlerFactory");
 const AppError = require("../utils/appError");
 
-const LearningCard = require("../models/learningCardModel");
 const TeachingCard = require("../models/teachingCardModel");
 const User = require("../models/userModel");
+const Classroom = require("../models/classroomModel");
 
+// filter cards acccoriding to their start date
 exports.getAllTeachCards = factory.getAll(TeachingCard);
+
 exports.getOneTeachCard = factory.getOne(TeachingCard);
-exports.createTeachCard = factory.createOne(TeachingCard);
+
+exports.createTeachCard = catchAsync(async (req, res, next) => {
+  const userID = req.user.id;
+
+  const {
+    subject,
+    topic,
+    date,
+    classStartsAt,
+    classEndsAt,
+    description,
+    expectations,
+    price,
+  } = req.body;
+
+  if (
+    !subject &&
+    !topic &&
+    !date &&
+    !classStartsAt &&
+    !classEndsAt &&
+    !description &&
+    !expectations &&
+    !price
+  ) {
+    return next(
+      new AppError(
+        "Please fill in sufficient information about the Teach Card!!"
+      )
+    );
+  }
+
+  const newTeachCard = await TeachingCard.create({
+    createdBy: userID,
+    subject,
+    topic,
+    isLearningCardReferred: false,
+    date,
+    classStartsAt,
+    classEndsAt,
+    description,
+    expectations,
+    price,
+  });
+
+  if (!newTeachCard) {
+    return next(
+      new AppError("Couldnt create Teaching Card!! Something went wrong!!")
+    );
+  }
+
+  const newClassroom = await Classroom.create({
+    admin: userID,
+    teachingCard: newTeachCard.id,
+    chatName: newTeachCard.topic,
+    classStartsAt: newTeachCard.classStartsAt,
+    classEndsAt: newTeachCard.classEndsAt,
+  });
+
+  if (!newClassroom) {
+    return next(
+      new AppError("Couldnt create the classroom!! Please file a report!")
+    );
+  }
+
+  res.status(201).json({
+    status: "success",
+    newTeachCard,
+    newClassroom,
+  });
+});
 
 // add to class
 // --> ceate a class once teach card is created
 // add students to teach card after theuy enroll
 
 // the class that has been completed wont be deleted from user side until he gives reviews
-
 
 exports.enrollInClass = catchAsync(async (req, res, next) => {
   // get user id
@@ -42,6 +113,7 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
   const updatedTeachCard = await TeachingCard.findByIdAndUpdate(
     teachCardId,
     {
+      $inc: { seatsFilled: 1 },
       $push: { studentsEnrolled: userId },
     },
     {
@@ -51,22 +123,51 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
   );
 
   if (!updatedTeachCard) {
-    return next(new AppError('Couldnt add you to class!! Try Again!! Coins havent been deducted!!'))
+    return next(
+      new AppError(
+        "Couldnt add you to class!! Try Again!! Coins havent been deducted!!"
+      )
+    );
   }
 
-  const updatedUser = await User.findByIdAndUpdate(userId, {
-    coins: userCoins - classPrice,
-    $push: { classesEnrolled: teachCard.id }
-  });
+  // add to classroom
+  const updatedClassroom = await Classroom.findByIdAndUpdate(
+    {
+      teachingCard: teachCardId,
+    },
+    {
+      $push: { enrolledUsers: userId },
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    {
+      coins: userCoins - classPrice,
+      $push: { classesEnrolled: updatedClassroom.id },
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
 
   if (!updatedUser) {
-    return next(new AppError('User couldnt be updated!! There came an error while charging the pay'))
+    return next(
+      new AppError(
+        "User couldnt be updated!! There came an error while charging the pay"
+      )
+    );
   }
 
   res.status(201).json({
-    status: 'success',
+    status: "success",
     teachCard,
     updatedTeachCard,
-    updatedUser
-  })
+    updatedUser,
+  });
 });

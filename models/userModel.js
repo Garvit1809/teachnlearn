@@ -37,8 +37,14 @@ const userSchema = new mongoose.Schema({
   },
   classesEnrolled: [
     {
-      type: mongoose.Schema.ObjectId,
-      ref: "TeachingCard",
+      class: {
+        type: mongoose.Schema.ObjectId,
+        ref: "TeachingCard",
+      },
+      isReviewed: {
+        type: Boolean,
+        default: false,
+      },
     },
   ],
   password: {

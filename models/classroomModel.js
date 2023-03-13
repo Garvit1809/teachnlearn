@@ -44,6 +44,8 @@ const classroomSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// reviews --> reference
+
 const Classroom = mongoose.model("Classroom", classroomSchema);
 
 module.exports = Classroom;
