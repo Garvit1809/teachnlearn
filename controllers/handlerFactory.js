@@ -50,9 +50,15 @@ exports.createOne = (Model) =>
 exports.getOne = (Model, popOptions) =>
   catchAsync(async (req, res, next) => {
     let param;
+
     if (req.params.learnCardId) {
-      param = req.params.learnCardId
+      param = req.params.learnCardId;
+    } else if (req.params.teachCardId) {
+      param = req.params.teachCardId;
+    } else if (req.params.userId) {
+      param = req.params.userId;
     }
+    
     let query = Model.findById(param);
     if (popOptions) query = query.populate(popOptions);
     const doc = await query;
@@ -72,7 +78,8 @@ exports.getOne = (Model, popOptions) =>
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
     let filter = {};
-    if (req.params.learnCardId) filter = { learningCardReferred: req.params.learnCardId };
+    if (req.params.learnCardId)
+      filter = { learningCardReferred: req.params.learnCardId };
     if (req.params.classroomId) {
       filter = { classroom: req.params.classroomId };
     }

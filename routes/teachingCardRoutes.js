@@ -14,13 +14,13 @@ const router = express.Router();
 router
   .route("/")
   .get(teachingCardController.getAllTeachCards)
-  .post(teachingCardController.createTeachCard);
+  .post(protect, teachingCardController.createTeachCard);
 
-router.get('/:id', teachingCardController.getOneTeachCard);
+router.get('/:teachCardId', teachingCardController.getOneTeachCard);
 
 router.use(protect);
 
-router.patch('/:id/enroll', teachingCardController.enrollInClass);
+router.patch('/:teachCardId/enroll', teachingCardController.enrollInClass);
 
 module.exports = router;
 

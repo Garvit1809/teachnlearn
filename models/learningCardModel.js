@@ -55,6 +55,14 @@ const learningCardSchema = new mongoose.Schema({
   ],
 });
 
+learningCardSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "createdBy",
+    select: "name",
+  })
+  next();
+});
+
 const LearningCard = mongoose.model("LearningCard", learningCardSchema);
 
 module.exports = LearningCard;

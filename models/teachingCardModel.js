@@ -4,6 +4,7 @@ const teachingCardSchema = new mongoose.Schema({
   createdBy: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
+    required: [true, "Teach Card should be created by a user!!"],
   },
   subject: {
     type: String,
@@ -65,6 +66,22 @@ const teachingCardSchema = new mongoose.Schema({
       ref: "User",
     },
   ],
+});
+
+teachingCardSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "createdBy",
+    select: "name",
+  })
+    .populate({
+      path: "studentsEnrolled",
+      select: "name",
+    })
+    .populate({
+      path: "learningCardReferred",
+      select: "subject createdBy",
+    });
+  next();
 });
 
 const TeachingCard = mongoose.model("TeachingCard", teachingCardSchema);

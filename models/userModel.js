@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
   },
   coins: {
     type: Number,
-    default: 10000,
+    default: 1000000,
   },
   classesEnrolled: [
     {

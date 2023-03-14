@@ -97,13 +97,31 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
   // add him to the enrolled field
   // cut pay
 
-  const teachCardId = req.params.id;
+  const teachCardId = req.params.teachCardId;
 
   const userId = req.user.id;
   const userCoins = req.user.coins;
 
   const teachCard = await TeachingCard.findById(teachCardId);
   const classPrice = teachCard.price;
+
+  const enrolledCheck = teachCard.studentsEnrolled.forEach((student) => {
+    console.log(student.id.valueOf());
+    // return student._id == userId;
+    return student.id.valueOf() == userId;
+
+  });
+
+  // console.log(teachCard.studentsEnrolled);
+  console.log(enrolledCheck);
+
+  if (enrolledCheck) {
+    return next(
+      new AppError(
+        "You have already enrolled in the Teaching Card!! Check the classroom!!"
+      )
+    );
+  }
 
   if (userCoins < classPrice) {
     return next(
@@ -131,8 +149,7 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
     );
   }
 
-  // add to classroom
-  const updatedClassroom = await Classroom.findByIdAndUpdate(
+  const updatedClassroom = await Classroom.findOneAndUpdate(
     {
       teachingCard: teachCardId,
     },
@@ -145,11 +162,22 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
     }
   );
 
+  if (!updatedClassroom) {
+    return next(
+      new AppError("Couldnt add you to the classroom!! Some error occurred!!")
+    );
+  }
+
   const updatedUser = await User.findByIdAndUpdate(
     userId,
     {
       coins: userCoins - classPrice,
-      $push: { classesEnrolled: updatedClassroom.id },
+      $push: {
+        classesEnrolled: {
+          class: updatedClassroom.id,
+          isReviewed: false,
+        },
+      },
     },
     {
       new: true,
@@ -167,8 +195,8 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
 
   res.status(201).json({
     status: "success",
-    teachCard,
     updatedTeachCard,
+    updatedClassroom,
     updatedUser,
   });
 });
