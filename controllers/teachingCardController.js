@@ -105,17 +105,15 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
   const teachCard = await TeachingCard.findById(teachCardId);
   const classPrice = teachCard.price;
 
-  const enrolledCheck = teachCard.studentsEnrolled.forEach((student) => {
-    console.log(student.id.valueOf());
-    // return student._id == userId;
+  const enrolledCheck = teachCard.studentsEnrolled.filter((student) => {
+    // console.log(student.id.valueOf());
+    // console.log(student.id.valueOf() == userId);
     return student.id.valueOf() == userId;
-
   });
 
-  // console.log(teachCard.studentsEnrolled);
   console.log(enrolledCheck);
 
-  if (enrolledCheck) {
+  if (enrolledCheck.length > 0) {
     return next(
       new AppError(
         "You have already enrolled in the Teaching Card!! Check the classroom!!"
