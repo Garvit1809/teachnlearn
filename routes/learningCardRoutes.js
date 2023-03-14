@@ -13,11 +13,13 @@ const router = express.Router();
 router
   .route("/")
   .get(learningCardController.getAllLearnCards)
-  .post(learningCardController.createLearnCard);
+  .post(protect, learningCardController.createLearnCard);
 
-router.get('/:id', learningCardController.getOneLearnCard);
-router.get('/:id/teach', learningCardController.getTeachCardsOnLearnCard);
-router.post('/:id/teach', learningCardController.createTeachCardOnLearnCard)
+router.get("/:learnCardId", learningCardController.getOneLearnCard);
+router.get("/:learnCardId/teach", learningCardController.getTeachCardsOnLearnCard);
 
+router.use(protect);
+router.post("/:learnCardId/teach", learningCardController.createTeachCardOnLearnCard);
+router.patch('/:learnCardId/interested', learningCardController.interestedInLearnCard);
 
 module.exports = router;

@@ -49,7 +49,11 @@ exports.createOne = (Model) =>
 
 exports.getOne = (Model, popOptions) =>
   catchAsync(async (req, res, next) => {
-    let query = Model.findById(req.params.id);
+    let param;
+    if (req.params.learnCardId) {
+      param = req.params.learnCardId
+    }
+    let query = Model.findById(param);
     if (popOptions) query = query.populate(popOptions);
     const doc = await query;
 
@@ -68,9 +72,9 @@ exports.getOne = (Model, popOptions) =>
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
     let filter = {};
-    if (req.params.id) filter = { learningCardReferred: req.params.id };
+    if (req.params.learnCardId) filter = { learningCardReferred: req.params.learnCardId };
     if (req.params.classroomId) {
-      filter = { classroom: eq.params.classroomId };
+      filter = { classroom: req.params.classroomId };
     }
 
     const features = new APIFeatures(Model.find(filter), req.query)

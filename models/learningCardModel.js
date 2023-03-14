@@ -15,12 +15,6 @@ const learningCardSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide the topic you need to learn"],
   },
-  interestedStudents: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: "User",
-    },
-  ],
   educationLevel: {
     type: String,
     required: [
@@ -53,6 +47,12 @@ const learningCardSchema = new mongoose.Schema({
     type: Date,
     default: defaultDueDate,
   },
+  interestedStudents: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
+    },
+  ],
 });
 
 const LearningCard = mongoose.model("LearningCard", learningCardSchema);
