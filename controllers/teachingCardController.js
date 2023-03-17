@@ -166,6 +166,12 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
     );
   }
 
+  const transactionObj = {
+    amount: classPrice,
+    transferredTo: teachCard.createdBy,
+    cardEnrolled: teachCard.id,
+  };
+
   const updatedUser = await User.findByIdAndUpdate(
     userId,
     {
@@ -175,6 +181,7 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
           class: updatedClassroom.id,
           isReviewed: false,
         },
+        transactionHistory: transactionObj,
       },
     },
     {

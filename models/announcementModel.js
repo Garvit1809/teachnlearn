@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const messageSchema = mongoose.Schema(
+const announcementSchema = mongoose.Schema(
   {
     sender: {
       type: mongoose.Schema.ObjectId,
@@ -14,6 +14,10 @@ const messageSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Classroom",
     },
+    fileUpload: {
+      type: String,
+      default: null,
+    },
     comments: [
       {
         type: mongoose.Schema.ObjectId,
@@ -24,5 +28,5 @@ const messageSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const Message = mongoose.model("Message", messageSchema);
-module.exports = Message;
+const Announcement = mongoose.model("Announcement", announcementSchema);
+module.exports = Announcement;

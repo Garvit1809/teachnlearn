@@ -32,6 +32,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide a contact number"],
   },
+  strongSubjects: [
+    {
+      subject: {
+        type: String,
+        trim: true,
+        default: null,
+      },
+    },
+  ],
   role: {
     type: String,
     enum: ["teach", "learn"],
@@ -85,9 +94,6 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-// account setup --> photo | strong subjects[]
-
-// login --> email or username
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
