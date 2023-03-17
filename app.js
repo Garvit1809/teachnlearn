@@ -6,6 +6,7 @@ const authRouter = require('./routes/authRoutes');
 const userRouter = require('./routes/userRoutes');
 const learningRouter = require('./routes/learningCardRoutes');
 const teachingRouter = require('./routes/teachingCardRoutes');
+const classroomRouter = require('./routes/classroomRoutes');
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/learn', learningRouter);
 app.use('/api/v1/teach', teachingRouter);
+app.use('/api/v1/classroom', classroomRouter);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

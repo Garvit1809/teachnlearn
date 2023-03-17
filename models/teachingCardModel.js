@@ -68,6 +68,9 @@ const teachingCardSchema = new mongoose.Schema({
   ],
 });
 
+// model
+// tags
+
 teachingCardSchema.pre(/^find/, function (next) {
   this.populate({
     path: "createdBy",

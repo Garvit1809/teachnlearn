@@ -8,4 +8,11 @@ router.use(protect)
 
 router.get('/me', userController.getMe, userController.getUser);
 
+// router.get('/:userId', )
+
+// my profile
+// user profile
+
+// purchase coins
+
 module.exports = router;

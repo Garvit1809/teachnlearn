@@ -48,6 +48,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 });
 
 exports.login = catchAsync(async (req, res, next) => {
+  //  add username
   const { email, password } = req.body;
 
   if (!email || !password) {
