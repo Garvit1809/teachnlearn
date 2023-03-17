@@ -2,9 +2,9 @@ const { promisify } = require("util");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 
-const User = require("../models/userModel");
-const catchAsync = require("./../utils/catchAsync");
 const AppError = require("../utils/appError");
+const catchAsync = require("./../utils/catchAsync");
+const User = require("../models/userModel");
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -16,7 +16,7 @@ const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
 
   const cookieOptions = {
-    expires: new Date(Date.now() + 2592000000),            
+    expires: new Date(Date.now() + 2592000000),
     httpOnly: true,
   };
 
@@ -41,20 +41,28 @@ exports.signup = catchAsync(async (req, res, next) => {
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
-    phoneNumber: req.body.phoneNumber
+    phoneNumber: req.body.phoneNumber,
   });
 
   createSendToken(newUser, 201, res);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
-  //  add username
-  const { email, password } = req.body;
+  const { userName, email, password } = req.body;
 
-  if (!email || !password) {
-    return next(new AppError("Please provide email and password!", 400));
+  if ((!userName && !email) || !password) {
+    return next(
+      new AppError("Please provide username or email and password!", 400)
+    );
   }
-  const user = await User.findOne({ email }).select("+password");
+
+  let user;
+
+  if (userName) {
+    user = await User.findOne({ userName }).select("+password");
+  } else {
+    user = await User.findOne({ email }).select("+password");
+  }
 
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError("Incorrect email or password", 401));

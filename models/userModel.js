@@ -85,8 +85,6 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-// transaction history
-
 // account setup --> photo | strong subjects[]
 
 // login --> email or username
