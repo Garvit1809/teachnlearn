@@ -11,7 +11,7 @@ const announcementSchema = mongoose.Schema(
       trim: true,
     },
     classroom: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.ObjectId,
       ref: "Classroom",
     },
     fileUpload: {
