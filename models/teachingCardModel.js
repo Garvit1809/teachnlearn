@@ -46,6 +46,14 @@ const teachingCardSchema = new mongoose.Schema({
       "Please provide a whole description for the learning card",
     ],
   },
+  tags: [
+    {
+      tag: {
+        type: String,
+        required: [true, "Please add tags in the Teach Card!!"]
+      }
+    }
+  ],
   expectations: [
     {
       type: String,

@@ -16,6 +16,8 @@ router
   .get(teachingCardController.getAllTeachCards)
   .post(protect, teachingCardController.createTeachCard);
 
+// top 5 teach Cards --> interested
+
 router.get('/:teachCardId', teachingCardController.getOneTeachCard);
 
 router.use(protect);

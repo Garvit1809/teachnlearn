@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 const announcementSchema = mongoose.Schema(
   {
+    classroom: {
+      type: mongoose.Schema.ObjectId,
+      ref: "Classroom",
+    },
     sender: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
@@ -9,10 +13,6 @@ const announcementSchema = mongoose.Schema(
     content: {
       type: String,
       trim: true,
-    },
-    classroom: {
-      type: mongoose.Schema.ObjectId,
-      ref: "Classroom",
     },
     fileUpload: {
       type: String,

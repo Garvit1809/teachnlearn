@@ -28,7 +28,7 @@ const learningCardSchema = new mongoose.Schema({
   },
   preferredLanguage: {
     type: String,
-    required: [true, 'Please specify the language you prefer for speaking']
+    required: [true, "Please specify the language you prefer for speaking"],
   },
   description: {
     type: String,
@@ -43,9 +43,17 @@ const learningCardSchema = new mongoose.Schema({
       required: [true, "Please provide what you expect from the tutor"],
     },
   ],
+  tags: [
+    {
+      tag: {
+        type: String,
+        required: [true, "Please add tags in the Teach Card!!"],
+      },
+    },
+  ],
   dueDate: {
     type: Date,
-    default: defaultDueDate,
+    default: new Date(+new Date() + defaultDueDate),
   },
   interestedStudents: [
     {
@@ -59,7 +67,7 @@ learningCardSchema.pre(/^find/, function (next) {
   this.populate({
     path: "createdBy",
     select: "name",
-  })
+  });
   next();
 });
 

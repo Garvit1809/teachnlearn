@@ -65,9 +65,16 @@ const userSchema = new mongoose.Schema({
         default: false,
       },
       endsAt: {
-        typr: Date,
+        type: Date,
         required: [true, "Please specify the end timing of the class!!"],
       },
+    },
+  ],
+  classesTaken: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "Classroom",
+      required: [true, "Must specify the classroom ID!!"],
     },
   ],
   transactionHistory: [
