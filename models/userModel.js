@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     max: [25, "Username must be less than 25 characters"],
   },
+  // can change in 60 days
   email: {
     type: String,
     required: [true, "Please provide your email"],
@@ -31,6 +32,7 @@ const userSchema = new mongoose.Schema({
   phoneNumber: {
     type: String,
     required: [true, "Please provide a contact number"],
+    select: false,
   },
   strongSubjects: [
     {
@@ -49,16 +51,22 @@ const userSchema = new mongoose.Schema({
   coins: {
     type: Number,
     default: 1000000,
+    select: false,
   },
   classesEnrolled: [
     {
       class: {
         type: mongoose.Schema.ObjectId,
         ref: "Classroom",
+        required: [true, "Must specify the classroom ID!!"],
       },
       isReviewed: {
         type: Boolean,
         default: false,
+      },
+      endsAt: {
+        typr: Date,
+        required: [true, "Please specify the end timing of the class!!"],
       },
     },
   ],
@@ -66,6 +74,14 @@ const userSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.ObjectId,
       ref: "TransactionHistory",
+    },
+  ],
+  referrals: [
+    {
+      referredTo: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+      },
     },
   ],
   password: {
@@ -93,7 +109,6 @@ const userSchema = new mongoose.Schema({
     select: false,
   },
 });
-
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();

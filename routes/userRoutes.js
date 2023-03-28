@@ -6,12 +6,19 @@ const router = express.Router();
 
 router.use(protect)
 
-router.get('/me', userController.getMe, userController.getUser);
+router.get('/:userId', userController.getUser);
 
-// router.get('/:userId', )
+router.get('/me', userController.getMe, userController.getUser);
+router.patch('/updateMe', userController.updateMe);
+router.patch('/deleteMe', userController.deleteMe);
 
 // my profile
 // user profile
+
+// update user profile image
+// changing username
+
+// referral friend --> API with users ID
 
 // purchase coins
 

@@ -22,4 +22,7 @@ router.use(protect);
 router.post("/:learnCardId/teach", learningCardController.createTeachCardOnLearnCard);
 router.patch('/:learnCardId/interested', learningCardController.interestedInLearnCard);
 
+// filter learn card using tags
+// search learn card
+
 module.exports = router;

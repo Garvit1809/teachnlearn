@@ -34,3 +34,8 @@ module.exports = app;
 // review Model, APIS
 
 // forum API
+
+// faq --> UI
+// contact us
+
+
