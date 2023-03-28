@@ -89,6 +89,8 @@ exports.createTeachCard = catchAsync(async (req, res, next) => {
 // to be worked on
 // the class that has been completed wont be deleted from user side until he gives reviews
 
+
+// add check to ensure admin doesnt enroll
 exports.enrollInClass = catchAsync(async (req, res, next) => {
   // get user id
   // get teach card id

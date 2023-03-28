@@ -51,3 +51,5 @@ exports.postAnnouncement = catchAsync(async (req, res, next) => {
     newAnnouncement
   })
 });
+
+// exports.updateAnnouncement = catchAsync()

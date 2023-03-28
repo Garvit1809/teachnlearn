@@ -5,6 +5,9 @@
 
 // update teach card
 
+// top 5 cards
+// filter --> getAll
+
 const express = require("express");
 const teachingCardController = require("../controllers/teachingCardController");
 const { protect } = require("../controllers/authController");

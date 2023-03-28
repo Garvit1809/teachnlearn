@@ -40,6 +40,12 @@ const classroomSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    announcemets: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "Announcement",
+      },
+    ],
   },
   { timestamps: true }
 );
