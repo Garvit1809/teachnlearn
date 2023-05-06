@@ -207,3 +207,7 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
     updatedUser,
   });
 });
+
+exports.topTeachCards = catchAsync(async(req,res,next) => {
+  
+})
