@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Input from "./input";
 
@@ -7,23 +7,6 @@ const Section = styled.div`
   padding: 15px;
   margin: 10px;
   border: 1px solid red;
-
-  .form__field {
-    font-family: inherit;
-    width: 100%;
-    border: 0;
-    border-bottom: 1px solid #d2d2d2;
-    outline: 0;
-    font-size: 16px;
-    color: #212121;
-    padding: 7px 0;
-    background: transparent;
-    transition: border-color 0.2s;
-  }
-
-  .form__field::placeholder {
-    color: transparent;
-  }
 
   .form__field:placeholder-shown ~ .form__label {
     font-size: 16px;
@@ -44,11 +27,6 @@ const Section = styled.div`
   .form__field:focus ~ .form__label {
     color: #009788;
   }
-
-  .form__field:focus {
-    padding-bottom: 6px;
-    border-bottom: 2px solid #009788;
-  }
 `;
 
 const Label = styled.div``;
@@ -59,13 +37,25 @@ interface inputProps {
 }
 
 const Inputholder = (props: inputProps) => {
+  const [isInputSelected, setIsInputSelected] = useState(false);
+  const selectInput = () => {
+    setIsInputSelected(!isInputSelected);
+  };
+
+  useEffect(() => {
+    console.log(isInputSelected);
+  }, [isInputSelected])  
+
   return (
     <Section>
-      <div className="form_field">
-        <Input value={props.value} onChangeHandler={props.onChangeHandler} />
-      </div>
-      <label className="form_label">Labelhjfb</label>
-      {/* <Label className="form__label">your label</Label> */}
+      <Input
+        value={props.value}
+        onChangeHandler={props.onChangeHandler}
+        onSelect={selectInput}
+      />
+      {isInputSelected ? (
+        <Label className="form__label">your label</Label>
+      ) : null}
     </Section>
   );
 };

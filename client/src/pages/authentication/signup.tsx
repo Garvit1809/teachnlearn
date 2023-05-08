@@ -12,12 +12,17 @@ const FormContainer = styled.div``;
 
 const InfoContainer = styled.div``;
 
+const changeHandler = () => {
+  console.log('hello');
+  
+}
+
 const Signup = () => {
   return (
     <Section>
       <FormContainer>
         <form>
-          <Inputholder value="loll" onChangeHandler={() => alert("Hello")} />
+          <Inputholder value="loll" onChangeHandler={changeHandler} />
         </form>
       </FormContainer>
       <InfoContainer></InfoContainer>
