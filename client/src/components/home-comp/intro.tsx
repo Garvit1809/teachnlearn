@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import IntroImg from "../../assets/home-intro-img.png";
-import Arrow from '../../assets/Arrow.svg'
+// import Arrow from "../../assets/Arrow.svg";
+import { Arrow } from "../general-components/svg";
 
 const Section = styled.div`
   /* border: 1px solid pink; */
@@ -12,59 +13,110 @@ const Section = styled.div`
   flex-direction: row;
   align-items: center;
   padding: 60px;
-  /* margin-top: 5rem; */
   margin: 5rem 5vw 0 5vw;
+  box-sizing: border-box;
 `;
 
 const InfoContainer = styled.div`
   display: grid;
   grid-template-rows: auto auto auto;
   row-gap: 1rem;
+  width: 60%;
+  margin-right: 5vw;
+  /* border: 1px solid red; */
+
+  p {
+    /* font-style: normal; */
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 25px;
+    color: #000000;
+  }
+`;
+
+const Headers = styled.div`
+
+  h2 {
+    margin: 0;
+    padding: 0;
+    /* border: 1px solid blue; */
+  }
+`;
+
+const Heading = styled.h2`
+  font-weight: 700;
+  font-size: 39px;
+  line-height: 121.4%;
+  color: #000000;
 `;
 
 const ImageContainer = styled.div`
   width: 419.57px;
   height: 335.33px;
+  /* border: 1px solid red; */
 
   img {
     width: 100%;
     height: 100%;
-  }
+    object-fit: contain;
+}
 `;
 
 const Buttons = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+  /* border: 1px solid red; */
+
+  button {
     display: flex;
+    justify-content: center;
     align-items: center;
-    /* justify-content: sp; */
-    img{
-        /* color: black; */
-        fill: black;
+    padding: 18px 40px;
+    gap: 10px;
 
-    }
+    width: 237px;
+    height: 61px;
 
-    svg{
-        background-color: black;
-    }
-`
+    background: #332ad5;
+    border-radius: 8px;
+    border: 0;
+    outline: none;
+
+    font-weight: 500;
+    font-size: 18px;
+    color: #ffffff;
+    cursor: pointer;
+  }
+
+  button.request {
+    color: #364152;
+    background: rgba(51, 42, 213, 0.05);
+  }
+`;
 
 const Intro = () => {
   return (
     <Section>
       <InfoContainer>
-        <div>
-          <h2>Quick and Easy Learning</h2>
-          <h2>Byte-Sized Classes for Everyone</h2>
-        </div>
+        <Headers>
+          <Heading>Quick and Easy Learning:</Heading>
+          <Heading>Byte-Sized Classes for Everyone</Heading>
+        </Headers>
         <p>
           Discover bite-sized classes designed to make learning accessible and
           fun for everyone, regardless of prior knowledge.
         </p>
-        < Buttons>
-            
-            <button>
-                <span>See all classes</span>
-                <img src={Arrow} alt="" />
-            </button>
+        <Buttons>
+          <button>
+            <span>See all classes</span>
+            <Arrow strokeColor="white" />
+          </button>
+          <button className="request">
+            <span>Create a request</span>
+            <Arrow strokeColor="#364152" />
+          </button>
         </Buttons>
       </InfoContainer>
       <ImageContainer>
