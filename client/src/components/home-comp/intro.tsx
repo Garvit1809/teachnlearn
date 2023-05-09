@@ -13,14 +13,16 @@ const Section = styled.div`
   flex-direction: row;
   align-items: center;
   padding: 60px;
-  margin: 5rem 5vw 0 5vw;
+  /* margin: 5rem 6.3vw 0 6.3vw; */
+  margin-top: 3.5rem;
+  margin-bottom: 2rem;
   box-sizing: border-box;
 `;
 
 const InfoContainer = styled.div`
   display: grid;
   grid-template-rows: auto auto auto;
-  row-gap: 1rem;
+  gap: 35px;;
   width: 60%;
   margin-right: 5vw;
   /* border: 1px solid red; */
@@ -34,14 +36,7 @@ const InfoContainer = styled.div`
   }
 `;
 
-const Headers = styled.div`
-
-  h2 {
-    margin: 0;
-    padding: 0;
-    /* border: 1px solid blue; */
-  }
-`;
+const Headers = styled.div``;
 
 const Heading = styled.h2`
   font-weight: 700;
@@ -65,8 +60,8 @@ const ImageContainer = styled.div`
 const Buttons = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 80%;
+  /* justify-content: space-between; */
+  /* width: 80%; */
   /* border: 1px solid red; */
 
   button {
@@ -93,6 +88,10 @@ const Buttons = styled.div`
   button.request {
     color: #364152;
     background: rgba(51, 42, 213, 0.05);
+  }
+
+  button:first-child{
+    margin-right: 3vw;
   }
 `;
 
