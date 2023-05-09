@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Coins, Friends, MyProfile, Redeem } from "../general-components/svg";
+import {
+  CoinsIcon,
+  FriendsIcon,
+  MyProfileIcon,
+  RedeemIcon,
+} from "../general-components/svg";
 
 const Section = styled.div`
   box-sizing: border-box;
@@ -36,6 +41,7 @@ const MenuOptions = styled.div<menuOptionsProps>`
   cursor: pointer;
   font-size: 16px;
   background: ${(props) => (props.isSelected ? "#F3F6FF" : "none")};
+  transition: all 0.5s ease;
 `;
 
 const DeleteButton = styled.div`
@@ -55,34 +61,46 @@ const DeleteButton = styled.div`
 const profileOptions = [
   {
     option: "My profile",
-    label: "myProfile",
-    icon: <MyProfile />,
+    label: "MyProfile",
+    icon: <MyProfileIcon />,
   },
   {
     option: "Purchase Coins",
-    label: "purchaseCoins",
-    icon: <Coins />,
+    label: "PurchaseCoins",
+    icon: <CoinsIcon />,
   },
   {
     option: "Invite Friends",
-    label: "invite",
-    icon: <Friends />,
+    label: "InviteFriends",
+    icon: <FriendsIcon />,
   },
   {
     option: "Redeem Items",
     label: "redeem",
-    icon: <Redeem />,
+    icon: <RedeemIcon />,
   },
 ];
 
-const ProfileOptions = () => {
-  const [selectedOption, setSelectedOption] = useState("myProfile");
+interface optionsProps {
+  setSelectedLeftScreen: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const ProfileOptions = ({ setSelectedLeftScreen }: optionsProps) => {
+  const [selectedOption, setSelectedOption] = useState("MyProfile");
+  const menuOptionHandler = (label: string) => {
+      setSelectedOption(label);
+      setSelectedLeftScreen(label);
+  };
   return (
     <Section>
       <Menu>
         {profileOptions.map((option, index) => {
           return (
-            <MenuOptions isSelected={selectedOption == option.label}>
+            <MenuOptions
+              key={index}
+              isSelected={selectedOption == option.label}
+              onClick={() => menuOptionHandler(option.label)}
+            >
               {option.icon}
               <span>{option.option}</span>
             </MenuOptions>

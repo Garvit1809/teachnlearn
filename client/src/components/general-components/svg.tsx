@@ -1,6 +1,4 @@
 export const Arrow = ({ strokeColor }: any) => {
-  console.log(strokeColor);
-
   return (
     <svg
       width="12"
@@ -40,7 +38,7 @@ export const SearchIcon = () => {
   );
 };
 
-export const MyProfile = () => {
+export const MyProfileIcon = () => {
   return (
     <svg
       width="20"
@@ -60,7 +58,7 @@ export const MyProfile = () => {
   );
 };
 
-export const Coins = () => {
+export const CoinsIcon = () => {
   return (
     <svg
       width="22"
@@ -80,7 +78,7 @@ export const Coins = () => {
   );
 };
 
-export const Redeem = () => {
+export const RedeemIcon = () => {
   return (
     <svg
       width="22"
@@ -100,7 +98,7 @@ export const Redeem = () => {
   );
 };
 
-export const Friends = () => {
+export const FriendsIcon = () => {
   return (
     <svg
       width="22"
