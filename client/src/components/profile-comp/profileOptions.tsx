@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import styled from "styled-components";
 import {
   CoinsIcon,
@@ -6,6 +6,9 @@ import {
   MyProfileIcon,
   RedeemIcon,
 } from "../general-components/svg";
+import MyProfile from "./myProfile";
+import PurchaseCoins from "./purchaseCoins";
+import InviteFriends from "./inviteFriends";
 
 const Section = styled.div`
   box-sizing: border-box;
@@ -83,13 +86,35 @@ const profileOptions = [
 
 interface optionsProps {
   setSelectedLeftScreen: React.Dispatch<React.SetStateAction<string>>;
+  // setElement: React.Dispatch<
+  //   React.SetStateAction<
+  //     ReactElement<any, string | React.JSXElementConstructor<any>>
+  //   >
+  // >;
 }
 
 const ProfileOptions = ({ setSelectedLeftScreen }: optionsProps) => {
+
   const [selectedOption, setSelectedOption] = useState("MyProfile");
+
   const menuOptionHandler = (label: string) => {
-      setSelectedOption(label);
-      setSelectedLeftScreen(label);
+    setSelectedOption(label);
+
+    // if (selectedOption == "MyProfile") {
+    //   setElement(<MyProfile />);
+    // } else if (selectedOption == "PurchaseCoins") {
+    //   setElement(<PurchaseCoins />);
+    // } else if (selectedOption == "InviteFriends") {
+    //   setElement(<InviteFriends />);
+    // }
+    setSelectedLeftScreen(label)
+
+    // if (selectedOption === 'MyProfile') {
+    //   setSelectedLeftScreen(label)
+    // } else if (selectedOption === 'PurchaseCoins') {
+    //   setSelectedLeftScreen(label)
+    // }
+
   };
   return (
     <Section>

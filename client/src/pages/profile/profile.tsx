@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import Navbar from "../../components/general-components/navbar";
 import ProfileOptions from "../../components/profile-comp/profileOptions";
 import styled from "styled-components";
@@ -21,29 +21,27 @@ const ProfileContainer = styled.div`
 `;
 
 const Profile = () => {
-//   let rightScreen;
-  let rightScreen = <MyProfile />;
   const [selectedLeftScreen, setSelectedLeftScreen] = useState("MyProfile");
+
   useEffect(() => {
     console.log(selectedLeftScreen);
     if (selectedLeftScreen == "MyProfile") {
-      rightScreen = <MyProfile />;
+      setElement(<MyProfile />);
     } else if (selectedLeftScreen == "PurchaseCoins") {
-        console.log('ollolol');
-        
-      rightScreen = <PurchaseCoins />;
+      setElement(<PurchaseCoins />);
     } else if (selectedLeftScreen == "InviteFriends") {
-      rightScreen = <InviteFriends />;
+      setElement(<InviteFriends />);
     }
-    // console.log(rightScreen);
   }, [selectedLeftScreen]);
+
+  const [element, setElement] = useState<ReactElement>(<MyProfile />);
 
   return (
     <>
       <Navbar />
       <Section>
         <ProfileOptions setSelectedLeftScreen={setSelectedLeftScreen} />
-        <ProfileContainer>{rightScreen}</ProfileContainer>
+        <ProfileContainer>{element}</ProfileContainer>
       </Section>
     </>
   );
