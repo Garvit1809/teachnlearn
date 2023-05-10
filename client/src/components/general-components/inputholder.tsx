@@ -1,61 +1,80 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Input from "./input";
 
 const Section = styled.div`
   position: relative;
-  padding: 15px;
-  margin: 10px;
-  border: 1px solid red;
+  width: 200px;
+  height: 20px;
+  /* border: 1px solid red; */
+`;
 
-  .form__field:placeholder-shown ~ .form__label {
-    font-size: 16px;
-    cursor: text;
-    top: 20px;
-  }
+const Input = styled.input`
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  border: 1.5px solid #d5d9eb;
+  border-radius: 8px;
+  color: #000000;
+  outline: none;
+  font-size: 16px;
+`;
 
-  label,
-  .form__field:focus ~ .form__label {
-    position: absolute;
-    top: 0;
-    display: block;
-    transition: 0.2s;
-    font-size: 12px;
-    color: #9b9b9b;
-  }
+interface labelProps {
+  isValid: boolean;
+}
 
-  .form__field:focus ~ .form__label {
-    color: #009788;
+const Label = styled.span<labelProps>`
+  position: absolute;
+  top: 0;
+  left: 10px;
+  transform: translateY(13px);
+  /* padding-left: 10px; */
+  pointer-events: none;
+  font-size: 16px;
+  text-transform: uppercase;
+  transition: 0.25s;
+  line-height: 1;
+  transform: ${(props) =>
+    props.isValid ? "translateX(5px) translateY(-5px)" : "null"};
+  font-size: ${(props) => (props.isValid ? "11px" : "16px")};
+  background-color: ${(props) => (props.isValid ? "white" : "none")};
+  color: ${(props) => (props.isValid ? "#b3b8db" : "black")};
+
+  ${Section}:focus-within & {
+    transform: translateX(5px) translateY(-5px);
+    font-size: 11px;
+    background-color: white;
+    color: #b3b8db;
+    padding: 0 5px;
   }
 `;
 
-const Label = styled.div``;
-
 interface inputProps {
   value: string;
-  onChangeHandler: React.ChangeEventHandler<HTMLInputElement>;
+  // onChangeHandler: React.ChangeEventHandler<HTMLInputElement>;
+  setname: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Inputholder = (props: inputProps) => {
-  const [isInputSelected, setIsInputSelected] = useState(false);
-  const selectInput = () => {
-    setIsInputSelected(!isInputSelected);
+  const [isValid, setisValid] = useState(false);
+  const inputhandler = (value: string) => {
+    props.setname(value);
+
+    if (value.trim().length > 0) {
+      setisValid(true);
+    } else {
+      setisValid(false);
+    }
   };
-
-  useEffect(() => {
-    console.log(isInputSelected);
-  }, [isInputSelected])  
-
   return (
     <Section>
       <Input
+        type="text"
+        required
         value={props.value}
-        onChangeHandler={props.onChangeHandler}
-        onSelect={selectInput}
+        onChange={(e) => inputhandler(e.target.value)}
       />
-      {isInputSelected ? (
-        <Label className="form__label">your label</Label>
-      ) : null}
+      <Label isValid={isValid}>First Name</Label>
     </Section>
   );
 };

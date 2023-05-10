@@ -4,23 +4,10 @@ import styled from "styled-components";
 const Section = styled.div`
   input {
     width: 100%;
-    border: 0;
-    border-bottom: 1px solid #d2d2d2;
-    outline: 0;
-    font-size: 16px;
-    color: #212121;
-    padding: 7px 0;
-    background: transparent;
-    transition: border-color 0.2s;
-
-    &::placeholder {
-      color: transparent;
-    }
-
-    &:focus {
-      padding-bottom: 6px;
-      border-bottom: 2px solid #009788;
-    }
+    padding: 10px;
+    border: 1.5px solid #d5d9eb;
+    border-radius: 8px;
+    color: #000000;
   }
 `;
 
@@ -39,7 +26,7 @@ const Input = (props: inputProps) => {
         onChange={props.onChangeHandler}
         onFocus={props.onSelect}
         onBlur={props.onSelect}
-      /> 
+      />
     </Section>
   );
 };
