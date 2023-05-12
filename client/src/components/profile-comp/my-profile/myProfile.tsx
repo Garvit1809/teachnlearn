@@ -1,13 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 
-import UserImg from "../../assets/userImg.png";
-import ModeToggle from "./modeToggle";
-import { EditIcon } from "../general-components/svg";
+import UserImg from "../../../assets/userImg.png";
+import ModeToggle from "../modeToggle";
+import EditBtn from "./editBtn";
+import InfoWrapper from "./infoWrapper";
+import ContactInfo from "./contactInfo";
+import AcademicInfo from "./academicInfo";
 
 const Section = styled.div`
   /* border: 1px solid red; */
   margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
   /* width: 95%; */
 `;
 
@@ -33,7 +39,7 @@ const UserContainer = styled.div`
   padding: 30px 28px;
   padding-right: 24px;
   gap: 1.2rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
 
   border: 1px solid #d5d9eb;
   border-radius: 32px;
@@ -66,47 +72,24 @@ const UserDetails = styled.div`
     line-height: 33px;
     letter-spacing: 0.02em;
     color: #000000;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.2rem;
   }
 
   p {
     /* border: 2px solid red; */
     width: 90%;
     line-height: 1.2;
-  }
-`;
 
-const EditBtn = styled.div`
-  /* border: 2px solid red; */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-
-  div {
-    border: 1px solid #cdd5df;
-    border-radius: 42px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 10px 14px;
-    gap: 6px;
-
-    span {
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 22px;
-      letter-spacing: 0.02em;
-      color: #4b5565;
-    }
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 25px;
+    letter-spacing: 0.02em;
+    color: #697586;
   }
 `;
 
 const ProfileStats = styled.div``;
 
-const ContactInfoCont = styled.div``;
-
-const AcademicCont = styled.div``;
 
 const userDetails = {
   name: "Ethan Alexander",
@@ -120,16 +103,16 @@ const userDetails = {
     coins: 400,
   },
   contactInfo: {
-    userName: "ethanalex",
-    password: "234323454323",
+    username: "ethanalex",
     email: "ethanalex@gmail.com",
+    password: "qwerty",
     phone: "9405619352",
   },
   academics: {
-    course: "",
-    interstedSub: [],
-    strongSub: [],
-    preferredLanguages: [],
+    course: "Electronic and Communication Engineering",
+    interstedSub: ["Finance", "Web Dev", "Trading", "Quant"],
+    strongSub: ["Web Dev", "Javascript", "Frontend", "AWS"],
+    preferredLanguages: ["English", "Hindi"],
   },
 };
 
@@ -148,15 +131,11 @@ const MyProfile = () => {
           <h4>{userDetails.name}</h4>
           <p>{userDetails.tagline}</p>
         </UserDetails>
-        <EditBtn>
-          <div>
-            <span>Edit</span>
-            <EditIcon />
-          </div>
-        </EditBtn>
+        <EditBtn />
       </UserContainer>
       <ProfileStats></ProfileStats>
-      <ContactInfoCont></ContactInfoCont>
+      <ContactInfo contactInfo={userDetails.contactInfo} />
+      <AcademicInfo academics={userDetails.academics} />
     </Section>
   );
 };

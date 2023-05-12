@@ -2,7 +2,7 @@ import { ReactElement, useEffect, useState } from "react";
 import Navbar from "../../components/general-components/navbar";
 import ProfileOptions from "../../components/profile-comp/profileOptions";
 import styled from "styled-components";
-import MyProfile from "../../components/profile-comp/myProfile";
+import MyProfile from "../../components/profile-comp/my-profile/myProfile";
 import InviteFriends from "../../components/profile-comp/inviteFriends";
 import PurchaseCoins from "../../components/profile-comp/purchaseCoins";
 

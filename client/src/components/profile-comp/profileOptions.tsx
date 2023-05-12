@@ -6,7 +6,7 @@ import {
   MyProfileIcon,
   RedeemIcon,
 } from "../general-components/svg";
-import MyProfile from "./myProfile";
+import MyProfile from "./my-profile/myProfile";
 import PurchaseCoins from "./purchaseCoins";
 import InviteFriends from "./inviteFriends";
 
@@ -18,6 +18,7 @@ const Section = styled.div`
   padding: 30px 28px 15px;
   border: 1px solid #d5d9eb;
   border-radius: 32px;
+  height: max-content;
 `;
 
 const Menu = styled.div`
