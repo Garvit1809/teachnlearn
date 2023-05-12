@@ -83,6 +83,7 @@ interface USERDATA {
   number: string;
   course: string;
   interestedSubjects: string[];
+  subject: string;
   strongSubjects: string[];
   preferredLanguages: string[];
 }
@@ -97,6 +98,7 @@ const initialData: USERDATA = {
   number: "",
   course: "",
   interestedSubjects: [],
+  subject: '',
   strongSubjects: [],
   preferredLanguages: [],
 };
@@ -110,17 +112,18 @@ const NewSignup = () => {
     });
   }
 
-  const { steps, currentStepIndex, step, isFirstStep, isLastStep, next, back } =
+  const { step, isFirstStep, isLastStep, next, back } =
     useMultiStepForm([
       <SignupForm {...userData} updateFields={updateFields} />,
-      <UserInfoForm />,
+      <UserInfoForm {...userData} updateFields={updateFields} />,
     ]);
+
   function onSubmit(e: FormEvent) {
     e.preventDefault();
     if (!isLastStep) return next();
     alert("Successful Account Creation");
   }
-  console.log(currentStepIndex);
+  // console.log(currentStepIndex);
   
   return (
     <Section>

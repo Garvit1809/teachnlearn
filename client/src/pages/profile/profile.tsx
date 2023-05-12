@@ -7,17 +7,18 @@ import InviteFriends from "../../components/profile-comp/inviteFriends";
 import PurchaseCoins from "../../components/profile-comp/purchaseCoins";
 
 const Section = styled.div`
-  border: 1px solid red;
+  border: 2px solid green;
   border-radius: 12px;
   padding: 45px;
   margin: 50px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 25% 70%;
   gap: 30px;
-  align-items: flex-start;
 `;
 
 const ProfileContainer = styled.div`
   border-left: 1px solid #d5d9eb;
+  /* width: /1; */
 `;
 
 const Profile = () => {

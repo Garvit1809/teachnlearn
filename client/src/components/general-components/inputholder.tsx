@@ -63,6 +63,7 @@ interface USERDATA {
   number: string;
   course: string;
   interestedSubjects: string[];
+  subject: string;
   strongSubjects: string[];
   preferredLanguages: string[];
 }
@@ -72,6 +73,7 @@ interface inputProps {
   type: string;
   label: string;
   name: string;
+  allSubjects?: string[];
   updateFields: (fields: Partial<USERDATA>) => void;
 }
 
@@ -96,6 +98,18 @@ const Inputholder = (props: inputProps) => {
     }
   };
 
+  const keyHandler = (e: any) => {
+    if (props.name == "subject") {
+      // console.log(e.key);
+      if (e.key == "Enter") {
+        console.log(e.key);
+        // props.allSubjects?.push(e.target.value);
+        // props.updateFields({ subject: e.target.value });
+        // props.updateFields({ interestedSubjects: props.allSubjects });
+      }
+    }
+  };
+
   return (
     <Section>
       <Input
@@ -104,6 +118,7 @@ const Inputholder = (props: inputProps) => {
         value={props.value}
         name={props.name}
         onChange={(e) => inputhandler(e)}
+        onKeyDown={keyHandler}
       />
       <Label isValid={isValid}>{props.label}</Label>
     </Section>
