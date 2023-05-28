@@ -9,6 +9,7 @@ const Section = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-top: 0.5rem;
 `;
 
 const SearchContainer = styled.div`
@@ -90,7 +91,7 @@ const Navbar = () => {
       <Menu>
         {navOptions.map((option, index) => {
           return (
-            <MenuItem>
+            <MenuItem key={index} >
               <Link to={option.link}>
                 <span>{option.title}</span>
               </Link>
