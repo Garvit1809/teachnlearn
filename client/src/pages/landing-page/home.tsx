@@ -13,7 +13,7 @@ const Section = styled.div`
 
 const cardDetails = [
   {
-    category: "Web Dev",
+    category: "Web Development",
     title: "Get started in Web Development and get selected in MH Fellowsip",
     author: "Garvit Varshney",
     interested: 22,

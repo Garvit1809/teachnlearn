@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Calender } from "../general-components/svg";
-// import Garvit from "../../assets/garvit.png";
 import zoro from '../../assets/zoro.jpg'
 
 const Section = styled.div`
@@ -11,7 +10,7 @@ const Section = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding: 20px;
-  gap: 10px;
+  gap: 14px;
   cursor: pointer;
 
 transition: all 0.15s linear;

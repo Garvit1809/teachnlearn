@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Arrow } from "../general-components/svg";
 import EnrolledClassCard from "./enrolledClassCard";
+import RequestCard from "./requestCard";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -80,7 +81,7 @@ const ClassSectionWrapper = (props: wrapperProps) => {
       </Header>
       <CardGrid>
         {props.cardArr.map((card, index) => {
-          return props.type == 'enrolled' ? <EnrolledClassCard key={index} {...card} /> : "hebvhbhv";
+          return props.type == 'enrolled' ? <EnrolledClassCard key={index} {...card} /> : <RequestCard key={index} {...card} />;
         })}
       </CardGrid>
     </Section>
