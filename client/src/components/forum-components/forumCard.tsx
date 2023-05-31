@@ -119,8 +119,7 @@ const ForumCard = (props: forumProps) => {
   const navigate = useNavigate();
 
   const forumNavigator = () => {
-    console.log("hello");
-
+    // console.log("hello");
     navigate(`/forum/${props.id}`, { state: { id: props.id } });
   };
 

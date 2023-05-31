@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import zoro from "../../assets/zoro.jpg";
 import { InterestedIcon, PurchaseCoinIcon } from "../general-components/svg";
+import UserChip from "../general-components/userChip";
 
 const Section = styled.div`
   display: flex;
@@ -99,10 +100,11 @@ const RequestCard = (props: requestCardProps) => {
       <Topic>
         <span>{props.title}</span>
       </Topic>
-      <Teacher>
+      <UserChip name={props.author} imgBorder="#FFFFFF" textColor="#FFFFFF" />
+      {/* <Teacher>
         <img src={zoro} alt="user-img" />
         <span>{props.author}</span>
-      </Teacher>
+      </Teacher> */}
       <Stats>
         <div>
           <InterestedIcon />

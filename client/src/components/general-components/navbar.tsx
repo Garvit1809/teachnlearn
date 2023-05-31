@@ -51,7 +51,7 @@ const MenuItem = styled.div`
   line-height: 25px;
   color: #000000;
 
-  &:last-child{
+  &:last-child {
     margin-right: 2.5rem;
   }
 `;
@@ -67,7 +67,7 @@ const navOptions = [
   },
   {
     title: "My Classes",
-    link: "/",
+    link: "/classroom",
   },
   {
     title: "Requests",
@@ -91,7 +91,7 @@ const Navbar = () => {
       <Menu>
         {navOptions.map((option, index) => {
           return (
-            <MenuItem key={index} >
+            <MenuItem key={index}>
               <Link to={option.link}>
                 <span>{option.title}</span>
               </Link>
