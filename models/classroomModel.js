@@ -46,10 +46,9 @@ const classroomSchema = new mongoose.Schema(
         ref: "Announcement",
       },
     ],
-    // banner image
+    // banner
     // desc
-    // expect
-    
+    // expec
   },
   { timestamps: true }
 );
