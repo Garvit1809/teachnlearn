@@ -79,7 +79,7 @@ exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
     let filter = {};
     if (req.params.learnCardId)
-      filter = { learningCardReferred: req.params.learnCardId };
+      filter = { referredLearningCard: req.params.learnCardId };
     if (req.params.classroomId) {
       filter = { classroom: req.params.classroomId };
     }

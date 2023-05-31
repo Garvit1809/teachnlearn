@@ -5,10 +5,10 @@ const AppError = require("../utils/appError");
 const TeachingCard = require("../models/teachingCardModel");
 const User = require("../models/userModel");
 const Classroom = require("../models/classroomModel");
+const TransactionHistory = require("../models/transactionHistoryModel");
 
 // filter cards acccoriding to their start date
 exports.getAllTeachCards = factory.getAll(TeachingCard);
-
 exports.getOneTeachCard = factory.getOne(TeachingCard);
 
 exports.createTeachCard = catchAsync(async (req, res, next) => {
@@ -17,22 +17,28 @@ exports.createTeachCard = catchAsync(async (req, res, next) => {
   const {
     subject,
     topic,
+    educationLevel,
+    standard,
     date,
     classStartsAt,
     classEndsAt,
     description,
     expectations,
+    tags,
     price,
   } = req.body;
 
   if (
     !subject &&
     !topic &&
+    !educationLevel &&
+    !standard &&
     !date &&
     !classStartsAt &&
     !classEndsAt &&
     !description &&
     !expectations &&
+    !tags &&
     !price
   ) {
     return next(
@@ -46,12 +52,15 @@ exports.createTeachCard = catchAsync(async (req, res, next) => {
     createdBy: userID,
     subject,
     topic,
+    educationLevel,
+    standard,
     isLearningCardReferred: false,
     date,
     classStartsAt,
     classEndsAt,
     description,
     expectations,
+    tags,
     price,
   });
 
@@ -88,28 +97,25 @@ exports.createTeachCard = catchAsync(async (req, res, next) => {
 
 // to be worked on
 // the class that has been completed wont be deleted from user side until he gives reviews
-
-
 // add check to ensure admin doesnt enroll
+
 exports.enrollInClass = catchAsync(async (req, res, next) => {
   // get user id
   // get teach card id
-  // get user profile
   // check if user has enough coins
   // add him to the enrolled field
   // cut pay
 
-  const teachCardId = req.params.teachCardId;
-
   const userId = req.user.id;
   const userCoins = req.user.coins;
+  const teachCardId = req.params.teachCardId;
 
   const teachCard = await TeachingCard.findById(teachCardId);
   const classPrice = teachCard.price;
 
   const enrolledCheck = teachCard.studentsEnrolled.filter((student) => {
-    // console.log(student.id.valueOf());
-    // console.log(student.id.valueOf() == userId);
+    console.log(student.id.valueOf());
+    console.log(student.id.valueOf() == userId);
     return student.id.valueOf() == userId;
   });
 
@@ -132,7 +138,6 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
   const updatedTeachCard = await TeachingCard.findByIdAndUpdate(
     teachCardId,
     {
-      $inc: { seatsFilled: 1 },
       $push: { studentsEnrolled: userId },
     },
     {
@@ -167,12 +172,19 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
       new AppError("Couldnt add you to the classroom!! Some error occurred!!")
     );
   }
-
-  const transactionObj = {
+  
+  const newTransaction = await TransactionHistory.create({
+    paidBy: userId,
     amount: classPrice,
     transferredTo: teachCard.createdBy,
     cardEnrolled: teachCard.id,
-  };
+  })
+
+  if (!newTransaction) {
+    return next(
+      new AppError("Transaction couldnt be made!!")
+    );
+  }
 
   const updatedUser = await User.findByIdAndUpdate(
     userId,
@@ -183,7 +195,7 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
           class: updatedClassroom.id,
           isReviewed: false,
         },
-        transactionHistory: transactionObj,
+        transactionHistory: newTransaction.id,
       },
     },
     {

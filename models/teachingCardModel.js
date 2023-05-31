@@ -14,11 +14,22 @@ const teachingCardSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide the topic to be taught"],
   },
+  educationLevel: {
+    type: String,
+    required: [
+      true,
+      "Please provide the level of education needed on this topic",
+    ],
+  },
+  standard: {
+    type: String,
+    required: [true, "Please provide the standard you want to teach of"],
+  },
   isLearningCardReferred: {
     type: Boolean,
     default: false,
   },
-  learningCardReferred: {
+  referredLearningCard: {
     type: mongoose.Schema.ObjectId,
     ref: "LearningCard",
   },
@@ -46,6 +57,12 @@ const teachingCardSchema = new mongoose.Schema({
       "Please provide a whole description for the learning card",
     ],
   },
+  expectations: [
+    {
+      type: String,
+      required: [true, "Please provide what you expect from the tutor"],
+    },
+  ],
   tags: [
     {
       tag: {
@@ -54,20 +71,14 @@ const teachingCardSchema = new mongoose.Schema({
       }
     }
   ],
-  expectations: [
-    {
-      type: String,
-      required: [true, "Please provide what you expect from the tutor"],
-    },
-  ],
   price: {
     type: Number,
     required: [true, "Please specify the price of this class"],
   },
-  seatsFilled: {
-    type: Number,
-    default: 0,
-  },
+  // seatsFilled: {
+  //   type: Number,
+  //   default: 0,
+  // },
   studentsEnrolled: [
     {
       type: mongoose.Schema.ObjectId,
@@ -75,9 +86,6 @@ const teachingCardSchema = new mongoose.Schema({
     },
   ],
 });
-
-// model
-// tags
 
 teachingCardSchema.pre(/^find/, function (next) {
   this.populate({
@@ -89,7 +97,7 @@ teachingCardSchema.pre(/^find/, function (next) {
       select: "name",
     })
     .populate({
-      path: "learningCardReferred",
+      path: "referredLearningCard",
       select: "subject createdBy",
     });
   next();

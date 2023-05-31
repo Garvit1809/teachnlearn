@@ -20,6 +20,7 @@ exports.createLearnCard = catchAsync(async (req, res, next) => {
     preferredLanguage,
     description,
     expectations,
+    tags,
     dueDate,
   } = req.body;
 
@@ -31,6 +32,7 @@ exports.createLearnCard = catchAsync(async (req, res, next) => {
     !preferredLanguage &&
     !description &&
     !expectations &&
+    !tags &&
     !dueDate
   ) {
     return next(
@@ -49,6 +51,7 @@ exports.createLearnCard = catchAsync(async (req, res, next) => {
     preferredLanguage,
     description,
     expectations,
+    tags,
     dueDate,
     interestedStudents
   });
@@ -72,22 +75,28 @@ exports.createTeachCardOnLearnCard = catchAsync(async (req, res, next) => {
   const {
     subject,
     topic,
+    educationLevel,
+    standard,
     date,
     classStartsAt,
     classEndsAt,
     description,
     expectations,
+    tags,
     price,
   } = req.body;
 
   if (
     !subject &&
     !topic &&
+    !educationLevel &&
+    !standard &&
     !date &&
     !classStartsAt &&
     !classEndsAt &&
     !description &&
     !expectations &&
+    !tags &&
     !price
   ) {
     return next(
@@ -101,13 +110,16 @@ exports.createTeachCardOnLearnCard = catchAsync(async (req, res, next) => {
     createdBy: userID,
     subject,
     topic,
+    educationLevel,
+    standard,
     isLearningCardReferred: true,
-    learningCardReferred: learnCardID,
+    referredLearningCard: learnCardID,
     date,
     classStartsAt,
     classEndsAt,
     description,
     expectations,
+    tags,
     price,
   });
 

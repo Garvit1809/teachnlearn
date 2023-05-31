@@ -4,7 +4,7 @@ const { protect } = require("../controllers/authController");
 
 const router = express.Router();
 
-router.use('/:classroomId/announcements', )
+// router.use('/:classroomId/announcements', )
 
 // getall classrooms
 

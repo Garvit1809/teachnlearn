@@ -34,12 +34,32 @@ const userSchema = new mongoose.Schema({
     required: [true, "Please provide a contact number"],
     select: false,
   },
+  enrolledProgramme: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  interestedSubjects: [
+    {
+      subject: {
+        type: String,
+        trim: true,
+      },
+    },
+  ],
   strongSubjects: [
     {
       subject: {
         type: String,
         trim: true,
-        default: null,
+      },
+    },
+  ],
+  preferredLanguages: [
+    {
+      language: {
+        type: String,
+        trim: true,
       },
     },
   ],

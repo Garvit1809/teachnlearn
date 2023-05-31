@@ -19,7 +19,7 @@ router.get("/:learnCardId", learningCardController.getOneLearnCard);
 router.get("/:learnCardId/teach", learningCardController.getTeachCardsOnLearnCard);
 
 router.use(protect);
-router.post("/:learnCardId/teach", learninCgCardController.createTeachCardOnLearnCard);
+router.post("/:learnCardId/teach", learningCardController.createTeachCardOnLearnCard);
 router.patch('/:learnCardId/interested', learningCardController.interestedInLearnCard);
 
 // filter learn card using tags

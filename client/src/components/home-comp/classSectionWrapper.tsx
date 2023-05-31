@@ -73,7 +73,7 @@ const ClassSectionWrapper = (props: wrapperProps) => {
   return (
     <Section>
       <Header>
-        <Heading>Classes recommended to you!</Heading>
+        <Heading>{props.heading}</Heading>
         <SeeAll>
           <span>See All</span>
           <Arrow strokeColor="#384250" />
