@@ -16,7 +16,7 @@ const ClassroomRouter = styled.div`
   align-items: center;
   justify-content: center;
   transition: all 0.15s linear;
-  width: 80%;
+  width: 70%;
   margin: 0 auto;
 
   .highlighted {
@@ -45,7 +45,7 @@ const ClassNavOption = styled.div`
 `;
 
 const ElementWrapper = styled.div`
-  margin: 3rem 10vw 0;
+  margin: 3rem 15vw 0;
   /* border: 1px solid red; */
 `;
 

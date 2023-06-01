@@ -3,8 +3,8 @@ import styled from "styled-components";
 import zoro from "../../assets/zoro.jpg";
 
 interface styleProps {
-    imgBorder: string,
-    textColor: string
+    imgBorder?: string,
+    textColor?: string
 }
 
 const Section = styled.div<styleProps>`
@@ -32,8 +32,8 @@ const Section = styled.div<styleProps>`
 
 interface userchipProps {
     name: string
-    imgBorder: string,
-    textColor: string
+    imgBorder?: string,
+    textColor?: string
 }
 
 const UserChip = ({name, imgBorder, textColor}: userchipProps) => {

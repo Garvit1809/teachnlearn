@@ -8,10 +8,12 @@ const OverviewContainer = styled.div`
   /* border: 1px solid red; */
   margin: 2rem 0;
   display: grid;
-  grid-template-columns: 1.3fr 4fr;
+  grid-template-columns: 1.3fr 3fr;
 `;
 
-const CallDetailContainer = styled.div``;
+const CallDetailContainer = styled.div`
+/* border: 1px solid red; */
+`;
 
 const TimeCapsule = styled.div`
   display: flex;

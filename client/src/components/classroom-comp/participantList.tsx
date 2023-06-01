@@ -89,7 +89,7 @@ const ParticipantList = (props: participantListProps) => {
             <img src={props.teacherObj?.userImg} alt="" />
             <div>
               <h4>{props.teacherObj?.name}</h4>
-              <h5>{props.teacherObj?.userName}</h5>
+              <h5>@{props.teacherObj?.userName}</h5>
             </div>
           </UserContainer>
         )}
