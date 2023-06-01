@@ -175,7 +175,7 @@ export const EditIcon = () => {
   );
 };
 
-export const Plus = () => {
+export const Plus = ({color}: any) => {
   return (
     <svg
       width="16"
@@ -186,7 +186,7 @@ export const Plus = () => {
     >
       <path
         d="M8 1.5V15.5M1 8.5H15"
-        stroke="#475467"
+        stroke={color || "#475467"}
         stroke-width="1.5"
         stroke-linecap="round"
         stroke-linejoin="round"

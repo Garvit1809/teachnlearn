@@ -4,9 +4,10 @@ import styled from "styled-components";
 import Overview from "../../components/classroom-comp/overview";
 import Participants from "../../components/classroom-comp/participants";
 import Footer from "../../components/general-components/footer/footer";
+import Classroom from "../../components/classroom-comp/classroom";
 
 const Section = styled.div`
-  margin-top: 2rem;
+  margin: 2rem 0 3rem;
 `;
 
 const ClassroomRouter = styled.div`
@@ -54,6 +55,8 @@ const SingleClassroom = () => {
   useEffect(() => {
     if (activeLink == "overview") {
       setElement(<Overview />);
+    } else if (activeLink == "classroom") {
+      setElement(<Classroom />);
     } else if (activeLink == "people") {
       setElement(<Participants />);
     }

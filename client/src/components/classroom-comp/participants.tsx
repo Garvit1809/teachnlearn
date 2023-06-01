@@ -5,7 +5,7 @@ import ethan from "../../assets/ethan.jpg";
 
 const ParticipantWrapper = styled.div`
   width: 60%;
-  margin: 3rem auto;
+  margin: 3rem auto 0;
 `;
 
 const TeacherSection = styled.div`
