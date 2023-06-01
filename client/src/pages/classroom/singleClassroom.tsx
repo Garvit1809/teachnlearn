@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import Navbar from "../../components/general-components/navbar";
 import styled from "styled-components";
+import Overview from "../../components/classroom-comp/overview";
+import Participants from "../../components/classroom-comp/participants";
+import Footer from "../../components/general-components/footer/footer";
 
 const Section = styled.div`
-  margin-top: 1.5rem;
+  margin-top: 2rem;
 `;
 
 const ClassroomRouter = styled.div`
@@ -12,6 +15,8 @@ const ClassroomRouter = styled.div`
   align-items: center;
   justify-content: center;
   transition: all 0.15s linear;
+  width: 80%;
+  margin: 0 auto;
 
   .highlighted {
     color: #000000;
@@ -38,8 +43,23 @@ const ClassNavOption = styled.div`
   cursor: pointer;
 `;
 
+const ElementWrapper = styled.div`
+  margin: 3rem 10vw 0;
+  /* border: 1px solid red; */
+`;
+
 const SingleClassroom = () => {
   const [activeLink, setActiveLink] = useState("overview");
+
+  useEffect(() => {
+    if (activeLink == "overview") {
+      setElement(<Overview />);
+    } else if (activeLink == "people") {
+      setElement(<Participants />);
+    }
+  }, [activeLink]);
+
+  const [element, setElement] = useState<ReactElement>(<Overview />);
 
   return (
     <>
@@ -65,7 +85,9 @@ const SingleClassroom = () => {
             People
           </ClassNavOption>
         </ClassroomRouter>
+        <ElementWrapper>{element}</ElementWrapper>
       </Section>
+      <Footer />
     </>
   );
 };
