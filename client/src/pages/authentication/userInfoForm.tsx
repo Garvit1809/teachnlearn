@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Inputholder from "../../components/general-components/inputholder";
+import Inputholder from "../../components/general-components/input/inputholder";
+import MultipleInput from "../../components/general-components/input/multipleInput";
 
 const Section = styled.div`
   display: flex;
@@ -28,8 +29,9 @@ interface UserInfo {
   profilePic: string;
   number: string;
   course: string;
+  interestedSubject: string;
   interestedSubjects: string[];
-  subject: string;
+  strongSubject: string;
   strongSubjects: string[];
   preferredLanguages: string[];
 }
@@ -66,16 +68,27 @@ const UserInfoForm = (props: UserInfoFormProps) => {
           name="number"
           updateFields={props.updateFields}
         />
-        <Inputholder
-          type="text"
+        <MultipleInput
           label="Interested Subjects (Max 5)"
-          value={props.subject}
-          name="subject"
+          value={props.interestedSubject}
+          name="interestedSubjects"
+          elemName="interestedSubject"
           updateFields={props.updateFields}
-          allSubjects={props.interestedSubjects}
+          arr={props.interestedSubjects}
         />
-        {interestedSubjects.map((subject, index) => {
-          return <span>subject</span>;
+        {props.interestedSubjects?.map((subject, index) => {
+          return <span>{subject}</span>;
+        })}
+        <MultipleInput
+          label="Strong Subjects"
+          value={props.strongSubject}
+          elemName="strongSubject"
+          name="strongSubjects"
+          updateFields={props.updateFields}
+          arr={props.strongSubjects}
+        />
+        {props.strongSubjects.map((subject, index) => {
+          return <span>{subject}</span>;
         })}
       </form>
     </Section>

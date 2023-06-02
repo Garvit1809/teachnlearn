@@ -8,19 +8,19 @@ const Section = styled.div`
   height: 20px;
   margin-bottom: 1.5rem;
   box-sizing: border-box;
-`;
 
-const Input = styled.input`
-  width: 100%;
-  height: 100%;
-  padding: 10px 0px 10px 10px;
-  border: 1.5px solid #d5d9eb;
-  box-sizing: content-box;
-  border-radius: 8px;
-  color: #000000;
-  outline: none;
-  font-size: 16px;
-  font-weight: 400;
+  input {
+    width: 100%;
+    height: 100%;
+    padding: 10px 0px 10px 10px;
+    border: 1.5px solid #d5d9eb;
+    box-sizing: content-box;
+    border-radius: 8px;
+    color: #000000;
+    outline: none;
+    font-size: 16px;
+    font-weight: 400;
+  }
 `;
 
 interface labelProps {
@@ -70,28 +70,29 @@ interface USERDATA {
 
 interface inputProps {
   value: string;
-  type: string;
   label: string;
   name: string;
   allSubjects?: string[];
   updateFields: (fields: Partial<USERDATA>) => void;
+  arr: string[];
+  elemName: string;
 }
 
-const Inputholder = (props: inputProps) => {
+const MultipleInput = (props: inputProps) => {
   const [isValid, setisValid] = useState(false);
 
   useEffect(() => {
-    if (props.value.trim().length > 0) {
+    if (props.value?.trim().length > 0) {
       setisValid(true);
     }
   }, []);
 
   const inputhandler = (e: any) => {
-    props.updateFields({ [e.target.name]: e.target.value });
+    props.updateFields({ [props.elemName]: e.target.value });
 
     const value = e.target.value;
 
-    if (value.trim().length > 0) {
+    if (value?.trim().length > 0) {
       setisValid(true);
     } else {
       setisValid(false);
@@ -99,21 +100,18 @@ const Inputholder = (props: inputProps) => {
   };
 
   const keyHandler = (e: any) => {
-    if (props.name == "subject") {
-      // console.log(e.key);
-      if (e.key == "Enter") {
-        console.log(e.key);
-        // props.allSubjects?.push(e.target.value);
-        // props.updateFields({ subject: e.target.value });
-        // props.updateFields({ interestedSubjects: props.allSubjects });
-      }
+    console.log(e.key == "Enter");
+    if (e.key == "Enter") {
+      props.arr?.push(props.value);
+      console.log(props.arr);
+      props.updateFields({ [props.name]: props.arr, [props.elemName]: "" });
     }
   };
 
   return (
     <Section>
-      <Input
-        type={props.type}
+      <input
+        type="text"
         required
         value={props.value}
         name={props.name}
@@ -125,4 +123,4 @@ const Inputholder = (props: inputProps) => {
   );
 };
 
-export default Inputholder;
+export default MultipleInput;

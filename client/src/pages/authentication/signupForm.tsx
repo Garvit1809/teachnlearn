@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Inputholder from "../../components/general-components/inputholder";
+import Inputholder from "../../components/general-components/input/inputholder";
 
 const Section = styled.div`
   display: flex;
@@ -37,7 +37,6 @@ type SignupFormProps = SignUpData & {
 };
 
 const SignupForm = (props: SignupFormProps) => {
-  console.log('kjfvvb');
   
   return (
     <Section>
