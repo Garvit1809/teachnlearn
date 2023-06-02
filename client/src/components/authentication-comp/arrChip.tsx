@@ -11,6 +11,7 @@ const Section = styled.div`
   flex-direction: row;
   align-items: flex-start;
   gap: 10px;
+  margin-bottom: 0.4rem;
   /* margin-top: 1rem; */
   width: 100%;
 `;

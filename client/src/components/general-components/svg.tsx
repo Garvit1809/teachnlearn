@@ -357,3 +357,31 @@ export const CrossIcon = () => {
     </svg>
   );
 };
+
+export const CircleIcon1 = () => {
+  return (
+    <svg
+      width="660"
+      height="502"
+      viewBox="0 0 660 502"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="198.667" cy="-14.6091" r="516.609" fill="#1E2E3D" />
+    </svg>
+  );
+};
+
+export const CircleIcon2 = () => {
+  return (
+    <svg
+      width="660"
+      height="708"
+      viewBox="0 0 660 708"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="198.833" cy="19.5" r="688.5" fill="#152534" />
+    </svg>
+  );
+};

@@ -14,16 +14,21 @@ const Section = styled.div`
 `;
 
 const LeftContainer = styled.div`
-  width: 50vw;
-  margin-top: 6rem;
   /* border: 1px solid red; */
-  box-sizing: border-box;
+  width: 50vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
 `;
 
 const RightContainer = styled.div`
-  width: 50vw;
   border: 1px solid red;
+  width: 50vw;
+  min-height: 100vh;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  /* justify-content: flex-start; */
 `;
 
 const DetailsContainer = styled.div`
@@ -53,12 +58,12 @@ const DetailsContainer = styled.div`
     width: 70%;
     margin: 0rem auto 0rem;
 
-    &:last-child{
+    &:last-child {
       margin-top: 1.5rem;
     }
   }
 
-  span.login{
+  span.login {
     color: #666666;
     font-size: 16px;
     line-height: 1;
@@ -66,8 +71,8 @@ const DetailsContainer = styled.div`
     margin-top: 1.5rem;
     padding: 0;
 
-    a{
-      color: #332AD5;
+    a {
+      color: #332ad5;
       font-weight: 600;
     }
   }
@@ -82,9 +87,11 @@ interface USERDATA {
   profilePic: string;
   number: string;
   course: string;
+  interestedSubject: string;
   interestedSubjects: string[];
-  subject: string;
+  strongSubject: string;
   strongSubjects: string[];
+  language: string;
   preferredLanguages: string[];
 }
 
@@ -97,10 +104,12 @@ const initialData: USERDATA = {
   profilePic: "",
   number: "",
   course: "",
+  interestedSubject: "",
   interestedSubjects: [],
-  subject: '',
+  strongSubject: "",
   strongSubjects: [],
   preferredLanguages: [],
+  language: "",
 };
 
 const NewSignup = () => {
@@ -112,11 +121,10 @@ const NewSignup = () => {
     });
   }
 
-  const { step, isFirstStep, isLastStep, next, back } =
-    useMultiStepForm([
-      <SignupForm {...userData} updateFields={updateFields} />,
-      <UserInfoForm {...userData} updateFields={updateFields} />,
-    ]);
+  const { step, isFirstStep, isLastStep, next, back } = useMultiStepForm([
+    <SignupForm {...userData} updateFields={updateFields} />,
+    <UserInfoForm {...userData} updateFields={updateFields} />,
+  ]);
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -124,7 +132,9 @@ const NewSignup = () => {
     alert("Successful Account Creation");
   }
   // console.log(currentStepIndex);
+  console.log(isFirstStep);
   
+
   return (
     <Section>
       <LeftContainer>
@@ -133,7 +143,7 @@ const NewSignup = () => {
 
           {/* </Indicator> */}
           {step}
-          <button type={isLastStep ? "submit" : "button"} onClick={onSubmit} >
+          <button type={isLastStep ? "submit" : "button"} onClick={onSubmit}>
             {isLastStep ? "Signup" : "Next"}
           </button>
           {isLastStep && (
@@ -141,13 +151,17 @@ const NewSignup = () => {
               Back
             </button>
           )}
-          {
-            isFirstStep && <span className="login" >Already have an account? <Link to="/signin" >Sign In!!</Link> </span>
-          }
+          {isFirstStep && (
+            <span className="login">
+              Already have an account? <Link to="/signin">Sign In!!</Link>{" "}
+            </span>
+          )}
         </DetailsContainer>
       </LeftContainer>
       <RightContainer>
-        <DescriptionBox />
+        <DescriptionBox
+          heading={isFirstStep ? "Get Started!" : "Just a little more"}
+        />
       </RightContainer>
     </Section>
   );

@@ -34,6 +34,7 @@ interface UserInfo {
   interestedSubjects: string[];
   strongSubject: string;
   strongSubjects: string[];
+  language: string;
   preferredLanguages: string[];
 }
 
@@ -97,6 +98,21 @@ const UserInfoForm = (props: UserInfoFormProps) => {
             listArr={props.strongSubjects}
             updateFields={props.updateFields}
             name="strongSubjects"
+          />
+        ) : null}
+        <MultipleInput
+          label="Preferred Languages"
+          value={props.language}
+          elemName="language"
+          name="preferredLanguages"
+          updateFields={props.updateFields}
+          arr={props.preferredLanguages}
+        />
+        {props.preferredLanguages.length != 0 ? (
+          <ArrChip
+            listArr={props.preferredLanguages}
+            updateFields={props.updateFields}
+            name="preferredLanguages"
           />
         ) : null}
       </form>
