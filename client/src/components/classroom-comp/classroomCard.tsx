@@ -138,7 +138,7 @@ const ClassroomCard = () => {
     const navigate = useNavigate();
 
     const enrollClassNavigator = () => {
-        navigate('/classroom/1')
+        navigate('/classes/class/1')
     }
 
   return (

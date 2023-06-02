@@ -33,7 +33,7 @@ const RightContainer = styled.div`
   justify-content: flex-start;
 `;
 
-const DetailsContainer = styled.div`
+const FormContainer = styled.div`
   /* border: 1px solid red; */
   box-sizing: border-box;
   display: flex;
@@ -143,7 +143,7 @@ const NewSignup = () => {
   return (
     <Section>
       <LeftContainer>
-        <DetailsContainer>
+        <FormContainer>
           <Indicator index={currentStepIndex} />
           {step}
           <ButtonContainer>
@@ -159,7 +159,7 @@ const NewSignup = () => {
           <span className="login">
             Already have an account? <Link to="/signin">Sign In!!</Link>{" "}
           </span>
-        </DetailsContainer>
+        </FormContainer>
       </LeftContainer>
       <RightContainer>
         <DescriptionBox

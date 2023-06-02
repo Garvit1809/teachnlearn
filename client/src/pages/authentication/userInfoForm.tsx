@@ -20,7 +20,6 @@ const Section = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* padding: 0px; */
     padding-right: 10px;
     gap: 20px;
   }

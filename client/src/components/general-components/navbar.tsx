@@ -67,7 +67,7 @@ const navOptions = [
   },
   {
     title: "My Classes",
-    link: "/classroom",
+    link: "/classes",
   },
   {
     title: "Requests",

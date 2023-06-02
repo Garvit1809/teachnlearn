@@ -3,6 +3,7 @@ import styled from "styled-components";
 import IntroImg from "../../assets/home-intro-img.png";
 // import Arrow from "../../assets/Arrow.svg";
 import { Arrow } from "../general-components/svg";
+import { Link } from "react-router-dom";
 
 const Section = styled.div`
   /* border: 1px solid pink; */
@@ -108,10 +109,12 @@ const Intro = () => {
           fun for everyone, regardless of prior knowledge.
         </p>
         <Buttons>
+          <Link to="/classes" >
           <button>
             <span>See all classes</span>
             <Arrow strokeColor="white" />
           </button>
+          </Link>
           <button className="request">
             <span>Create a request</span>
             <Arrow strokeColor="#364152" />

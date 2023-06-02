@@ -6,9 +6,9 @@ const Section = styled.div<indicatorProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 12px;
   width: 70%;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
 
   div {
     transition: all 0.15s linear;
