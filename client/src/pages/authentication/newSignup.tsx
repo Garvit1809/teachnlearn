@@ -4,7 +4,7 @@ import DescriptionBox from "../../components/authentication-comp/descriptionBox"
 import { useMultiStepForm } from "../../components/authentication-comp/useMultiStepForm";
 import SignupForm from "./signupForm";
 import UserInfoForm from "./userInfoForm";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Indicator from "../../components/authentication-comp/indicator";
 
 const Section = styled.div`
@@ -12,6 +12,7 @@ const Section = styled.div`
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
+  font-family: "Nunito";
 `;
 
 const LeftContainer = styled.div`
@@ -54,10 +55,15 @@ const FormContainer = styled.div`
     margin: 0;
     margin-top: 1.5rem;
     padding: 0;
-
-    a {
+    
+    display: flex;
+    gap: 6px;
+    
+    h5 {
       color: #332ad5;
+      font-size: 16px;
       font-weight: 600;
+      cursor: pointer;
     }
   }
 `;
@@ -140,6 +146,13 @@ const NewSignup = () => {
     alert("Successful Account Creation");
   }
 
+  const navigate = useNavigate();
+
+  const navigateLink = () => {
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+    navigate("/signin");
+  };
+
   return (
     <Section>
       <LeftContainer>
@@ -157,7 +170,7 @@ const NewSignup = () => {
             )}
           </ButtonContainer>
           <span className="login">
-            Already have an account? <Link to="/signin">Sign In!!</Link>{" "}
+            Already have an account? <h5 onClick={navigateLink}>Sign In!!</h5>
           </span>
         </FormContainer>
       </LeftContainer>

@@ -9,6 +9,7 @@ const Section = styled.div`
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
+  font-family: 'Nunito';
 `;
 
 const LeftContainer = styled.div`

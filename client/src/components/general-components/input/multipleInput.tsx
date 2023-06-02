@@ -40,7 +40,7 @@ const Label = styled.span<labelProps>`
     props.isValid ? "translateX(5px) translateY(-5px)" : "null"};
   font-size: ${(props) => (props.isValid ? "11px" : "16px")};
   background-color: ${(props) => (props.isValid ? "white" : "none")};
-  color: ${(props) => (props.isValid ? "#b3b8db" : "black")};
+  color: ${(props) => (props.isValid ? "#b3b8db" : "#564c4d")};
   padding: ${(props) => (props.isValid ? "0 5px" : "none")};
 
   ${Section}:focus-within & {

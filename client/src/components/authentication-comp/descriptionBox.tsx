@@ -51,7 +51,6 @@ const Description = styled.div`
     line-height: 60px;
     color: #ffffff;
     margin-bottom: 35vh;
-    /* z-index: 10; */
   }
 
   svg {
@@ -67,10 +66,9 @@ const Description = styled.div`
     font-size: 44px;
     line-height: 56px;
     color: #ffffff;
-    /* border: 1px solid white; */
     width: 100%;
     text-indent: 70px;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
   }
 
   div {

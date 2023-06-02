@@ -4,7 +4,6 @@ import styled from "styled-components";
 const Section = styled.div`
   position: relative;
   width: 100%;
-  /* margin: 0 auto; */
   height: 20px;
   margin-bottom: 2rem;
   box-sizing: border-box;
@@ -30,6 +29,7 @@ interface labelProps {
 const Label = styled.span<labelProps>`
   position: absolute;
   top: 0;
+  font-family: "Nunito";
   left: 10px;
   transform: translateY(19px);
   pointer-events: none;
@@ -41,7 +41,7 @@ const Label = styled.span<labelProps>`
     props.isValid ? "translateX(5px) translateY(-5px)" : "null"};
   font-size: ${(props) => (props.isValid ? "11px" : "16px")};
   background-color: ${(props) => (props.isValid ? "white" : "none")};
-  color: ${(props) => (props.isValid ? "#b3b8db" : "black")};
+  color: ${(props) => (props.isValid ? "#b3b8db" : "#564c4d")};
   padding: ${(props) => (props.isValid ? "0 5px" : "none")};
 
   ${Section}:focus-within & {
