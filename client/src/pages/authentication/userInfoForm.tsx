@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Inputholder from "../../components/general-components/input/inputholder";
 import MultipleInput from "../../components/general-components/input/multipleInput";
+import ArrChip from "../../components/authentication-comp/arrChip";
 
 const Section = styled.div`
   display: flex;
@@ -76,9 +77,13 @@ const UserInfoForm = (props: UserInfoFormProps) => {
           updateFields={props.updateFields}
           arr={props.interestedSubjects}
         />
-        {props.interestedSubjects?.map((subject, index) => {
-          return <span>{subject}</span>;
-        })}
+        {props.interestedSubjects.length != 0 ? (
+          <ArrChip
+            listArr={props.interestedSubjects}
+            updateFields={props.updateFields}
+            name="interestedSubjects"
+          />
+        ) : null}
         <MultipleInput
           label="Strong Subjects"
           value={props.strongSubject}
@@ -87,9 +92,13 @@ const UserInfoForm = (props: UserInfoFormProps) => {
           updateFields={props.updateFields}
           arr={props.strongSubjects}
         />
-        {props.strongSubjects.map((subject, index) => {
-          return <span>{subject}</span>;
-        })}
+        {props.strongSubjects.length != 0 ? (
+          <ArrChip
+            listArr={props.strongSubjects}
+            updateFields={props.updateFields}
+            name="strongSubjects"
+          />
+        ) : null}
       </form>
     </Section>
   );

@@ -4,7 +4,6 @@ import styled from "styled-components";
 const Section = styled.div`
   position: relative;
   width: 100%;
-  /* margin: 0 auto; */
   height: 20px;
   margin-bottom: 1.5rem;
   box-sizing: border-box;
@@ -53,7 +52,7 @@ const Label = styled.span<labelProps>`
   }
 `;
 
-interface USERDATA {
+export interface USERDATA {
   fullName: string;
   userName: string;
   email: string;

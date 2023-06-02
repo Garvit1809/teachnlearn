@@ -175,7 +175,7 @@ export const EditIcon = () => {
   );
 };
 
-export const Plus = ({color}: any) => {
+export const Plus = ({ color }: any) => {
   return (
     <svg
       width="16"
@@ -303,7 +303,7 @@ export const Calender = ({ color }: any) => {
   );
 };
 
-export const PurchaseCoinIcon = ({color}: any) => {
+export const PurchaseCoinIcon = ({ color }: any) => {
   return (
     <svg
       width="14"
@@ -314,7 +314,7 @@ export const PurchaseCoinIcon = ({color}: any) => {
     >
       <path
         d="M9.29709 9.297C11.2936 9.0297 12.8334 7.31967 12.8334 5.24999C12.8334 2.99483 11.0052 1.16666 8.75008 1.16666C6.6804 1.16666 4.97037 2.70646 4.70307 4.70298M4.37508 7.58332L5.25008 6.99999V10.2083M4.37508 10.2083H6.12508M9.33341 8.74999C9.33341 11.0052 7.50524 12.8333 5.25008 12.8333C2.99492 12.8333 1.16675 11.0052 1.16675 8.74999C1.16675 6.49483 2.99492 4.66666 5.25008 4.66666C7.50524 4.66666 9.33341 6.49483 9.33341 8.74999Z"
-        stroke={color || 'white'}
+        stroke={color || "white"}
         stroke-linecap="round"
         stroke-linejoin="round"
       />
@@ -339,4 +339,21 @@ export const InterestedIcon = () => {
   );
 };
 
-// export const Calender = () => {}
+export const CrossIcon = () => {
+  return (
+    <svg
+      width="10"
+      height="9"
+      viewBox="0 0 10 9"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M9 0.5L1 8.5M1 0.5L9 8.5"
+        stroke="white"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+};
