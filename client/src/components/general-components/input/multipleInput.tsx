@@ -5,13 +5,13 @@ const Section = styled.div`
   position: relative;
   width: 100%;
   height: 20px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   box-sizing: border-box;
 
   input {
     width: 100%;
     height: 100%;
-    padding: 10px 0px 10px 10px;
+    padding: 15px 0px 15px 10px;
     border: 1.5px solid #d5d9eb;
     box-sizing: content-box;
     border-radius: 8px;
@@ -30,7 +30,7 @@ const Label = styled.span<labelProps>`
   position: absolute;
   top: 0;
   left: 10px;
-  transform: translateY(13px);
+  transform: translateY(19px);
   pointer-events: none;
   font-size: 16px;
   text-transform: uppercase;

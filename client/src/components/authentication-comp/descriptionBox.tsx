@@ -8,10 +8,8 @@ import {
 const Section = styled.div`
   background-color: #0d1c2e;
   border-radius: 24px;
-  /* margin: 0 10vw 0 0; */
-  margin: auto;
-  padding: 10vh 2rem 18vh;
-  width: 60%;
+  padding: 10vh 2.5rem 18vh 4rem;
+  width: 80%;
   position: relative;
   overflow: hidden;
   z-index: -3;
@@ -55,16 +53,16 @@ const Description = styled.div`
   z-index: 100;
   h4 {
     font-weight: 600;
-    font-size: 28px;
+    font-size: 40px;
     line-height: 60px;
     color: #ffffff;
-    margin-bottom: 25vh;
+    margin-bottom: 35vh;
     /* z-index: 10; */
   }
 
   svg {
-    width: 30px;
-    height: 34px;
+    width: 40px;
+    height: 44px;
     margin-bottom: 0.5rem;
   }
 
@@ -72,8 +70,8 @@ const Description = styled.div`
     font-family: "Nunito";
     font-style: italic;
     font-weight: 500;
-    font-size: 34px;
-    line-height: 40px;
+    font-size: 44px;
+    line-height: 56px;
     color: #ffffff;
     /* border: 1px solid white; */
     width: 100%;

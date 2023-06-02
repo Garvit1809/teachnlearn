@@ -5,6 +5,7 @@ import { useMultiStepForm } from "../../components/authentication-comp/useMultiS
 import SignupForm from "./signupForm";
 import UserInfoForm from "./userInfoForm";
 import { Link } from "react-router-dom";
+import Indicator from "../../components/authentication-comp/indicator";
 
 const Section = styled.div`
   display: flex;
@@ -22,13 +23,14 @@ const LeftContainer = styled.div`
 `;
 
 const RightContainer = styled.div`
-  border: 1px solid red;
+  /* border: 1px solid red; */
+  padding: 5vw 0;
   width: 50vw;
   min-height: 100vh;
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  /* justify-content: flex-start; */
+  justify-content: flex-start;
 `;
 
 const DetailsContainer = styled.div`
@@ -45,24 +47,6 @@ const DetailsContainer = styled.div`
   border-radius: 28px;
   margin: auto;
 
-  button {
-    background: #332ad5;
-    border-radius: 8px;
-    outline: none;
-    border: none;
-    padding: 0.75rem 1rem;
-    color: white;
-    font-size: 18px;
-    line-height: 27px;
-    cursor: pointer;
-    width: 70%;
-    margin: 0rem auto 0rem;
-
-    &:last-child {
-      margin-top: 1.5rem;
-    }
-  }
-
   span.login {
     color: #666666;
     font-size: 16px;
@@ -74,6 +58,29 @@ const DetailsContainer = styled.div`
     a {
       color: #332ad5;
       font-weight: 600;
+    }
+  }
+`;
+
+const ButtonContainer = styled.div`
+  /* border: 1px solid red; */
+  width: 70%;
+
+  button {
+    background: #332ad5;
+    border-radius: 8px;
+    outline: none;
+    border: none;
+    padding: 0.75rem 1rem;
+    color: white;
+    font-size: 18px;
+    line-height: 27px;
+    cursor: pointer;
+    width: 100%;
+    margin: 0rem auto;
+
+    &:nth-child(2) {
+      margin-top: 0.8rem;
     }
   }
 `;
@@ -121,46 +128,42 @@ const NewSignup = () => {
     });
   }
 
-  const { step, isFirstStep, isLastStep, next, back } = useMultiStepForm([
-    <SignupForm {...userData} updateFields={updateFields} />,
-    <UserInfoForm {...userData} updateFields={updateFields} />,
-  ]);
+  const { step, isFirstStep, isLastStep, next, back, currentStepIndex } =
+    useMultiStepForm([
+      <SignupForm {...userData} updateFields={updateFields} />,
+      <UserInfoForm {...userData} updateFields={updateFields} />,
+    ]);
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();
     if (!isLastStep) return next();
     alert("Successful Account Creation");
   }
-  // console.log(currentStepIndex);
-  console.log(isFirstStep);
-  
 
   return (
     <Section>
       <LeftContainer>
         <DetailsContainer>
-          {/* <Indicator> */}
-
-          {/* </Indicator> */}
+          <Indicator index={currentStepIndex} />
           {step}
-          <button type={isLastStep ? "submit" : "button"} onClick={onSubmit}>
-            {isLastStep ? "Signup" : "Next"}
-          </button>
-          {isLastStep && (
-            <button type="button" onClick={back}>
-              Back
+          <ButtonContainer>
+            <button type={isLastStep ? "submit" : "button"} onClick={onSubmit}>
+              {isLastStep ? "Signup" : "Next"}
             </button>
-          )}
-          {isFirstStep && (
-            <span className="login">
-              Already have an account? <Link to="/signin">Sign In!!</Link>{" "}
-            </span>
-          )}
+            {isLastStep && (
+              <button type="button" onClick={back}>
+                Back
+              </button>
+            )}
+          </ButtonContainer>
+          <span className="login">
+            Already have an account? <Link to="/signin">Sign In!!</Link>{" "}
+          </span>
         </DetailsContainer>
       </LeftContainer>
       <RightContainer>
         <DescriptionBox
-          heading={isFirstStep ? "Get Started!" : "Just a little more"}
+          heading={isFirstStep ? "Get Started!" : "Just a little more..."}
         />
       </RightContainer>
     </Section>
