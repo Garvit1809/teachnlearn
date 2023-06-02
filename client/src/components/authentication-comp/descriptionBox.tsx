@@ -8,7 +8,7 @@ import {
 const Section = styled.div`
   background-color: #0d1c2e;
   border-radius: 24px;
-  padding: 10vh 2.5rem 18vh 4rem;
+  padding: 15vh 2.5rem 20vh 4rem;
   width: 80%;
   position: relative;
   overflow: hidden;
@@ -19,14 +19,13 @@ const UpperCircle = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  transform: translateX(-20%);
-  /* border: 1px solid white; */
+  transform: translateX(-33%);
   z-index: -1;
   width: fit-content;
 
   svg {
-    width: 60vw;
-    height: 50vh;
+    width: 150vw;
+    height: 65vh;
   }
 `;
 
@@ -35,17 +34,12 @@ const LowerCircle = styled.div`
   z-index: -2;
   top: 0;
   left: 0;
-  transform: translateX(-20%);
-  /* border: 1px solid white; */
-  /* z-index: 1; */
+  transform: translateX(-33%);
   width: fit-content;
 
   svg {
-    /* width: 100%; */
-    /* z-index: 1; */
-    width: 55vw;
-    /* height: 233.22px; */
-    height: 65vh;
+    width: 150vw;
+    height: 85vh;
   }
 `;
 
