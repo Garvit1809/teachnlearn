@@ -15,8 +15,11 @@ const Section = styled.div`
     list-style: none;
 
     li {
-      font-weight: 400;
-      font-size: 20px;
+      font-family: "Nunito";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 22px;
+      line-height: 30px;
       color: #000000;
       margin-bottom: 0.7rem;
       cursor: pointer;

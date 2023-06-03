@@ -8,6 +8,9 @@ import { Facebook, Instagram, LinkedIn, Twitter } from "../svg";
 const Section = styled.div`
   border-top: 1px solid #7d89b0;
   padding: 40px 0px 20px;
+  font-family: "Nunito";
+  font-style: normal;
+  margin-top: 4rem;
 `;
 
 const Links = styled.div`
@@ -49,11 +52,11 @@ const Socials = styled.div`
 `;
 
 const GetApp = styled.div`
-  h5{
+  h5 {
     font-weight: 700;
-  font-size: 18px;
-  line-height: 25px;
-  color: #000000;
+    font-size: 18px;
+    line-height: 25px;
+    color: #000000;
   }
 `;
 

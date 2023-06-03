@@ -8,46 +8,25 @@ import Classroom from "../../components/classroom-comp/classroom";
 import HorizontalNavigator from "../../components/general-components/horizontalNavigator";
 
 const Section = styled.div`
-  margin: 2rem 0 3rem;
-`;
-
-const ClassroomRouter = styled.div`
-  border-bottom: 1px solid #b4b4b4;
+  /* margin: 2rem 0 3rem; */
+  padding: 2rem 15vw 0;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.15s linear;
-  width: 70%;
-  margin: 0 auto;
+  flex-direction: column;
+  /* border: 1px solid red; */
+  /* gap: 2.5rem; */
 
-  .highlighted {
-    color: #000000;
-    &::after {
-      content: "";
-      transition: all 0.15s linear;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      border-bottom: 4px solid #674ff1;
-    }
-  }
-`;
-
-const ClassNavOption = styled.div`
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 22px;
-  text-align: center;
-  padding: 0 4.5rem 0.5rem;
-  position: relative;
-  color: #979797;
-  cursor: pointer;
+  font-family: "Nunito";
+  font-style: normal;
 `;
 
 const ElementWrapper = styled.div`
-  margin: 3rem 15vw 0;
-  /* border: 1px solid red; */
+  /* margin: 3rem 15vw 0; */
+  margin: 3rem 0 0;
+`;
+
+const FooterWrapper = styled.div`
+  padding: 0 6.3vw;
+  /* margin-top: 4rem; */
 `;
 
 const SingleClassroom = () => {
@@ -66,8 +45,8 @@ const SingleClassroom = () => {
   const [element, setElement] = useState<ReactElement>(<Overview />);
 
   const navigationHandler = (navigateTo: string) => {
-    setActiveLink(navigateTo)
-  }
+    setActiveLink(navigateTo);
+  };
 
   const labels = ["overview", "classroom", "people"];
 
@@ -75,30 +54,16 @@ const SingleClassroom = () => {
     <>
       <Navbar />
       <Section>
-        {/* <ClassroomRouter>
-          <ClassNavOption
-            className={activeLink == "overview" ? "highlighted" : undefined}
-            onClick={() => setActiveLink("overview")}
-          >
-            Overview
-          </ClassNavOption>
-          <ClassNavOption
-            className={activeLink == "classroom" ? "highlighted" : undefined}
-            onClick={() => setActiveLink("classroom")}
-          >
-            Classroom
-          </ClassNavOption>
-          <ClassNavOption
-            className={activeLink == "people" ? "highlighted" : undefined}
-            onClick={() => setActiveLink("people")}
-          >
-            People
-          </ClassNavOption>
-        </ClassroomRouter> */}
-        <HorizontalNavigator activeLink={activeLink} labelArr={labels} navigationHandler={navigationHandler} />
+        <HorizontalNavigator
+          activeLink={activeLink}
+          labelArr={labels}
+          navigationHandler={navigationHandler}
+        />
         <ElementWrapper>{element}</ElementWrapper>
       </Section>
-      <Footer />
+      <FooterWrapper>
+        <Footer />
+      </FooterWrapper>
     </>
   );
 };

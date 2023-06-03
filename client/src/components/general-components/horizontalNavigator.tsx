@@ -7,14 +7,13 @@ const ClassroomRouter = styled.div`
   align-items: center;
   justify-content: center;
   transition: all 0.15s linear;
-  width: 70%;
+  width: 100%;
   margin: 0 auto;
 
   .highlighted {
     color: #000000;
     &::after {
       content: "";
-      transition: all 0.15s linear;
       position: absolute;
       bottom: 0;
       left: 0;

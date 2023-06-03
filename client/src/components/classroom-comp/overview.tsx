@@ -12,7 +12,7 @@ const OverviewContainer = styled.div`
 `;
 
 const CallDetailContainer = styled.div`
-/* border: 1px solid red; */
+  /* border: 1px solid red; */
 `;
 
 const TimeCapsule = styled.div`
@@ -60,7 +60,7 @@ const LinkContainer = styled.div`
 const ClassOverview = styled.div``;
 
 const ChipContainer = styled.div`
-margin-bottom: 1.2rem;
+  margin-bottom: 1.2rem;
   img {
     width: 40px;
     height: 40px;
@@ -77,24 +77,29 @@ margin-bottom: 1.2rem;
 
 const Details = styled.div`
   p {
+    font-family: "Nunito";
+    font-style: normal;
     font-weight: 400;
     font-size: 20px;
+    line-height: 30px;
     color: #4a5578;
     margin-bottom: 1.5rem;
-}
+  }
 
-h3{
+  h3 {
     font-size: 22px;
     opacity: 0.8;
     margin-bottom: 0.8rem;
-}
+  }
 
-ul{
+  ul {
     padding-left: 1rem;
-    li{
-        color: #4a5578;
-        font-size: 18px;
-        margin-bottom: 0.5rem;
+    li {
+      font-weight: 500;
+      color: #4a5578;
+      font-size: 18px;
+      line-height: 26px;
+      margin-bottom: 0.5rem;
     }
   }
 `;
@@ -129,9 +134,18 @@ const Overview = () => {
             </p>
             <h3>After this Class, students would be able to :-</h3>
             <ul>
-                <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus ea cumque vero facere ipsam necessitatibus!</li>
-                <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus ea cumque vero facere ipsam necessitatibus!</li>
-                <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus ea cumque vero facere ipsam necessitatibus!</li>
+              <li>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Voluptatibus ea cumque vero facere ipsam necessitatibus!
+              </li>
+              <li>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Voluptatibus ea cumque vero facere ipsam necessitatibus!
+              </li>
+              <li>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Voluptatibus ea cumque vero facere ipsam necessitatibus!
+              </li>
             </ul>
           </Details>
         </ClassOverview>
