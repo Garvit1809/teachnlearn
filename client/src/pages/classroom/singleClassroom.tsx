@@ -5,6 +5,7 @@ import Overview from "../../components/classroom-comp/overview";
 import Participants from "../../components/classroom-comp/participants";
 import Footer from "../../components/general-components/footer/footer";
 import Classroom from "../../components/classroom-comp/classroom";
+import HorizontalNavigator from "../../components/general-components/horizontalNavigator";
 
 const Section = styled.div`
   margin: 2rem 0 3rem;
@@ -64,11 +65,17 @@ const SingleClassroom = () => {
 
   const [element, setElement] = useState<ReactElement>(<Overview />);
 
+  const navigationHandler = (navigateTo: string) => {
+    setActiveLink(navigateTo)
+  }
+
+  const labels = ["overview", "classroom", "people"];
+
   return (
     <>
       <Navbar />
       <Section>
-        <ClassroomRouter>
+        {/* <ClassroomRouter>
           <ClassNavOption
             className={activeLink == "overview" ? "highlighted" : undefined}
             onClick={() => setActiveLink("overview")}
@@ -87,7 +94,8 @@ const SingleClassroom = () => {
           >
             People
           </ClassNavOption>
-        </ClassroomRouter>
+        </ClassroomRouter> */}
+        <HorizontalNavigator activeLink={activeLink} labelArr={labels} navigationHandler={navigationHandler} />
         <ElementWrapper>{element}</ElementWrapper>
       </Section>
       <Footer />

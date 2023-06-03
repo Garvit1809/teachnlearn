@@ -18,18 +18,21 @@ const Section = styled.div`
   margin-top: 3.5rem;
   margin-bottom: 2rem;
   box-sizing: border-box;
+
+  font-family: "Nunito";
+  font-style: normal;
 `;
 
 const InfoContainer = styled.div`
   display: grid;
   grid-template-rows: auto auto auto;
-  gap: 35px;;
+  gap: 35px;
   width: 60%;
   margin-right: 5vw;
-  /* border: 1px solid red; */
 
   p {
-    /* font-style: normal; */
+    font-family: "Nunito";
+    font-style: normal;
     font-weight: 400;
     font-size: 18px;
     line-height: 25px;
@@ -55,15 +58,12 @@ const ImageContainer = styled.div`
     width: 100%;
     height: 100%;
     object-fit: contain;
-}
+  }
 `;
 
 const Buttons = styled.div`
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
-  /* width: 80%; */
-  /* border: 1px solid red; */
 
   button {
     display: flex;
@@ -72,17 +72,18 @@ const Buttons = styled.div`
     padding: 18px 40px;
     gap: 10px;
 
-    width: 237px;
     height: 61px;
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 25px;
 
     background: #332ad5;
+    color: #ffffff;
     border-radius: 8px;
     border: 0;
     outline: none;
-
-    font-weight: 500;
-    font-size: 18px;
-    color: #ffffff;
     cursor: pointer;
   }
 
@@ -91,7 +92,7 @@ const Buttons = styled.div`
     background: rgba(51, 42, 213, 0.05);
   }
 
-  button:first-child{
+  button:first-child {
     margin-right: 3vw;
   }
 `;
@@ -109,11 +110,11 @@ const Intro = () => {
           fun for everyone, regardless of prior knowledge.
         </p>
         <Buttons>
-          <Link to="/classes" >
-          <button>
-            <span>See all classes</span>
-            <Arrow strokeColor="white" />
-          </button>
+          <Link to="/classes">
+            <button>
+              <span>See all classes</span>
+              <Arrow strokeColor="white" />
+            </button>
           </Link>
           <button className="request">
             <span>Create a request</span>
