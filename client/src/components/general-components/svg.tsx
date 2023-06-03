@@ -385,3 +385,49 @@ export const CircleIcon2 = () => {
     </svg>
   );
 };
+
+export const BrowseIcon = () => {
+  return (
+    <svg
+      width="18"
+      height="13"
+      viewBox="0 0 18 13"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M1.5 6.5H11.5M1.5 1.5H16.5M1.5 11.5H16.5"
+        stroke="white"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+};
+
+// export const BrowseIcon = () => {
+//   return (
+
+//   )
+// }
+// export const BrowseIcon = () => {
+//   return (
+
+//   )
+// }
+// export const BrowseIcon = () => {
+//   return (
+
+//   )
+// }
+// export const BrowseIcon = () => {
+//   return (
+
+//   )
+// }
+// export const BrowseIcon = () => {
+//   return (
+
+//   )
+// }

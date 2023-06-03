@@ -8,8 +8,9 @@ const Section = styled.div`
   /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  margin-bottom: 4rem;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  /* margin-bottom: 4rem; */
 `;
 
 const Header = styled.div`

@@ -5,10 +5,14 @@ import Intro from "../../components/home-comp/intro";
 import RecommendedClasses from "../../components/home-comp/recommendedClasses";
 import Footer from "../../components/general-components/footer/footer";
 import ClassSectionWrapper from "../../components/home-comp/classSectionWrapper";
+import Popular from "../../components/home-comp/popular";
 
 const Section = styled.div`
   /* border: 1px solid brown; */
   padding: 0 6.3vw;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
 `;
 
 const cardDetails = [
@@ -81,6 +85,7 @@ const Home = () => {
       <Navbar />
       <Section>
         <Intro />
+        <Popular />
         <ClassSectionWrapper
           heading="Classes recommended for you!"
           cardArr={cardDetails}
