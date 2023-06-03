@@ -13,7 +13,7 @@ const Section = styled.div`
   background: #674ff1;
   border-radius: 16px;
   cursor: pointer;
-
+  font-family: "Nunito";
   transition: all 0.15s linear;
 
   &:hover {
@@ -37,6 +37,12 @@ const Topic = styled.div`
   font-size: 22px;
   line-height: 26px;
   color: #ffffff;
+
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 33px;
 `;
 
 const Teacher = styled.div`
@@ -101,10 +107,6 @@ const RequestCard = (props: requestCardProps) => {
         <span>{props.title}</span>
       </Topic>
       <UserChip name={props.author} imgBorder="#FFFFFF" textColor="#FFFFFF" />
-      {/* <Teacher>
-        <img src={zoro} alt="user-img" />
-        <span>{props.author}</span>
-      </Teacher> */}
       <Stats>
         <div>
           <InterestedIcon />

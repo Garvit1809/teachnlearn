@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Calender } from "../general-components/svg";
-import zoro from '../../assets/zoro.jpg'
+import zoro from "../../assets/zoro.jpg";
 
 const Section = styled.div`
   background: #e7e5f1;
@@ -12,12 +12,14 @@ const Section = styled.div`
   padding: 20px;
   gap: 14px;
   cursor: pointer;
+  font-family: "Nunito";
+  font-style: normal;
 
-transition: all 0.15s linear;
+  transition: all 0.15s linear;
 
-&:hover{
+  &:hover {
     transform: translateY(-10px);
-}
+  }
 `;
 
 const TimeContainer = styled.div`
@@ -39,10 +41,13 @@ const TimeContainer = styled.div`
 `;
 
 const Topic = styled.div`
-  font-weight: 600;
+  font-weight: 700;
   font-size: 22px;
   line-height: 26px;
   color: #000000;
+
+  font-size: 24px;
+  line-height: 33px;
 `;
 
 const Teacher = styled.div`
