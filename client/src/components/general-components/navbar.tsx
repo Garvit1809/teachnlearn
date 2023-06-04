@@ -10,6 +10,7 @@ const Section = styled.div`
   align-items: center;
   justify-content: space-between;
   padding-top: 0.5rem;
+  font-family: "Nunito";
 `;
 
 const SearchContainer = styled.div`

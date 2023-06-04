@@ -5,6 +5,8 @@ import Navbar from "../../components/general-components/navbar";
 import Intro from "../../components/home-comp/intro";
 import HorizontalNavigator from "../../components/general-components/horizontalNavigator";
 import Footer from "../../components/general-components/footer/footer";
+import Classroom from "../../components/classroom-comp/classroom";
+import ClassroomGrid from "../../components/classroom-comp/classroomGrid";
 
 const Section = styled.div`
   /* display: grid; */
@@ -44,6 +46,7 @@ const Classrooms = () => {
       <Section>
         <Intro />
         <HorizontalNavigator activeLink={activeLink} labelArr={labels} navigationHandler={navigationHandler}  />
+        <ClassroomGrid />
         <Footer />
       </Section>
     </>

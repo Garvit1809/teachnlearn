@@ -72,6 +72,15 @@ const CARDDATA = [
   },
 ];
 
+const cardSizes = {
+  imageHeight: "232px",
+  gap: "24px",
+  headerSize: "18px",
+  titleSize: "24px",
+  btnSize: "16px",
+  svgSize: "12px",
+};
+
 const Popular = () => {
   return (
     <Section>
@@ -79,7 +88,7 @@ const Popular = () => {
         <PopularFilter />
       </FilterContainer>
       <ClassroomCardContainer>
-        <ClassroomCard />
+        <ClassroomCard cssArr={cardSizes} />
         <PopularTag>
           <span>Popular</span>
         </PopularTag>

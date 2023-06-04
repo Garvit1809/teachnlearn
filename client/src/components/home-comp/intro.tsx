@@ -16,7 +16,7 @@ const Section = styled.div`
   padding: 60px;
   /* margin: 5rem 6.3vw 0 6.3vw; */
   margin-top: 3.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   box-sizing: border-box;
 
   font-family: "Nunito";

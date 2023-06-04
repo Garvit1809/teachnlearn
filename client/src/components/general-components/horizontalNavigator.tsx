@@ -9,6 +9,10 @@ const ClassroomRouter = styled.div`
   transition: all 0.15s linear;
   width: 100%;
   margin: 0 auto;
+  font-family: "Nunito";
+  font-style: normal;
+  text-align: center;
+  color: #000000;
 
   .highlighted {
     color: #000000;
