@@ -5,7 +5,7 @@ const Section = styled.div`
   position: relative;
   width: 100%;
   height: 20px;
-  margin-bottom: 2rem;
+  margin-bottom: 3.5rem;
   box-sizing: border-box;
 
   input {
@@ -33,7 +33,7 @@ const Label = styled.span<labelProps>`
   transform: translateY(19px);
   pointer-events: none;
   font-size: 16px;
-  text-transform: uppercase;
+  text-transform: ${(p) => (p.isValid ? "none" : "uppercase")};
   transition: 0.25s;
   line-height: 1;
   transform: ${(props) =>
@@ -44,6 +44,7 @@ const Label = styled.span<labelProps>`
   padding: ${(props) => (props.isValid ? "0 5px" : "none")};
 
   ${Section}:focus-within & {
+    text-transform: none;
     transform: translateX(5px) translateY(-5px);
     font-size: 11px;
     background-color: white;

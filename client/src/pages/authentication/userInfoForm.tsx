@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Inputholder from "../../components/general-components/input/inputholder";
 import MultipleInput from "../../components/general-components/input/multipleInput";
 import ArrChip from "../../components/authentication-comp/arrChip";
+import UploadImage from "../../components/general-components/input/uploadImage";
 
 const Section = styled.div`
   display: flex;
@@ -21,7 +22,7 @@ const Section = styled.div`
     align-items: center;
     justify-content: center;
     padding-right: 10px;
-    gap: 20px;
+    /* gap: 10px; */
   }
 `;
 
@@ -42,19 +43,10 @@ type UserInfoFormProps = UserInfo & {
 };
 
 const UserInfoForm = (props: UserInfoFormProps) => {
-  const [interestedSubjects, setInterestedSubjects] = useState(
-    props.interestedSubjects
-  );
-
-  // useEffect(() => {
-  //   setInterestedSubjects((prev) => {
-  //     return [...prev, props.subject];
-  //   });
-  // }, [props.subject]);
-
   return (
     <Section>
       <form action="">
+        <UploadImage />
         <Inputholder
           type="text"
           label="Course Enrolled"
@@ -62,13 +54,13 @@ const UserInfoForm = (props: UserInfoFormProps) => {
           name="course"
           updateFields={props.updateFields}
         />
-        <Inputholder
+        {/* <Inputholder
           type="text"
           label="Phone Number"
           value={props.number}
           name="number"
           updateFields={props.updateFields}
-        />
+        /> */}
         <MultipleInput
           label="Interested Subjects (Max 5)"
           value={props.interestedSubject}

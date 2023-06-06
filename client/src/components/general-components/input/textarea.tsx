@@ -4,23 +4,26 @@ import styled from "styled-components";
 const Section = styled.div`
   position: relative;
   width: 100%;
-  height: 20px;
-  margin-bottom: 3.5rem;
+  /* height: 20px; */
+  margin-bottom: 2rem;
   box-sizing: border-box;
+
+  textarea {
+    width: 100%;
+    height: 3rem;
+    padding: 15px 0px 15px 10px;
+    border: 1.5px solid #d5d9eb;
+    box-sizing: content-box;
+    border-radius: 8px;
+    color: #000000;
+    outline: none;
+    font-size: 16px;
+    font-weight: 400;
+    resize: none;
+  }
 `;
 
-const Input = styled.input`
-  width: 100%;
-  height: 100%;
-  padding: 15px 0px 15px 10px;
-  border: 1.5px solid #d5d9eb;
-  box-sizing: content-box;
-  border-radius: 8px;
-  color: #000000;
-  outline: none;
-  font-size: 16px;
-  font-weight: 400;
-`;
+const Input = styled.input``;
 
 interface labelProps {
   isValid: boolean;
@@ -34,7 +37,7 @@ const Label = styled.span<labelProps>`
   transform: translateY(19px);
   pointer-events: none;
   font-size: 16px;
-  text-transform: ${p => p.isValid ? 'none' : 'uppercase'};
+  text-transform: uppercase;
   transition: 0.25s;
   line-height: 1;
   transform: ${(props) =>
@@ -45,7 +48,6 @@ const Label = styled.span<labelProps>`
   padding: ${(props) => (props.isValid ? "0 5px" : "none")};
 
   ${Section}:focus-within & {
-    text-transform: none;
     transform: translateX(5px) translateY(-5px);
     font-size: 11px;
     background-color: white;
@@ -54,31 +56,27 @@ const Label = styled.span<labelProps>`
   }
 `;
 
-interface USERDATA {
-  fullName: string;
-  userName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  profilePic: string;
-  number: string;
-  course: string;
-  interestedSubjects: string[];
+interface learnCardDetails {
   subject: string;
-  strongSubjects: string[];
-  preferredLanguages: string[];
+  topic: string;
+  educationLevel: string;
+  standard: string;
+  preferredLanguage: string;
+  description: string;
+  expectations: string[];
+  tags: string[];
+  dueDate: string;
 }
 
 interface inputProps {
   value: string;
-  type: string;
   label: string;
   name: string;
-  allSubjects?: string[];
-  updateFields: (fields: Partial<USERDATA>) => void;
+  // updateFields: (fields: Partial<learnCardDetails>) => void;
+  updateFields: any;
 }
 
-const Inputholder = (props: inputProps) => {
+const Textarea = (props: inputProps) => {
   const [isValid, setisValid] = useState(false);
 
   useEffect(() => {
@@ -101,8 +99,7 @@ const Inputholder = (props: inputProps) => {
 
   return (
     <Section>
-      <Input
-        type={props.type}
+      <textarea
         required
         value={props.value}
         name={props.name}
@@ -113,4 +110,4 @@ const Inputholder = (props: inputProps) => {
   );
 };
 
-export default Inputholder;
+export default Textarea;

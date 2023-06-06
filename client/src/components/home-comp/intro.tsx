@@ -116,10 +116,12 @@ const Intro = () => {
               <Arrow strokeColor="white" />
             </button>
           </Link>
-          <button className="request">
-            <span>Create a request</span>
-            <Arrow strokeColor="#364152" />
-          </button>
+          <Link to="/create-request">
+            <button className="request">
+              <span>Create a request</span>
+              <Arrow strokeColor="#364152" />
+            </button>
+          </Link>
         </Buttons>
       </InfoContainer>
       <ImageContainer>
