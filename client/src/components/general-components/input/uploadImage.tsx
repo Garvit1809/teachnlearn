@@ -6,7 +6,7 @@ const Section = styled.div`
   position: relative;
   width: 100%;
   height: 20px;
-  margin-bottom: 1.5rem;
+  /* margin-bottom: 1.5rem; */
   box-sizing: border-box;
 
   padding: 15px 0px 15px 10px;
@@ -16,7 +16,7 @@ const Section = styled.div`
   color: #000000;
   outline: none;
   z-index: 1;
-  transform: translateX(7px);
+  /* transform: translateX(7px); */
 `;
 
 const Input = styled.input`

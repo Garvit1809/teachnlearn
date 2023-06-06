@@ -7,6 +7,7 @@ import BackBtn from "./backBtn";
 import FormField from "./formField";
 import Inputholder from "../general-components/input/inputholder";
 import Textarea from "../general-components/input/textarea";
+import UploadImage from "../general-components/input/uploadImage";
 
 const Section = styled.div`
   border: 1px solid red;
@@ -45,6 +46,33 @@ const Section = styled.div`
       color: #564c4d;
       border-radius: 8px;
     }
+  }
+`;
+
+const FormButtonCont = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 18px 40px;
+    gap: 10px;
+    outline: none;
+    border: none;
+    background: #332ad5;
+    border-radius: 8px;
+    cursor: pointer;
+
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 25px;
+    color: #ffffff;
   }
 `;
 
@@ -174,7 +202,18 @@ const CreateTeachCard = () => {
             elem={<input type="date" name="" id="date" />}
             inputDesc="Specify due date for the lesson"
           />
-          <input type="time" name="" id="" />
+          <FormField
+            elem={<input type="time" name="" id="date" />}
+            inputDesc="Specify starting time for the lesson"
+          />
+          <FormField
+            elem={<input type="time" name="" id="date" />}
+            inputDesc="Specify end timing for the lesson"
+          />
+          <FormField
+            elem={<UploadImage />}
+            inputDesc="Upload a cover image for your class"
+          />
           <FormField
             elem={
               <Textarea
@@ -210,6 +249,9 @@ const CreateTeachCard = () => {
             inputDesc="You can add tags in your learn card"
           />
         </form>
+        <FormButtonCont>
+          <button>Create Teach Card</button>
+        </FormButtonCont>
       </Section>
       <FooterWrapper />
     </>
