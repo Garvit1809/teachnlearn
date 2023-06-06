@@ -6,6 +6,7 @@ import Participants from "../../components/classroom-comp/participants";
 import Footer from "../../components/general-components/footer/footer";
 import Classroom from "../../components/classroom-comp/classroom";
 import HorizontalNavigator from "../../components/general-components/horizontalNavigator";
+import FooterWrapper from "../../components/general-components/footer/footerWrapper";
 
 const Section = styled.div`
   /* margin: 2rem 0 3rem; */
@@ -20,13 +21,7 @@ const Section = styled.div`
 `;
 
 const ElementWrapper = styled.div`
-  /* margin: 3rem 15vw 0; */
   margin: 3rem 0 0;
-`;
-
-const FooterWrapper = styled.div`
-  padding: 0 6.3vw;
-  /* margin-top: 4rem; */
 `;
 
 const SingleClassroom = () => {
@@ -61,9 +56,7 @@ const SingleClassroom = () => {
         />
         <ElementWrapper>{element}</ElementWrapper>
       </Section>
-      <FooterWrapper>
-        <Footer />
-      </FooterWrapper>
+      <FooterWrapper />
     </>
   );
 };

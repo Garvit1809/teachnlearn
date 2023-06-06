@@ -5,7 +5,7 @@ import styled from "styled-components";
 const Section = styled.div`
   h4 {
     font-weight: 600;
-    font-size: 18px;
+    font-size: 17px;
     line-height: 25px;
     color: #344054;
     margin-bottom: 1rem;

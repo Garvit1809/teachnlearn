@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Navbar from "../general-components/navbar";
-import Inputholder from "../general-components/input/inputholder";
-import BackBtn from "./backBtn";
-import Textarea from "../general-components/input/textarea";
-import FormField from "./formField";
+import Footer from "../general-components/footer/footer";
 import FooterWrapper from "../general-components/footer/footerWrapper";
+import BackBtn from "./backBtn";
+import FormField from "./formField";
+import Inputholder from "../general-components/input/inputholder";
+import Textarea from "../general-components/input/textarea";
 
 const Section = styled.div`
   border: 1px solid red;
@@ -47,66 +48,45 @@ const Section = styled.div`
   }
 `;
 
-const FormButtonCont = styled.div`
-  /* border: 1px solid red; */
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  button {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 18px 40px;
-    gap: 10px;
-    outline: none;
-    border: none;
-    background: #332ad5;
-    border-radius: 8px;
-    cursor: pointer;
-
-    font-family: "Nunito";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 25px;
-    color: #ffffff;
-  }
-`;
-
-interface learnCardDetails {
+interface teachCardDetails {
   subject: string;
   topic: string;
   educationLevel: string;
   standard: string;
   preferredLanguage: string;
+  date: string;
   description: string;
   expectation: string;
   expectations: string[];
   tag: string;
   tags: string[];
-  dueDate: string;
+  price: number;
+  startingTime: string;
+  endingTime: string;
 }
 
-const initialData: learnCardDetails = {
+const initialData: teachCardDetails = {
   subject: "",
   topic: "",
   educationLevel: "",
   standard: "",
   preferredLanguage: "",
+  date: "",
   description: "",
   expectation: "",
   expectations: [],
   tag: "",
   tags: [],
-  dueDate: "",
+  price: 0,
+  startingTime: "",
+  endingTime: "",
 };
 
-const CreateLearnCard = () => {
-  const [learnCard, setLearnCard] = useState<learnCardDetails>(initialData);
+const CreateTeachCard = () => {
+  const [teachCard, setTeachCard] = useState<teachCardDetails>(initialData);
 
-  function updateFields(fields: Partial<learnCardDetails>) {
-    setLearnCard((prev) => {
+  function updateFields(fields: Partial<teachCardDetails>) {
+    setTeachCard((prev) => {
       return { ...prev, ...fields };
     });
   }
@@ -116,14 +96,14 @@ const CreateLearnCard = () => {
       <Navbar />
       <Section>
         <BackBtn />
-        <h2>Let's get started with your Learn Card</h2>
+        <h2>Let's get started with your Teach Card</h2>
         <form>
           <FormField
             elem={
               <Inputholder
                 type="text"
                 label="Subject"
-                value={learnCard.subject}
+                value={teachCard.subject}
                 name="subject"
                 updateFields={updateFields}
               />
@@ -135,7 +115,7 @@ const CreateLearnCard = () => {
               <Inputholder
                 type="text"
                 label="Topic"
-                value={learnCard.topic}
+                value={teachCard.topic}
                 name="topic"
                 updateFields={updateFields}
               />
@@ -147,7 +127,7 @@ const CreateLearnCard = () => {
               <Inputholder
                 type="text"
                 label="Education Level"
-                value={learnCard.educationLevel}
+                value={teachCard.educationLevel}
                 name="educationLevel"
                 updateFields={updateFields}
               />
@@ -159,7 +139,7 @@ const CreateLearnCard = () => {
               <Inputholder
                 type="text"
                 label="Standard"
-                value={learnCard.standard}
+                value={teachCard.standard}
                 name="standard"
                 updateFields={updateFields}
               />
@@ -171,8 +151,20 @@ const CreateLearnCard = () => {
               <Inputholder
                 type="text"
                 label="Preferred Language"
-                value={learnCard.preferredLanguage}
+                value={teachCard.preferredLanguage}
                 name="preferredLanguage"
+                updateFields={updateFields}
+              />
+            }
+            inputDesc="Language that you prefer"
+          />
+          <FormField
+            elem={
+              <Inputholder
+                type="number"
+                label="Price"
+                value={teachCard.price}
+                name="price"
                 updateFields={updateFields}
               />
             }
@@ -182,13 +174,14 @@ const CreateLearnCard = () => {
             elem={<input type="date" name="" id="date" />}
             inputDesc="Specify due date for the lesson"
           />
+          <input type="time" name="" id="" />
           <FormField
             elem={
               <Textarea
                 label="Description"
                 name="description"
                 updateFields={updateFields}
-                value={learnCard.description}
+                value={teachCard.description}
               />
             }
             inputDesc="Describe briefly what you expect from the teacher"
@@ -199,7 +192,7 @@ const CreateLearnCard = () => {
                 label="Expectations"
                 name="expectation"
                 updateFields={updateFields}
-                value={learnCard.expectation}
+                value={teachCard.expectation}
               />
             }
             inputDesc="Your expectations after completing the class"
@@ -211,19 +204,16 @@ const CreateLearnCard = () => {
                 label="Add Tag"
                 name="tag"
                 updateFields={updateFields}
-                value={learnCard.tag}
+                value={teachCard.tag}
               />
             }
             inputDesc="You can add tags in your learn card"
           />
         </form>
-        <FormButtonCont>
-          <button>Create Learn Card</button>
-        </FormButtonCont>
       </Section>
       <FooterWrapper />
     </>
   );
 };
 
-export default CreateLearnCard;
+export default CreateTeachCard;

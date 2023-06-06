@@ -116,7 +116,7 @@ const Intro = () => {
               <Arrow strokeColor="white" />
             </button>
           </Link>
-          <Link to="/create-request">
+          <Link to="/create-teach-request">
             <button className="request">
               <span>Create a request</span>
               <Arrow strokeColor="#364152" />

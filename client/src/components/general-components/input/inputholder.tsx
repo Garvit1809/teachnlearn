@@ -35,7 +35,7 @@ const Label = styled.span<labelProps>`
   transform: translateY(19px);
   pointer-events: none;
   font-size: 16px;
-  text-transform: ${p => p.isValid ? 'none' : 'uppercase'};
+  text-transform: ${(p) => (p.isValid ? "none" : "uppercase")};
   transition: 0.25s;
   line-height: 1;
   transform: ${(props) =>
@@ -71,7 +71,7 @@ interface USERDATA {
 }
 
 interface inputProps {
-  value: string;
+  value: string | number;
   type: string;
   label: string;
   name: string;
@@ -83,8 +83,14 @@ const Inputholder = (props: inputProps) => {
   const [isValid, setisValid] = useState(false);
 
   useEffect(() => {
-    if (props.value?.trim().length > 0) {
-      setisValid(true);
+    if (typeof props.value == "string") {
+      if (props.value?.trim().length > 0) {
+        setisValid(true);
+      }
+    } else if (typeof props.value == "number") {
+      if (props.value >= 0) {
+        setisValid(true);
+      }
     }
   }, []);
 

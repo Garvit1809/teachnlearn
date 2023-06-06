@@ -33,6 +33,10 @@ const teachingCardSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: "LearningCard",
   },
+  preferredLanguage: {
+    type: String,
+    required: [true, "Please specify the language you prefer for teaching"],
+  },
   date: {
     type: Date,
     required: [true, "Please provide date for the class"],
@@ -67,18 +71,14 @@ const teachingCardSchema = new mongoose.Schema({
     {
       tag: {
         type: String,
-        required: [true, "Please add tags in the Teach Card!!"]
-      }
-    }
+        required: [true, "Please add tags in the Teach Card!!"],
+      },
+    },
   ],
   price: {
     type: Number,
     required: [true, "Please specify the price of this class"],
   },
-  // seatsFilled: {
-  //   type: Number,
-  //   default: 0,
-  // },
   studentsEnrolled: [
     {
       type: mongoose.Schema.ObjectId,
