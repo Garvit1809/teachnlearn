@@ -1,17 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { BackArrowIcon } from "../general-components/svg";
 
 const Section = styled.div`
   border: 1px solid #d5d9eb;
   width: fit-content;
 
-  display: flex;
-  flex-direction: row;
-  align-items: center;
   padding: 10px 14px;
-  gap: 6px;
   border-radius: 42px;
+  margin-bottom: 2.5rem;
+
+  a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+  }
 
   span {
     font-family: "Nunito";
@@ -28,6 +33,7 @@ const BackBtn = () => {
   return (
     <Section>
       <Link to="/">
+        <BackArrowIcon />
         <span>Back</span>
       </Link>
     </Section>

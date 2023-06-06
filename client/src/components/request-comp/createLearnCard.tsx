@@ -5,19 +5,72 @@ import Inputholder from "../general-components/input/inputholder";
 import BackBtn from "./backBtn";
 import Textarea from "../general-components/input/textarea";
 import UploadImage from "../general-components/input/uploadImage";
+import FormField from "./formField";
 
 const Section = styled.div`
   border: 1px solid red;
 
-  /* border: 1px solid #d5d9eb; */
-  /* border-radius: 32px; */
-  padding: 20px;
-  /* width: 80%; */
+  border: 1px solid #d5d9eb;
+  border-radius: 26px;
+  box-sizing: border-box;
+  padding: 48px 64px;
+  width: 80%;
   margin: 2.5rem auto;
+  display: flex;
+  flex-direction: column;
+  /* gap: 20px; */
 
   h2 {
     font-family: "Nunito";
     font-style: normal;
+    margin-bottom: 2rem;
+  }
+
+  form {
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+    row-gap: 32px;
+    margin-bottom: 3.5rem;
+
+    input#date {
+      border: 1px solid #d5d9eb;
+      padding: 15px 10px;
+      box-sizing: content-box;
+      font-family: "Nunito";
+      font-size: 16px;
+      font-weight: 400;
+      outline: none;
+      color: #564c4d;
+      border-radius: 8px;
+    }
+  }
+`;
+
+const FormButtonCont = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 18px 40px;
+    gap: 10px;
+    outline: none;
+    border: none;
+    background: #332ad5;
+    border-radius: 8px;
+    cursor: pointer;
+
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 25px;
+    color: #ffffff;
   }
 `;
 
@@ -63,63 +116,96 @@ const CreateLearnCard = () => {
         <BackBtn />
         <h2>Let's get started with your Learn Card</h2>
         <form>
-          <Inputholder
-            type="text"
-            label="Subject"
-            value={learnCard.subject}
-            name="subject"
-            updateFields={updateFields}
+          <FormField
+            elem={
+              <Inputholder
+                type="text"
+                label="Subject"
+                value={learnCard.subject}
+                name="subject"
+                updateFields={updateFields}
+              />
+            }
+            inputDesc="Pick a Subject"
           />
-          <Inputholder
-            type="text"
-            label="Topic"
-            value={learnCard.topic}
-            name="topic"
-            updateFields={updateFields}
+          <FormField
+            elem={
+              <Inputholder
+                type="text"
+                label="Topic"
+                value={learnCard.topic}
+                name="topic"
+                updateFields={updateFields}
+              />
+            }
+            inputDesc="Specify the topic for the card"
           />
-          <Inputholder
-            type="text"
-            label="Education Level"
-            value={learnCard.educationLevel}
-            name="educationLevel"
-            updateFields={updateFields}
+          <FormField
+            elem={
+              <Inputholder
+                type="text"
+                label="Education Level"
+                value={learnCard.educationLevel}
+                name="educationLevel"
+                updateFields={updateFields}
+              />
+            }
+            inputDesc="Specify Education Level for the lesson"
           />
-          <Inputholder
-            type="text"
-            label="Standard"
-            value={learnCard.standard}
-            name="standard"
-            updateFields={updateFields}
+          <FormField
+            elem={
+              <Inputholder
+                type="text"
+                label="Standard"
+                value={learnCard.standard}
+                name="standard"
+                updateFields={updateFields}
+              />
+            }
+            inputDesc="Specify the Standard for the lesson"
           />
-          <Inputholder
-            type="text"
-            label="Preferred Language"
-            value={learnCard.preferredLanguage}
-            name="preferredLanguage"
-            updateFields={updateFields}
+          <FormField
+            elem={
+              <Inputholder
+                type="text"
+                label="Preferred Language"
+                value={learnCard.preferredLanguage}
+                name="preferredLanguage"
+                updateFields={updateFields}
+              />
+            }
+            inputDesc="Language that you prefer"
           />
-          <input type="date" name="" id="" />
-          <Inputholder
-            type="text"
-            label="Due Date"
-            value={learnCard.dueDate}
-            name="dueDate"
-            updateFields={updateFields}
+          <FormField
+            elem={<input type="date" name="" id="date" />}
+            inputDesc="Specify due date for the lesson"
           />
-          <Textarea
-            label="Description"
-            name="description"
-            updateFields={updateFields}
-            value={learnCard.description}
+          <FormField
+            elem={
+              <Textarea
+                label="Description"
+                name="description"
+                updateFields={updateFields}
+                value={learnCard.description}
+              />
+            }
+            inputDesc="Describe briefly what you expect from the teacher"
           />
-          <Textarea
-            label="Expectations"
-            name="expectation"
-            updateFields={updateFields}
-            value={learnCard.expectation}
+          <FormField
+            elem={
+              <Textarea
+                label="Expectations"
+                name="expectation"
+                updateFields={updateFields}
+                value={learnCard.expectation}
+              />
+            }
+            inputDesc="Your expectations after completing the class"
           />
-          {/* <Textarea label="Description" name="description" updateFields={updateFields} value={learnCard.} /> */}
         </form>
+        <FormButtonCont>
+          <button>Create Learn Card</button>
+        </FormButtonCont>
       </Section>
     </>
   );
