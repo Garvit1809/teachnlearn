@@ -22,7 +22,7 @@ const Section = styled.div`
     align-items: center;
     justify-content: center;
     padding-right: 10px;
-    /* gap: 10px; */
+    gap: 20px;
   }
 `;
 

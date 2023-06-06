@@ -6,17 +6,15 @@ const Section = styled.div`
   position: relative;
   width: 100%;
   height: 20px;
-  /* margin-bottom: 1.5rem; */
   box-sizing: border-box;
 
-  padding: 15px 0px 15px 10px;
+  padding: 15px 0px;
   border: 1.5px solid #d5d9eb;
   box-sizing: content-box;
   border-radius: 8px;
   color: #000000;
   outline: none;
   z-index: 1;
-  /* transform: translateX(7px); */
 `;
 
 const Input = styled.input`
@@ -36,7 +34,6 @@ const Label = styled.span`
   font-family: "Nunito";
   left: 10px;
   pointer-events: none;
-  /* text-transform: uppercase; */
   transition: 0.25s;
   line-height: 1;
   transform: translateX(5px) translateY(-5px);
@@ -50,29 +47,17 @@ const InputPlaceholder = styled.div`
   position: absolute;
   font-family: "Nunito";
   font-style: normal;
-  padding: 0 5px;
-  /* top: 15px; */
-  /* left: 10px; */
+  left: 10px;
   font-weight: 400;
   font-size: 16px;
   color: #564c4d;
   transition: all 0.25s linear;
-  /* line-height: 1; */
   z-index: -1;
-  /* cursor: pointer; */
 
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-
-  span{
-    /* cursor: pointer; */
-  }
-
-  svg {
-    color: #564c4d;
-  }
 `;
 
 const UploadImage = () => {

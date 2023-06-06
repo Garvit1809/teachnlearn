@@ -48,6 +48,7 @@ const Label = styled.span<labelProps>`
   padding: ${(props) => (props.isValid ? "0 5px" : "none")};
 
   ${Section}:focus-within & {
+    text-transform: none;
     transform: translateX(5px) translateY(-5px);
     font-size: 11px;
     background-color: white;

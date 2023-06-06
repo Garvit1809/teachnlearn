@@ -20,7 +20,7 @@ const Section = styled.div`
     justify-content: center;
     /* padding: 0px; */
     padding-right: 10px;
-    gap: 20px;
+    row-gap: 20px;
   }
 `;
 
@@ -37,7 +37,6 @@ type SignupFormProps = SignUpData & {
 };
 
 const SignupForm = (props: SignupFormProps) => {
-  
   return (
     <Section>
       <form>

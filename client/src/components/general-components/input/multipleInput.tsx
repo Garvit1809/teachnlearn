@@ -5,7 +5,7 @@ const Section = styled.div`
   position: relative;
   width: 100%;
   height: 20px;
-  margin-bottom: 3.5rem;
+  margin-bottom: 2rem;
   box-sizing: border-box;
 
   input {
