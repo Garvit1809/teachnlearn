@@ -63,13 +63,17 @@ const SearchBox = styled.div`
   }
 `;
 
-const SearchBar = () => {
+interface searchProps {
+  placeholderText?: string
+}
+
+const SearchBar = (props: searchProps) => {
   return (
     <Section>
       <form>
         <SearchBox>
           <SearchIcon />
-          <input type="text" placeholder="Search for anything" />
+          <input type="text" placeholder={props.placeholderText || 'Search for anything'} />
         </SearchBox>
         <button>
           <Arrow strokeColor="white" />

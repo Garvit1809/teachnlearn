@@ -14,8 +14,7 @@ const Section = styled.div`
   flex-direction: row;
   align-items: center;
   padding: 60px;
-  /* margin: 5rem 6.3vw 0 6.3vw; */
-  margin-top: 3.5rem;
+  margin-top: 50px;
   margin-bottom: 1rem;
   box-sizing: border-box;
 

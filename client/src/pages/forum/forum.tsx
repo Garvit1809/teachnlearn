@@ -3,20 +3,21 @@ import Navbar from "../../components/general-components/navbar";
 import SearchBar from "../../components/general-components/searchBar";
 import styled from "styled-components";
 import ForumCard from "../../components/forum-components/forumCard";
+import FooterWrapper from "../../components/general-components/footer/footerWrapper";
 
 const Section = styled.div`
   border: 1px solid brown;
-  overflow-x: hidden;
   /* display: flex; */
   /* align-items: center; */
 `;
 
 const TopBar = styled.div`
   width: 100%;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 50px;
 `;
 
 const ForumGrid = styled.div`
@@ -81,7 +82,7 @@ const Forum = () => {
       <Navbar />
       <Section>
         <TopBar>
-          <SearchBar />
+          <SearchBar placeholderText="Search n forums..." />
         </TopBar>
         <ForumGrid>
           {forumData.map((forum, index) => {
@@ -89,6 +90,7 @@ const Forum = () => {
           })}
         </ForumGrid>
       </Section>
+      <FooterWrapper />
     </>
   );
 };

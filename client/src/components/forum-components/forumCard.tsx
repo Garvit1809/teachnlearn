@@ -19,10 +19,7 @@ const Section = styled.div`
   transition: all 0.15s linear;
 
   &:hover {
-    transform: scale(1.05);
-    -webkit-box-shadow: 0px 0px 26px 0px rgba(0, 0, 0, 0.49);
-    -moz-box-shadow: 0px 0px 26px 0px rgba(0, 0, 0, 0.49);
-    box-shadow: 0px 0px 26px 0px rgba(0, 0, 0, 0.49);
+    transform: translateY(-10px);
   }
 `;
 
@@ -45,6 +42,12 @@ const Question = styled.div`
   /* line-height: 35px; */
 
   color: #000000;
+
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 35px;
 `;
 
 const Details = styled.div`

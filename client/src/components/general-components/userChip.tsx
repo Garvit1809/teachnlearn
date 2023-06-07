@@ -5,6 +5,8 @@ import zoro from "../../assets/zoro.jpg";
 interface styleProps {
   imgBorder?: string;
   textColor?: string;
+  imgSize?: string;
+  textSize?: string;
 }
 
 const Section = styled.div<styleProps>`
@@ -14,8 +16,8 @@ const Section = styled.div<styleProps>`
 
   img {
     display: block;
-    width: 28px;
-    height: 28px;
+    width: ${(p) => p.imgSize || "28px"};
+    height: ${(p) => p.imgSize || "28px"};
     border: ${(p) => `1px solid ${p.imgBorder}`};
     border-radius: 50%;
     object-fit: contain;
@@ -26,7 +28,7 @@ const Section = styled.div<styleProps>`
     font-family: "Nunito";
     font-style: normal;
     font-weight: 500;
-    font-size: 20px;
+    font-size: ${(p) => p.textSize || "20px"};
     line-height: 27px;
     color: ${(p) => p.textColor};
   }
@@ -36,11 +38,24 @@ interface userchipProps {
   name: string;
   imgBorder?: string;
   textColor?: string;
+  imgSize?: string;
+  textSize?: string;
 }
 
-const UserChip = ({ name, imgBorder, textColor }: userchipProps) => {
+const UserChip = ({
+  name,
+  imgBorder,
+  textColor,
+  imgSize,
+  textSize,
+}: userchipProps) => {
   return (
-    <Section imgBorder={imgBorder} textColor={textColor}>
+    <Section
+      imgBorder={imgBorder}
+      textColor={textColor}
+      imgSize={imgSize}
+      textSize={textSize}
+    >
       <img src={zoro} alt="user-img" />
       <span>{name}</span>
     </Section>

@@ -8,12 +8,21 @@ import {
 import UserChip from "../general-components/userChip";
 import { useNavigate } from "react-router-dom";
 
-const Section = styled.div`
+const Section = styled.div<cardAnimationProps>`
   box-shadow: 0px 20px 24px -4px rgba(16, 24, 40, 0.08),
     0px 8px 8px -4px rgba(16, 24, 40, 0.03);
   border-radius: 16px;
   overflow: hidden;
+  transition: all 0.15s linear;
+
+  &:hover {
+    transform: ${p => p.hasAnimation ? 'translateY(-10px)' : null};
+  }
 `;
+
+interface cardAnimationProps {
+  hasAnimation?: boolean
+}
 
 interface imageProps {
   imgHeight?: string;
@@ -32,6 +41,7 @@ interface buttonProps {
 }
 interface titleProps {
   titleSize?: string;
+  titleLineHeight?: string;
 }
 
 const ImageContainer = styled.div<imageProps>`
@@ -69,7 +79,7 @@ const Header = styled.div<headerProps>`
 
   h4 {
     font-weight: 500;
-    font-size: ${props => props.headerSize || '18px'};
+    font-size: ${(props) => props.headerSize || "18px"};
     line-height: 1;
     line-height: 25px;
     letter-spacing: 0.02em;
@@ -86,7 +96,7 @@ const Interested = styled.div<headerProps>`
 
   span {
     font-weight: 500;
-    font-size: ${props => props.headerSize || '18px'};
+    font-size: ${(props) => props.headerSize || "18px"};
     line-height: 25px;
     color: #000000;
     text-transform: capitalize;
@@ -97,9 +107,8 @@ const Title = styled.p<titleProps>`
   font-family: "Nunito";
   font-style: normal;
   font-weight: 700;
-  font-size: 24px;
-  font-size: ${p => p.titleSize || '24px'};
-  line-height: 35px;
+  font-size: ${(p) => p.titleSize || "24px"};
+  line-height: ${(p) => p.titleLineHeight || "35px"};
   color: #000000;
 `;
 
@@ -124,7 +133,8 @@ const EnrollBtn = styled.div<buttonProps>`
   span {
     font-weight: 500;
     font-size: 16px;
-    font-size: ${p => p.btnSize || '16px'};
+    font-size: ${(p) => p.btnSize || "16px"};
+    /* font-size: 10px; */
     letter-spacing: 0.02em;
     color: #ffffff;
   }
@@ -135,20 +145,20 @@ const EnrollBtn = styled.div<buttonProps>`
   }
 `;
 
-const Coins = styled.div`
+const Coins = styled.div<buttonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
 
   svg {
-    width: 18px;
-    height: 18px;
+    width: ${(p) => p.svgSize || "18px"};
+    height: ${(p) => p.svgSize || "18px"};
   }
 
   span {
     font-weight: 600;
-    font-size: 18px;
+    font-size: ${(p) => p.btnSize || "18px"};
     color: #000000;
   }
 `;
@@ -158,12 +168,16 @@ interface classCardProps {
 }
 
 interface obj {
+  hasAnimation?: boolean;
   imageHeight: string;
   gap: string;
   headerSize: string;
   titleSize: string;
+  titleLineHeight?: string;
   btnSize: string;
   svgSize: string;
+  userChipImgSize?: string;
+  userChipTextSize?: string;
 }
 
 const ClassroomCard = (props: classCardProps) => {
@@ -177,32 +191,43 @@ const ClassroomCard = (props: classCardProps) => {
   };
 
   return (
-    <Section>
+    <Section hasAnimation={props.cssArr?.hasAnimation} >
       <ImageContainer imgHeight={props.cssArr?.imageHeight}>
         <img src={link} alt="" />
       </ImageContainer>
       <DetailContainer gapSize={props.cssArr?.gap}>
-        <Header headerSize={props.cssArr?.headerSize} >
+        <Header headerSize={props.cssArr?.headerSize}>
           <h4>Web Development</h4>
-          <Interested headerSize={props.cssArr?.headerSize} >
+          <Interested headerSize={props.cssArr?.headerSize}>
             <InterestedIcon />
             <span>22 enrolled</span>
           </Interested>
         </Header>
-        <Title titleSize={props.cssArr?.titleSize} >
+        <Title
+          titleSize={props.cssArr?.titleSize}
+          titleLineHeight={props.cssArr?.titleLineHeight}
+        >
           Get started in Web Development and get selected in MH Fellowsip
         </Title>
         <UserChip
           name="Garvit Varshney"
           imgBorder="#000000"
           textColor="#000000"
+          imgSize={props.cssArr?.userChipImgSize}
+          textSize={props.cssArr?.userChipTextSize}
         />
         <EnrollCont>
-          <EnrollBtn onClick={enrollClassNavigator}>
+          <EnrollBtn
+            onClick={enrollClassNavigator}
+            btnSize={props.cssArr?.btnSize}
+          >
             <span>Enroll Now</span>
             <Arrow strokeColor="white" />
           </EnrollBtn>
-          <Coins>
+          <Coins
+            svgSize={props.cssArr?.svgSize}
+            btnSize={props.cssArr?.btnSize}
+          >
             <PurchaseCoinIcon color="black" />
             <span>200 Coins</span>
           </Coins>
