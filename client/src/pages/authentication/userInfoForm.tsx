@@ -49,18 +49,18 @@ const UserInfoForm = (props: UserInfoFormProps) => {
         <UploadImage />
         <Inputholder
           type="text"
+          label="Phone Number"
+          value={props.number}
+          name="number"
+          updateFields={props.updateFields}
+        />
+        <Inputholder
+          type="text"
           label="Course Enrolled"
           value={props.course}
           name="course"
           updateFields={props.updateFields}
         />
-        {/* <Inputholder
-          type="text"
-          label="Phone Number"
-          value={props.number}
-          name="number"
-          updateFields={props.updateFields}
-        /> */}
         <MultipleInput
           label="Interested Subjects (Max 5)"
           value={props.interestedSubject}
