@@ -9,8 +9,26 @@ exports.getMe = (req, res, next) => {
 
 // dev
 exports.getAllUsers = factory.getAll(User);
-
 exports.getUser = factory.getOne(User);
+
+exports.getOtherUser = catchAsync(async (req,res,next) => {
+  const userId = req.params.userId;
+
+  if (!userId) {
+    return next(new AppError("Please provide a user id.", 404));
+  }
+
+  const user = await User.findById(userId).select('-role -classesEnrolled');
+
+  if (!user) {
+    return next(new AppError("There is no user with such ID.", 404));
+  }
+
+  res.status(200).json({
+    status: 'success',
+    user
+  })
+})
 
 exports.checkPassword = (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm) {
@@ -39,7 +57,6 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     updatedUser,
   });
 });
-
 
 exports.deleteMe = catchAsync(async (req, res, next) => {
   await User.findByIdAndUpdate(req.user.id, { active: false });

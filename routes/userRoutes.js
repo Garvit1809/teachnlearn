@@ -1,16 +1,17 @@
-const express = require('express');
-const { protect } = require('../controllers/authController');
+const express = require("express");
+const { protect } = require("../controllers/authController");
 const userController = require("../controllers/userController");
 
 const router = express.Router();
 
-router.use(protect)
+router.use(protect);
 
-router.get('/:userId', userController.getUser);
+router.get("/me", userController.getMe, userController.getUser);
+router.patch("/deleteMe", userController.deleteMe);
 
-router.get('/me', userController.getMe, userController.getUser);
-router.patch('/updateMe', userController.updateMe);
-router.patch('/deleteMe', userController.deleteMe);
+router.get("/:userId", userController.getOtherUser);
+
+// router.patch("/updateMe", userController.updateMe);
 
 // my profile
 // user profile

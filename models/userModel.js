@@ -16,6 +16,11 @@ const userSchema = new mongoose.Schema({
     unique: true,
     max: [25, "Username must be less than 25 characters"],
   },
+  tagline: {
+    type: String,
+    trim: true,
+    min: [30, "Tagline should be atleast 30 characters long"],
+  },
   // can change in 60 days
   email: {
     type: String,
@@ -41,26 +46,20 @@ const userSchema = new mongoose.Schema({
   },
   interestedSubjects: [
     {
-      subject: {
-        type: String,
-        trim: true,
-      },
+      type: String,
+      trim: true,
     },
   ],
   strongSubjects: [
     {
-      subject: {
-        type: String,
-        trim: true,
-      },
+      type: String,
+      trim: true,
     },
   ],
   preferredLanguages: [
     {
-      language: {
-        type: String,
-        trim: true,
-      },
+      type: String,
+      trim: true,
     },
   ],
   role: {
@@ -101,14 +100,14 @@ const userSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.ObjectId,
       ref: "TransactionHistory",
+      select: false,
     },
   ],
   referrals: [
     {
-      referredTo: {
-        type: mongoose.Schema.ObjectId,
-        ref: "User",
-      },
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
+      select: false,
     },
   ],
   password: {
