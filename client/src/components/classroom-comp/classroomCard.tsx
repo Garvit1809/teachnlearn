@@ -16,12 +16,12 @@ const Section = styled.div<cardAnimationProps>`
   transition: all 0.15s linear;
 
   &:hover {
-    transform: ${p => p.hasAnimation ? 'translateY(-10px)' : null};
+    transform: ${(p) => (p.hasAnimation ? "translateY(-10px)" : null)};
   }
 `;
 
 interface cardAnimationProps {
-  hasAnimation?: boolean
+  hasAnimation?: boolean;
 }
 
 interface imageProps {
@@ -191,7 +191,7 @@ const ClassroomCard = (props: classCardProps) => {
   };
 
   return (
-    <Section hasAnimation={props.cssArr?.hasAnimation} >
+    <Section hasAnimation={props.cssArr?.hasAnimation}>
       <ImageContainer imgHeight={props.cssArr?.imageHeight}>
         <img src={link} alt="" />
       </ImageContainer>

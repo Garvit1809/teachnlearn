@@ -77,8 +77,8 @@ const cardSizes = {
   gap: "24px",
   headerSize: "18px",
   titleSize: "24px",
-  btnSize: "16px",
-  svgSize: "12px",
+  btnSize: "18px",
+  svgSize: "18px",
 };
 
 const Popular = () => {

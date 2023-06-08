@@ -7,7 +7,7 @@ import InviteFriends from "../../components/profile-comp/inviteFriends";
 import PurchaseCoins from "../../components/profile-comp/purchaseCoins";
 
 const Section = styled.div`
-  border: 2px solid green;
+  border: 2px solid #D5D9EB;
   border-radius: 12px;
   padding: 45px;
   margin: 50px;

@@ -11,6 +11,7 @@ import SingleClassroom from "./pages/classroom/singleClassroom";
 import Signin from "./pages/authentication/signin";
 import CreateLearnCard from "./components/request-comp/createLearnCard";
 import CreateTeachCard from "./components/request-comp/createTeachCard";
+import Requests from "./pages/requests/requests";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/forum/:id" element={<SingleForum />} />
         <Route path="/classes" element={<Classrooms />} />
         <Route path="/classes/class/:id" element={<SingleClassroom />} />
+        <Route path="/requests" element={<Requests />} />
         <Route path="/create-learn-request" element={<CreateLearnCard />} />
         <Route path="/create-teach-request" element={<CreateTeachCard />} />
         <Route path="/me" element={<Profile />} />

@@ -1,27 +1,28 @@
 import React from "react";
 import styled from "styled-components";
-import zoro from "../../assets/zoro.jpg";
-import { InterestedIcon, PurchaseCoinIcon } from "../general-components/svg";
 import UserChip from "../general-components/userChip";
+import { InterestedIcon, PurchaseCoinIcon } from "../general-components/svg";
 
 const Section = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 22px;
-  gap: 14px;
+  gap: 16px;
   background: #674ff1;
   border-radius: 16px;
   cursor: pointer;
   font-family: "Nunito";
   transition: all 0.15s linear;
+  font-family: "Nunito";
+  font-style: normal;
 
   &:hover {
     transform: translateY(-10px);
   }
 `;
 
-const Tag = styled.div`
+const Subject = styled.div`
   h4 {
     font-weight: 500;
     font-size: 16px;
@@ -33,16 +34,12 @@ const Tag = styled.div`
 `;
 
 const Topic = styled.div`
-  font-weight: 600;
-  font-size: 22px;
-  line-height: 26px;
-  color: #ffffff;
-
   font-family: "Nunito";
   font-style: normal;
   font-weight: 600;
   font-size: 24px;
   line-height: 33px;
+  color: #ffffff;
 `;
 
 const Stats = styled.div`
@@ -66,24 +63,70 @@ const Stats = styled.div`
   }
 `;
 
+const TagBox = styled.div`
+  /* border: 1px solid white; */
+  width: 100%;
+  margin-top: 0.6rem;
+
+  display: flex;
+  /* align-items: center; */
+  column-gap: 12px;
+  row-gap: 12px;
+  flex-wrap: wrap;
+
+  div {
+    /* border: 1px solid white; */
+    padding: 6px 8px;
+    border-radius: 8px;
+    background-color: white;
+  }
+`;
+
+const DateCont = styled.div`
+  /* border: 1px solid white; */
+
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  color: #ffffff;
+`;
+
+const RequestWrapper = styled.div`
+  /* border: 1px solid red; */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 interface requestCardProps {
-  category?: string;
+  subject: string;
   title: string;
   author: string;
   interested?: number;
+  preferredLanguage: string;
   coins?: number;
+  description: string;
+  expectations: string[];
+  tags: string[];
+  dueDate: string;
 }
 
-const RequestCard = (props: requestCardProps) => {
+const LearnCard = (props: requestCardProps) => {
   return (
     <Section>
-      <Tag>
-        <h4>{props.category}</h4>
-      </Tag>
+      <Subject>
+        <h4>{props.subject}</h4>
+      </Subject>
       <Topic>
         <span>{props.title}</span>
       </Topic>
-      <UserChip name={props.author} imgBorder="#FFFFFF" textColor="#FFFFFF" />
+      <RequestWrapper>
+        <UserChip name={props.author} imgBorder="#FFFFFF" textColor="#FFFFFF" />
+        <DateCont>
+          <span>Due - {props.dueDate}</span>
+        </DateCont>
+      </RequestWrapper>
       <Stats>
         <div>
           <InterestedIcon />
@@ -94,8 +137,17 @@ const RequestCard = (props: requestCardProps) => {
           <span>{props.coins} Coins</span>
         </div>
       </Stats>
+      <TagBox>
+        {props.tags.map((tag, index) => {
+          return (
+            <div key={index}>
+              <span>{tag}</span>
+            </div>
+          );
+        })}
+      </TagBox>
     </Section>
   );
 };
 
-export default RequestCard;
+export default LearnCard;

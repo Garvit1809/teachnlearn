@@ -67,12 +67,12 @@ const navOptions = [
     link: "/forum",
   },
   {
-    title: "My Classes",
+    title: "Classes",
     link: "/classes",
   },
   {
     title: "Requests",
-    link: "/",
+    link: "/requests",
   },
   {
     title: "Profile",
