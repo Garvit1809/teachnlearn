@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../general-components/navbar";
 import Inputholder from "../general-components/input/inputholder";
@@ -9,6 +9,10 @@ import FooterWrapper from "../general-components/footer/footerWrapper";
 import MultipleInput from "../general-components/input/multipleInput";
 import ArrChip from "../authentication-comp/arrChip";
 import { InputWrapper } from "../../pages/authentication/userInfoForm";
+import axios from "axios";
+import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
+import { getHeaders } from "../../utils/helperFunctions";
+import { UserCookie } from "../../utils/userCookie";
 
 const Section = styled.div`
   border: 1px solid red;
@@ -170,6 +174,15 @@ const initialData: learnCardDetails = {
 
 const CreateLearnCard = () => {
   const [learnCard, setLearnCard] = useState<learnCardDetails>(initialData);
+  const [token, setToken] = useState("");
+  const { fetchLocalUserToken } = UserCookie();
+
+  useEffect(() => {
+    fetchLocalUserToken().then((token) => {
+      console.log(token);
+      setToken(token);
+    });
+  }, []);
 
   function updateFields(fields: Partial<learnCardDetails>) {
     setLearnCard((prev) => {
@@ -177,16 +190,15 @@ const CreateLearnCard = () => {
     });
   }
 
-  const learnCardHandler = async (e: any) => {
-    e.preventDefault();
-    console.log(learnCard);
+  const dateHandler = (date: any) => {
+    updateFields({ dueDate: date });
   };
 
   const expectationHandler = () => {
     const expectation = learnCard.expectation;
     const newArr = learnCard.expectations;
     newArr.push(expectation);
-    updateFields({ expectations: newArr });
+    updateFields({ expectations: newArr, expectation: "" });
   };
 
   const removeExpecHandler = (expec: string) => {
@@ -195,6 +207,33 @@ const CreateLearnCard = () => {
       return elem != expec;
     });
     updateFields({ expectations: filteredArr });
+  };
+
+  const learnCardHandler = async (e: any) => {
+    e.preventDefault();
+    console.log(learnCard);
+    await axios
+      .post(
+        `${BASE_URL}${apiVersion}/learn`,
+        {
+          subject: learnCard.subject,
+          topic: learnCard.topic,
+          programme: learnCard.programme,
+          standard: learnCard.standard,
+          preferredLanguage: learnCard.preferredLanguage,
+          description: learnCard.description,
+          expectations: learnCard.expectations,
+          tags: learnCard.tags,
+          dueDate: learnCard.dueDate,
+        },
+        {
+          headers: getHeaders(token ?? ""),
+        }
+      )
+      .then(({ data }) => {
+        console.log(data);
+        setLearnCard(initialData);
+      });
   };
 
   return (
@@ -265,7 +304,14 @@ const CreateLearnCard = () => {
             inputDesc="Language that you prefer"
           />
           <FormField
-            elem={<input type="date" name="" id="date" />}
+            elem={
+              <input
+                type="date"
+                id="date"
+                value={learnCard.dueDate}
+                onChange={(e) => dateHandler(e.target.value)}
+              />
+            }
             inputDesc="Specify due date for the lesson"
           />
           <FormField

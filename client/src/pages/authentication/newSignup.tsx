@@ -9,6 +9,7 @@ import Indicator from "../../components/authentication-comp/indicator";
 import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { localStorageUser } from "../../utils/globalConstants";
+import { UserCookie } from "../../utils/userCookie";
 
 const Section = styled.div`
   display: flex;
@@ -143,13 +144,15 @@ const NewSignup = () => {
       <UserInfoForm {...userData} updateFields={updateFields} />,
     ]);
 
+    const { fetchLocalUserData } = UserCookie();
+
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!isLastStep) return next();
     else {
       e.preventDefault();
       console.log(userData);
-      const { data } = await axios.post(`${BASE_URL}${apiVersion}auth/signup`, {
+      const { data } = await axios.post(`${BASE_URL}${apiVersion}/auth/signup`, {
         name: userData.fullName,
         userName: userData.userName,
         email: userData.email,
@@ -164,7 +167,9 @@ const NewSignup = () => {
       console.log(data);
       if (data.status === "success") {
         data.user.token = data.token;
-        localStorage.setItem(localStorageUser, JSON.stringify(data.user));
+        localStorage.setItem(localStorageUser, JSON.stringify(data.user))
+        // fetchLocalUserData()
+        // setLocalUser()
         // navigateToHome();
       }
     }

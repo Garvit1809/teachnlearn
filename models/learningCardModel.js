@@ -45,10 +45,8 @@ const learningCardSchema = new mongoose.Schema({
   ],
   tags: [
     {
-      tag: {
-        type: String,
-        required: [true, "Please add tags in the Teach Card!!"],
-      },
+      type: String,
+      required: [true, "Please add tags in the Teach Card!!"],
     },
   ],
   dueDate: {

@@ -131,6 +131,7 @@ interface userProps {
   interestedSubjects: string[];
   strongSubjects: string[];
   preferredLanguages: string[];
+  token: string;
 }
 
 const MyProfile = () => {
