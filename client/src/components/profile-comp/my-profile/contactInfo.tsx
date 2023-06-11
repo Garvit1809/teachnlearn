@@ -60,12 +60,10 @@ const Wrapper = styled.div`
 `;
 
 interface ContactProps {
-  contactInfo: {
     username: string;
     password: string;
     email: string;
     phone: string;
-  };
 }
 
 const ContactInfo = (props: ContactProps) => {
@@ -76,8 +74,8 @@ const ContactInfo = (props: ContactProps) => {
         <EditBtn />
       </Header>
       <Wrapper>
-        {Object.values(props.contactInfo).map((item, index) => {
-          const currentKey = Object.keys(props.contactInfo)[index];
+        {Object.values(props).map((item, index) => {
+          const currentKey = Object.keys(props)[index];
           return (
             <div>
               <h4>{currentKey}</h4>

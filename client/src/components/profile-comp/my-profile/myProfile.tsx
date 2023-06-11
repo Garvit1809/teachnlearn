@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import UserImg from "../../../assets/userImg.png";
@@ -7,6 +7,7 @@ import EditBtn from "./editBtn";
 import InfoWrapper from "./infoWrapper";
 import ContactInfo from "./contactInfo";
 import AcademicInfo from "./academicInfo";
+import { localStorageUser } from "../../../utils/globalConstants";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -59,6 +60,7 @@ const ImageContainer = styled.div`
     height: 100%;
     border-radius: 50%;
     display: block;
+    object-fit: cover;
   }
 `;
 
@@ -90,7 +92,6 @@ const UserDetails = styled.div`
 
 const ProfileStats = styled.div``;
 
-
 const userDetails = {
   name: "Ethan Alexander",
   // img: UserImg,
@@ -116,8 +117,37 @@ const userDetails = {
   },
 };
 
+interface userProps {
+  _id: string;
+  name: string;
+  userName: string;
+  photo: string;
+  tagline: string;
+  email: string;
+  enrolledProgramme: string;
+  phoneNumber: string;
+  // classesEnrolled: string[];
+  // classesTaken: string[];
+  interestedSubjects: string[];
+  strongSubjects: string[];
+  preferredLanguages: string[];
+}
+
 const MyProfile = () => {
-  return (
+  const [localUser, setLocalUser] = useState<userProps>();
+
+  async function fetchLocalUserData() {
+    const data = await JSON.parse(
+      localStorage.getItem(localStorageUser) || "{}"
+    );
+    setLocalUser(data);
+  }
+
+  useEffect(() => {
+    fetchLocalUserData();
+  }, []);
+
+  return localUser ? (
     <Section>
       <Header>
         <Heading>My profile</Heading>
@@ -125,18 +155,30 @@ const MyProfile = () => {
       </Header>
       <UserContainer>
         <ImageContainer>
-          <img src={UserImg} alt="" />
+          <img src={localUser.photo} alt="user-img" />
         </ImageContainer>
         <UserDetails>
-          <h4>{userDetails.name}</h4>
-          <p>{userDetails.tagline}</p>
+          <h4>{localUser.name}</h4>
+          <p>{localUser.tagline}</p>
         </UserDetails>
         <EditBtn />
       </UserContainer>
       <ProfileStats></ProfileStats>
-      <ContactInfo contactInfo={userDetails.contactInfo} />
-      <AcademicInfo academics={userDetails.academics} />
+      <ContactInfo
+        password="kcnkwjcd"
+        email={localUser.email}
+        username={localUser.userName}
+        phone={localUser.phoneNumber}
+      />
+      <AcademicInfo
+        course={localUser.enrolledProgramme}
+        preferredLanguages={localUser.preferredLanguages}
+        interstedSub={localUser.interestedSubjects}
+        strongSub={localUser.strongSubjects}
+      />
     </Section>
+  ) : (
+    <h3>Loading</h3>
   );
 };
 

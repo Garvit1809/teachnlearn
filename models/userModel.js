@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema({
   phoneNumber: {
     type: String,
     required: [true, "Please provide a contact number"],
-    select: false,
+    // select: false,
   },
   enrolledProgramme: {
     type: String,

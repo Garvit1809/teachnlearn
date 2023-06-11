@@ -26,7 +26,7 @@ const Section = styled.div`
   }
 `;
 
-const InputWrapper = styled.div`
+export const InputWrapper = styled.div`
   /* border: 1px solid red; */
   width: 100%;
   display: flex;

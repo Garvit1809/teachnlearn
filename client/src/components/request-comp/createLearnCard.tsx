@@ -6,6 +6,9 @@ import BackBtn from "./backBtn";
 import Textarea from "../general-components/input/textarea";
 import FormField from "./formField";
 import FooterWrapper from "../general-components/footer/footerWrapper";
+import MultipleInput from "../general-components/input/multipleInput";
+import ArrChip from "../authentication-comp/arrChip";
+import { InputWrapper } from "../../pages/authentication/userInfoForm";
 
 const Section = styled.div`
   border: 1px solid red;
@@ -74,6 +77,69 @@ const FormButtonCont = styled.div`
   }
 `;
 
+const ExpectationWrapper = styled.div`
+  /* border: 1px solid red; */
+  width: 100%;
+`;
+
+const AddExpecBtn = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+  button {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 24px;
+    gap: 10px;
+    background: #332ad5;
+    border-radius: 8px;
+    border: none;
+
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    /* line-height: px; */
+    color: #ffffff;
+  }
+`;
+
+const ExpectationsContainer = styled.ul`
+  /* border: 1px solid red; */
+  margin-top: 1rem;
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.4rem;
+`;
+
+const Expectation = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  li {
+    /* border: 1px solid red; */
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  span {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    cursor: pointer;
+  }
+`;
+
 interface learnCardDetails {
   subject: string;
   topic: string;
@@ -110,6 +176,26 @@ const CreateLearnCard = () => {
       return { ...prev, ...fields };
     });
   }
+
+  const learnCardHandler = async (e: any) => {
+    e.preventDefault();
+    console.log(learnCard);
+  };
+
+  const expectationHandler = () => {
+    const expectation = learnCard.expectation;
+    const newArr = learnCard.expectations;
+    newArr.push(expectation);
+    updateFields({ expectations: newArr });
+  };
+
+  const removeExpecHandler = (expec: string) => {
+    const newArr = learnCard.expectations;
+    const filteredArr = newArr.filter((elem, index) => {
+      return elem != expec;
+    });
+    updateFields({ expectations: filteredArr });
+  };
 
   return (
     <>
@@ -195,30 +281,61 @@ const CreateLearnCard = () => {
           />
           <FormField
             elem={
-              <Textarea
-                label="Expectations"
-                name="expectation"
-                updateFields={updateFields}
-                value={learnCard.expectation}
-              />
+              <ExpectationWrapper>
+                <Textarea
+                  label="Expectations"
+                  name="expectation"
+                  updateFields={updateFields}
+                  value={learnCard.expectation}
+                />
+                <AddExpecBtn>
+                  <button type="button" onClick={expectationHandler}>
+                    Add Expectation
+                  </button>
+                </AddExpecBtn>
+                <ExpectationsContainer>
+                  {learnCard.expectations.map((expec, index) => {
+                    return (
+                      <Expectation>
+                        <li key={index}>{expec}</li>
+                        <span onClick={() => removeExpecHandler(expec)}>
+                          Remove
+                        </span>
+                      </Expectation>
+                    );
+                  })}
+                </ExpectationsContainer>
+              </ExpectationWrapper>
             }
             inputDesc="Your expectations after completing the class"
           />
           <FormField
             elem={
-              <Inputholder
-                type="text"
-                label="Add Tag"
-                name="tag"
-                updateFields={updateFields}
-                value={learnCard.tag}
-              />
+              <InputWrapper>
+                <MultipleInput
+                  label="Tags"
+                  elemName="tag"
+                  value={learnCard.tag}
+                  name="tags"
+                  arr={learnCard.tags}
+                  updateFields={updateFields}
+                />
+                {learnCard.tags.length != 0 ? (
+                  <ArrChip
+                    listArr={learnCard.tags}
+                    updateFields={updateFields}
+                    name="tags"
+                  />
+                ) : null}
+              </InputWrapper>
             }
             inputDesc="You can add tags in your learn card"
           />
         </form>
         <FormButtonCont>
-          <button>Create Learn Card</button>
+          <button type="submit" onClick={learnCardHandler}>
+            Create Learn Card
+          </button>
         </FormButtonCont>
       </Section>
       <FooterWrapper />

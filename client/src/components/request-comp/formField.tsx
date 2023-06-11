@@ -12,8 +12,9 @@ const Section = styled.div`
 
   h3 {
     /* border: 1px solid red; */
+    margin-top: 1rem;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
 
     font-family: "Nunito";

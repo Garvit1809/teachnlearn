@@ -72,10 +72,10 @@ interface inputProps {
   value: string;
   label: string;
   name: string;
-  allSubjects?: string[];
-  updateFields: (fields: Partial<USERDATA>) => void;
+  // allSubjects?: string[];
   arr: string[];
   elemName: string;
+  updateFields: (fields: Partial<USERDATA>) => void;
 }
 
 const MultipleInput = (props: inputProps) => {

@@ -76,12 +76,10 @@ const Tag = styled.div`
 `;
 
 interface AcademicProps {
-  academics: {
     course: string;
     interstedSub: Array<string>;
     strongSub: string[];
     preferredLanguages: string[];
-  };
 }
 
 const AcademicInfo = (props: AcademicProps) => {
@@ -92,15 +90,15 @@ const AcademicInfo = (props: AcademicProps) => {
         <EditBtn />
       </Header>
       <Wrapper>
-        {Object.values(props.academics).map((item, index) => {
-          const currentKey = Object.keys(props.academics)[index];
+        {Object.values(props).map((item, index) => {
+          const currentKey = Object.keys(props)[index];
           console.log(Array.isArray(item));
 
           if (!Array.isArray(item)) {
             return (
               <div>
                 <h4>Course</h4>
-                <span>{props.academics.course}</span>
+                <span>{props.course}</span>
               </div>
             );
           }

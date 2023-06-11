@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import DescriptionBox from "../../components/authentication-comp/descriptionBox";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoginForm from "../../components/authentication-comp/loginForm";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import axios from "axios";
 import { localStorageUser } from "../../utils/globalConstants";
-import { navigateToHome } from "../../utils/navigationHandlers";
 
 const Section = styled.div`
   display: flex;
@@ -99,18 +98,25 @@ const Signin = () => {
     });
   }
 
+  const navigate = useNavigate();
+
+  const navigateToHome = () => {
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+    navigate("/");
+  };
+
   const loginHandler = async (e: any) => {
     e.preventDefault();
-    // console.log(loginData);
     const { data } = await axios.post(`${BASE_URL}${apiVersion}auth/login`, {
       email: loginData.email,
       password: loginData.password,
     });
     console.log(data);
     if (data.status === "success") {
-      data.user.token = data.token;
-      localStorage.setItem(localStorageUser, JSON.stringify(data.user));
-      // navigateToHome();
+      data.data.user.token = data.token;
+      localStorage.setItem(localStorageUser, JSON.stringify(data.data.user));
+      // navigate('/')
+      navigateToHome();
     }
   };
 
