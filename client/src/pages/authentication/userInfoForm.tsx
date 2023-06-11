@@ -26,6 +26,14 @@ const Section = styled.div`
   }
 `;
 
+const InputWrapper = styled.div`
+  /* border: 1px solid red; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
 interface UserInfo {
   profilePic: string;
   number: string;
@@ -61,51 +69,57 @@ const UserInfoForm = (props: UserInfoFormProps) => {
           name="course"
           updateFields={props.updateFields}
         />
-        <MultipleInput
-          label="Interested Subjects (Max 5)"
-          value={props.interestedSubject}
-          name="interestedSubjects"
-          elemName="interestedSubject"
-          updateFields={props.updateFields}
-          arr={props.interestedSubjects}
-        />
-        {props.interestedSubjects.length != 0 ? (
-          <ArrChip
-            listArr={props.interestedSubjects}
-            updateFields={props.updateFields}
+        <InputWrapper>
+          <MultipleInput
+            label="Interested Subjects (Max 5)"
+            value={props.interestedSubject}
             name="interestedSubjects"
-          />
-        ) : null}
-        <MultipleInput
-          label="Strong Subjects"
-          value={props.strongSubject}
-          elemName="strongSubject"
-          name="strongSubjects"
-          updateFields={props.updateFields}
-          arr={props.strongSubjects}
-        />
-        {props.strongSubjects.length != 0 ? (
-          <ArrChip
-            listArr={props.strongSubjects}
+            elemName="interestedSubject"
             updateFields={props.updateFields}
+            arr={props.interestedSubjects}
+          />
+          {props.interestedSubjects.length != 0 ? (
+            <ArrChip
+              listArr={props.interestedSubjects}
+              updateFields={props.updateFields}
+              name="interestedSubjects"
+            />
+          ) : null}
+        </InputWrapper>
+        <InputWrapper>
+          <MultipleInput
+            label="Strong Subjects"
+            value={props.strongSubject}
+            elemName="strongSubject"
             name="strongSubjects"
-          />
-        ) : null}
-        <MultipleInput
-          label="Preferred Languages"
-          value={props.language}
-          elemName="language"
-          name="preferredLanguages"
-          updateFields={props.updateFields}
-          arr={props.preferredLanguages}
-        />
-        {props.preferredLanguages.length != 0 ? (
-          <ArrChip
-            listArr={props.preferredLanguages}
             updateFields={props.updateFields}
-            name="preferredLanguages"
+            arr={props.strongSubjects}
           />
-        ) : null}
+          {props.strongSubjects.length != 0 ? (
+            <ArrChip
+              listArr={props.strongSubjects}
+              updateFields={props.updateFields}
+              name="strongSubjects"
+            />
+          ) : null}
+        </InputWrapper>
+        <InputWrapper>
+          <MultipleInput
+            label="Preferred Languages"
+            value={props.language}
+            elemName="language"
+            name="preferredLanguages"
+            updateFields={props.updateFields}
+            arr={props.preferredLanguages}
+          />
+          {props.preferredLanguages.length != 0 ? (
+            <ArrChip
+              listArr={props.preferredLanguages}
+              updateFields={props.updateFields}
+              name="preferredLanguages"
+            />
+          ) : null}
+        </InputWrapper>
       </form>
     </Section>
   );

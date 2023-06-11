@@ -3,13 +3,17 @@ import styled from "styled-components";
 import DescriptionBox from "../../components/authentication-comp/descriptionBox";
 import { Link } from "react-router-dom";
 import LoginForm from "../../components/authentication-comp/loginForm";
+import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
+import axios from "axios";
+import { localStorageUser } from "../../utils/globalConstants";
+import { navigateToHome } from "../../utils/navigationHandlers";
 
 const Section = styled.div`
   display: flex;
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
-  font-family: 'Nunito';
+  font-family: "Nunito";
 `;
 
 const LeftContainer = styled.div`
@@ -95,9 +99,19 @@ const Signin = () => {
     });
   }
 
-  const loginHandler = (e: any) => {
+  const loginHandler = async (e: any) => {
     e.preventDefault();
     console.log(loginData);
+    const { data } = await axios.post(`${BASE_URL}${apiVersion}auth/login`, {
+      email: loginData.email,
+      password: loginData.password,
+    });
+    console.log(data);
+    if (data.status === "success") {
+      data.user.token = data.token;
+      localStorage.setItem(localStorageUser, JSON.stringify(data.user));
+      // navigateToHome();
+    }
   };
 
   return (

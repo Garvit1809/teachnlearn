@@ -6,6 +6,9 @@ import SignupForm from "./signupForm";
 import UserInfoForm from "./userInfoForm";
 import { Link, useNavigate } from "react-router-dom";
 import Indicator from "../../components/authentication-comp/indicator";
+import axios from "axios";
+import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
+import { localStorageUser } from "../../utils/globalConstants";
 
 const Section = styled.div`
   display: flex;
@@ -55,10 +58,10 @@ const FormContainer = styled.div`
     margin: 0;
     margin-top: 1.5rem;
     padding: 0;
-    
+
     display: flex;
     gap: 6px;
-    
+
     h5 {
       color: #332ad5;
       font-size: 16px;
@@ -140,11 +143,32 @@ const NewSignup = () => {
       <UserInfoForm {...userData} updateFields={updateFields} />,
     ]);
 
-  function onSubmit(e: FormEvent) {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!isLastStep) return next();
-    alert("Successful Account Creation");
-  }
+    else {
+      e.preventDefault();
+      console.log(userData);
+      const { data } = await axios.post(`${BASE_URL}${apiVersion}auth/signup`, {
+        name: userData.fullName,
+        userName: userData.userName,
+        email: userData.email,
+        password: userData.password,
+        passwordConfirm: userData.confirmPassword,
+        phoneNumber: userData.number,
+        enrolledProgramme: userData.course,
+        interestedSubjects: userData.interestedSubjects,
+        strongSubjects: userData.strongSubjects,
+        preferredLanguages: userData.preferredLanguages,
+      });
+      console.log(data);
+      if (data.status === "success") {
+        data.user.token = data.token;
+        localStorage.setItem(localStorageUser, JSON.stringify(data.user));
+        // navigateToHome();
+      }
+    }
+  };
 
   const navigate = useNavigate();
 

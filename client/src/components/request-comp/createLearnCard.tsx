@@ -77,7 +77,7 @@ const FormButtonCont = styled.div`
 interface learnCardDetails {
   subject: string;
   topic: string;
-  educationLevel: string;
+  programme: string;
   standard: string;
   preferredLanguage: string;
   description: string;
@@ -91,7 +91,7 @@ interface learnCardDetails {
 const initialData: learnCardDetails = {
   subject: "",
   topic: "",
-  educationLevel: "",
+  programme: "",
   standard: "",
   preferredLanguage: "",
   description: "",
@@ -146,9 +146,9 @@ const CreateLearnCard = () => {
             elem={
               <Inputholder
                 type="text"
-                label="Education Level"
-                value={learnCard.educationLevel}
-                name="educationLevel"
+                label="Programme"
+                value={learnCard.programme}
+                name="programme"
                 updateFields={updateFields}
               />
             }

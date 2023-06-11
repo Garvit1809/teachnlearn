@@ -15,7 +15,7 @@ exports.createLearnCard = catchAsync(async (req, res, next) => {
   const {
     subject,
     topic,
-    educationLevel,
+    programme,
     standard,
     preferredLanguage,
     description,
@@ -27,7 +27,7 @@ exports.createLearnCard = catchAsync(async (req, res, next) => {
   if (
     !subject &&
     !topic &&
-    !educationLevel &&
+    !programme &&
     !standard &&
     !preferredLanguage &&
     !description &&
@@ -46,7 +46,7 @@ exports.createLearnCard = catchAsync(async (req, res, next) => {
     createdBy: userId,
     subject,
     topic,
-    educationLevel,
+    programme,
     standard,
     preferredLanguage,
     description,
@@ -75,7 +75,7 @@ exports.createTeachCardOnLearnCard = catchAsync(async (req, res, next) => {
   const {
     subject,
     topic,
-    educationLevel,
+    programme,
     standard,
     date,
     classStartsAt,
@@ -89,7 +89,7 @@ exports.createTeachCardOnLearnCard = catchAsync(async (req, res, next) => {
   if (
     !subject &&
     !topic &&
-    !educationLevel &&
+    !programme &&
     !standard &&
     !date &&
     !classStartsAt &&
@@ -110,7 +110,7 @@ exports.createTeachCardOnLearnCard = catchAsync(async (req, res, next) => {
     createdBy: userID,
     subject,
     topic,
-    educationLevel,
+    programme,
     standard,
     isLearningCardReferred: true,
     referredLearningCard: learnCardID,

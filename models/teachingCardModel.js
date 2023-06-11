@@ -14,7 +14,7 @@ const teachingCardSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide the topic to be taught"],
   },
-  educationLevel: {
+  programme: {
     type: String,
     required: [
       true,
