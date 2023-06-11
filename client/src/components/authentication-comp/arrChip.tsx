@@ -48,15 +48,11 @@ interface arrChipProps {
 
 const ArrChip = (props: arrChipProps) => {
   const removeElement = (subToDelete: string) => {
-    console.log("jnvj");
-
-    var filteredArr = props.listArr.filter((sub, index) => {
+    let filteredArr = props.listArr.filter((sub, index) => {
       console.log(sub == subToDelete);
       return sub != subToDelete;
     });
-    console.log(filteredArr);
     props.updateFields({ [props.name]: filteredArr });
-
   };
 
   return (

@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../../components/general-components/navbar";
 import FooterWrapper from "../../components/general-components/footer/footerWrapper";
 import Intro from "../../components/home-comp/intro";
 import LearnCard from "../../components/request-comp/learnCard";
+import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
+import axios from "axios";
 
 const Section = styled.div`
   padding: 0 6.3vw;
@@ -90,7 +92,36 @@ const cardDetails = [
   },
 ];
 
+interface learnCardProps {
+  createdBy: {
+    name: string;
+    photo: string;
+  };
+  subject: string;
+  topic: string;
+  programme: string;
+  standard: string;
+  dueDate: string;
+  preferredLanguage: string;
+  description: string;
+  expectations: string[];
+  tags: string[];
+}
+
 const Requests = () => {
+  const [learnCards, setLearnCards] = useState<Array<learnCardProps>>();
+
+  const fetchLearnCards = async () => {
+    await axios.get(`${BASE_URL}${apiVersion}/learn`).then(({data}) => {
+      console.log(data);
+    });
+  };
+
+  useEffect(() => {
+    fetchLearnCards()
+  }, [])
+  
+
   return (
     <>
       <Navbar />

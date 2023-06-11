@@ -37,6 +37,10 @@ const teachingCardSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please specify the language you prefer for teaching"],
   },
+  cardBanner: {
+    type: String,
+    required: [true, "Please provide a class banner image"],
+  },
   date: {
     type: Date,
     required: [true, "Please provide date for the class"],
@@ -79,6 +83,12 @@ const teachingCardSchema = new mongoose.Schema({
     type: Number,
     required: [true, "Please specify the price of this class"],
   },
+  interestedStudents: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
+    },
+  ],
   studentsEnrolled: [
     {
       type: mongoose.Schema.ObjectId,
@@ -90,15 +100,15 @@ const teachingCardSchema = new mongoose.Schema({
 teachingCardSchema.pre(/^find/, function (next) {
   this.populate({
     path: "createdBy",
-    select: "name",
+    select: "name photo",
   })
     .populate({
       path: "studentsEnrolled",
-      select: "name",
+      select: "name photo",
     })
     .populate({
       path: "referredLearningCard",
-      select: "subject createdBy",
+      select: "subject topic createdBy",
     });
   next();
 });

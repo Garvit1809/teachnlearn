@@ -60,12 +60,17 @@ const InputPlaceholder = styled.div`
   gap: 8px;
 `;
 
-const UploadImage = () => {
+interface uploadImageProps {
+  updateFields: any;
+}
+
+const UploadImage = ({ updateFields }: uploadImageProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [fileName, setFileName] = useState("");
 
-  const imageUploadHandler = () => {
+  const postImage = (pics: FileList | null) => {
+    if (!pics) return;
     if (inputRef.current != null) {
       const files = inputRef.current.files;
       if (files != null) {
@@ -73,6 +78,28 @@ const UploadImage = () => {
         console.log(name);
         setFileName(name);
       }
+    }
+    const pic = pics[0];
+    if (pic.type === "image/jpeg" || pic.type === "image/png") {
+      const data = new FormData();
+      data.append("file", pic);
+      data.append("upload_preset", "chat-app");
+      data.append("cloud_name", "dkgrvhkxb");
+      fetch("https://api.cloudinary.com/v1_1/dkgrvhkxb/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          updateFields({ img : data.url.toString() });
+          console.log(data);
+          console.log(data.url.toString());
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log("errrrrrorrrr");
     }
   };
 
@@ -82,7 +109,7 @@ const UploadImage = () => {
         type="file"
         accept="image/*"
         ref={inputRef}
-        onChange={imageUploadHandler}
+        onChange={(e) => postImage(e.target.files)}
       />
       <Label>Profile Pic</Label>
       <InputPlaceholder>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../general-components/navbar";
 import Footer from "../general-components/footer/footer";
@@ -8,6 +8,14 @@ import FormField from "./formField";
 import Inputholder from "../general-components/input/inputholder";
 import Textarea from "../general-components/input/textarea";
 import UploadImage from "../general-components/input/uploadImage";
+import { InputWrapper } from "../../pages/authentication/userInfoForm";
+import MultipleInput from "../general-components/input/multipleInput";
+import ArrChip from "../authentication-comp/arrChip";
+import ExpectationWrapper from "./expectationWrapper";
+import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
+import axios from "axios";
+import { UserCookie } from "../../utils/userCookie";
+import { getHeaders } from "../../utils/helperFunctions";
 
 const Section = styled.div`
   border: 1px solid red;
@@ -79,9 +87,10 @@ const FormButtonCont = styled.div`
 interface teachCardDetails {
   subject: string;
   topic: string;
-  educationLevel: string;
+  programme: string;
   standard: string;
   preferredLanguage: string;
+  img: string;
   date: string;
   description: string;
   expectation: string;
@@ -96,9 +105,10 @@ interface teachCardDetails {
 const initialData: teachCardDetails = {
   subject: "",
   topic: "",
-  educationLevel: "",
+  programme: "",
   standard: "",
   preferredLanguage: "",
+  img: "",
   date: "",
   description: "",
   expectation: "",
@@ -113,11 +123,56 @@ const initialData: teachCardDetails = {
 const CreateTeachCard = () => {
   const [teachCard, setTeachCard] = useState<teachCardDetails>(initialData);
 
+  const [token, setToken] = useState("");
+  const { fetchLocalUserToken } = UserCookie();
+
+  useEffect(() => {
+    fetchLocalUserToken().then((token) => {
+      setToken(token);
+    });
+  }, []);
+
   function updateFields(fields: Partial<teachCardDetails>) {
     setTeachCard((prev) => {
       return { ...prev, ...fields };
     });
   }
+
+  const dateHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updateFields({ [e.target.name]: e.target.value });
+  };
+
+  const teachCardHandler = async (e: any) => {
+    e.preventDefault();
+    console.log(teachCard);
+
+    await axios
+      .post(
+        `${BASE_URL}${apiVersion}/learn`,
+        {
+          subject: teachCard.subject,
+          topic: teachCard.topic,
+          programme: teachCard.programme,
+          standard: teachCard.standard,
+          preferredLanguage: teachCard.preferredLanguage,
+          description: teachCard.description,
+          expectations: teachCard.expectations,
+          tags: teachCard.tags,
+          date: teachCard.date,
+          cardBanner: teachCard.img,
+          price: teachCard.price,
+          classStartsAt: teachCard.startingTime,
+          classEndsAt: teachCard.endingTime,
+        },
+        {
+          headers: getHeaders(token ?? ""),
+        }
+      )
+      .then(({ data }) => {
+        console.log(data);
+        setTeachCard(initialData);
+      });
+  };
 
   return (
     <>
@@ -155,8 +210,8 @@ const CreateTeachCard = () => {
               <Inputholder
                 type="text"
                 label="Education Level"
-                value={teachCard.educationLevel}
-                name="educationLevel"
+                value={teachCard.programme}
+                name="programme"
                 updateFields={updateFields}
               />
             }
@@ -199,19 +254,43 @@ const CreateTeachCard = () => {
             inputDesc="Language that you prefer"
           />
           <FormField
-            elem={<input type="date" name="" id="date" />}
+            elem={
+              <input
+                type="date"
+                name="date"
+                id="date"
+                value={teachCard.date}
+                onChange={(e) => dateHandler(e)}
+              />
+            }
             inputDesc="Specify due date for the lesson"
           />
           <FormField
-            elem={<input type="time" name="" id="date" />}
+            elem={
+              <input
+                type="time"
+                name="startingTime"
+                id="date"
+                value={teachCard.startingTime}
+                onChange={(e) => dateHandler(e)}
+              />
+            }
             inputDesc="Specify starting time for the lesson"
           />
           <FormField
-            elem={<input type="time" name="" id="date" />}
+            elem={
+              <input
+                type="time"
+                name="endingTime"
+                id="date"
+                value={teachCard.endingTime}
+                onChange={(e) => dateHandler(e)}
+              />
+            }
             inputDesc="Specify end timing for the lesson"
           />
           <FormField
-            elem={<UploadImage />}
+            elem={<UploadImage updateFields={updateFields} />}
             inputDesc="Upload a cover image for your class"
           />
           <FormField
@@ -227,30 +306,41 @@ const CreateTeachCard = () => {
           />
           <FormField
             elem={
-              <Textarea
-                label="Expectations"
-                name="expectation"
+              <ExpectationWrapper
+                expectation={teachCard.expectation}
+                expectations={teachCard.expectations}
                 updateFields={updateFields}
-                value={teachCard.expectation}
               />
             }
             inputDesc="Your expectations after completing the class"
           />
           <FormField
             elem={
-              <Inputholder
-                type="text"
-                label="Add Tag"
-                name="tag"
-                updateFields={updateFields}
-                value={teachCard.tag}
-              />
+              <InputWrapper>
+                <MultipleInput
+                  label="Add Tag"
+                  elemName="tag"
+                  value={teachCard.tag}
+                  name="tags"
+                  arr={teachCard.tags}
+                  updateFields={updateFields}
+                />
+                {teachCard.tags.length != 0 ? (
+                  <ArrChip
+                    listArr={teachCard.tags}
+                    name="tags"
+                    updateFields={updateFields}
+                  />
+                ) : null}
+              </InputWrapper>
             }
             inputDesc="You can add tags in your learn card"
           />
         </form>
         <FormButtonCont>
-          <button>Create Teach Card</button>
+          <button type="submit" onClick={teachCardHandler}>
+            Create Teach Card
+          </button>
         </FormButtonCont>
       </Section>
       <FooterWrapper />
