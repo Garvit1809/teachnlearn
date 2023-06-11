@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require('cors');
 const AppError = require("./utils/appError");
 const globalErrorHandler = require('./controllers/errorController');
 
@@ -10,6 +11,7 @@ const classroomRouter = require('./routes/classroomRoutes');
 
 const app = express();
 
+app.use(cors());
 app.use(express.json({ limit: "10kb" }));
 
 app.use('/api/v1/auth', authRouter);

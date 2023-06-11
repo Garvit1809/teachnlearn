@@ -101,7 +101,7 @@ const Signin = () => {
 
   const loginHandler = async (e: any) => {
     e.preventDefault();
-    console.log(loginData);
+    // console.log(loginData);
     const { data } = await axios.post(`${BASE_URL}${apiVersion}auth/login`, {
       email: loginData.email,
       password: loginData.password,
