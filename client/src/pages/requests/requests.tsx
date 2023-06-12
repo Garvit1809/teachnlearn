@@ -92,7 +92,7 @@ const cardDetails = [
   },
 ];
 
-interface learnCardProps {
+export interface learnCardProps {
   _id: string;
   createdBy: {
     name: string;

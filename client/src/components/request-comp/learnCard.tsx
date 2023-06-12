@@ -42,7 +42,7 @@ const Topic = styled.div`
   font-size: 24px;
   line-height: 33px;
   color: #ffffff;
-  max-height: 65px;
+  /* max-height: 65px; */
   /*  */
   /* border: 1px solid white; */
   white-space: wrap;
@@ -141,7 +141,9 @@ const LearnCard = (props: requestCardProps) => {
   const navigate = useNavigate();
 
   const leanrCardOverviewNavigator = () => {
-    navigate(`/learncard-overview/${props._id}`);
+    navigate(`/learncard-overview/${props._id}`, {
+      state: { learnCardId: props._id },
+    });
   };
 
   return (
