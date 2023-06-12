@@ -148,7 +148,7 @@ const CreateTeachCard = () => {
 
     await axios
       .post(
-        `${BASE_URL}${apiVersion}/learn`,
+        `${BASE_URL}${apiVersion}/teach`,
         {
           subject: teachCard.subject,
           topic: teachCard.topic,

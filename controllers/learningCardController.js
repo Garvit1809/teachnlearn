@@ -53,7 +53,7 @@ exports.createLearnCard = catchAsync(async (req, res, next) => {
     expectations,
     tags,
     dueDate,
-    interestedStudents
+    interestedStudents,
   });
 
   if (!newLearnCard) {
@@ -64,7 +64,7 @@ exports.createLearnCard = catchAsync(async (req, res, next) => {
 
   res.status(201).json({
     status: "success",
-    newLearnCard
+    newLearnCard,
   });
 });
 
@@ -77,6 +77,8 @@ exports.createTeachCardOnLearnCard = catchAsync(async (req, res, next) => {
     topic,
     programme,
     standard,
+    preferredLanguage,
+    cardBanner,
     date,
     classStartsAt,
     classEndsAt,
@@ -91,6 +93,8 @@ exports.createTeachCardOnLearnCard = catchAsync(async (req, res, next) => {
     !topic &&
     !programme &&
     !standard &&
+    !preferredLanguage &&
+    !cardBanner &&
     !date &&
     !classStartsAt &&
     !classEndsAt &&
@@ -112,6 +116,8 @@ exports.createTeachCardOnLearnCard = catchAsync(async (req, res, next) => {
     topic,
     programme,
     standard,
+    preferredLanguage,
+    cardBanner,
     isLearningCardReferred: true,
     referredLearningCard: learnCardID,
     date,
@@ -127,24 +133,24 @@ exports.createTeachCardOnLearnCard = catchAsync(async (req, res, next) => {
     return next(new AppError("Teach Card couldnt be created, Try Again!!"));
   }
 
-  const newClassroom = await Classroom.create({
-    admin: userID,
-    teachingCard: newTeachCard.id,
-    chatName: newTeachCard.topic,
-    classStartsAt: newTeachCard.classStartsAt,
-    classEndsAt: newTeachCard.classEndsAt,
-  });
+  // const newClassroom = await Classroom.create({
+  //   admin: userID,
+  //   teachingCard: newTeachCard.id,
+  //   chatName: newTeachCard.topic,
+  //   classStartsAt: newTeachCard.classStartsAt,
+  //   classEndsAt: newTeachCard.classEndsAt,
+  // });
 
-  if (!newClassroom) {
-    return next(
-      new AppError("Couldnt create the classroom!! Please file a report!")
-    );
-  }
+  // if (!newClassroom) {
+  //   return next(
+  //     new AppError("Couldnt create the classroom!! Please file a report!")
+  //   );
+  // }
 
   res.status(201).json({
-    status: 'success',
+    status: "success",
     newTeachCard,
-    newClassroom,
+    // newClassroom,
   });
 });
 
@@ -178,11 +184,11 @@ exports.interestedInLearnCard = catchAsync(async (req, res, next) => {
   );
 
   if (!updatedLearnCard) {
-    return next(new AppError('Learn Card couldnt be updated!! Try again!'))
+    return next(new AppError("Learn Card couldnt be updated!! Try again!"));
   }
-  
+
   res.status(200).json({
-    status: 'success',
-    updatedLearnCard
-  })
+    status: "success",
+    updatedLearnCard,
+  });
 });

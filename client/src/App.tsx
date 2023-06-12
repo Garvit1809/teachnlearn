@@ -12,6 +12,7 @@ import Signin from "./pages/authentication/signin";
 import CreateLearnCard from "./components/request-comp/createLearnCard";
 import CreateTeachCard from "./components/request-comp/createTeachCard";
 import Requests from "./pages/requests/requests";
+import LearnCardOverview from "./components/request-comp/learnCardOverview";
 
 function App() {
   return (
@@ -25,6 +26,10 @@ function App() {
         <Route path="/classes" element={<Classrooms />} />
         <Route path="/classes/class/:id" element={<SingleClassroom />} />
         <Route path="/requests" element={<Requests />} />
+        <Route
+          path="/learncard-overview/:learncardId"
+          element={<LearnCardOverview />}
+        />
         <Route path="/create-learn-request" element={<CreateLearnCard />} />
         <Route path="/create-teach-request" element={<CreateTeachCard />} />
         <Route path="/me" element={<Profile />} />

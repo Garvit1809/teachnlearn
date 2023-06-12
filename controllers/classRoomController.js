@@ -7,7 +7,6 @@ const catchAsync = require("../utils/catchAsync");
 
 exports.getAllClassrooms = catchAsync(async (req,res,next) => {
     const userID = req.user.id;
-
     // const classrooms = await Classroom.find({  }) 
 })
 

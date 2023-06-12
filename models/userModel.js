@@ -76,7 +76,7 @@ const userSchema = new mongoose.Schema({
     {
       class: {
         type: mongoose.Schema.ObjectId,
-        ref: "Classroom",
+        ref: "TeachingCard",
         required: [true, "Must specify the classroom ID!!"],
       },
       isReviewed: {
@@ -92,8 +92,7 @@ const userSchema = new mongoose.Schema({
   classesTaken: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: "Classroom",
-      required: [true, "Must specify the classroom ID!!"],
+      ref: "TeachingCard",
     },
   ],
   transactionHistory: [

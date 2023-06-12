@@ -20,7 +20,7 @@ const Section = styled.div<styleProps>`
     height: ${(p) => p.imgSize || "28px"};
     border: ${(p) => `1px solid ${p.imgBorder}`};
     border-radius: 50%;
-    object-fit: contain;
+    object-fit: cover;
     margin-right: 0.4rem;
   }
 
@@ -36,6 +36,7 @@ const Section = styled.div<styleProps>`
 
 interface userchipProps {
   name: string;
+  photo?: string;
   imgBorder?: string;
   textColor?: string;
   imgSize?: string;
@@ -44,6 +45,7 @@ interface userchipProps {
 
 const UserChip = ({
   name,
+  photo,
   imgBorder,
   textColor,
   imgSize,
@@ -56,7 +58,7 @@ const UserChip = ({
       imgSize={imgSize}
       textSize={textSize}
     >
-      <img src={zoro} alt="user-img" />
+      <img src={photo ? photo : zoro} alt="user-img" />
       <span>{name}</span>
     </Section>
   );

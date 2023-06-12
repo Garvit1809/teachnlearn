@@ -93,15 +93,18 @@ const cardDetails = [
 ];
 
 interface learnCardProps {
+  _id: string;
   createdBy: {
     name: string;
     photo: string;
+    id: string;
   };
   subject: string;
   topic: string;
   programme: string;
   standard: string;
   dueDate: string;
+  interestedStudents: string[];
   preferredLanguage: string;
   description: string;
   expectations: string[];
@@ -112,26 +115,29 @@ const Requests = () => {
   const [learnCards, setLearnCards] = useState<Array<learnCardProps>>();
 
   const fetchLearnCards = async () => {
-    await axios.get(`${BASE_URL}${apiVersion}/learn`).then(({data}) => {
-      console.log(data);
+    await axios.get(`${BASE_URL}${apiVersion}/learn`).then(({ data }) => {
+      console.log(data.data.data);
+      const learnCardData = data.data.data;
+      setLearnCards(learnCardData);
     });
   };
 
   useEffect(() => {
-    fetchLearnCards()
-  }, [])
-  
+    fetchLearnCards();
+  }, []);
 
   return (
     <>
       <Navbar />
       <Section>
         <Intro />
-        <CardGrid>
-          {cardDetails.map((card, index) => {
-            return <LearnCard key={index} {...card} />;
-          })}
-        </CardGrid>
+        {learnCards ? (
+          <CardGrid>
+            {learnCards.map((card, index) => {
+              return <LearnCard key={index} {...card} />;
+            })}
+          </CardGrid>
+        ) : null}
       </Section>
       <FooterWrapper />
     </>

@@ -18,16 +18,17 @@ router
   .route("/")
   .get(teachingCardController.getAllTeachCards)
   .post(protect, teachingCardController.createTeachCard);
-
 // top 5 teach Cards --> interested
 
-router.get('/:teachCardId', teachingCardController.getOneTeachCard);
+router.get("/:teachCardId", teachingCardController.getOneTeachCard);
 
 router.use(protect);
 
-router.patch('/:teachCardId/enroll', teachingCardController.enrollInClass);
+router.patch(
+  "/:teachCardId/interested",
+  teachingCardController.interestedInTeachCard
+);
+
+router.patch("/:teachCardId/enroll", teachingCardController.enrollInClass);
 
 module.exports = router;
-
-
-

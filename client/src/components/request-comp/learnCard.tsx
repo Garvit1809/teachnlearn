@@ -2,16 +2,18 @@ import React from "react";
 import styled from "styled-components";
 import UserChip from "../general-components/userChip";
 import { InterestedIcon, PurchaseCoinIcon } from "../general-components/svg";
+import { getReadableTime } from "../../utils/helperFunctions";
+import { useNavigate } from "react-router-dom";
 
 const Section = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 22px;
-  gap: 16px;
+  gap: 18px;
   background: #674ff1;
   border-radius: 16px;
-  cursor: pointer;
+  /* cursor: pointer; */
   font-family: "Nunito";
   transition: all 0.15s linear;
   font-family: "Nunito";
@@ -40,10 +42,13 @@ const Topic = styled.div`
   font-size: 24px;
   line-height: 33px;
   color: #ffffff;
+  max-height: 65px;
+  /*  */
+  /* border: 1px solid white; */
+  white-space: wrap;
 `;
 
 const Stats = styled.div`
-  /* border: 1px solid white; */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -77,64 +82,91 @@ const TagBox = styled.div`
   div {
     /* border: 1px solid white; */
     padding: 6px 8px;
-    border-radius: 8px;
+    border-radius: 4px;
     background-color: white;
   }
 `;
 
 const DateCont = styled.div`
   /* border: 1px solid white; */
-
   font-weight: 500;
   font-size: 16px;
   line-height: 22px;
   color: #ffffff;
 `;
 
-const RequestWrapper = styled.div`
+// const RequestWrapper = styled.div`
+//   border: 1px solid red;
+//   width: 100%;
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+// `;
+
+const ExpandButton = styled.div`
   /* border: 1px solid red; */
   width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
+  button {
+    /* margin-right: rem; */
+    outline: none;
+    cursor: pointer;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+  }
 `;
 
 interface requestCardProps {
+  _id: string;
+  createdBy: {
+    name: string;
+    photo: string;
+    id: string;
+  };
   subject: string;
-  title: string;
-  author: string;
-  interested?: number;
+  topic: string;
+  programme: string;
+  standard: string;
+  dueDate: string;
+  interestedStudents: string[];
   preferredLanguage: string;
-  coins?: number;
   description: string;
   expectations: string[];
   tags: string[];
-  dueDate: string;
 }
 
 const LearnCard = (props: requestCardProps) => {
+  const navigate = useNavigate();
+
+  const leanrCardOverviewNavigator = () => {
+    navigate(`/learncard-overview/${props._id}`);
+  };
+
   return (
     <Section>
       <Subject>
         <h4>{props.subject}</h4>
       </Subject>
       <Topic>
-        <span>{props.title}</span>
+        <span>{props.topic}</span>
       </Topic>
-      <RequestWrapper>
-        <UserChip name={props.author} imgBorder="#FFFFFF" textColor="#FFFFFF" />
-        <DateCont>
-          <span>Due - {props.dueDate}</span>
-        </DateCont>
-      </RequestWrapper>
+      <UserChip
+        name={props.createdBy.name}
+        photo={props.createdBy.photo}
+        imgBorder="#FFFFFF"
+        textColor="#FFFFFF"
+      />
       <Stats>
         <div>
           <InterestedIcon />
-          <span>{props.interested} Interested</span>
+          <span>{props.interestedStudents.length} Interested</span>
         </div>
         <div>
-          <PurchaseCoinIcon />
-          <span>{props.coins} Coins</span>
+          <DateCont>
+            <span>Due - {getReadableTime(props.dueDate)}</span>
+          </DateCont>
         </div>
       </Stats>
       <TagBox>
@@ -146,6 +178,11 @@ const LearnCard = (props: requestCardProps) => {
           );
         })}
       </TagBox>
+      <ExpandButton>
+        <button type="button" onClick={leanrCardOverviewNavigator}>
+          Expand -{">"}
+        </button>
+      </ExpandButton>
     </Section>
   );
 };

@@ -17,9 +17,11 @@ exports.createTeachCard = catchAsync(async (req, res, next) => {
   const {
     subject,
     topic,
-    educationLevel,
+    programme,
     standard,
     date,
+    preferredLanguage,
+    cardBanner,
     classStartsAt,
     classEndsAt,
     description,
@@ -31,8 +33,10 @@ exports.createTeachCard = catchAsync(async (req, res, next) => {
   if (
     !subject &&
     !topic &&
-    !educationLevel &&
+    !programme &&
     !standard &&
+    !preferredLanguage &&
+    !cardBanner &&
     !date &&
     !classStartsAt &&
     !classEndsAt &&
@@ -52,8 +56,10 @@ exports.createTeachCard = catchAsync(async (req, res, next) => {
     createdBy: userID,
     subject,
     topic,
-    educationLevel,
+    programme,
     standard,
+    preferredLanguage,
+    cardBanner,
     isLearningCardReferred: false,
     date,
     classStartsAt,
@@ -70,24 +76,24 @@ exports.createTeachCard = catchAsync(async (req, res, next) => {
     );
   }
 
-  const newClassroom = await Classroom.create({
-    admin: userID,
-    teachingCard: newTeachCard.id,
-    chatName: newTeachCard.topic,
-    classStartsAt: newTeachCard.classStartsAt,
-    classEndsAt: newTeachCard.classEndsAt,
-  });
+  // const newClassroom = await Classroom.create({
+  //   admin: userID,
+  //   teachingCard: newTeachCard.id,
+  //   chatName: newTeachCard.topic,
+  //   classStartsAt: newTeachCard.classStartsAt,
+  //   classEndsAt: newTeachCard.classEndsAt,
+  // });
 
-  if (!newClassroom) {
-    return next(
-      new AppError("Couldnt create the classroom!! Please file a report!")
-    );
-  }
+  // if (!newClassroom) {
+  //   return next(
+  //     new AppError("Couldnt create the classroom!! Please file a report!")
+  //   );
+  // }
 
   res.status(201).json({
     status: "success",
     newTeachCard,
-    newClassroom,
+    // newClassroom,
   });
 });
 
@@ -172,18 +178,16 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
       new AppError("Couldnt add you to the classroom!! Some error occurred!!")
     );
   }
-  
+
   const newTransaction = await TransactionHistory.create({
     paidBy: userId,
     amount: classPrice,
     transferredTo: teachCard.createdBy,
     cardEnrolled: teachCard.id,
-  })
+  });
 
   if (!newTransaction) {
-    return next(
-      new AppError("Transaction couldnt be made!!")
-    );
+    return next(new AppError("Transaction couldnt be made!!"));
   }
 
   const updatedUser = await User.findByIdAndUpdate(
@@ -220,6 +224,55 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.topTeachCards = catchAsync(async(req,res,next) => {
-  
-})
+exports.interestedInTeachCard = catchAsync(async (req, res, next) => {
+  const userId = req.user.id;
+
+  const teachCardId = req.params.teachCardId;
+
+  const teachCard = await TeachingCard.findById(teachCardId);
+  const interestedStudents = teachCard.interestedStudents;
+  const isAlreadyInterested = interestedStudents.includes(userId);
+
+  if (isAlreadyInterested) {
+    return next(
+      new AppError(
+        "User is already in the interested users for the Learn Card!!"
+      )
+    );
+  }
+
+  const updatedLearnCard = await LearningCard.findByIdAndUpdate(
+    teachCardId,
+    {
+      $push: { interestedStudents: userId },
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  if (!updatedLearnCard) {
+    return next(new AppError("Learn Card couldnt be updated!! Try again!"));
+  }
+
+  res.status(200).json({
+    status: "success",
+    updatedLearnCard,
+  });
+});
+
+exports.getUserEnrolledClasses = catchAsync(async (req, res, next) => {
+  const userId = req.user.id;
+
+  const enrolledClasses = await TeachingCard.find({
+    studentsEnrolled: { $in: [userId] },
+  });
+
+  res.status(200).json({
+    status: "success",
+    enrolledClasses,
+  });
+});
+
+exports.topTeachCards = catchAsync(async (req, res, next) => {});
