@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import styled from "styled-components";
 import ClassroomCard from "../../components/classroom-comp/classroomCard";
 import Navbar from "../../components/general-components/navbar";
@@ -7,6 +7,8 @@ import HorizontalNavigator from "../../components/general-components/horizontalN
 import Footer from "../../components/general-components/footer/footer";
 import Classroom from "../../components/classroom-comp/classroom";
 import ClassroomGrid from "../../components/classroom-comp/classroomGrid";
+import axios from "axios";
+import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 
 const Section = styled.div`
   /* display: grid; */
@@ -18,9 +20,36 @@ const Section = styled.div`
   gap: 2.5rem;
 `;
 
-const Classrooms = () => {
+export interface teachCardProps {
+  announcements: string[];
+  callLink: string;
+  cardBanner: string;
+  classStartsAt: string;
+  classEndsAt: string;
+  createdBy: {
+    name: string;
+    photo: string;
+    _id: string;
+  };
+  date: string;
+  description: string;
+  expectations: string[];
+  interestedStudents: string[];
+  isLearningCardReferred: boolean;
+  preferredLanguage: string;
+  price: number;
+  programme: string;
+  standard: string;
+  studentsEnrolled: string[];
+  subject: string;
+  tags: string[];
+  topic: string;
+  _id: string;
+}
 
+const Classrooms = () => {
   const [activeLink, setActiveLink] = useState("all classes");
+  // const [element, setElement] = useState<ReactElement>(<Overview />);
 
   // useEffect(() => {
   //   if (activeLink == "overview") {
@@ -32,21 +61,36 @@ const Classrooms = () => {
   //   }
   // }, [activeLink]);
 
-  // const [element, setElement] = useState<ReactElement>(<Overview />);
-
   const navigationHandler = (navigateTo: string) => {
     setActiveLink(navigateTo);
   };
 
-  const labels = ['all classes', 'upcoming', 'completed']
+  const labels = ["all classes", "upcoming", "completed"];
+
+  const [teachCards, setTeachCards] = useState<Array<teachCardProps>>();
+
+  async function fetchTeachCards() {
+    await axios.get(`${BASE_URL}${apiVersion}/teach`).then(({ data }) => {
+      console.log(data.data.data);
+      setTeachCards(data.data.data);
+    });
+  }
+
+  useEffect(() => {
+    fetchTeachCards();
+  }, []);
 
   return (
     <>
       <Navbar />
       <Section>
         <Intro />
-        <HorizontalNavigator activeLink={activeLink} labelArr={labels} navigationHandler={navigationHandler}  />
-        <ClassroomGrid />
+        <HorizontalNavigator
+          activeLink={activeLink}
+          labelArr={labels}
+          navigationHandler={navigationHandler}
+        />
+        {teachCards && <ClassroomGrid teachCards={teachCards} />}
         <Footer />
       </Section>
     </>

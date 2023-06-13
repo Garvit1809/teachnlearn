@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { localStorageUser } from "./globalConstants";
 
-interface userProps {
+export interface userProps {
   _id: string;
   name: string;
   userName: string;
@@ -10,8 +10,8 @@ interface userProps {
   email: string;
   enrolledProgramme: string;
   phoneNumber: string;
-  // classesEnrolled: string[];
-  // classesTaken: string[];
+  classesEnrolled: string[];
+  classesTaken: string[];
   interestedSubjects: string[];
   strongSubjects: string[];
   preferredLanguages: string[];

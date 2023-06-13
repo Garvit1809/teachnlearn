@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ClassroomCard from "./classroomCard";
+import { teachCardProps } from "../../pages/classroom/classrooms";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -10,7 +11,11 @@ const Section = styled.div`
   row-gap: 4rem;
 `;
 
-const ClassroomGrid = () => {
+interface gridProps {
+  teachCards: Array<teachCardProps>
+}
+
+const ClassroomGrid = (props: gridProps) => {
   const cardSizes = {
     hasAnimation: true,
     imageHeight: "180px",
@@ -26,11 +31,18 @@ const ClassroomGrid = () => {
 
   return (
     <Section>
+      {
+        props.teachCards.map((teachCard,index) => {
+          return (
+            <ClassroomCard cssArr={cardSizes} teachCard={teachCard} />
+          )
+        })
+      }
+      {/* <ClassroomCard cssArr={cardSizes} />
       <ClassroomCard cssArr={cardSizes} />
       <ClassroomCard cssArr={cardSizes} />
       <ClassroomCard cssArr={cardSizes} />
-      <ClassroomCard cssArr={cardSizes} />
-      <ClassroomCard cssArr={cardSizes} />
+      <ClassroomCard cssArr={cardSizes} /> */}
     </Section>
   );
 };

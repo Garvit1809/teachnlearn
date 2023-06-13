@@ -12,7 +12,7 @@ import { InputWrapper } from "../../pages/authentication/userInfoForm";
 import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunctions";
-import { UserCookie } from "../../utils/userCookie";
+import {  } from "../../utils/";
 
 const Section = styled.div`
   border: 1px solid red;
@@ -175,7 +175,7 @@ const initialData: learnCardDetails = {
 const CreateLearnCard = () => {
   const [learnCard, setLearnCard] = useState<learnCardDetails>(initialData);
   const [token, setToken] = useState("");
-  const { fetchLocalUserToken } = UserCookie();
+  const { fetchLocalUserToken } = ();
 
   useEffect(() => {
     fetchLocalUserToken().then((token) => {

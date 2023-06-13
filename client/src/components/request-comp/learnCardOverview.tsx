@@ -10,19 +10,21 @@ import { learnCardProps } from "../../pages/requests/requests";
 import TimeCapsule from "../classroom-comp/timeCapsule";
 import UserChip from "../general-components/userChip";
 import DetailsContainer from "../classroom-comp/detailsContainer";
-import { InterestedIcon } from "../general-components/svg";
+import { Arrow, InterestedIcon } from "../general-components/svg";
 
 const Section = styled.div`
   /* border: 1px solid brown; */
   padding: 0 6.3vw;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   margin-top: 2.5rem;
+  gap: 2rem;
 `;
 
 const TopicCont = styled.div`
   /* border: 1px solid red; */
+  margin: 0 auto;
   width: 60%;
   display: flex;
   align-items: center;
@@ -40,6 +42,40 @@ const OverviewContainer = styled.div`
   display: grid;
   grid-template-columns: 1.3fr 3fr;
   column-gap: 4rem;
+`;
+
+const LeftContainer = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.6rem;
+`;
+
+const CreateTeachCardBtn = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  /* padding-left: 1.5rem; */
+
+  button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 18px 40px;
+    gap: 10px;
+    width: fit-content;
+    background: #332ad5;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 25px;
+    color: #ffffff;
+  }
 `;
 
 const LearnCardDetailContainer = styled.div`
@@ -102,6 +138,13 @@ const TagCont = styled.div`
   }
 `;
 
+const TeachCardsOnLearnCard = styled.div`
+h2{
+  border-bottom: 1px solid black;
+  width: fit-content;
+}
+`;
+
 const LearnCardOverview = () => {
   const [learnCardId, setLearnCardId] = useState();
   const [learnCard, setlearnCard] = useState<learnCardProps>();
@@ -139,18 +182,26 @@ const LearnCardOverview = () => {
             <h2>{learnCard.topic}</h2>
           </TopicCont>
           <OverviewContainer>
-            <LearnCardDetailContainer>
-              <TimeCapsule />
-              <TagCont>
-                {learnCard.tags.map((tag, index) => {
-                  return (
-                    <div key={index}>
-                      <span>{tag}</span>
-                    </div>
-                  );
-                })}
-              </TagCont>
-            </LearnCardDetailContainer>
+            <LeftContainer>
+              <LearnCardDetailContainer>
+                <TimeCapsule />
+                <TagCont>
+                  {learnCard.tags.map((tag, index) => {
+                    return (
+                      <div key={index}>
+                        <span>{tag}</span>
+                      </div>
+                    );
+                  })}
+                </TagCont>
+              </LearnCardDetailContainer>
+              <CreateTeachCardBtn>
+                <button type="button">
+                  <span>Create teach Card</span>
+                  <Arrow strokeColor="#FFFFFF" />
+                </button>
+              </CreateTeachCardBtn>
+            </LeftContainer>
             <CardOverview>
               <ChipContainer>
                 <UserChip
@@ -167,6 +218,9 @@ const LearnCardOverview = () => {
               <DetailsContainer />
             </CardOverview>
           </OverviewContainer>
+          <TeachCardsOnLearnCard>
+            <h2>Teach Cards on this Learn Card</h2>
+          </TeachCardsOnLearnCard>
         </Section>
         <FooterWrapper />
       </>

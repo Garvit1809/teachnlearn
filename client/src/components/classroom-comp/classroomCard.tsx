@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   Arrow,
@@ -7,6 +7,8 @@ import {
 } from "../general-components/svg";
 import UserChip from "../general-components/userChip";
 import { useNavigate } from "react-router-dom";
+import { teachCardProps } from "../../pages/classroom/classrooms";
+import { UserCookie, userProps } from "../../utils/userCookie";
 
 const Section = styled.div<cardAnimationProps>`
   box-shadow: 0px 20px 24px -4px rgba(16, 24, 40, 0.08),
@@ -165,6 +167,7 @@ const Coins = styled.div<buttonProps>`
 
 interface classCardProps {
   cssArr?: obj;
+  teachCard: teachCardProps;
 }
 
 interface obj {
@@ -187,30 +190,50 @@ const ClassroomCard = (props: classCardProps) => {
   const navigate = useNavigate();
 
   const enrollClassNavigator = () => {
-    navigate("/classes/class/1");
+    navigate(`/classes/class/${props.teachCard._id}`);
+  };
+
+  const { fetchLocalUserData } = UserCookie();
+
+  const [localUser, setLocalUser] = useState<userProps>();
+
+  useEffect(() => {
+    fetchLocalUserData().then((data) => {
+      setLocalUser(data);
+    });
+  }, []);
+
+  const checkEnrolledClass = () => {
+    const bool = localUser?.classesEnrolled.includes(props.teachCard._id);
+    console.log(bool);
+    return bool;
   };
 
   return (
     <Section hasAnimation={props.cssArr?.hasAnimation}>
       <ImageContainer imgHeight={props.cssArr?.imageHeight}>
-        <img src={link} alt="" />
+        <img
+          src={props.teachCard.cardBanner ? props.teachCard.cardBanner : link}
+          alt=""
+        />
       </ImageContainer>
       <DetailContainer gapSize={props.cssArr?.gap}>
         <Header headerSize={props.cssArr?.headerSize}>
-          <h4>Web Development</h4>
+          <h4>{props.teachCard.subject}</h4>
           <Interested headerSize={props.cssArr?.headerSize}>
             <InterestedIcon />
-            <span>22 enrolled</span>
+            <span>{props.teachCard.studentsEnrolled.length} enrolled</span>
           </Interested>
         </Header>
         <Title
           titleSize={props.cssArr?.titleSize}
           titleLineHeight={props.cssArr?.titleLineHeight}
         >
-          Get started in Web Development and get selected in MH Fellowsip
+          {props.teachCard.topic}
         </Title>
         <UserChip
-          name="Garvit Varshney"
+          name={props.teachCard.createdBy.name}
+          photo={props.teachCard.createdBy.photo}
           imgBorder="#000000"
           textColor="#000000"
           imgSize={props.cssArr?.userChipImgSize}
@@ -221,16 +244,18 @@ const ClassroomCard = (props: classCardProps) => {
             onClick={enrollClassNavigator}
             btnSize={props.cssArr?.btnSize}
           >
-            <span>Enroll Now</span>
+            <span>{checkEnrolledClass() ? "Check Class" : "Enroll Now"}</span>
             <Arrow strokeColor="white" />
           </EnrollBtn>
-          <Coins
-            svgSize={props.cssArr?.svgSize}
-            btnSize={props.cssArr?.btnSize}
-          >
-            <PurchaseCoinIcon color="black" />
-            <span>200 Coins</span>
-          </Coins>
+          {!checkEnrolledClass() ? (
+            <Coins
+              svgSize={props.cssArr?.svgSize}
+              btnSize={props.cssArr?.btnSize}
+            >
+              <PurchaseCoinIcon color="black" />
+              <span>{props.teachCard.price} Coins</span>
+            </Coins>
+          ) : null}
         </EnrollCont>
       </DetailContainer>
     </Section>
