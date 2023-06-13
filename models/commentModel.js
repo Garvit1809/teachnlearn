@@ -10,6 +10,10 @@ const commentSchema = mongoose.Schema({
     trim: true,
     required: [true, "Please provide the comment content!!"],
   },
+  announcement: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Announcement",
+  },
 });
 
 commentSchema.pre(/^find/, function (next) {

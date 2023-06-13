@@ -94,24 +94,21 @@ exports.createTeachCard = catchAsync(async (req, res, next) => {
     );
   }
 
-  // const newClassroom = await Classroom.create({
-  //   admin: userID,
-  //   teachingCard: newTeachCard.id,
-  //   chatName: newTeachCard.topic,
-  //   classStartsAt: newTeachCard.classStartsAt,
-  //   classEndsAt: newTeachCard.classEndsAt,
-  // });
-
-  // if (!newClassroom) {
-  //   return next(
-  //     new AppError("Couldnt create the classroom!! Please file a report!")
-  //   );
-  // }
+  const newUser = await User.findByIdAndUpdate(
+    userID,
+    {
+      $push: { classesTaken: newTeachCard.id },
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
 
   res.status(201).json({
     status: "success",
     newTeachCard,
-    // newClassroom,
+    newUser,
   });
 });
 

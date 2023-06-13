@@ -1,12 +1,12 @@
 const express = require("express");
-// const learningCardController = require("../controllers/announcementController");
+const commentController = require("../controllers/commentController");
 const { protect } = require("../controllers/authController");
 
 const router = express.Router({ mergeParams: true });
 
-router.use(protect);
-
-// get comment
-// post comment
+router
+  .route("/")
+  .get(commentController.getAllComments)
+  .post(commentController.postComment);
 
 module.exports = router;

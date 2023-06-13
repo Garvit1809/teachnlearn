@@ -2,11 +2,15 @@ const Announcement = require("../models/announcementModel");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 
-exposts.restricToAdmin = () => {
-  const classroomId = req.params.classroomId;
+exports.restricToAdmin = (req, res, next) => {
+  const teachingCardId = req.params.teachingCardId;
   const userClassesTaken = req.user.classesTaken;
 
-  const restriction = !userClassesTaken.includes(classroomId);
+  console.log(userClassesTaken);
+
+  const restriction = !userClassesTaken.includes(teachingCardId);
+
+  console.log(restriction);
 
   if (restriction) {
     return next(new AppError("User are not the admin of this classroom!!"));
@@ -16,9 +20,9 @@ exposts.restricToAdmin = () => {
 };
 
 exports.getAllAnnouncements = catchAsync(async (req, res, next) => {
-  const classroomId = req.params.classroomId;
+  const teachingCardId = req.params.teachingCardId;
 
-  const announcements = await Announcement.find({ classroom: classroomId });
+  const announcements = await Announcement.find({ classroom: teachingCardId });
 
   if (!announcements) {
     return next(new AppError("Unable to get the announcements!!"));
@@ -31,25 +35,22 @@ exports.getAllAnnouncements = catchAsync(async (req, res, next) => {
 });
 
 exports.postAnnouncement = catchAsync(async (req, res, next) => {
-  const classroomId = req.params.classroomId;
+  const teachingCardId = req.params.teachingCardId;
   const userId = req.user.id;
-  const { content, fileUpload } = req.body;
+  const { content } = req.body;
 
   const newAnnouncement = await Announcement.create({
-    classroom: classroomId,
+    classroom: teachingCardId,
     sender: userId,
     content,
-    fileUpload,
   });
 
-  if(!newAnnouncement) {
-    return next(new AppError('Announcement couldnt be created!!'))
+  if (!newAnnouncement) {
+    return next(new AppError("Announcement couldnt be created!!"));
   }
 
   res.status(201).json({
-    status: 'success',
-    newAnnouncement
-  })
+    status: "success",
+    newAnnouncement,
+  });
 });
-
-// exports.updateAnnouncement = catchAsync()
