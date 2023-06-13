@@ -9,7 +9,25 @@ const TransactionHistory = require("../models/transactionHistoryModel");
 
 // filter cards acccoriding to their start date
 exports.getAllTeachCards = factory.getAll(TeachingCard);
-exports.getOneTeachCard = factory.getOne(TeachingCard);
+exports.getTeachCardOverview = factory.getOne(TeachingCard);
+
+exports.getOneTeachCard = catchAsync(async (req, res, next) => {
+  const teachCardId = req.params.teachCardId;
+
+  const teachCard = await TeachingCard.findById(teachCardId).populate({
+    path: "announcemets",
+    fields: "content comments",
+  });
+
+  if (!teachCard) {
+    new AppError("No such teach card exist with that ID!");
+  }
+
+  res.status(200).json({
+    status: "success",
+    teachCard,
+  });
+});
 
 exports.createTeachCard = catchAsync(async (req, res, next) => {
   const userID = req.user.id;

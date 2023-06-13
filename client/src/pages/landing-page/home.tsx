@@ -85,7 +85,7 @@ const Home = () => {
       <Navbar />
       <Section>
         <Intro />
-        <Popular />
+        {/* <Popular /> */}
         <ClassSectionWrapper
           heading="Classes recommended for you!"
           cardArr={cardDetails}

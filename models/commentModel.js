@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const messageSchema = mongoose.Schema({
+const commentSchema = mongoose.Schema({
   author: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
@@ -12,6 +12,14 @@ const messageSchema = mongoose.Schema({
   },
 });
 
-const Comment = mongoose.model("Comment", messageSchema);
+commentSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "author",
+    select: "name photo",
+  });
+  next();
+});
+
+const Comment = mongoose.model("Comment", commentSchema);
 
 module.exports = Comment;

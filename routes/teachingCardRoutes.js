@@ -11,14 +11,16 @@
 const express = require("express");
 const teachingCardController = require("../controllers/teachingCardController");
 const { protect } = require("../controllers/authController");
+const announcementRouter = require("./announcementRouter");
 
 const router = express.Router();
+
+router.use("/:teachingCardId/announcements", announcementRouter);
 
 router
   .route("/")
   .get(teachingCardController.getAllTeachCards)
   .post(protect, teachingCardController.createTeachCard);
-// top 5 teach Cards --> interested
 
 router.get("/:teachCardId", teachingCardController.getOneTeachCard);
 

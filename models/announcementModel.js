@@ -4,7 +4,7 @@ const announcementSchema = mongoose.Schema(
   {
     classroom: {
       type: mongoose.Schema.ObjectId,
-      ref: "Classroom",
+      ref: "TeachingCard",
     },
     sender: {
       type: mongoose.Schema.ObjectId,
@@ -13,10 +13,6 @@ const announcementSchema = mongoose.Schema(
     content: {
       type: String,
       trim: true,
-    },
-    fileUpload: {
-      type: String,
-      default: null,
     },
     comments: [
       {
@@ -29,4 +25,5 @@ const announcementSchema = mongoose.Schema(
 );
 
 const Announcement = mongoose.model("Announcement", announcementSchema);
+
 module.exports = Announcement;
