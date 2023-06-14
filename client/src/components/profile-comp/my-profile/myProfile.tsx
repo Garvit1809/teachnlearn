@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import UserImg from "../../../assets/userImg.png";
 import ModeToggle from "../modeToggle";
 import EditBtn from "./editBtn";
 import InfoWrapper from "./infoWrapper";
@@ -117,7 +116,7 @@ const userDetails = {
   },
 };
 
-interface userProps {
+export interface userProps {
   _id: string;
   name: string;
   userName: string;
@@ -126,16 +125,39 @@ interface userProps {
   email: string;
   enrolledProgramme: string;
   phoneNumber: string;
-  // classesEnrolled: string[];
-  // classesTaken: string[];
+  classesEnrolled: string[];
+  classesTaken: string[];
+  interestedSubject: string;
   interestedSubjects: string[];
+  strongSubject: string;
   strongSubjects: string[];
+  language: string;
   preferredLanguages: string[];
   token: string;
 }
 
+const initialData: userProps = {
+  _id: "",
+  name: "",
+  userName: "",
+  photo: "",
+  tagline: "",
+  email: "",
+  enrolledProgramme: "",
+  phoneNumber: "",
+  classesEnrolled: [],
+  classesTaken: [],
+  interestedSubject: "",
+  interestedSubjects: [],
+  strongSubject: "",
+  strongSubjects: [],
+  language: "",
+  preferredLanguages: [],
+  token: "",
+};
+
 const MyProfile = () => {
-  const [localUser, setLocalUser] = useState<userProps>();
+  const [localUser, setLocalUser] = useState<userProps>(initialData);
 
   async function fetchLocalUserData() {
     const data = await JSON.parse(
@@ -148,7 +170,15 @@ const MyProfile = () => {
     fetchLocalUserData();
   }, []);
 
-  return localUser ? (
+  function updateFields(fields: Partial<userProps>) {
+    if (localUser) {
+      setLocalUser((prev) => {
+        return { ...prev, ...fields };
+      });
+    }
+  }
+
+  return localUser._id.length != 0 ? (
     <Section>
       <Header>
         <Heading>My profile</Heading>
@@ -166,16 +196,20 @@ const MyProfile = () => {
       </UserContainer>
       <ProfileStats></ProfileStats>
       <ContactInfo
-        password="kcnkwjcd"
-        email={localUser.email}
         username={localUser.userName}
+        email={localUser.email}
         phone={localUser.phoneNumber}
+        updateFields={updateFields}
       />
       <AcademicInfo
         course={localUser.enrolledProgramme}
+        strongSubjects={localUser.strongSubjects}
+        interestedSubject={localUser.interestedSubject}
+        interstedSubjects={localUser.interestedSubjects}
+        language={localUser.language}
+        strongSubject={localUser.strongSubject}
         preferredLanguages={localUser.preferredLanguages}
-        interstedSub={localUser.interestedSubjects}
-        strongSub={localUser.strongSubjects}
+        updateFields={updateFields}
       />
     </Section>
   ) : (

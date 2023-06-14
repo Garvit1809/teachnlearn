@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import EditBtn from "./editBtn";
+import Modal from "react-modal";
+import AcademicInfoModal from "./profileModals/academicInfoModal";
 
 const Section = styled.div`
   display: flex;
@@ -8,9 +10,6 @@ const Section = styled.div`
   align-items: flex-start;
   padding: 30px 28px;
   gap: 18px;
-
-  /* width: 764px; */
-  /* height: 312px; */
   border: 1px solid #d5d9eb;
   border-radius: 32px;
 `;
@@ -34,9 +33,8 @@ const Header = styled.div`
 const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 3fr 4fr;
-  /* grid-template-columns: auto auto; */
   row-gap: 1rem;
-  /* border: 1px solid red; */
+  column-gap: 1.5rem;
   width: 100%;
 
   div {
@@ -75,46 +73,91 @@ const Tag = styled.div`
   border-radius: 12px;
 `;
 
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    overflow: 'auto',
+    height: '80vh'
+  },
+};
+
 interface AcademicProps {
-    course: string;
-    interstedSub: Array<string>;
-    strongSub: string[];
-    preferredLanguages: string[];
+  course: string;
+  strongSubject: string;
+  strongSubjects: string[];
+  interestedSubject: string;
+  interstedSubjects: Array<string>;
+  language: string;
+  preferredLanguages: string[];
+  updateFields: any;
 }
 
 const AcademicInfo = (props: AcademicProps) => {
-  return (
-    <Section>
-      <Header>
-        <h4>Academic Information</h4>
-        <EditBtn />
-      </Header>
-      <Wrapper>
-        {Object.values(props).map((item, index) => {
-          const currentKey = Object.keys(props)[index];
-          console.log(Array.isArray(item));
+  const [modalIsOpen, setIsOpen] = useState(false);
 
-          if (!Array.isArray(item)) {
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  return (
+    <>
+      <Section>
+        <Header>
+          <h4>Academic Information</h4>
+          <EditBtn onClickFunc={openModal} />
+        </Header>
+        <Wrapper>
+          {Object.values(props).map((item, index) => {
+            const currentKey = Object.keys(props)[index];
+            console.log(Array.isArray(item));
+
+            if (!Array.isArray(item)) {
+              return (
+                <div>
+                  <h4>Course</h4>
+                  <span>{props.course}</span>
+                </div>
+              );
+            }
             return (
               <div>
-                <h4>Course</h4>
-                <span>{props.course}</span>
+                <h4>{currentKey}</h4>
+                <Tags>
+                  {item?.map((sub, index) => {
+                    return <Tag key={index}>{sub}</Tag>;
+                  })}
+                </Tags>
               </div>
             );
-          }
-          return (
-            <div>
-              <h4>{currentKey}</h4>
-              <Tags>
-                {item?.map((sub, index) => {
-                  return <Tag key={index}>{sub}</Tag>;
-                })}
-              </Tags>
-            </div>
-          );
-        })}
-      </Wrapper>
-    </Section>
+          })}
+        </Wrapper>
+      </Section>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+      >
+        <AcademicInfoModal
+          course={props.course}
+          interestedSubject={props.interestedSubject}
+          interstedSubjects={props.interstedSubjects}
+          strongSubject={props.strongSubject}
+          strongSubjects={props.strongSubjects}
+          language={props.language}
+          preferredLanguages={props.preferredLanguages}
+          updateFields={props.updateFields}
+        />
+      </Modal>
+    </>
   );
 };
 

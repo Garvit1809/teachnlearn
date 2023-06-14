@@ -28,9 +28,13 @@ const Section = styled.div`
   }
 `;
 
-const EditBtn = () => {
+interface editProps {
+  onClickFunc?: any;
+}
+
+const EditBtn = (props: editProps) => {
   return (
-    <Section>
+    <Section onClick={props.onClickFunc}>
       <div>
         <span>Edit</span>
         <EditIcon />

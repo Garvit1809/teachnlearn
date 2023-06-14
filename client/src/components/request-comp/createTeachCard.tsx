@@ -146,32 +146,32 @@ const CreateTeachCard = () => {
     e.preventDefault();
     console.log(teachCard);
 
-    await axios
-      .post(
-        `${BASE_URL}${apiVersion}/teach`,
-        {
-          subject: teachCard.subject,
-          topic: teachCard.topic,
-          programme: teachCard.programme,
-          standard: teachCard.standard,
-          preferredLanguage: teachCard.preferredLanguage,
-          description: teachCard.description,
-          expectations: teachCard.expectations,
-          tags: teachCard.tags,
-          date: teachCard.date,
-          cardBanner: teachCard.img,
-          price: teachCard.price,
-          classStartsAt: teachCard.startingTime,
-          classEndsAt: teachCard.endingTime,
-        },
-        {
-          headers: getHeaders(token ?? ""),
-        }
-      )
-      .then(({ data }) => {
-        console.log(data);
-        setTeachCard(initialData);
-      });
+    // await axios
+    //   .post(
+    //     `${BASE_URL}${apiVersion}/teach`,
+    //     {
+    //       subject: teachCard.subject,
+    //       topic: teachCard.topic,
+    //       programme: teachCard.programme,
+    //       standard: teachCard.standard,
+    //       preferredLanguage: teachCard.preferredLanguage,
+    //       description: teachCard.description,
+    //       expectations: teachCard.expectations,
+    //       tags: teachCard.tags,
+    //       date: teachCard.date,
+    //       cardBanner: teachCard.img,
+    //       price: teachCard.price,
+    //       classStartsAt: teachCard.startingTime,
+    //       classEndsAt: teachCard.endingTime,
+    //     },
+    //     {
+    //       headers: getHeaders(token ?? ""),
+    //     }
+    //   )
+    //   .then(({ data }) => {
+    //     console.log(data);
+    //     setTeachCard(initialData);
+    //   });
   };
 
   return (
@@ -268,7 +268,7 @@ const CreateTeachCard = () => {
           <FormField
             elem={
               <input
-                type="time"
+                type="datetime-local"
                 name="startingTime"
                 id="date"
                 value={teachCard.startingTime}
@@ -280,7 +280,7 @@ const CreateTeachCard = () => {
           <FormField
             elem={
               <input
-                type="time"
+                type="datetime-local"
                 name="endingTime"
                 id="date"
                 value={teachCard.endingTime}

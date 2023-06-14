@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import EditBtn from "./editBtn";
 import InfoWrapper from "./infoWrapper";
+import Modal from "react-modal";
+import ContactInfoModal from "./profileModals/contactInfoModal";
 
 const Section = styled.div`
   display: flex;
@@ -9,9 +11,6 @@ const Section = styled.div`
   align-items: flex-start;
   padding: 30px 28px;
   gap: 18px;
-
-  /* width: 764px; */
-  /* height: 312px; */
   border: 1px solid #d5d9eb;
   border-radius: 32px;
 `;
@@ -19,7 +18,6 @@ const Section = styled.div`
 const Header = styled.div`
   display: flex;
   align-items: flex-start;
-  /* border: 1px solid red; */
   width: 100%;
   justify-content: space-between;
 
@@ -36,7 +34,7 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 3fr 4fr;
   row-gap: 1rem;
-  /* border: 1px solid red; */
+  column-gap: 1.5rem;
   width: 100%;
 
   div {
@@ -59,36 +57,71 @@ const Wrapper = styled.div`
   }
 `;
 
+export const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+
 interface ContactProps {
-    username: string;
-    password: string;
-    email: string;
-    phone: string;
+  username: string;
+  email: string;
+  phone: string;
+  updateFields: any;
 }
 
 const ContactInfo = (props: ContactProps) => {
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   return (
-    <Section>
-      <Header>
-        <h4>Contact Information</h4>
-        <EditBtn />
-      </Header>
-      <Wrapper>
-        {Object.values(props).map((item, index) => {
-          const currentKey = Object.keys(props)[index];
-          return (
-            <div>
-              <h4>{currentKey}</h4>
-              {currentKey == "password" ? (
-                <span>{Array(item.length + 1).join("*")}</span>
-              ) : (
-                <span>{item}</span>
-              )}
-            </div>
-          );
-        })}
-      </Wrapper>
-    </Section>
+    <>
+      <Section>
+        <Header>
+          <h4>Contact Information</h4>
+          <EditBtn onClickFunc={openModal} />
+        </Header>
+        <Wrapper>
+          <div>
+            <h4>Username</h4>
+            <span>{props.username}</span>
+          </div>
+          <div>
+            <h4>Email</h4>
+            <span>{props.email}</span>
+          </div>
+          <div>
+            <h4>Phone Number</h4>
+            <span>{props.phone}</span>
+          </div>
+        </Wrapper>
+      </Section>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <ContactInfoModal
+          email={props.email}
+          phone={props.phone}
+          username={props.username}
+          updateFields={props.updateFields}
+        />
+      </Modal>
+    </>
   );
 };
 

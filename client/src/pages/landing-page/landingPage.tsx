@@ -15,6 +15,7 @@ import Footer from "../../components/general-components/footer/footer";
 import wave from "../../assets/wave.png";
 import wave2 from "../../assets/wave2.png";
 import { navigateTo } from "../../utils/navigationHook";
+import YoutubeLinks from "../../components/home-comp/youtubeLinks";
 
 const Section = styled.div`
   display: flex;
@@ -81,6 +82,7 @@ const AuthButton = styled.div`
   font-size: 16px;
   line-height: 22px;
   color: #2b2c34;
+  cursor: pointer;
 `;
 
 const BlogHeader = styled.div`
@@ -329,6 +331,7 @@ const LandingPage = () => {
           <img src={wave2} alt="" />
         </div>
       </WaveCont>
+      <YoutubeLinks />
       <Footer />
     </>
   );

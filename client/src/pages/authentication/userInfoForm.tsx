@@ -54,8 +54,8 @@ const UserInfoForm = (props: UserInfoFormProps) => {
   return (
     <Section>
       <form action="">
-        <UploadImage />
-        <Inputholder
+        {/* <UploadImage  /> */}
+        <Inputholder 
           type="text"
           label="Phone Number"
           value={props.number}

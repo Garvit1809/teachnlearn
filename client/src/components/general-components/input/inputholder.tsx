@@ -75,8 +75,8 @@ interface inputProps {
   type: string;
   label: string;
   name: string;
-  allSubjects?: string[];
-  updateFields: (fields: Partial<USERDATA>) => void;
+  // updateFields: (fields: Partial<USERDATA>) => void;
+  updateFields: any;
 }
 
 const Inputholder = (props: inputProps) => {

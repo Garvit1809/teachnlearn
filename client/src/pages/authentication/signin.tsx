@@ -93,8 +93,6 @@ const Signin = () => {
     password: "",
   });
 
-  const { fetchLocalUserData } = UserCookie();
-
   function updateFields(fields: Partial<loginDataProps>) {
     setLoginData((prev) => {
       return { ...prev, ...fields };

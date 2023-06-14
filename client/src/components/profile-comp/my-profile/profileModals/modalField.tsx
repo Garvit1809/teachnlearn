@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React from 'react'
+import styled from 'styled-components';
 
 const Section = styled.div`
   display: grid;
@@ -27,17 +27,17 @@ const ElementWrapper = styled.div`
 `;
 
 interface fieldProps {
-  inputDesc: string;
-  elem: JSX.Element;
-}
+    inputDesc: string;
+    elem: JSX.Element;
+  }
 
-const FormField = (props: fieldProps) => {
+const ModalField = () => {
   return (
     <Section>
-      <h3>{props.inputDesc}</h3>
-      <ElementWrapper>{props.elem}</ElementWrapper>
+      {/* <h3>{props.inputDesc}</h3> */}
+      {/* <ElementWrapper>{props.elem}</ElementWrapper> */}
     </Section>
-  );
-};
+  )
+}
 
-export default FormField;
+export default ModalField
