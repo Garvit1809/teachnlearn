@@ -139,10 +139,10 @@ const TagCont = styled.div`
 `;
 
 const TeachCardsOnLearnCard = styled.div`
-h2{
-  border-bottom: 1px solid black;
-  width: fit-content;
-}
+  h2 {
+    border-bottom: 1px solid black;
+    width: fit-content;
+  }
 `;
 
 const LearnCardOverview = () => {
@@ -174,9 +174,9 @@ const LearnCardOverview = () => {
   }, [learnCardId]);
 
   return (
-    learnCard && (
-      <>
-        <Navbar />
+    <>
+      <Navbar />
+      {learnCard ? (
         <Section>
           <TopicCont>
             <h2>{learnCard.topic}</h2>
@@ -222,9 +222,11 @@ const LearnCardOverview = () => {
             <h2>Teach Cards on this Learn Card</h2>
           </TeachCardsOnLearnCard>
         </Section>
-        <FooterWrapper />
-      </>
-    )
+      ) : (
+        <h3>Loading...</h3>
+      )}
+      <FooterWrapper />
+    </>
   );
 };
 

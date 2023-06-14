@@ -13,14 +13,28 @@ import CreateLearnCard from "./components/request-comp/createLearnCard";
 import CreateTeachCard from "./components/request-comp/createTeachCard";
 import Requests from "./pages/requests/requests";
 import LearnCardOverview from "./components/request-comp/learnCardOverview";
+import { UserCookie } from "./utils/userCookie";
+import { useEffect } from "react";
+import LandingPage from "./pages/landing-page/landingPage";
 
 function App() {
+  const { fetchLocalUserData, localUser } = UserCookie();
+
+  useEffect(() => {
+    console.log("Checking");
+    fetchLocalUserData();
+  }, []);
+
   return (
     <div className="App">
       <Routes>
         <Route path="/signup" element={<NewSignup />} />
         <Route path="/signin" element={<Signin />} />
-        <Route path="/" element={<Home />} />
+        {localUser ? (
+          <Route path="/" element={<Home />} />
+        ) : (
+          <Route path="/" element={<LandingPage />} />
+        )}
         <Route path="/forum" element={<Forum />} />
         <Route path="/forum/:id" element={<SingleForum />} />
         <Route path="/classes" element={<Classrooms />} />

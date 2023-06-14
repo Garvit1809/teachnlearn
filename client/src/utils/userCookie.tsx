@@ -30,8 +30,8 @@ export function UserCookie() {
     const data = await JSON.parse(
       localStorage.getItem(localStorageUser) || "{}"
     );
-    console.log(data);
-    // setLocalUser(data);
+    // console.log(data);
+    setLocalUser(data);
     return data;
   }
 
