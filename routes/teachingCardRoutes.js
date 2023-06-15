@@ -12,10 +12,12 @@ const express = require("express");
 const teachingCardController = require("../controllers/teachingCardController");
 const { protect } = require("../controllers/authController");
 const announcementRouter = require("./announcementRouter");
+const reviewRouter = require("./reviewRoutes");
 
 const router = express.Router();
 
 router.use("/:teachingCardId/announcements", announcementRouter);
+router.use("/:teachingCardId/reviews", reviewRouter);
 
 router
   .route("/")

@@ -4,6 +4,11 @@ const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 
 require("./models/announcementModel");
+require("./models/commentModel");
+require("./models/learningCardModel");
+require("./models/reviewModel");
+require("./models/teachingCardModel");
+require("./models/userModel");
 
 const authRouter = require("./routes/authRoutes");
 const userRouter = require("./routes/userRoutes");

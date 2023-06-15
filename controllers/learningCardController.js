@@ -3,7 +3,6 @@ const factory = require("./handlerFactory");
 const LearningCard = require("../models/learningCardModel");
 const TeachingCard = require("../models/teachingCardModel");
 const AppError = require("../utils/appError");
-const Classroom = require("../models/classroomModel");
 
 exports.getAllLearnCards = factory.getAll(LearningCard);
 exports.getOneLearnCard = factory.getOne(LearningCard);

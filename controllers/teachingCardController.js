@@ -4,7 +4,6 @@ const AppError = require("../utils/appError");
 
 const TeachingCard = require("../models/teachingCardModel");
 const User = require("../models/userModel");
-const Classroom = require("../models/classroomModel");
 const TransactionHistory = require("../models/transactionHistoryModel");
 
 // filter cards acccoriding to their start date
@@ -175,25 +174,6 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
     );
   }
 
-  const updatedClassroom = await Classroom.findOneAndUpdate(
-    {
-      teachingCard: teachCardId,
-    },
-    {
-      $push: { enrolledUsers: userId },
-    },
-    {
-      new: true,
-      runValidators: true,
-    }
-  );
-
-  if (!updatedClassroom) {
-    return next(
-      new AppError("Couldnt add you to the classroom!! Some error occurred!!")
-    );
-  }
-
   const newTransaction = await TransactionHistory.create({
     paidBy: userId,
     amount: classPrice,
@@ -213,6 +193,7 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
         classesEnrolled: {
           class: updatedClassroom.id,
           isReviewed: false,
+          endsAt: teachCard.classEndsAt,
         },
         transactionHistory: newTransaction.id,
       },
@@ -234,7 +215,6 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
   res.status(201).json({
     status: "success",
     updatedTeachCard,
-    updatedClassroom,
     updatedUser,
   });
 });

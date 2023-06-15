@@ -11,9 +11,10 @@ const reviewSchema = new mongoose.Schema(
       min: 1,
       max: 5,
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
+    classroom: {
+      type: mongoose.Schema.ObjectId,
+      ref: "TeachingCard",
+      required: [true, "Review must belong to a Classroom."],
     },
     teacher: {
       type: mongoose.Schema.ObjectId,
@@ -26,11 +27,22 @@ const reviewSchema = new mongoose.Schema(
       required: [true, "Review must belong to a user"],
     },
   },
+  { timestamps: true },
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
   }
 );
+
+reviewSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "user",
+    select: "name photo",
+  }).populate({
+    path: "teacher",
+    select: "name photo",
+  });
+});
 
 const Review = mongoose.model("Review", reviewSchema);
 

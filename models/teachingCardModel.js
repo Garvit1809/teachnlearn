@@ -48,11 +48,11 @@ const teachingCardSchema = new mongoose.Schema(
       required: [true, "Please provide date for the class"],
     },
     classStartsAt: {
-      type: String,
+      type: Date,
       required: [true, "Please provide the timing for the class start"],
     },
     classEndsAt: {
-      type: String,
+      type: Date,
       required: [true, "Please provide the timing for the class start"],
       validate: [
         function (value) {
@@ -105,6 +105,12 @@ const teachingCardSchema = new mongoose.Schema(
         ref: "Announcement",
       },
     ],
+    // reviews: [
+    //   {
+    //     type: mongoose.Schema.ObjectId,
+    //     ref: "Review",
+    //   },
+    // ],
   },
   { timestamps: true }
 );
@@ -122,7 +128,17 @@ teachingCardSchema.pre(/^find/, function (next) {
       path: "referredLearningCard",
       select: "subject topic createdBy",
     });
+  // .populate({
+  //   path: "reviews",
+  //   select: "rating review user",
+  // });
   next();
+});
+
+teachingCardSchema.virtual("reviews", {
+  ref: "Review",
+  foreignField: "classroom",
+  localField: "_id",
 });
 
 const TeachingCard = mongoose.model("TeachingCard", teachingCardSchema);
