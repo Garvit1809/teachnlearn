@@ -16,6 +16,7 @@ import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import axios from "axios";
 import { UserCookie } from "../../utils/userCookie";
 import { getHeaders } from "../../utils/helperFunctions";
+import { useLocation } from "react-router-dom";
 
 const Section = styled.div`
   border: 1px solid red;
@@ -122,6 +123,35 @@ const initialData: teachCardDetails = {
 
 const CreateTeachCard = () => {
   const [teachCard, setTeachCard] = useState<teachCardDetails>(initialData);
+  const [learnCardId, setLearnCardId] = useState<string>();
+  const [isLearnCardReferred, setIsLearnCardReferred] =
+    useState<boolean>(false);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log(location.state);
+
+    const navProps = location.state;
+
+    if (location.state) {
+      setTeachCard((prev) => {
+        return {
+          ...prev,
+          subject: navProps.subject,
+          topic: navProps.topic,
+          programme: navProps.programme,
+          standard: navProps.standard,
+          description: navProps.description,
+          expectations: navProps.expectations,
+          tags: navProps.tags,
+        };
+      });
+      // console.log(location);
+      setLearnCardId(navProps.learnCardId);
+      setIsLearnCardReferred(true);
+    }
+  }, [location]);
 
   const [token, setToken] = useState("");
   const { fetchLocalUserToken } = UserCookie();
@@ -146,39 +176,71 @@ const CreateTeachCard = () => {
     e.preventDefault();
     console.log(teachCard);
 
-    // await axios
-    //   .post(
-    //     `${BASE_URL}${apiVersion}/teach`,
-    //     {
-    //       subject: teachCard.subject,
-    //       topic: teachCard.topic,
-    //       programme: teachCard.programme,
-    //       standard: teachCard.standard,
-    //       preferredLanguage: teachCard.preferredLanguage,
-    //       description: teachCard.description,
-    //       expectations: teachCard.expectations,
-    //       tags: teachCard.tags,
-    //       date: teachCard.date,
-    //       cardBanner: teachCard.img,
-    //       price: teachCard.price,
-    //       classStartsAt: teachCard.startingTime,
-    //       classEndsAt: teachCard.endingTime,
-    //     },
-    //     {
-    //       headers: getHeaders(token ?? ""),
-    //     }
-    //   )
-    //   .then(({ data }) => {
-    //     console.log(data);
-    //     setTeachCard(initialData);
-    //   });
+    await axios
+      .post(
+        `${BASE_URL}${apiVersion}/teach`,
+        {
+          subject: teachCard.subject,
+          topic: teachCard.topic,
+          programme: teachCard.programme,
+          standard: teachCard.standard,
+          preferredLanguage: teachCard.preferredLanguage,
+          description: teachCard.description,
+          expectations: teachCard.expectations,
+          tags: teachCard.tags,
+          date: teachCard.date,
+          cardBanner: teachCard.img,
+          price: teachCard.price,
+          classStartsAt: teachCard.startingTime,
+          classEndsAt: teachCard.endingTime,
+        },
+        {
+          headers: getHeaders(token ?? ""),
+        }
+      )
+      .then(({ data }) => {
+        console.log(data);
+        setTeachCard(initialData);
+      });
+  };
+
+  const teachCardOnLeanrCardHandler = async (e: any) => {
+    await axios
+      .post(
+        `${BASE_URL}${apiVersion}/learn/${learnCardId}/teach`,
+        {
+          subject: teachCard.subject,
+          topic: teachCard.topic,
+          programme: teachCard.programme,
+          standard: teachCard.standard,
+          preferredLanguage: teachCard.preferredLanguage,
+          description: teachCard.description,
+          expectations: teachCard.expectations,
+          tags: teachCard.tags,
+          date: teachCard.date,
+          cardBanner: teachCard.img,
+          price: teachCard.price,
+          classStartsAt: teachCard.startingTime,
+          classEndsAt: teachCard.endingTime,
+        },
+        {
+          headers: getHeaders(token ?? ""),
+        }
+      )
+      .then(({ data }) => {
+        console.log(data);
+        setTeachCard(initialData);
+      });
   };
 
   return (
     <>
       <Navbar />
       <Section>
-        <BackBtn />
+        <BackBtn
+          link={learnCardId ? `/learncard-overview/${learnCardId}` : "/"}
+          cardId={learnCardId ? learnCardId : undefined}
+        />
         <h2>Let's get started with your Teach Card</h2>
         <form>
           <FormField
@@ -195,8 +257,7 @@ const CreateTeachCard = () => {
           />
           <FormField
             elem={
-              <Inputholder
-                type="text"
+              <Textarea
                 label="Topic"
                 value={teachCard.topic}
                 name="topic"
@@ -290,9 +351,7 @@ const CreateTeachCard = () => {
             inputDesc="Specify end timing for the lesson"
           />
           <FormField
-            elem={
-              <UploadImage updateFields={updateFields} />
-            }
+            elem={<UploadImage updateFields={updateFields} />}
             inputDesc="Upload a cover image for your class"
           />
           <FormField
@@ -340,7 +399,14 @@ const CreateTeachCard = () => {
           />
         </form>
         <FormButtonCont>
-          <button type="submit" onClick={teachCardHandler}>
+          <button
+            type="submit"
+            onClick={
+              isLearnCardReferred
+                ? teachCardOnLeanrCardHandler
+                : teachCardHandler
+            }
+          >
             Create Teach Card
           </button>
         </FormButtonCont>

@@ -84,7 +84,7 @@ const Textarea = (props: inputProps) => {
     if (props.value?.trim().length > 0) {
       setisValid(true);
     }
-  }, []);
+  }, [props]);
 
   const inputhandler = (e: any) => {
     props.updateFields({ [e.target.name]: e.target.value });

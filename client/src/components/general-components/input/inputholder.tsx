@@ -92,7 +92,7 @@ const Inputholder = (props: inputProps) => {
         setisValid(true);
       }
     }
-  }, []);
+  }, [props]);
 
   const inputhandler = (e: any) => {
     props.updateFields({ [e.target.name]: e.target.value });

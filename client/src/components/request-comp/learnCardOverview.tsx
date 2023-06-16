@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../general-components/navbar";
 import FooterWrapper from "../general-components/footer/footerWrapper";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import LearnCard from "./learnCard";
@@ -11,6 +11,7 @@ import TimeCapsule from "../classroom-comp/timeCapsule";
 import UserChip from "../general-components/userChip";
 import DetailsContainer from "../classroom-comp/detailsContainer";
 import { Arrow, InterestedIcon } from "../general-components/svg";
+import { teachCardProps } from "../../pages/classroom/classrooms";
 
 const Section = styled.div`
   /* border: 1px solid brown; */
@@ -148,6 +149,7 @@ const TeachCardsOnLearnCard = styled.div`
 const LearnCardOverview = () => {
   const [learnCardId, setLearnCardId] = useState();
   const [learnCard, setlearnCard] = useState<learnCardProps>();
+  const [teachCards, setTeachCards] = useState<Array<teachCardProps>>();
 
   const location = useLocation();
   useEffect(() => {
@@ -166,12 +168,41 @@ const LearnCardOverview = () => {
       });
   }
 
+  async function fetchTeachCardsOnLearnCard() {
+    await axios
+      .get(`${BASE_URL}${apiVersion}/learn/${learnCardId}/teach`)
+      .then(({ data }) => {
+        console.log(data.data.data);
+        setTeachCards(data.data.data);
+      });
+  }
+
   useEffect(() => {
     if (learnCardId) {
       console.log(learnCardId);
       fetchLearnCard();
+      fetchTeachCardsOnLearnCard();
     }
   }, [learnCardId]);
+
+  const navigate = useNavigate();
+
+  const teachCardNavigator = () => {
+    if (learnCard) {
+      navigate("/create-teach-request", {
+        state: {
+          learnCardId: learnCard._id,
+          subject: learnCard.subject,
+          topic: learnCard.topic,
+          programme: learnCard.programme,
+          standard: learnCard.standard,
+          description: learnCard.description,
+          expectations: learnCard.expectations,
+          tags: learnCard.tags,
+        },
+      });
+    }
+  };
 
   return (
     <>
@@ -196,7 +227,7 @@ const LearnCardOverview = () => {
                 </TagCont>
               </LearnCardDetailContainer>
               <CreateTeachCardBtn>
-                <button type="button">
+                <button type="button" onClick={teachCardNavigator}>
                   <span>Create teach Card</span>
                   <Arrow strokeColor="#FFFFFF" />
                 </button>
@@ -218,9 +249,14 @@ const LearnCardOverview = () => {
               <DetailsContainer />
             </CardOverview>
           </OverviewContainer>
-          <TeachCardsOnLearnCard>
-            <h2>Teach Cards on this Learn Card</h2>
-          </TeachCardsOnLearnCard>
+          {teachCards?.length != 0 ? (
+            <TeachCardsOnLearnCard>
+              <h2>Teach Cards on this Learn Card</h2>
+              {
+                
+              }
+            </TeachCardsOnLearnCard>
+          ) : null}
         </Section>
       ) : (
         <h3>Loading...</h3>

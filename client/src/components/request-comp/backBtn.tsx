@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { BackArrowIcon } from "../general-components/svg";
 
@@ -29,13 +29,28 @@ const Section = styled.div`
   }
 `;
 
-const BackBtn = () => {
+interface backProps {
+  link: string;
+  cardId?: string;
+}
+
+const BackBtn = (props: backProps) => {
+  const navigate = useNavigate();
+
+  const navigationHandler = () => {
+    if (props.cardId) {
+      navigate(`/learncard-overview/${props.cardId}`, {
+        state: { learnCardId: props.cardId },
+      });
+    } else {
+      navigate(props.link);
+    }
+  };
+
   return (
-    <Section>
-      <Link to="/">
-        <BackArrowIcon />
-        <span>Back</span>
-      </Link>
+    <Section onClick={navigationHandler}>
+      <BackArrowIcon />
+      <span>Back</span>
     </Section>
   );
 };
