@@ -14,6 +14,7 @@ import { Arrow, InterestedIcon } from "../general-components/svg";
 import { teachCardProps } from "../../pages/classroom/classrooms";
 import ClassroomCard from "../classroom-comp/classroomCard";
 import { cardSizes } from "../classroom-comp/classroomGrid";
+import BackBtn from "./backBtn";
 
 const Section = styled.div`
   /* border: 1px solid brown; */
@@ -222,6 +223,7 @@ const LearnCardOverview = () => {
       <Navbar />
       {learnCard ? (
         <Section>
+          <BackBtn link="/requests"/>
           <TopicCont>
             <h2>{learnCard.topic}</h2>
           </TopicCont>

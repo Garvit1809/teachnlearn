@@ -29,12 +29,12 @@ const Section = styled.div`
   margin: 2.5rem auto;
   display: flex;
   flex-direction: column;
-  /* gap: 20px; */
+  gap: 2rem;
 
   h2 {
     font-family: "Nunito";
     font-style: normal;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
   }
 
   form {

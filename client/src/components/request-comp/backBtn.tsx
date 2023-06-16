@@ -9,14 +9,10 @@ const Section = styled.div`
 
   padding: 10px 14px;
   border-radius: 42px;
-  margin-bottom: 2.5rem;
-
-  a {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 6px;
-  }
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
 
   span {
     font-family: "Nunito";
