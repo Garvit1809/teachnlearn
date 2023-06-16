@@ -190,10 +190,6 @@ const ClassroomCard = (props: classCardProps) => {
 
   const navigate = useNavigate();
 
-  const enrollClassNavigator = () => {
-    navigate(`/classes/class/${props.teachCard._id}`);
-  };
-
   const { fetchLocalUserData } = UserCookie();
 
   const [localUser, setLocalUser] = useState<userProps>();
@@ -208,6 +204,22 @@ const ClassroomCard = (props: classCardProps) => {
     const bool = localUser?.classesEnrolled.includes(props.teachCard._id);
     console.log(bool);
     return bool;
+  };
+
+  const enrollClassNavigator = () => {
+    if (checkEnrolledClass()) {
+      navigate(`/classes/class/${props.teachCard._id}`, {
+        state: {
+          classroomId: props.teachCard._id,
+        },
+      });
+    } else {
+      navigate(`/class-overviw/${props.teachCard._id}`, {
+        state: {
+          classroomId: props.teachCard._id,
+        },
+      });
+    }
   };
 
   return (

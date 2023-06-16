@@ -39,8 +39,8 @@ const ChipContainer = styled.div`
 const Overview = () => {
   return (
     <>
-      <ClassBanner />
-      <OverviewContainer>
+      {/* <ClassBanner  /> */}
+      {/* <OverviewContainer>
         <CallDetailContainer>
           <TimeCapsule />
           <JoinCall />
@@ -51,7 +51,7 @@ const Overview = () => {
           </ChipContainer>
           <DetailsContainer />
         </ClassOverview>
-      </OverviewContainer>
+      </OverviewContainer> */}
     </>
   );
 };

@@ -19,7 +19,7 @@ const ImageContainer = styled.div`
 
 const Title = styled.div`
   /* border: 1px solid white; */
-  
+
   position: absolute;
   bottom: 2rem;
   left: 1.5rem;
@@ -31,17 +31,23 @@ const Title = styled.div`
   width: 50%;
 `;
 
-const ClassBanner = () => {
+interface bannerProps {
+  img: string;
+  title: string;
+}
+
+const ClassBanner = ({ img, title }: bannerProps) => {
   return (
     <Section>
       <ImageContainer>
         <img
-          src="https://images.unsplash.com/photo-1511376777868-611b54f68947?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
+          // src="https://images.unsplash.com/photo-1511376777868-611b54f68947?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
+          src={img}
           alt="class-banner-img"
         />
       </ImageContainer>
       <Title>
-        <h3>Web Development Essentials - Crash Course from scratch</h3>
+        <h3>{title}</h3>
       </Title>
     </Section>
   );

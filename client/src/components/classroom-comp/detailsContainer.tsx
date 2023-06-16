@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const Section = styled.div`
   p {
@@ -30,33 +30,31 @@ const Section = styled.div`
   }
 `;
 
-const DetailsContainer = () => {
-  return (
-    <Section>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat
-              explicabo cupiditate recusandae debitis vel quaerat, dignissimos
-              eum ipsa perferendis reprehenderit sunt optio laboriosam quis at
-              veniam reiciendis sit atque expedita repudiandae hic sint
-              assumenda vero. Pariatur consectetur distinctio eos eius?
-            </p>
-            <h3>After this Class, students would be able to :-</h3>
-            <ul>
-              <li>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Voluptatibus ea cumque vero facere ipsam necessitatibus!
-              </li>
-              <li>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Voluptatibus ea cumque vero facere ipsam necessitatibus!
-              </li>
-              <li>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Voluptatibus ea cumque vero facere ipsam necessitatibus!
-              </li>
-            </ul>
-          </Section>
-  )
+interface detailProps {
+  desciption: string;
+  expectations: string[];
 }
 
-export default DetailsContainer
+const DetailsContainer = (props: detailProps) => {
+  return (
+    <Section>
+      <p>
+        {props.desciption}
+      </p>
+      <h3>After this Class, students would be able to :-</h3>
+      <ul>
+        {
+          props.expectations.map((expectation,index) => {
+            return (
+              <li key={index} >
+                {expectation}
+              </li>
+            )
+          })
+        }
+      </ul>
+    </Section>
+  );
+};
+
+export default DetailsContainer;

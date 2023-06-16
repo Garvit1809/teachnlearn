@@ -10,6 +10,23 @@ const TransactionHistory = require("../models/transactionHistoryModel");
 exports.getAllTeachCards = factory.getAll(TeachingCard);
 exports.getTeachCardOverview = factory.getOne(TeachingCard);
 
+exports.getTeachCardOverview = catchAsync(async (req, res, next) => {
+  const teachCardId = req.params.teachCardId;
+
+  const teachCard = await TeachingCard.findById(teachCardId).select(
+    "-announcemets"
+  );
+
+  if (!teachCard) {
+    new AppError("No such teach card exist with that ID!");
+  }
+
+  res.status(200).json({
+    status: "success",
+    teachCard,
+  });
+});
+
 exports.getOneTeachCard = catchAsync(async (req, res, next) => {
   const teachCardId = req.params.teachCardId;
 

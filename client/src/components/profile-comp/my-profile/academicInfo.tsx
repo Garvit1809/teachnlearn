@@ -116,29 +116,6 @@ const AcademicInfo = (props: AcademicProps) => {
           <EditBtn onClickFunc={openModal} />
         </Header>
         <Wrapper>
-          {/* {Object.values(props).map((item, index) => {
-            const currentKey = Object.keys(props)[index];
-            console.log(Array.isArray(item));
-
-            if (!Array.isArray(item)) {
-              return (
-                <div>
-                  <h4>Course</h4>
-                  <span>{props.course}</span>
-                </div>
-              );
-            }
-            return (
-              <div>
-                <h4>{currentKey}</h4>
-                <Tags>
-                  {item?.map((sub, index) => {
-                    return <Tag key={index}>{sub}</Tag>;
-                  })}
-                </Tags>
-              </div>
-            );
-          })} */}
           <div>
             <h4>Course</h4>
             <span>{props.course}</span>

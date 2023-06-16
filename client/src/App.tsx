@@ -16,6 +16,7 @@ import LearnCardOverview from "./components/request-comp/learnCardOverview";
 import { UserCookie } from "./utils/userCookie";
 import { useEffect } from "react";
 import LandingPage from "./pages/landing-page/landingPage";
+import ClassroomOverview from "./pages/classroom/classroomOverview";
 
 function App() {
   const { fetchLocalUserData, localUser } = UserCookie();
@@ -38,6 +39,7 @@ function App() {
         <Route path="/forum" element={<Forum />} />
         <Route path="/forum/:id" element={<SingleForum />} />
         <Route path="/classes" element={<Classrooms />} />
+        <Route path="/class-overviw/:id" element={<ClassroomOverview />} />
         <Route path="/classes/class/:id" element={<SingleClassroom />} />
         <Route path="/requests" element={<Requests />} />
         <Route

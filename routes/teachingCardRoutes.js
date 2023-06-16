@@ -25,6 +25,10 @@ router
   .post(protect, teachingCardController.createTeachCard);
 
 router.get("/:teachCardId", teachingCardController.getOneTeachCard);
+router.get(
+  "/:teachCardId/overview",
+  teachingCardController.getTeachCardOverview
+);
 
 router.use(protect);
 
