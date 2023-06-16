@@ -70,7 +70,6 @@ const userSchema = new mongoose.Schema({
   coins: {
     type: Number,
     default: 1000000,
-    select: false,
   },
   classesEnrolled: [
     {

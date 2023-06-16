@@ -6,7 +6,7 @@ const transactionHistorySchema = mongoose.Schema({
     ref: "User",
   },
   amount: {
-    type: Boolean,
+    type: Number,
     required: [true, "Please specify the amount that has been transferred!!"],
   },
   transferredTo: {

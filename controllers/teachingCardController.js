@@ -126,12 +126,28 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
   // add him to the enrolled field
   // cut pay
 
+  // add check for date
+
   const userId = req.user.id;
   const userCoins = req.user.coins;
   const teachCardId = req.params.teachCardId;
 
   const teachCard = await TeachingCard.findById(teachCardId);
   const classPrice = teachCard.price;
+  const teacher = teachCard.createdBy;
+
+  const currentDate = new Date();
+  const endDate = teachCard.classEndsAt;
+
+  if (endDate < currentDate) {
+    return next(
+      new AppError("Cannot enroll in the class, class has already ended!!")
+    );
+  }
+
+  if (userId == teacher) {
+    return next(new AppError("Teacher cannot enroll in thier own class"));
+  }
 
   const enrolledCheck = teachCard.studentsEnrolled.filter((student) => {
     console.log(student.id.valueOf());
@@ -191,7 +207,7 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
       coins: userCoins - classPrice,
       $push: {
         classesEnrolled: {
-          class: updatedClassroom.id,
+          class: teachCard.id,
           isReviewed: false,
           endsAt: teachCard.classEndsAt,
         },
@@ -267,6 +283,42 @@ exports.getUserEnrolledClasses = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     enrolledClasses,
+  });
+});
+
+exports.getUpcomingClasses = catchAsync(async (req, res, next) => {
+  const userId = req.user.id;
+
+  const currentDate = new Date();
+
+  console.log(currentDate);
+
+  const upcomingClasses = await TeachingCard.find({
+    studentsEnrolled: { $in: [userId] },
+    classEndsAt: { $gte: currentDate },
+  });
+
+  res.status(200).json({
+    status: "success",
+    upcomingClasses,
+  });
+});
+
+exports.getCompletedClasses = catchAsync(async (req, res, next) => {
+  const userId = req.user.id;
+
+  const currentDate = new Date();
+
+  console.log(currentDate);
+
+  const completedClasses = await TeachingCard.find({
+    studentsEnrolled: { $in: [userId] },
+    classEndsAt: { $lte: currentDate },
+  });
+
+  res.status(200).json({
+    status: "success",
+    completedClasses,
   });
 });
 
