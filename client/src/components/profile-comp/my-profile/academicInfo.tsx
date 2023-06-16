@@ -81,8 +81,8 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    overflow: 'auto',
-    height: '80vh'
+    overflow: "auto",
+    height: "80vh",
   },
 };
 
@@ -116,7 +116,7 @@ const AcademicInfo = (props: AcademicProps) => {
           <EditBtn onClickFunc={openModal} />
         </Header>
         <Wrapper>
-          {Object.values(props).map((item, index) => {
+          {/* {Object.values(props).map((item, index) => {
             const currentKey = Object.keys(props)[index];
             console.log(Array.isArray(item));
 
@@ -138,7 +138,35 @@ const AcademicInfo = (props: AcademicProps) => {
                 </Tags>
               </div>
             );
-          })}
+          })} */}
+          <div>
+            <h4>Course</h4>
+            <span>{props.course}</span>
+          </div>
+          <div>
+            <h4>Strong Subjects</h4>
+            <Tags>
+              {props.strongSubjects?.map((sub, index) => {
+                return <Tag key={index}>{sub}</Tag>;
+              })}
+            </Tags>
+          </div>
+          <div>
+            <h4>Interested Subjects</h4>
+            <Tags>
+              {props.interstedSubjects?.map((sub, index) => {
+                return <Tag key={index}>{sub}</Tag>;
+              })}
+            </Tags>
+          </div>
+          <div>
+            <h4>Preferred Languages</h4>
+            <Tags>
+              {props.preferredLanguages?.map((sub, index) => {
+                return <Tag key={index}>{sub}</Tag>;
+              })}
+            </Tags>
+          </div>
         </Wrapper>
       </Section>
       <Modal

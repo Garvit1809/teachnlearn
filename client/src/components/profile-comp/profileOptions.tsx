@@ -68,54 +68,33 @@ const profileOptions = [
     label: "MyProfile",
     icon: <MyProfileIcon />,
   },
-  {
-    option: "Purchase Coins",
-    label: "PurchaseCoins",
-    icon: <CoinsIcon />,
-  },
-  {
-    option: "Invite Friends",
-    label: "InviteFriends",
-    icon: <FriendsIcon />,
-  },
-  {
-    option: "Redeem Items",
-    label: "redeem",
-    icon: <RedeemIcon />,
-  },
+  // {
+  //   option: "Purchase Coins",
+  //   label: "PurchaseCoins",
+  //   icon: <CoinsIcon />,
+  // },
+  // {
+  //   option: "Invite Friends",
+  //   label: "InviteFriends",
+  //   icon: <FriendsIcon />,
+  // },
+  // {
+  //   option: "Redeem Items",
+  //   label: "redeem",
+  //   icon: <RedeemIcon />,
+  // },
 ];
 
 interface optionsProps {
   setSelectedLeftScreen: React.Dispatch<React.SetStateAction<string>>;
-  // setElement: React.Dispatch<
-  //   React.SetStateAction<
-  //     ReactElement<any, string | React.JSXElementConstructor<any>>
-  //   >
-  // >;
 }
 
 const ProfileOptions = ({ setSelectedLeftScreen }: optionsProps) => {
-
   const [selectedOption, setSelectedOption] = useState("MyProfile");
 
   const menuOptionHandler = (label: string) => {
     setSelectedOption(label);
-
-    // if (selectedOption == "MyProfile") {
-    //   setElement(<MyProfile />);
-    // } else if (selectedOption == "PurchaseCoins") {
-    //   setElement(<PurchaseCoins />);
-    // } else if (selectedOption == "InviteFriends") {
-    //   setElement(<InviteFriends />);
-    // }
-    setSelectedLeftScreen(label)
-
-    // if (selectedOption === 'MyProfile') {
-    //   setSelectedLeftScreen(label)
-    // } else if (selectedOption === 'PurchaseCoins') {
-    //   setSelectedLeftScreen(label)
-    // }
-
+    setSelectedLeftScreen(label);
   };
   return (
     <Section>

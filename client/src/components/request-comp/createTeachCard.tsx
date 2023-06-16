@@ -290,7 +290,9 @@ const CreateTeachCard = () => {
             inputDesc="Specify end timing for the lesson"
           />
           <FormField
-            elem={<UploadImage updateFields={updateFields} />}
+            elem={
+              <UploadImage updateFields={updateFields} />
+            }
             inputDesc="Upload a cover image for your class"
           />
           <FormField

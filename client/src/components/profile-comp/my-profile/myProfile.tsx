@@ -4,9 +4,11 @@ import styled from "styled-components";
 import ModeToggle from "../modeToggle";
 import EditBtn from "./editBtn";
 import InfoWrapper from "./infoWrapper";
-import ContactInfo from "./contactInfo";
+import ContactInfo, { customStyles } from "./contactInfo";
 import AcademicInfo from "./academicInfo";
 import { localStorageUser } from "../../../utils/globalConstants";
+import Modal from "react-modal";
+import UserInfoModal from "./profileModals/userInfoModal";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -91,31 +93,6 @@ const UserDetails = styled.div`
 
 const ProfileStats = styled.div``;
 
-const userDetails = {
-  name: "Ethan Alexander",
-  // img: UserImg,
-  tagline:
-    "B. Tech Artificial Intelligence student and part-time Web Developer B. Tech Artificial Intelligence student and part-time Web Developer",
-  profileStats: {
-    taught: 24,
-    attended: 10,
-    rating: 4.3,
-    coins: 400,
-  },
-  contactInfo: {
-    username: "ethanalex",
-    email: "ethanalex@gmail.com",
-    password: "qwerty",
-    phone: "9405619352",
-  },
-  academics: {
-    course: "Electronic and Communication Engineering",
-    interstedSub: ["Finance", "Web Dev", "Trading", "Quant"],
-    strongSub: ["Web Dev", "Javascript", "Frontend", "AWS"],
-    preferredLanguages: ["English", "Hindi"],
-  },
-};
-
 export interface userProps {
   _id: string;
   name: string;
@@ -178,6 +155,16 @@ const MyProfile = () => {
     }
   }
 
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   return localUser._id.length != 0 ? (
     <Section>
       <Header>
@@ -190,9 +177,25 @@ const MyProfile = () => {
         </ImageContainer>
         <UserDetails>
           <h4>{localUser.name}</h4>
-          <p>{localUser.tagline}</p>
+          {localUser.tagline ? (
+            <p>{localUser.tagline}</p>
+          ) : (
+            <p>Add Tagline for your profile ...</p>
+          )}
         </UserDetails>
-        <EditBtn />
+        <EditBtn onClickFunc={openModal} />
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customStyles}
+        >
+          <UserInfoModal
+            name={localUser.name}
+            photo={localUser.photo}
+            tagline={localUser.tagline}
+            updateFields={updateFields}
+          />
+        </Modal>
       </UserContainer>
       <ProfileStats></ProfileStats>
       <ContactInfo

@@ -7,7 +7,7 @@ import InviteFriends from "../../components/profile-comp/inviteFriends";
 import PurchaseCoins from "../../components/profile-comp/purchaseCoins";
 
 const Section = styled.div`
-  border: 2px solid #D5D9EB;
+  border: 2px solid #d5d9eb;
   border-radius: 12px;
   padding: 45px;
   margin: 50px;
@@ -28,11 +28,12 @@ const Profile = () => {
     console.log(selectedLeftScreen);
     if (selectedLeftScreen == "MyProfile") {
       setElement(<MyProfile />);
-    } else if (selectedLeftScreen == "PurchaseCoins") {
-      setElement(<PurchaseCoins />);
-    } else if (selectedLeftScreen == "InviteFriends") {
-      setElement(<InviteFriends />);
     }
+    // else if (selectedLeftScreen == "PurchaseCoins") {
+    //   setElement(<PurchaseCoins />);
+    // } else if (selectedLeftScreen == "InviteFriends") {
+    //   setElement(<InviteFriends />);
+    // }
   }, [selectedLeftScreen]);
 
   const [element, setElement] = useState<ReactElement>(<MyProfile />);
