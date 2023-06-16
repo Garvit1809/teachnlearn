@@ -12,37 +12,30 @@ const Section = styled.div`
 `;
 
 interface gridProps {
-  teachCards: Array<teachCardProps>
+  teachCards: Array<teachCardProps>;
 }
 
-const ClassroomGrid = (props: gridProps) => {
-  const cardSizes = {
-    hasAnimation: true,
-    imageHeight: "180px",
-    gap: "18px",
-    headerSize: "16px",
-    titleSize: "20px",
-    titleLineHeight: "30px",
-    btnSize: "16px",
-    svgSize: "18px",
-    userChipImgSize: "26px",
-    userChipTextSize: "16px",
-  };
+export const cardSizes = {
+  hasAnimation: true,
+  imageHeight: "180px",
+  gap: "18px",
+  headerSize: "16px",
+  titleSize: "20px",
+  titleLineHeight: "30px",
+  btnSize: "16px",
+  svgSize: "18px",
+  userChipImgSize: "26px",
+  userChipTextSize: "16px",
+};
 
+const ClassroomGrid = (props: gridProps) => {
   return (
     <Section>
-      {
-        props.teachCards.map((teachCard,index) => {
-          return (
-            <ClassroomCard cssArr={cardSizes} teachCard={teachCard} />
-          )
-        })
-      }
-      {/* <ClassroomCard cssArr={cardSizes} />
-      <ClassroomCard cssArr={cardSizes} />
-      <ClassroomCard cssArr={cardSizes} />
-      <ClassroomCard cssArr={cardSizes} />
-      <ClassroomCard cssArr={cardSizes} /> */}
+      {props.teachCards.map((teachCard, index) => {
+        return (
+          <ClassroomCard cssArr={cardSizes} teachCard={teachCard} key={index} />
+        );
+      })}
     </Section>
   );
 };

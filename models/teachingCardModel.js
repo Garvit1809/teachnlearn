@@ -105,12 +105,6 @@ const teachingCardSchema = new mongoose.Schema(
         ref: "Announcement",
       },
     ],
-    // reviews: [
-    //   {
-    //     type: mongoose.Schema.ObjectId,
-    //     ref: "Review",
-    //   },
-    // ],
   },
   { timestamps: true }
 );
@@ -128,10 +122,6 @@ teachingCardSchema.pre(/^find/, function (next) {
       path: "referredLearningCard",
       select: "subject topic createdBy",
     });
-  // .populate({
-  //   path: "reviews",
-  //   select: "rating review user",
-  // });
   next();
 });
 

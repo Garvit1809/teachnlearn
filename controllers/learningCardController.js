@@ -132,24 +132,9 @@ exports.createTeachCardOnLearnCard = catchAsync(async (req, res, next) => {
     return next(new AppError("Teach Card couldnt be created, Try Again!!"));
   }
 
-  // const newClassroom = await Classroom.create({
-  //   admin: userID,
-  //   teachingCard: newTeachCard.id,
-  //   chatName: newTeachCard.topic,
-  //   classStartsAt: newTeachCard.classStartsAt,
-  //   classEndsAt: newTeachCard.classEndsAt,
-  // });
-
-  // if (!newClassroom) {
-  //   return next(
-  //     new AppError("Couldnt create the classroom!! Please file a report!")
-  //   );
-  // }
-
   res.status(201).json({
     status: "success",
     newTeachCard,
-    // newClassroom,
   });
 });
 

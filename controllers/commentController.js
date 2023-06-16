@@ -28,7 +28,7 @@ exports.postComment = catchAsync(async (req, res, next) => {
     return next(new AppError("Comment couldnt be created!!"));
   }
 
-  const updateAnnounceMent = await Announcement.findByIdAndUpdate(
+  const updateAnnouncement = await Announcement.findByIdAndUpdate(
     announcementId,
     {
       $push: {
@@ -44,6 +44,6 @@ exports.postComment = catchAsync(async (req, res, next) => {
   res.status(201).json({
     status: "success",
     newComment,
-    updateAnnounceMent,
+    updateAnnouncement,
   });
 });

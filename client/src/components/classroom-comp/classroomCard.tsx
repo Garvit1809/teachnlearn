@@ -15,6 +15,7 @@ const Section = styled.div<cardAnimationProps>`
     0px 8px 8px -4px rgba(16, 24, 40, 0.03);
   border-radius: 16px;
   overflow: hidden;
+  background: #f6f6f6;
   transition: all 0.15s linear;
 
   &:hover {
@@ -47,21 +48,21 @@ interface titleProps {
 }
 
 const ImageContainer = styled.div<imageProps>`
-  height: 232px;
   height: ${(p) => p.imgHeight || "232px"};
 
   img {
     margin: 0;
     border-top-right-radius: 16px;
     border-top-left-radius: 16px;
-    /* border: 1px solid red; */
     width: 100%;
     height: 100%;
     object-fit: cover;
+    /* border: 1px solid red; */
   }
 `;
 
 const DetailContainer = styled.div<detailProps>`
+  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -214,7 +215,7 @@ const ClassroomCard = (props: classCardProps) => {
       <ImageContainer imgHeight={props.cssArr?.imageHeight}>
         <img
           src={props.teachCard.cardBanner ? props.teachCard.cardBanner : link}
-          alt=""
+          alt="card-banner"
         />
       </ImageContainer>
       <DetailContainer gapSize={props.cssArr?.gap}>

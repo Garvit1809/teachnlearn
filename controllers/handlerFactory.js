@@ -57,8 +57,10 @@ exports.getOne = (Model, popOptions) =>
       param = req.params.teachCardId;
     } else if (req.params.userId) {
       param = req.params.userId;
+    } else if (req.params.forumId) {
+      param = req.params.forumId;
     }
-    
+
     let query = Model.findById(param);
     if (popOptions) query = query.populate(popOptions);
     const doc = await query;

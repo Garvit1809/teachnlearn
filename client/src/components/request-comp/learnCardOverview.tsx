@@ -12,6 +12,8 @@ import UserChip from "../general-components/userChip";
 import DetailsContainer from "../classroom-comp/detailsContainer";
 import { Arrow, InterestedIcon } from "../general-components/svg";
 import { teachCardProps } from "../../pages/classroom/classrooms";
+import ClassroomCard from "../classroom-comp/classroomCard";
+import { cardSizes } from "../classroom-comp/classroomGrid";
 
 const Section = styled.div`
   /* border: 1px solid brown; */
@@ -140,10 +142,21 @@ const TagCont = styled.div`
 `;
 
 const TeachCardsOnLearnCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
   h2 {
     border-bottom: 1px solid black;
     width: fit-content;
   }
+`;
+
+const TeachCardGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 2rem;
+  row-gap: 4rem;
+  /* border: 1px solid red; */
 `;
 
 const LearnCardOverview = () => {
@@ -252,9 +265,17 @@ const LearnCardOverview = () => {
           {teachCards?.length != 0 ? (
             <TeachCardsOnLearnCard>
               <h2>Teach Cards on this Learn Card</h2>
-              {
-                
-              }
+              <TeachCardGrid>
+                {teachCards?.map((teachCard, index) => {
+                  return (
+                    <ClassroomCard
+                      teachCard={teachCard}
+                      cssArr={cardSizes}
+                      key={index}
+                    />
+                  );
+                })}
+              </TeachCardGrid>
             </TeachCardsOnLearnCard>
           ) : null}
         </Section>
