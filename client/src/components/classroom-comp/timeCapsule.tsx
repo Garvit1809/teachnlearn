@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { getReadableDate, getReadableTime } from "../../utils/helperFunctions";
 
 const Section = styled.div`
   display: flex;
@@ -27,12 +28,28 @@ const Section = styled.div`
   }
 `;
 
-const TimeCapsule = () => {
+interface capsuleProps {
+  date: string;
+  classStartsAt: string;
+  classEndsAt: string;
+}
+
+const TimeCapsule = (props: capsuleProps) => {
+  // console.log(getReadableTime(props.classStartsAt));
+  console.log(getReadableTime('Mon Jun 19 2023 15:05:00 GMT+0530'));
+
+  const startingTime = getReadableTime(props.classStartsAt);
+  const endingTime = getReadableTime(props.classEndsAt);
+
   return (
     <Section>
-      <span>27th April</span>
+      <span>{getReadableDate(props.date)}</span>
       <div></div>
-      <span>01 - 02 PM</span>
+      <span>
+        {  
+          startingTime + ' - ' + endingTime
+        }
+      </span>
     </Section>
   );
 };

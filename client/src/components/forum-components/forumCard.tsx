@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Comments, Plus } from "../general-components/svg";
 import { useNavigate } from "react-router-dom";
+import { forumProps } from "../../pages/forum/forum";
+import moment from "moment";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -108,47 +110,55 @@ const Stats = styled.div`
   }
 `;
 
-interface forumProps {
-  id: number;
-  tag: string;
-  question: string;
-  userName: string;
-  time: string;
-  likes: number;
-  comments: number;
-}
+type forumCardProps = forumProps & {
+  userToken: string;
+};
 
-const ForumCard = (props: forumProps) => {
+const ForumCard = (props: forumCardProps) => {
   const navigate = useNavigate();
 
   const forumNavigator = () => {
-    // console.log("hello");
-    navigate(`/forum/${props.id}`, { state: { id: props.id } });
+    navigate(`/forum/${props._id}`, {
+      state: {
+        forumId: props._id,
+        userToken: props.userToken,
+      },
+    });
   };
 
   return (
     <Section onClick={forumNavigator}>
       <Header>
-        <Tag>{props.tag}</Tag>
+        <Tag>{props.topic}</Tag>
         <Options></Options>
       </Header>
-      <Question>{props.question}</Question>
+      <Question>
+        {props.tagline.length > 71 ? (
+          <>
+            {props.tagline.slice(0, 70)}
+            &nbsp;
+            <span>...</span>
+          </>
+        ) : (
+          props.tagline
+        )}
+      </Question>
       <Details>
         <User>
-          <span>@{props.userName}</span>
+          <span>@{props.createdBy.userName}</span>
           <div>
             <span className="dot"></span>
-            <span>{props.time}</span>
+            <span>{moment(props.createdAt).fromNow()}</span>
           </div>
         </User>
         <Stats>
           <div>
             <Plus />
-            <span>{props.likes}</span>
+            <span>{props.upvotes.length}</span>
           </div>
           <div>
             <Comments />
-            <span>{props.comments}</span>
+            <span>{props.answers.length}</span>
           </div>
         </Stats>
       </Details>

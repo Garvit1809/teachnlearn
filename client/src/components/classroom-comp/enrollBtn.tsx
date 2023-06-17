@@ -40,6 +40,9 @@ interface enrollProps {
   date: string;
   classStartsAt: string;
   classEndsAt: string;
+  userCredit: number;
+  teachCardId: string;
+  userToken: string; 
 }
 
 const EnrollBtn = (props: enrollProps) => {
@@ -63,7 +66,7 @@ const EnrollBtn = (props: enrollProps) => {
         onRequestClose={closeModal}
         style={customStyles}
       >
-        <EnrollModal  {...props} />
+        <EnrollModal {...props} />
       </Modal>
     </>
   );

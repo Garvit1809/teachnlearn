@@ -20,6 +20,12 @@ const Section = styled.div`
   gap: 2.5rem;
 `;
 
+interface student {
+  _id: string,
+  name: string,
+  photo: string,
+}
+
 export interface teachCardProps {
   announcements: string[];
   callLink: string;
@@ -75,6 +81,7 @@ const Classrooms = () => {
       setTeachCards(data.data.data);
     });
   }
+  
 
   useEffect(() => {
     fetchTeachCards();

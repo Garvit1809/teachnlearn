@@ -10,14 +10,10 @@ import { UserCookie } from "../../utils/userCookie";
 import styled from "styled-components";
 import ClassBanner from "../../components/classroom-comp/classBanner";
 import TimeCapsule from "../../components/classroom-comp/timeCapsule";
-import JoinCall from "../../components/classroom-comp/joinCall";
 import UserChip from "../../components/general-components/userChip";
 import DetailsContainer from "../../components/classroom-comp/detailsContainer";
 import EnrollBtn from "../../components/classroom-comp/enrollBtn";
-import {
-  CoinsIcon,
-  PurchaseCoinIcon,
-} from "../../components/general-components/svg";
+import { PurchaseCoinIcon } from "../../components/general-components/svg";
 import BackBtn from "../../components/request-comp/backBtn";
 
 const Section = styled.div`
@@ -83,10 +79,11 @@ const ClassroomOverview = () => {
   const [teachCard, setTeachCard] = useState<teachCardProps>();
   const [teachCardId, setTeachCardId] = useState<string>();
   const [userToken, setUserToken] = useState<string>();
+  const [userCredit, setUserCredit] = useState<number>();
 
   const location = useLocation();
 
-  const { fetchLocalUserToken } = UserCookie();
+  const { fetchLocalUserToken, fetchUserCredit } = UserCookie();
 
   useEffect(() => {
     const cardId = location.state.classroomId;
@@ -98,6 +95,10 @@ const ClassroomOverview = () => {
     fetchLocalUserToken().then((token) => {
       setUserToken(token);
     });
+    fetchUserCredit().then((coins) => {
+      console.log(coins);
+      setUserCredit(coins);
+    });
   }, []);
 
   async function fetchClassOverview() {
@@ -106,7 +107,6 @@ const ClassroomOverview = () => {
         headers: getHeaders(userToken ?? ""),
       })
       .then(({ data }) => {
-        // console.log(data);
         setTeachCard(data.teachCard);
       });
   }
@@ -127,14 +127,23 @@ const ClassroomOverview = () => {
           <ClassBanner img={teachCard?.cardBanner} title={teachCard.topic} />
           <OverviewContainer>
             <CallDetailContainer>
-              <TimeCapsule />
-              <EnrollBtn
-                title={teachCard.topic}
-                price={teachCard.price}
+              <TimeCapsule
                 date={teachCard.date}
-                classStartsAt={teachCard.classStartsAt}
                 classEndsAt={teachCard.classEndsAt}
+                classStartsAt={teachCard.classStartsAt}
               />
+              {userCredit && userToken && (
+                <EnrollBtn
+                  title={teachCard.topic}
+                  price={teachCard.price}
+                  date={teachCard.date}
+                  classStartsAt={teachCard.classStartsAt}
+                  classEndsAt={teachCard.classEndsAt}
+                  userCredit={userCredit}
+                  teachCardId={teachCard._id}
+                  userToken={userToken}
+                />
+              )}
             </CallDetailContainer>
             <ClassOverview>
               <ChipContainer>

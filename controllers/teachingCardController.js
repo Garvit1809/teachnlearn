@@ -30,6 +30,8 @@ exports.getTeachCardOverview = catchAsync(async (req, res, next) => {
 exports.getOneTeachCard = catchAsync(async (req, res, next) => {
   const teachCardId = req.params.teachCardId;
 
+  // check if user is enrolled
+
   const teachCard = await TeachingCard.findById(teachCardId).populate({
     path: "announcemets",
     fields: "content comments",

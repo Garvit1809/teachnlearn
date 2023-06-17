@@ -144,8 +144,6 @@ const NewSignup = () => {
       <UserInfoForm {...userData} updateFields={updateFields} />,
     ]);
 
-    const { fetchLocalUserData } = UserCookie();
-
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!isLastStep) return next();

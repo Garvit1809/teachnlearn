@@ -10,6 +10,12 @@ const forumSchema = mongoose.Schema(
       type: String,
       required: [true, "A forum must have  a topic"],
     },
+    tagline: {
+      type: String,
+      required: [true, "A forum must have a short tagline"],
+      maxLength: [250, "Tagline mustnt be more than 250 characters!!"],
+      trim: true,
+    },
     question: {
       type: String,
       required: [true, "A forum must have  a question"],
@@ -27,17 +33,21 @@ const forumSchema = mongoose.Schema(
       },
     ],
   },
-  {
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
-  },
   { timestamps: true }
 );
 
 forumSchema.pre(/^find/, function (next) {
   this.populate({
     path: "createdBy",
-    select: "name photo",
+    select: "userName",
+  });
+  next();
+});
+
+forumSchema.pre(/^findOne/, function (next) {
+  this.populate({
+    path: "createdBy",
+    select: "name photo userName",
   });
   next();
 });

@@ -8,6 +8,7 @@ export interface userProps {
   photo: string;
   tagline: string;
   email: string;
+  coins: number;
   enrolledProgramme: string;
   phoneNumber: string;
   classesEnrolled: string[];
@@ -39,9 +40,14 @@ export function UserCookie() {
     const data = await JSON.parse(
       localStorage.getItem(localStorageUser) || "{}"
     );
-    // console.log(data);
-    // console.log(data.token);
     return data.token;
+  }
+
+  async function fetchUserCredit() {
+    const data = await JSON.parse(
+      localStorage.getItem(localStorageUser) || "{}"
+    );
+    return data.coins;
   }
 
   return {
@@ -49,6 +55,7 @@ export function UserCookie() {
     setLocalUser,
     userToken,
     fetchLocalUserData,
-    fetchLocalUserToken
+    fetchLocalUserToken,
+    fetchUserCredit,
   };
 }

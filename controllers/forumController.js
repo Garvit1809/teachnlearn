@@ -6,11 +6,12 @@ exports.getAllForums = factory.getAll(Forum);
 
 exports.createForum = catchAsync(async (req, res, next) => {
   const userId = req.user.id;
-  const { topic, question } = req.body;
+  const { topic, tagline, question } = req.body;
 
   const newForum = await Forum.create({
     createdBy: userId,
     topic,
+    tagline,
     question,
   });
 
@@ -76,13 +77,3 @@ exports.upvoteForum = catchAsync(async (req, res, next) => {
 });
 
 exports.getOneForum = factory.getOne(Forum, "answers");
-// exports.getOneForum = catchAsync(async (req, res, next) => {
-//   const forumId = req.params.forumId;
-
-//   const forum = await Forum.findById(forumId).populate({ path: "answers" });
-
-//   res.status(200).json({
-//     status: "success",
-//     forum,
-//   });
-// });

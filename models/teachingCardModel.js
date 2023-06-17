@@ -114,10 +114,10 @@ teachingCardSchema.pre(/^find/, function (next) {
     path: "createdBy",
     select: "name photo",
   })
-    .populate({
-      path: "studentsEnrolled",
-      select: "name photo",
-    })
+    // .populate({
+    //   path: "studentsEnrolled",
+    //   select: "name photo",
+    // })
     .populate({
       path: "referredLearningCard",
       select: "subject topic createdBy",

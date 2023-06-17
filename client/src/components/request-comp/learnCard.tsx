@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import UserChip from "../general-components/userChip";
 import { InterestedIcon, PurchaseCoinIcon } from "../general-components/svg";
-import { getReadableTime } from "../../utils/helperFunctions";
+import { getReadableDate } from "../../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
 
 const Section = styled.div`
@@ -167,7 +167,7 @@ const LearnCard = (props: requestCardProps) => {
         </div>
         <div>
           <DateCont>
-            <span>Due - {getReadableTime(props.dueDate)}</span>
+            <span>Due - {getReadableDate(props.dueDate)}</span>
           </DateCont>
         </div>
       </Stats>

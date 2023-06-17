@@ -185,6 +185,9 @@ interface obj {
 }
 
 const ClassroomCard = (props: classCardProps) => {
+
+  // console.log(props);
+
   let link =
     "https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80";
 
@@ -201,9 +204,19 @@ const ClassroomCard = (props: classCardProps) => {
   }, []);
 
   const checkEnrolledClass = () => {
-    const bool = localUser?.classesEnrolled.includes(props.teachCard._id);
-    console.log(bool);
-    return bool;
+    // const bool = localUser?.classesEnrolled.includes(props.teachCard._id);
+    if (localUser) {
+      const bool = props.teachCard.studentsEnrolled.filter((student) => {
+        return student == localUser._id;
+      });
+      console.log(props.teachCard.studentsEnrolled);
+      
+      console.log(bool);
+      return bool.length;
+    } else {
+      return null;
+    }
+    // console.log(bool);
   };
 
   const enrollClassNavigator = () => {
@@ -242,7 +255,12 @@ const ClassroomCard = (props: classCardProps) => {
           titleSize={props.cssArr?.titleSize}
           titleLineHeight={props.cssArr?.titleLineHeight}
         >
-          {props.teachCard.topic}
+          {
+            props.teachCard.topic.length > 52 ? 
+            props.teachCard.topic.slice(0,52) + '...'
+            : props.teachCard.topic
+          }
+          {/* {props.teachCard.topic} */}
         </Title>
         <UserChip
           name={props.teachCard.createdBy.name}
