@@ -11,6 +11,9 @@ import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { UserCookie } from "../../utils/userCookie";
 import { getHeaders } from "../../utils/helperFunctions";
+import AllClasses from "../../components/classroom-comp/classpage-comp/allClasses";
+import UpcomingClasses from "../../components/classroom-comp/classpage-comp/upcomingClasses";
+import CompletedClasses from "../../components/classroom-comp/classpage-comp/completedClasses";
 
 const Section = styled.div`
   /* display: grid; */
@@ -20,6 +23,11 @@ const Section = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
+`;
+
+const ElementWrapper = styled.div`
+  margin: 2rem 0 0;
+  /* border: 2px solid green; */
 `;
 
 export interface student {
@@ -58,52 +66,38 @@ export interface teachCardProps {
 }
 
 const Classrooms = () => {
-  const [activeLink, setActiveLink] = useState("all classes");
-  // const [element, setElement] = useState<ReactElement>(<Overview />);
+  const [userToken, setUserToken] = useState<string>("");
 
-  // useEffect(() => {
-  //   if (activeLink == "overview") {
-  //     setElement(<Overview />);
-  //   } else if (activeLink == "classroom") {
-  //     setElement(<Classroom />);
-  //   } else if (activeLink == "people") {
-  //     setElement(<Participants />);
-  //   }
-  // }, [activeLink]);
-
-  const navigationHandler = (navigateTo: string) => {
-    setActiveLink(navigateTo);
-  };
-
-  const labels = ["all classes", "upcoming", "completed"];
-
-  const [teachCards, setTeachCards] = useState<Array<teachCardProps>>();
-
-  const [userToken, setUserToken] = useState<string>();
   const { fetchLocalUserToken } = UserCookie();
 
   useEffect(() => {
     fetchLocalUserToken().then((token) => {
       setUserToken(token);
     });
-  }, [location]);
+  }, []);
 
-  async function fetchTeachCards() {
-    await axios
-      .get(`${BASE_URL}${apiVersion}/teach`, {
-        headers: getHeaders(userToken ?? ""),
-      })
-      .then(({ data }) => {
-        console.log(data.data.data);
-        setTeachCards(data.data.data);
-      });
-  }
+  const [activeLink, setActiveLink] = useState("all classes");
+  const [element, setElement] = useState<ReactElement>(
+    <AllClasses userToken={userToken} />
+  );
 
   useEffect(() => {
     if (userToken) {
-      fetchTeachCards();
+      if (activeLink == "all classes") {
+        setElement(<AllClasses userToken={userToken} />);
+      } else if (activeLink == "upcoming") {
+        setElement(<UpcomingClasses userToken={userToken} />);
+      } else if (activeLink == "completed") {
+        setElement(<CompletedClasses userToken={userToken} />);
+      }
     }
-  }, [userToken]);
+  }, [activeLink]);
+
+  const navigationHandler = (navigateTo: string) => {
+    setActiveLink(navigateTo);
+  };
+
+  const labels = ["all classes", "upcoming", "completed"];
 
   return (
     <>
@@ -115,7 +109,7 @@ const Classrooms = () => {
           labelArr={labels}
           navigationHandler={navigationHandler}
         />
-        {teachCards && <ClassroomGrid teachCards={teachCards} />}
+        <ElementWrapper>{element}</ElementWrapper>
         <Footer />
       </Section>
     </>
