@@ -223,14 +223,14 @@ const LearnCardOverview = () => {
       <Navbar />
       {learnCard ? (
         <Section>
-          <BackBtn link="/requests"/>
+          <BackBtn link="/requests" />
           <TopicCont>
             <h2>{learnCard.topic}</h2>
           </TopicCont>
           <OverviewContainer>
             <LeftContainer>
               <LearnCardDetailContainer>
-                <TimeCapsule />
+                <TimeCapsule date={learnCard.dueDate} />
                 <TagCont>
                   {learnCard.tags.map((tag, index) => {
                     return (
@@ -261,7 +261,10 @@ const LearnCardOverview = () => {
                   <h3>{learnCard.interestedStudents.length} Interested</h3>
                 </InterestedCont>
               </ChipContainer>
-              <DetailsContainer />
+              <DetailsContainer
+                desciption={learnCard.description}
+                expectations={learnCard.expectations}
+              />
             </CardOverview>
           </OverviewContainer>
           {teachCards?.length != 0 ? (

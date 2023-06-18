@@ -19,18 +19,18 @@ const router = express.Router();
 router.use("/:teachingCardId/announcements", announcementRouter);
 router.use("/:teachingCardId/reviews", reviewRouter);
 
+router.use(protect);
+
 router
   .route("/")
   .get(teachingCardController.getAllTeachCards)
-  .post(protect, teachingCardController.createTeachCard);
+  .post(teachingCardController.createTeachCard);
 
 router.get("/:teachCardId", teachingCardController.getOneTeachCard);
 router.get(
   "/:teachCardId/overview",
   teachingCardController.getTeachCardOverview
 );
-
-router.use(protect);
 
 router.patch(
   "/:teachCardId/interested",

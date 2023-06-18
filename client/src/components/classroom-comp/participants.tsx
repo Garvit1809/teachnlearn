@@ -2,6 +2,7 @@ import ClassBanner from "./classBanner";
 import ParticipantList from "./participantList";
 import styled from "styled-components";
 import ethan from "../../assets/ethan.jpg";
+import { student } from "../../pages/classroom/classrooms";
 
 const ParticipantWrapper = styled.div`
   width: 60%;
@@ -21,54 +22,31 @@ const teacherObj = {
   name: "Ethan Alexander",
 };
 
-const studentArr = [
-  {
-    userImg: ethan,
-    userName: "ethanalex",
-    name: "Ethan Alexander",
-  },
-  {
-    userImg: ethan,
-    userName: "ethanalex",
-    name: "Ethan Alexander",
-  },
-  {
-    userImg: ethan,
-    userName: "ethanalex",
-    name: "Ethan Alexander",
-  },
-  {
-    userImg: ethan,
-    userName: "ethanalex",
-    name: "Ethan Alexander",
-  },
-  {
-    userImg: ethan,
-    userName: "ethanalex",
-    name: "Ethan Alexander",
-  },
-  {
-    userImg: ethan,
-    userName: "ethanalex",
-    name: "Ethan Alexander",
-  },
-  {
-    userImg: ethan,
-    userName: "ethanalex",
-    name: "Ethan Alexander",
-  },
-];
+interface participantProps {
+  cardBanner: string;
+  topic: string;
+  createdBy: {
+    name: string;
+    photo: string;
+    _id: string;
+    userName: string;
+  };
+  studentsEnrolled: student[];
+}
 
-const Participants = () => {
+const Participants = (props: participantProps) => {
   return (
     <div>
-      <ClassBanner />
+      <ClassBanner img={props.cardBanner} title={props.topic} />
       <ParticipantWrapper>
         <TeacherSection>
-          <ParticipantList heading="Teachers" teacherObj={teacherObj} />
+          <ParticipantList heading="Teachers" teacherObj={props.createdBy} />
         </TeacherSection>
         <StudentSection>
-          <ParticipantList heading="Students" listArr={studentArr} />
+          <ParticipantList
+            heading="Students"
+            listArr={props.studentsEnrolled}
+          />
         </StudentSection>
       </ParticipantWrapper>
     </div>

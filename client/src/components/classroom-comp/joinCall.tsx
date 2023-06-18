@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Arrow, Plus } from "../general-components/svg";
+import Modal from "react-modal";
+import { customStyles } from "../profile-comp/my-profile/contactInfo";
 
 const Section = styled.div`
   display: flex;
@@ -45,12 +47,24 @@ const LinkContainer = styled.div`
   cursor: pointer;
 `;
 
-const JoinCall = () => {
-  const xyz = true;
+interface callProps {
+  callLink: string;
+}
+
+const JoinCall = ({ callLink }: callProps) => {
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   return (
     <>
-      {!xyz ? (
+      {!callLink ? (
         <LinkContainer>
           <span>Add class link</span>
           <Plus color="white" />
@@ -61,6 +75,12 @@ const JoinCall = () => {
           <Arrow strokeColor="white" />
         </Section>
       )}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+      >
+      </Modal>
     </>
   );
 };

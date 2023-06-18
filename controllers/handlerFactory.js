@@ -82,9 +82,6 @@ exports.getAll = (Model) =>
     let filter = {};
     if (req.params.learnCardId)
       filter = { referredLearningCard: req.params.learnCardId };
-    if (req.params.classroomId) {
-      filter = { classroom: req.params.classroomId };
-    }
 
     const features = new APIFeatures(Model.find(filter), req.query)
       .filter()

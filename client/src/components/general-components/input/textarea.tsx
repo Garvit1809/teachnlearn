@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const Section = styled.div`
+interface heightProps {
+  areaHeight?: string;
+}
+
+const Section = styled.div<heightProps>`
   position: relative;
   width: 100%;
   /* height: 20px; */
@@ -10,7 +14,8 @@ const Section = styled.div`
 
   textarea {
     width: 100%;
-    height: 3rem;
+    /* height: 3rem; */
+    height: ${(p) => (p.areaHeight ? p.areaHeight : "3rem")};
     padding: 15px 0px 15px 10px;
     border: 1.5px solid #d5d9eb;
     box-sizing: content-box;
@@ -37,7 +42,7 @@ const Label = styled.span<labelProps>`
   transform: translateY(19px);
   pointer-events: none;
   font-size: 16px;
-  text-transform: uppercase;
+  text-transform: ${(p) => (p.isValid ? "none" : "uppercase")};
   transition: 0.25s;
   line-height: 1;
   transform: ${(props) =>
@@ -73,8 +78,9 @@ interface inputProps {
   value: string;
   label: string;
   name: string;
-  // updateFields: (fields: Partial<learnCardDetails>) => void;
-  updateFields: any;
+  updateFields?: any;
+  updateSingleField?: any;
+  areaHeight?: string;
 }
 
 const Textarea = (props: inputProps) => {
@@ -87,7 +93,11 @@ const Textarea = (props: inputProps) => {
   }, [props]);
 
   const inputhandler = (e: any) => {
-    props.updateFields({ [e.target.name]: e.target.value });
+    if (props.updateSingleField) {
+      props.updateSingleField(e.target.value);
+    } else {
+      props.updateFields({ [e.target.name]: e.target.value });
+    }
 
     const value = e.target.value;
 
@@ -99,7 +109,7 @@ const Textarea = (props: inputProps) => {
   };
 
   return (
-    <Section>
+    <Section areaHeight={props.areaHeight ? props.areaHeight : undefined}>
       <textarea
         required
         value={props.value}

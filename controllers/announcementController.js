@@ -1,4 +1,5 @@
 const Announcement = require("../models/announcementModel");
+const APIFeatures = require("../utils/apiFeatures");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 
@@ -13,7 +14,7 @@ exports.restricToAdmin = (req, res, next) => {
   console.log(restriction);
 
   if (restriction) {
-    return next(new AppError("User are not the admin of this classroom!!"));
+    return next(new AppError("User is not the admin of this classroom!!"));
   }
 
   next();
@@ -22,15 +23,20 @@ exports.restricToAdmin = (req, res, next) => {
 exports.getAllAnnouncements = catchAsync(async (req, res, next) => {
   const teachingCardId = req.params.teachingCardId;
 
-  const announcements = await Announcement.find({ classroom: teachingCardId });
+  const docs = new APIFeatures(
+    Announcement.find({ classroom: teachingCardId }),
+    req.query
+  )
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
 
-  if (!announcements) {
-    return next(new AppError("Unable to get the announcements!!"));
-  }
+  const doc = await docs.query;
 
   res.status(200).json({
     status: "success",
-    announcements,
+    announcements: doc
   });
 });
 

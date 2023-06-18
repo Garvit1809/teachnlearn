@@ -113,15 +113,22 @@ teachingCardSchema.pre(/^find/, function (next) {
   this.populate({
     path: "createdBy",
     select: "name photo",
-  })
-    // .populate({
-    //   path: "studentsEnrolled",
-    //   select: "name photo",
-    // })
-    .populate({
-      path: "referredLearningCard",
-      select: "subject topic createdBy",
-    });
+  });
+  // .populate({
+  //   path: "studentsEnrolled",
+  //   select: "name photo",
+  // })
+  next();
+});
+
+teachingCardSchema.pre(/^findOne/, function (next) {
+  this.populate({
+    path: "createdBy",
+    select: "name photo userName",
+  }).populate({
+    path: "studentsEnrolled",
+    select: "name photo userName",
+  });
   next();
 });
 

@@ -8,9 +8,10 @@ interface participantListProps {
 }
 
 interface listObj {
-  userImg: string;
-  userName: string;
   name: string;
+  photo: string;
+  _id: string;
+  userName: string;
 }
 
 const Section = styled.div`
@@ -23,28 +24,41 @@ const Section = styled.div`
   h3 {
     font-weight: 600;
     font-size: 26px;
-    /* line-height: 41px; */
     width: 100%;
     padding-bottom: 0.3rem;
     color: #3622a5;
     border-bottom: 1px solid #3622a5;
   }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.5rem;
+  }
 `;
 
 const UserContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 1rem;
   /* border: 1px solid red; */
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 12px;
+  /* margin-bottom: 1rem; */
   cursor: pointer;
 
   img {
+    /* border: 1px solid red; */
     width: 51px;
     height: 53px;
     object-fit: cover;
     border-radius: 50%;
+  }
+
+  div {
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   h4 {
@@ -58,9 +72,6 @@ const UserContainer = styled.div`
   h5 {
     font-weight: 400;
     font-size: 16px;
-    /* line-height: 22px;  */
-    /* text-align: center; */
-    /* letter-spacing: 0.02em; */
     color: #000000;
   }
 `;
@@ -76,7 +87,7 @@ const ParticipantList = (props: participantListProps) => {
           props.listArr.map((user, index) => {
             return (
               <UserContainer key={index}>
-                <img src={user.userImg} alt="" />
+                <img src={user.photo} alt="user-img" />
                 <div>
                   <h4>{user.name}</h4>
                   <h5>@{user.userName}</h5>
@@ -86,7 +97,7 @@ const ParticipantList = (props: participantListProps) => {
           })
         ) : (
           <UserContainer>
-            <img src={props.teacherObj?.userImg} alt="" />
+            <img src={props.teacherObj?.photo} alt="" />
             <div>
               <h4>{props.teacherObj?.name}</h4>
               <h5>@{props.teacherObj?.userName}</h5>

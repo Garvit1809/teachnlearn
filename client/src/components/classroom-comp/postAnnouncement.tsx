@@ -1,5 +1,9 @@
 import styled from "styled-components";
 import { Plus } from "../general-components/svg";
+import Modal from "react-modal";
+import { useState } from "react";
+import { customStyles } from "../profile-comp/my-profile/contactInfo";
+import AnnouncementModal from "./announcementModal";
 
 const Section = styled.div`
   display: flex;
@@ -19,12 +23,35 @@ const Section = styled.div`
   /* margin-bottom:; */
 `;
 
-const PostAnnouncement = () => {
+interface announcementModalProps {
+  teachCardId: string
+}
+
+const PostAnnouncement = (props: announcementModalProps) => {
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   return (
-    <Section>
-      <span>Make an Announcement</span>
-      <Plus color="white" />
-    </Section>
+    <>
+      <Section onClick={openModal}>
+        <span>Make an Announcement</span>
+        <Plus color="white" />
+      </Section>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+      >
+        <AnnouncementModal teachCardId={props.teachCardId} closeModal={closeModal} />
+      </Modal>
+    </>
   );
 };
 

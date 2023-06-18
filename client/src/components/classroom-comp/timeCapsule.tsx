@@ -30,26 +30,32 @@ const Section = styled.div`
 
 interface capsuleProps {
   date: string;
-  classStartsAt: string;
-  classEndsAt: string;
+  classStartsAt?: string;
+  classEndsAt?: string;
 }
 
 const TimeCapsule = (props: capsuleProps) => {
   // console.log(getReadableTime(props.classStartsAt));
-  console.log(getReadableTime('Mon Jun 19 2023 15:05:00 GMT+0530'));
+  console.log(getReadableTime("Mon Jun 19 2023 15:05:00 GMT+0530"));
+  let startingTime;
+  let endingTime;
 
-  const startingTime = getReadableTime(props.classStartsAt);
-  const endingTime = getReadableTime(props.classEndsAt);
+  if (props.classStartsAt && props.classEndsAt) {
+    startingTime = getReadableTime(props.classStartsAt);
+    endingTime = getReadableTime(props.classEndsAt);
+  }
 
   return (
     <Section>
-      <span>{getReadableDate(props.date)}</span>
-      <div></div>
-      <span>
-        {  
-          startingTime + ' - ' + endingTime
-        }
-      </span>
+      {props.classStartsAt && props.classEndsAt ? (
+        <>
+          <span>{getReadableDate(props.date)}</span>
+          <div></div>
+          <span>{startingTime + " - " + endingTime}</span>
+        </>
+      ) : (
+        <span>Due By:- {getReadableDate(props.date)}</span>
+      )}
     </Section>
   );
 };

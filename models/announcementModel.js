@@ -24,6 +24,14 @@ const announcementSchema = mongoose.Schema(
   { timestamps: true }
 );
 
+announcementSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "sender",
+    select: "name photo",
+  });
+  next();
+});
+
 const Announcement = mongoose.model("Announcement", announcementSchema);
 
 module.exports = Announcement;

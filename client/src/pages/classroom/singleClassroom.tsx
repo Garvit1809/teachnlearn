@@ -7,6 +7,12 @@ import Footer from "../../components/general-components/footer/footer";
 import Classroom from "../../components/classroom-comp/classroom";
 import HorizontalNavigator from "../../components/general-components/horizontalNavigator";
 import FooterWrapper from "../../components/general-components/footer/footerWrapper";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
+import { getHeaders } from "../../utils/helperFunctions";
+import { UserCookie } from "../../utils/userCookie";
+import { teachCardProps } from "./classrooms";
 
 const Section = styled.div`
   /* margin: 2rem 0 3rem; */
@@ -25,19 +31,95 @@ const ElementWrapper = styled.div`
 `;
 
 const SingleClassroom = () => {
+  const [classroomId, setClassroomId] = useState<string>();
+  const [userToken, setUserToken] = useState<string>("");
+  const [userId, setUserId] = useState<string>("");
+
+  const [classroom, setClassroom] = useState<teachCardProps>();
+
+  const location = useLocation();
+
+  const { fetchLocalUserData } = UserCookie();
+
+  useEffect(() => {
+    const id = location.state.classroomId;
+    console.log(location.state);
+
+    setClassroomId(id);
+    fetchLocalUserData().then((data) => {
+      setUserToken(data.token);
+      setUserId(data._id);
+    });
+  }, [location]);
+
+  async function fetchClassroom() {
+    await axios
+      .get(`${BASE_URL}${apiVersion}/teach/${classroomId}`, {
+        headers: getHeaders(userToken ?? ""),
+      })
+      .then(({ data }) => {
+        const card = data.teachCard;
+        setClassroom(card);
+      });
+  }
+
+  useEffect(() => {
+    if (classroomId && userToken) {
+      fetchClassroom();
+    }
+  }, [classroomId]);
+
   const [activeLink, setActiveLink] = useState("overview");
 
   useEffect(() => {
-    if (activeLink == "overview") {
-      setElement(<Overview />);
-    } else if (activeLink == "classroom") {
-      setElement(<Classroom />);
-    } else if (activeLink == "people") {
-      setElement(<Participants />);
+    const link = location.state.navLink;
+    console.log(link);
+
+    if (link) {
+      setActiveLink(link);
+    }
+  }, [location]);
+
+  const [element, setElement] = useState<ReactElement>();
+
+  useEffect(() => {
+    if (classroom) {
+      setElement(<Overview {...classroom} />);
+    }
+  }, [classroom]);
+
+  const checkTeacher = (userId: string, teacherId: string) => {
+    return userId == teacherId;
+  };
+
+  useEffect(() => {
+    if (classroom) {
+      if (activeLink == "overview") {
+        setElement(<Overview {...classroom} />);
+      } else if (activeLink == "classroom") {
+        setElement(
+          <Classroom
+            callLink={classroom.callLink}
+            cardBanner={classroom.cardBanner}
+            topic={classroom.topic}
+            isTeacher={checkTeacher(userId, classroom.createdBy._id)}
+            teachCardId={classroom._id}
+            userToken={userToken}
+          />
+        );
+      } else if (activeLink == "people") {
+        setElement(
+          <Participants
+            cardBanner={classroom.cardBanner}
+            createdBy={classroom.createdBy}
+            studentsEnrolled={classroom.studentsEnrolled}
+            topic={classroom.topic}
+          />
+        );
+      }
+    } else {
     }
   }, [activeLink]);
-
-  const [element, setElement] = useState<ReactElement>(<Overview />);
 
   const navigationHandler = (navigateTo: string) => {
     setActiveLink(navigateTo);

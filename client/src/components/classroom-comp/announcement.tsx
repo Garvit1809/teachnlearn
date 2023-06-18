@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import UserChip from "../general-components/userChip";
+import { announcementProps } from "./classroom";
+import { getReadableDate, getReadableTime } from "../../utils/helperFunctions";
 
 const Section = styled.div`
   box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08),
@@ -12,6 +14,22 @@ const Section = styled.div`
   padding: 20px 30px;
   gap: 20px;
 
+  header {
+    /* border: 1px solid red; */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h4 {
+      font-family: "Nunito";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+
   p {
     font-weight: 400;
     font-size: 20px;
@@ -20,17 +38,23 @@ const Section = styled.div`
   }
 `;
 
-const Announcement = () => {
+const Announcement = (props: announcementProps) => {
   return (
     <Section>
-      <UserChip name="Garvit var" />
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Drew Cano
-      </p>
+      <header>
+        <UserChip
+          name={props.sender.name}
+          photo={props.sender.photo}
+          textSize="20px"
+          imgSize="32px"
+        />
+        <h4>
+          {getReadableDate(props.createdAt) +
+            ", " +
+            getReadableTime(props.createdAt)}
+        </h4>
+      </header>
+      <p>{props.content}</p>
     </Section>
   );
 };

@@ -9,6 +9,8 @@ import Classroom from "../../components/classroom-comp/classroom";
 import ClassroomGrid from "../../components/classroom-comp/classroomGrid";
 import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
+import { UserCookie } from "../../utils/userCookie";
+import { getHeaders } from "../../utils/helperFunctions";
 
 const Section = styled.div`
   /* display: grid; */
@@ -20,10 +22,11 @@ const Section = styled.div`
   gap: 2.5rem;
 `;
 
-interface student {
-  _id: string,
-  name: string,
-  photo: string,
+export interface student {
+  _id: string;
+  name: string;
+  photo: string;
+  userName: string;
 }
 
 export interface teachCardProps {
@@ -36,6 +39,7 @@ export interface teachCardProps {
     name: string;
     photo: string;
     _id: string;
+    userName: string;
   };
   date: string;
   description: string;
@@ -46,7 +50,7 @@ export interface teachCardProps {
   price: number;
   programme: string;
   standard: string;
-  studentsEnrolled: string[];
+  studentsEnrolled: student[];
   subject: string;
   tags: string[];
   topic: string;
@@ -75,17 +79,31 @@ const Classrooms = () => {
 
   const [teachCards, setTeachCards] = useState<Array<teachCardProps>>();
 
-  async function fetchTeachCards() {
-    await axios.get(`${BASE_URL}${apiVersion}/teach`).then(({ data }) => {
-      console.log(data.data.data);
-      setTeachCards(data.data.data);
-    });
-  }
-  
+  const [userToken, setUserToken] = useState<string>();
+  const { fetchLocalUserToken } = UserCookie();
 
   useEffect(() => {
-    fetchTeachCards();
-  }, []);
+    fetchLocalUserToken().then((token) => {
+      setUserToken(token);
+    });
+  }, [location]);
+
+  async function fetchTeachCards() {
+    await axios
+      .get(`${BASE_URL}${apiVersion}/teach`, {
+        headers: getHeaders(userToken ?? ""),
+      })
+      .then(({ data }) => {
+        console.log(data.data.data);
+        setTeachCards(data.data.data);
+      });
+  }
+
+  useEffect(() => {
+    if (userToken) {
+      fetchTeachCards();
+    }
+  }, [userToken]);
 
   return (
     <>

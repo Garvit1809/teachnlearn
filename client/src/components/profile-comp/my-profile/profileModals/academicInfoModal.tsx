@@ -31,7 +31,7 @@ const Header = styled.div`
   }
 `;
 
-const SubmitButton = styled.div`
+export const SubmitButton = styled.div`
   /* border: 1px solid green; */
   display: flex;
   /* align-items: flex-end; */

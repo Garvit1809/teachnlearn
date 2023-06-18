@@ -22,7 +22,6 @@ function App() {
   const { fetchLocalUserData, localUser } = UserCookie();
 
   useEffect(() => {
-    console.log("Checking");
     fetchLocalUserData();
   }, []);
 

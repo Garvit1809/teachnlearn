@@ -185,7 +185,6 @@ interface obj {
 }
 
 const ClassroomCard = (props: classCardProps) => {
-
   // console.log(props);
 
   let link =
@@ -204,19 +203,14 @@ const ClassroomCard = (props: classCardProps) => {
   }, []);
 
   const checkEnrolledClass = () => {
-    // const bool = localUser?.classesEnrolled.includes(props.teachCard._id);
     if (localUser) {
       const bool = props.teachCard.studentsEnrolled.filter((student) => {
         return student == localUser._id;
       });
-      console.log(props.teachCard.studentsEnrolled);
-      
-      console.log(bool);
       return bool.length;
     } else {
       return null;
     }
-    // console.log(bool);
   };
 
   const enrollClassNavigator = () => {
@@ -255,12 +249,9 @@ const ClassroomCard = (props: classCardProps) => {
           titleSize={props.cssArr?.titleSize}
           titleLineHeight={props.cssArr?.titleLineHeight}
         >
-          {
-            props.teachCard.topic.length > 52 ? 
-            props.teachCard.topic.slice(0,52) + '...'
-            : props.teachCard.topic
-          }
-          {/* {props.teachCard.topic} */}
+          {props.teachCard.topic.length > 52
+            ? props.teachCard.topic.slice(0, 52) + "..."
+            : props.teachCard.topic}
         </Title>
         <UserChip
           name={props.teachCard.createdBy.name}
