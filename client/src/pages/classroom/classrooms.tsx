@@ -1,16 +1,10 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import styled from "styled-components";
-import ClassroomCard from "../../components/classroom-comp/classroomCard";
 import Navbar from "../../components/general-components/navbar";
 import Intro from "../../components/home-comp/intro";
 import HorizontalNavigator from "../../components/general-components/horizontalNavigator";
 import Footer from "../../components/general-components/footer/footer";
-import Classroom from "../../components/classroom-comp/classroom";
-import ClassroomGrid from "../../components/classroom-comp/classroomGrid";
-import axios from "axios";
-import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { UserCookie } from "../../utils/userCookie";
-import { getHeaders } from "../../utils/helperFunctions";
 import AllClasses from "../../components/classroom-comp/classpage-comp/allClasses";
 import UpcomingClasses from "../../components/classroom-comp/classpage-comp/upcomingClasses";
 import CompletedClasses from "../../components/classroom-comp/classpage-comp/completedClasses";

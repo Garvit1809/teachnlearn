@@ -7,7 +7,6 @@ import {
 } from "../general-components/svg";
 import UserChip from "../general-components/userChip";
 import { useNavigate } from "react-router-dom";
-import { teachCardProps } from "../../pages/classroom/classrooms";
 import { UserCookie, userProps } from "../../utils/userCookie";
 
 const Section = styled.div<cardAnimationProps>`
@@ -166,9 +165,37 @@ const Coins = styled.div<buttonProps>`
   }
 `;
 
+export interface classroomCardProps {
+  announcements: string[];
+  callLink: string;
+  cardBanner: string;
+  classStartsAt: string;
+  classEndsAt: string;
+  createdBy: {
+    name: string;
+    photo: string;
+    _id: string;
+    userName: string;
+  };
+  date: string;
+  description: string;
+  expectations: string[];
+  interestedStudents: string[];
+  isLearningCardReferred: boolean;
+  preferredLanguage: string;
+  price: number;
+  programme: string;
+  standard: string;
+  studentsEnrolled: string[];
+  subject: string;
+  tags: string[];
+  topic: string;
+  _id: string;
+}
+
 interface classCardProps {
   cssArr?: obj;
-  teachCard: teachCardProps;
+  teachCard: classroomCardProps;
 }
 
 interface obj {
@@ -185,11 +212,6 @@ interface obj {
 }
 
 const ClassroomCard = (props: classCardProps) => {
-  // console.log(props);
-
-  let link =
-    "https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80";
-
   const navigate = useNavigate();
 
   const { fetchLocalUserData } = UserCookie();
@@ -205,6 +227,7 @@ const ClassroomCard = (props: classCardProps) => {
   const checkEnrolledClass = () => {
     if (localUser) {
       const bool = props.teachCard.studentsEnrolled.filter((student) => {
+        // console.log("STUDENT :-" + student);
         return student == localUser._id;
       });
       return bool.length;
@@ -232,10 +255,7 @@ const ClassroomCard = (props: classCardProps) => {
   return (
     <Section hasAnimation={props.cssArr?.hasAnimation}>
       <ImageContainer imgHeight={props.cssArr?.imageHeight}>
-        <img
-          src={props.teachCard.cardBanner ? props.teachCard.cardBanner : link}
-          alt="card-banner"
-        />
+        <img src={props.teachCard.cardBanner} alt="card-banner" />
       </ImageContainer>
       <DetailContainer gapSize={props.cssArr?.gap}>
         <Header headerSize={props.cssArr?.headerSize}>

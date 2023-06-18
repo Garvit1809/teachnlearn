@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import ClassroomCard from "./classroomCard";
+import ClassroomCard, { classroomCardProps } from "./classroomCard";
 import { teachCardProps } from "../../pages/classroom/classrooms";
 
 const Section = styled.div`
@@ -12,7 +12,7 @@ const Section = styled.div`
 `;
 
 interface gridProps {
-  teachCards: Array<teachCardProps>;
+  teachCards: Array<classroomCardProps>;
 }
 
 export const cardSizes = {

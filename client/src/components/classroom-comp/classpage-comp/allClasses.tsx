@@ -6,6 +6,7 @@ import { BASE_URL, apiVersion } from "../../../utils/apiRoutes";
 import { getHeaders } from "../../../utils/helperFunctions";
 import axios from "axios";
 import ClassroomGrid from "../classroomGrid";
+import { classroomCardProps } from "../classroomCard";
 
 const Section = styled.div``;
 
@@ -14,7 +15,7 @@ export interface classElemProps {
 }
 
 const AllClasses = (props: classElemProps) => {
-  const [teachCards, setTeachCards] = useState<Array<teachCardProps>>();
+  const [teachCards, setTeachCards] = useState<Array<classroomCardProps>>();
 
   async function fetchAllTeachCards() {
     await axios
