@@ -169,7 +169,7 @@ const MyProfile = () => {
     <Section>
       <Header>
         <Heading>My profile</Heading>
-        <ModeToggle />
+        <ModeToggle userToken={localUser.token} />
       </Header>
       <UserContainer>
         <ImageContainer>

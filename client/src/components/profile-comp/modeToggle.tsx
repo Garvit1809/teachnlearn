@@ -1,5 +1,9 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
+import { getHeaders } from "../../utils/helperFunctions";
+import { localStorageUser } from "../../utils/globalConstants";
 
 const Section = styled.div`
   display: flex;
@@ -75,20 +79,65 @@ const TeachText = styled.span<ToggleCheckedProps>`
   line-height: 25px;
 `;
 
-const ModeToggle = () => {
-  const [isChecked, setIsChecked] = useState(false);
+interface toggleProps {
+  userToken: string;
+}
+
+const ModeToggle = (props: toggleProps) => {
+  const [mode, setMode] = useState("learn");
+
+  const toggleHandler = async () => {
+    if (mode == "learn") {
+      await axios
+        .patch(
+          `${BASE_URL}${apiVersion}/user/myMode`,
+          {
+            mode: "teach",
+          },
+          {
+            headers: getHeaders(props.userToken ?? ""),
+          }
+        )
+        .then(({ data }) => {
+          const user = data.updatedUser;
+          user.token = props.userToken;
+          console.log(user);
+          localStorage.setItem(localStorageUser, JSON.stringify(user));
+        });
+      setMode("teach");
+    } else {
+      await axios
+        .patch(
+          `${BASE_URL}${apiVersion}/user/myMode`,
+          {
+            mode: "learn",
+          },
+          {
+            headers: getHeaders(props.userToken ?? ""),
+          }
+        )
+        .then(({ data }) => {
+          const user = data.updatedUser;
+          user.token = props.userToken;
+          console.log(user);
+          localStorage.setItem(localStorageUser, JSON.stringify(user));
+        });
+      setMode("learn");
+    }
+  };
+
   return (
     <Section>
-      <LearnText isChecked={isChecked}>Learn Mode</LearnText>
+      <LearnText isChecked={mode == "learn"}>Teach Mode</LearnText>
       <ToggleBtn>
         <input
-          type="radio"
-          checked={isChecked}
-          onClick={() => setIsChecked(!isChecked)}
+          type="checkbox"
+          checked={mode == "learn"}
+          onClick={toggleHandler}
         />
-        <Slider className="slider" isChecked={isChecked} />
+        <Slider className="slider" isChecked={mode == "learn"} />
       </ToggleBtn>
-      <TeachText isChecked={isChecked}>Teach Mode</TeachText>
+      <TeachText isChecked={mode == "learn"}>Learn Mode</TeachText>
     </Section>
   );
 };
