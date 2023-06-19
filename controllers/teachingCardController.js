@@ -145,22 +145,16 @@ exports.createTeachCard = catchAsync(async (req, res, next) => {
   });
 });
 
-// add to class
-// --> ceate a class once teach card is created
-// add students to teach card after theuy enroll
-
-// to be worked on
-// the class that has been completed wont be deleted from user side until he gives reviews
-// add check to ensure admin doesnt enroll
-
 exports.enrollInClass = catchAsync(async (req, res, next) => {
   // get user id
   // get teach card id
   // check if user has enough coins
   // add him to the enrolled field
   // cut pay
-
   // add check for date
+
+  // to be worked on
+  // add check to ensure admin doesnt enroll
 
   const userId = req.user.id;
   const userCoins = req.user.coins;
@@ -168,17 +162,19 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
 
   const teachCard = await TeachingCard.findById(teachCardId);
   const classPrice = teachCard.price;
-  const teacher = teachCard.createdBy;
+  const teacher = teachCard.createdBy._id;
 
   const currentDate = new Date();
   const endDate = teachCard.classEndsAt;
 
+  // date check
   if (endDate < currentDate) {
     return next(
       new AppError("Cannot enroll in the class, class has already ended!!")
     );
   }
 
+  //  owner check
   if (userId == teacher) {
     return next(new AppError("Teacher cannot enroll in thier own class"));
   }
@@ -191,6 +187,7 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
 
   console.log(enrolledCheck);
 
+  // already enrolled check
   if (enrolledCheck.length > 0) {
     return next(
       new AppError(
@@ -199,6 +196,7 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
     );
   }
 
+  // user credit check
   if (userCoins < classPrice) {
     return next(
       new AppError("User doent have enough coins for attending this class!!")
@@ -227,7 +225,7 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
   const newTransaction = await TransactionHistory.create({
     paidBy: userId,
     amount: classPrice,
-    transferredTo: teachCard.createdBy,
+    transferredTo: teachCard.createdBy._id,
     cardEnrolled: teachCard.id,
   });
 
@@ -262,10 +260,26 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
     );
   }
 
+  const updatedTeacher = await User.findByIdAndUpdate(teacher, {
+    $inc: { coins: classPrice },
+    $push: {
+      transactionHistory: newTransaction.id,
+    },
+  });
+
+  if (!updatedTeacher) {
+    return next(
+      new AppError(
+        "User couldnt be updated!! There came an error while charging the pay"
+      )
+    );
+  }
+
   res.status(201).json({
     status: "success",
     updatedTeachCard,
     updatedUser,
+    updatedTeacher,
   });
 });
 

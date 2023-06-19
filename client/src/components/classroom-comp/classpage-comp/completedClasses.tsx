@@ -19,8 +19,9 @@ const CompletedClasses = (props: classElemProps) => {
         headers: getHeaders(props.userToken ?? ""),
       })
       .then(({ data }) => {
-        const classes = data.upcomingClasses;
-        console.log(classes);
+        console.log(data);
+        const classes = data.completedClasses;
+        // console.log(classes);
         setTeachCards(classes);
       });
   }
