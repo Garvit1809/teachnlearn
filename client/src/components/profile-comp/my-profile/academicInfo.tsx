@@ -95,6 +95,7 @@ interface AcademicProps {
   language: string;
   preferredLanguages: string[];
   updateFields: any;
+  userToken: string;
 }
 
 const AcademicInfo = (props: AcademicProps) => {
@@ -160,6 +161,8 @@ const AcademicInfo = (props: AcademicProps) => {
           language={props.language}
           preferredLanguages={props.preferredLanguages}
           updateFields={props.updateFields}
+          userToken={props.userToken}
+          closeModal={closeModal}
         />
       </Modal>
     </>

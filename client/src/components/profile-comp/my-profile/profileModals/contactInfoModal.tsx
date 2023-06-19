@@ -3,6 +3,10 @@ import styled from "styled-components";
 import Inputholder from "../../../general-components/input/inputholder";
 import FormField from "../../../request-comp/formField";
 import { userProps } from "../myProfile";
+import axios from "axios";
+import { BASE_URL, apiVersion } from "../../../../utils/apiRoutes";
+import { getHeaders } from "../../../../utils/helperFunctions";
+import { localStorageUser } from "../../../../utils/globalConstants";
 
 const Section = styled.div`
   width: 50vw;
@@ -61,6 +65,8 @@ interface ContactProps {
   username: string;
   email: string;
   phone: string;
+  userToken: string;
+  closeModal: any;
 }
 
 type modalProps = ContactProps & {
@@ -68,6 +74,28 @@ type modalProps = ContactProps & {
 };
 
 const ContactInfoModal = (props: modalProps) => {
+  const updateContactUserHandler = async () => {
+    await axios
+      .patch(
+        `${BASE_URL}${apiVersion}/user/mycontactInfo`,
+        {
+          userName: props.username,
+          email: props.email,
+          phoneNumber: props.phone,
+        },
+        {
+          headers: getHeaders(props.userToken),
+        }
+      )
+      .then(({ data }) => {
+        console.log(data.updatedUser);
+        const user = data.updatedUser;
+        user.token = props.userToken;
+        localStorage.setItem(localStorageUser, JSON.stringify(user));
+        props.closeModal();
+      });
+  };
+
   return (
     <Section>
       <Header>
@@ -112,7 +140,9 @@ const ContactInfoModal = (props: modalProps) => {
         />
       </form>
       <SubmitButton>
-        <button type="submit">Edit User Info</button>
+        <button type="submit" onClick={updateContactUserHandler}>
+          Edit User Info
+        </button>
       </SubmitButton>
     </Section>
   );

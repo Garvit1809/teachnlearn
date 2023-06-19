@@ -9,6 +9,7 @@ export interface userProps {
   tagline: string;
   email: string;
   coins: number;
+  role: string;
   enrolledProgramme: string;
   phoneNumber: string;
   classesEnrolled: string[];

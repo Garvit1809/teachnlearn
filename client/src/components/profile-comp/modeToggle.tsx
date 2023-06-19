@@ -81,10 +81,11 @@ const TeachText = styled.span<ToggleCheckedProps>`
 
 interface toggleProps {
   userToken: string;
+  role: string;
 }
 
 const ModeToggle = (props: toggleProps) => {
-  const [mode, setMode] = useState("learn");
+  const [mode, setMode] = useState(props.role);
 
   const toggleHandler = async () => {
     if (mode == "learn") {

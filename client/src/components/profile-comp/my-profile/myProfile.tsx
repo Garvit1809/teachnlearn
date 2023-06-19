@@ -9,6 +9,10 @@ import AcademicInfo from "./academicInfo";
 import { localStorageUser } from "../../../utils/globalConstants";
 import Modal from "react-modal";
 import UserInfoModal from "./profileModals/userInfoModal";
+import axios from "axios";
+import { BASE_URL, apiVersion } from "../../../utils/apiRoutes";
+import { getHeaders } from "../../../utils/helperFunctions";
+import { UserCookie } from "../../../utils/userCookie";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -101,6 +105,7 @@ export interface userProps {
   tagline: string;
   email: string;
   enrolledProgramme: string;
+  role: string;
   phoneNumber: string;
   classesEnrolled: string[];
   classesTaken: string[];
@@ -122,6 +127,7 @@ const initialData: userProps = {
   email: "",
   enrolledProgramme: "",
   phoneNumber: "",
+  role: "",
   classesEnrolled: [],
   classesTaken: [],
   interestedSubject: "",
@@ -135,17 +141,34 @@ const initialData: userProps = {
 
 const MyProfile = () => {
   const [localUser, setLocalUser] = useState<userProps>(initialData);
+  const [userToken, setUserToken] = useState<string>("");
 
-  async function fetchLocalUserData() {
-    const data = await JSON.parse(
-      localStorage.getItem(localStorageUser) || "{}"
-    );
-    setLocalUser(data);
+  const { fetchLocalUserToken } = UserCookie();
+
+  useEffect(() => {
+    fetchLocalUserToken().then((token) => {
+      setUserToken(token);
+    });
+  }, []);
+
+  async function fetchMyDetails() {
+    await axios
+      .get(`${BASE_URL}${apiVersion}/user/me`, {
+        headers: getHeaders(userToken),
+      })
+      .then(({ data }) => {
+        const user = data.data.data;
+        user.token = userToken;
+        console.log(user);
+        setLocalUser(user);
+      });
   }
 
   useEffect(() => {
-    fetchLocalUserData();
-  }, []);
+    if (userToken) {
+      fetchMyDetails();
+    }
+  }, [userToken]);
 
   function updateFields(fields: Partial<userProps>) {
     if (localUser) {
@@ -169,7 +192,7 @@ const MyProfile = () => {
     <Section>
       <Header>
         <Heading>My profile</Heading>
-        <ModeToggle userToken={localUser.token} />
+        <ModeToggle userToken={localUser.token} role={localUser.role} />
       </Header>
       <UserContainer>
         <ImageContainer>
@@ -188,12 +211,15 @@ const MyProfile = () => {
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
           style={customStyles}
+          ariaHideApp={false}
         >
           <UserInfoModal
             name={localUser.name}
             photo={localUser.photo}
             tagline={localUser.tagline}
             updateFields={updateFields}
+            userToken={localUser.token}
+            closeModal={closeModal}
           />
         </Modal>
       </UserContainer>
@@ -203,6 +229,7 @@ const MyProfile = () => {
         email={localUser.email}
         phone={localUser.phoneNumber}
         updateFields={updateFields}
+        userToken={userToken}
       />
       <AcademicInfo
         course={localUser.enrolledProgramme}
@@ -213,6 +240,7 @@ const MyProfile = () => {
         strongSubject={localUser.strongSubject}
         preferredLanguages={localUser.preferredLanguages}
         updateFields={updateFields}
+        userToken={userToken}
       />
     </Section>
   ) : (

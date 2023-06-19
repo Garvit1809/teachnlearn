@@ -5,6 +5,10 @@ import FormField from "../../../request-comp/formField";
 import Inputholder from "../../../general-components/input/inputholder";
 import MultipleInput from "../../../general-components/input/multipleInput";
 import ArrChip from "../../../authentication-comp/arrChip";
+import { BASE_URL, apiVersion } from "../../../../utils/apiRoutes";
+import { getHeaders } from "../../../../utils/helperFunctions";
+import axios from "axios";
+import { localStorageUser } from "../../../../utils/globalConstants";
 
 const Section = styled.div`
   width: 50vw;
@@ -75,6 +79,8 @@ interface AcademicProps {
   interstedSubjects: Array<string>;
   language: string;
   preferredLanguages: string[];
+  userToken: string;
+  closeModal: any;
 }
 
 type modalProps = AcademicProps & {
@@ -82,6 +88,29 @@ type modalProps = AcademicProps & {
 };
 
 const AcademicInfoModal = (props: modalProps) => {
+  const updateUserAcademicInfoHandler = async () => {
+    await axios
+      .patch(
+        `${BASE_URL}${apiVersion}/user/myacademicInfo`,
+        {
+          enrolledProgramme: props.course,
+          strongSubjects: props.strongSubjects,
+          interestedSubjects: props.interstedSubjects,
+          preferredLanguages: props.preferredLanguages,
+        },
+        {
+          headers: getHeaders(props.userToken),
+        }
+      )
+      .then(({ data }) => {
+        console.log(data.updatedUser);
+        const user = data.updatedUser;
+        user.token = props.userToken;
+        localStorage.setItem(localStorageUser, JSON.stringify(user));
+        props.closeModal();
+      });
+  };
+
   return (
     <Section>
       <Header>
@@ -162,7 +191,9 @@ const AcademicInfoModal = (props: modalProps) => {
         />
       </form>
       <SubmitButton>
-        <button type="submit">Edit Academic Info</button>
+        <button type="submit" onClick={updateUserAcademicInfoHandler}>
+          Edit Academic Info
+        </button>
       </SubmitButton>
     </Section>
   );

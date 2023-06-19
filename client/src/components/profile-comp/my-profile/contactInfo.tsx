@@ -73,6 +73,7 @@ interface ContactProps {
   email: string;
   phone: string;
   updateFields: any;
+  userToken: string;
 }
 
 const ContactInfo = (props: ContactProps) => {
@@ -119,6 +120,8 @@ const ContactInfo = (props: ContactProps) => {
           phone={props.phone}
           username={props.username}
           updateFields={props.updateFields}
+          userToken={props.userToken}
+          closeModal={closeModal}
         />
       </Modal>
     </>

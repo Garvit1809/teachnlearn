@@ -4,6 +4,9 @@ import { userProps } from "../myProfile";
 import FormField from "../../../request-comp/formField";
 import Inputholder from "../../../general-components/input/inputholder";
 import Textarea from "../../../general-components/input/textarea";
+import axios from "axios";
+import { BASE_URL, apiVersion } from "../../../../utils/apiRoutes";
+import { getHeaders } from "../../../../utils/helperFunctions";
 
 const Section = styled.div`
   width: 50vw;
@@ -62,6 +65,8 @@ interface userInfo {
   name: string;
   photo: string;
   tagline: string;
+  userToken: string;
+  closeModal: any;
 }
 
 type modalProps = userInfo & {
@@ -69,6 +74,25 @@ type modalProps = userInfo & {
 };
 
 const UserInfoModal = (props: modalProps) => {
+  const updateUserInfoHandler = async () => {
+    await axios
+      .patch(
+        `${BASE_URL}${apiVersion}/user/myInfo`,
+        {
+          name: props.name,
+          tagline: props.tagline,
+          photo: props.photo,
+        },
+        {
+          headers: getHeaders(props.userToken ?? ""),
+        }
+      )
+      .then(({ data }) => {
+        console.log(data.updatedUser);
+        props.closeModal();
+      });
+  };
+
   return (
     <Section>
       <Header>
@@ -98,21 +122,11 @@ const UserInfoModal = (props: modalProps) => {
           }
           inputDesc="Change your Tagline :-"
         />
-        {/* <FormField
-          elem={
-            <Inputholder
-              label="Phone Number"
-              name="phoneNumber"
-              type="string"
-              value={props.phone}
-              updateFields={props.updateFields}
-            />
-          }
-          inputDesc="Change your Phone Number :-"
-        /> */}
       </form>
       <SubmitButton>
-        <button type="submit">Edit User Info</button>
+        <button type="submit" onClick={updateUserInfoHandler}>
+          Edit User Info
+        </button>
       </SubmitButton>
     </Section>
   );
