@@ -17,6 +17,7 @@ import { UserCookie } from "./utils/userCookie";
 import { useEffect } from "react";
 import LandingPage from "./pages/landing-page/landingPage";
 import ClassroomOverview from "./pages/classroom/classroomOverview";
+import CreateForum from "./components/forum-components/createForum";
 
 function App() {
   const { fetchLocalUserData, localUser } = UserCookie();
@@ -35,8 +36,9 @@ function App() {
         ) : (
           <Route path="/" element={<LandingPage />} />
         )}
-        <Route path="/forum" element={<Forum />} />
+        <Route path="/forums" element={<Forum />} />
         <Route path="/forum/:id" element={<SingleForum />} />
+        <Route path="/create-forum" element={<CreateForum />} />
         <Route path="/classes" element={<Classrooms />} />
         <Route path="/class-overviw/:id" element={<ClassroomOverview />} />
         <Route path="/classes/class/:id" element={<SingleClassroom />} />

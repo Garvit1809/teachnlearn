@@ -68,7 +68,7 @@ const Classrooms = () => {
     fetchLocalUserToken().then((token) => {
       setUserToken(token);
     });
-  }, []);
+  }, [location]);
 
   const [activeLink, setActiveLink] = useState("all classes");
   const [element, setElement] = useState<ReactElement>(
@@ -85,7 +85,7 @@ const Classrooms = () => {
         setElement(<CompletedClasses userToken={userToken} />);
       }
     }
-  }, [activeLink]);
+  }, [activeLink, userToken]);
 
   const navigationHandler = (navigateTo: string) => {
     setActiveLink(navigateTo);

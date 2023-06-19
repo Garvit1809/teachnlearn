@@ -64,7 +64,7 @@ const navOptions = [
   },
   {
     title: "Forum",
-    link: "/forum",
+    link: "/forums",
   },
   {
     title: "Classes",

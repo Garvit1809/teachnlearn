@@ -8,6 +8,7 @@ import {
 import UserChip from "../general-components/userChip";
 import { useNavigate } from "react-router-dom";
 import { UserCookie, userProps } from "../../utils/userCookie";
+import { getReadableDate, getReadableTime } from "../../utils/helperFunctions";
 
 const Section = styled.div<cardAnimationProps>`
   box-shadow: 0px 20px 24px -4px rgba(16, 24, 40, 0.08),
@@ -165,6 +166,22 @@ const Coins = styled.div<buttonProps>`
   }
 `;
 
+const UserWrapper = styled.div`
+  /* border: 1px solid red; */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const TimeCont = styled.span`
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+`;
+
 export interface classroomCardProps {
   announcements: string[];
   callLink: string;
@@ -227,7 +244,6 @@ const ClassroomCard = (props: classCardProps) => {
   const checkEnrolledClass = () => {
     if (localUser) {
       const bool = props.teachCard.studentsEnrolled.filter((student) => {
-        // console.log("STUDENT :-" + student);
         return student == localUser._id;
       });
       return bool.length;
@@ -273,14 +289,23 @@ const ClassroomCard = (props: classCardProps) => {
             ? props.teachCard.topic.slice(0, 52) + "..."
             : props.teachCard.topic}
         </Title>
-        <UserChip
-          name={props.teachCard.createdBy.name}
-          photo={props.teachCard.createdBy.photo}
-          imgBorder="#000000"
-          textColor="#000000"
-          imgSize={props.cssArr?.userChipImgSize}
-          textSize={props.cssArr?.userChipTextSize}
-        />
+        <UserWrapper>
+          <UserChip
+            name={props.teachCard.createdBy.name}
+            photo={props.teachCard.createdBy.photo}
+            imgBorder="#000000"
+            textColor="#000000"
+            imgSize={props.cssArr?.userChipImgSize}
+            textSize={props.cssArr?.userChipTextSize}
+          />
+          <TimeCont>
+            {getReadableDate(props.teachCard.date) +
+              ", " +
+              getReadableTime(props.teachCard.classStartsAt) +
+              " - " +
+              getReadableTime(props.teachCard.classEndsAt)}
+          </TimeCont>
+        </UserWrapper>
         <EnrollCont>
           <EnrollBtn
             onClick={enrollClassNavigator}

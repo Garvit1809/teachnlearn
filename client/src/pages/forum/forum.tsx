@@ -8,9 +8,11 @@ import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunctions";
 import { UserCookie } from "../../utils/userCookie";
+import ForumOptions from "../../components/forum-components/forumOptions";
+import { useNavigate } from "react-router-dom";
 
 const Section = styled.div`
-  /* border: 1px solid brown; */
+  border: 1px solid brown;
   /* display: flex; */
   /* align-items: center; */
 `;
@@ -29,6 +31,10 @@ const ForumGrid = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: 2rem 2.5rem;
   margin: 2rem 15vw 1rem;
+`;
+
+const CreateForumBtn = styled.div`
+  border: 1px solid red;
 `;
 
 export interface forumProps {
@@ -76,10 +82,20 @@ const Forum = () => {
     }
   }, [userToken]);
 
+  const navigate = useNavigate();
+  const postForumNavigator = () => {
+    navigate('/create-forum')
+  };
+
   return (
     <>
       <Navbar />
       <Section>
+        <CreateForumBtn>
+          <button type="button" onClick={postForumNavigator}>
+            Post Forum
+          </button>
+        </CreateForumBtn>
         <TopBar>
           <SearchBar placeholderText="Search n forums..." />
         </TopBar>

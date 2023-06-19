@@ -240,7 +240,7 @@ const CreateLearnCard = () => {
     <>
       <Navbar />
       <Section>
-        <BackBtn />
+        <BackBtn link="/" />
         <h2>Let's get started with your Learn Card</h2>
         <form>
           <FormField

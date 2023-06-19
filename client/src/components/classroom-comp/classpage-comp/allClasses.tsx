@@ -20,6 +20,9 @@ const AllClasses = (props: classElemProps) => {
   async function fetchAllTeachCards() {
     await axios
       .get(`${BASE_URL}${apiVersion}/teach`, {
+        params: {
+          sort: "classStartsAt",
+        },
         headers: getHeaders(props.userToken ?? ""),
       })
       .then(({ data }) => {

@@ -7,49 +7,109 @@ import { useLocation } from "react-router-dom";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import axios from "axios";
 import { getHeaders } from "../../utils/helperFunctions";
+import BackBtn from "../../components/request-comp/backBtn";
 
 const Section = styled.div`
-  border: 1px solid red;
-  margin-top: 50px;
+  /* border: 1px solid red; */
 
-  padding: 0 6.3vw;
-  /* display: flex; */
-  /* flex-direction: column; */
-  display: grid;
-  /* grid-template-columns: 1.5fr 2.5fr 1.5fr; */
-  grid-template-columns: 25% 70%;
-  gap: 30px;
+  border: 1px solid #d5d9eb;
+  border-radius: 26px;
+  box-sizing: border-box;
+  padding: 48px 64px;
+  width: 80%;
+  margin: 2.5rem auto;
+  display: flex;
+  flex-direction: column;
 `;
 
-const FilterContainer = styled.div`
-  border: 1px solid red;
+const HeaderBtns = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+`;
+
+const PostAnswerBtn = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 14px 30px;
+  gap: 10px;
+  background: rgb(51, 42, 213);
+  border-radius: 8px;
+  outline: none;
+  border: none;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 25px;
+  color: #ffffff;
+  cursor: pointer;
 `;
 
 const ForumContainer = styled.div`
-  border: 1px solid red;
+  /* border: 1px solid red; */
 `;
 
 const QuestionContainer = styled.div`
   display: flex;
-  /* align-items: ; */
   border-bottom: 1px solid #cdd5df;
-  /* margin-bottom: 2rem; */
+  padding-bottom: 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 `;
 
 const RatingContainer = styled.div`
-  border: 1px solid red;
+  /* border: 1px solid red; */
+  width: 5%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 `;
 
 const ChipWrapper = styled.div`
-  border: 1px solid red;
+  /* border: 1px solid red; */
 `;
 
-const Question = styled.div``;
+const Question = styled.div`
+  width: 90%;
+  /* border: 2px solid green; */
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+
+  h2 {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 35px;
+
+    color: #000000;
+  }
+
+  p {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 26px;
+    color: #4a5578;
+  }
+`;
 
 const AnswerContainer = styled.div`
+  border: 1px solid blue;
   display: flex;
   flex-direction: column;
   /* gap: 2rem; */
+  width: 90%;
+  margin: 0 auto;
+  padding: 1rem;
+  box-sizing: border-box;
 `;
 
 const AnswerDetails = styled.div`
@@ -73,7 +133,7 @@ interface answerProps {
 
 interface forumProps {
   _id: string;
-  answers: answerProps;
+  answers: Array<answerProps>;
   createdBy: {
     _id: string;
     userName: string;
@@ -103,8 +163,6 @@ const SingleForum = () => {
     setuserToken(token);
   }, [location]);
 
-  //  user who posted ques cannot answer the ques --> check to be added
-
   async function fetchForum() {
     await axios
       .get(`${BASE_URL}${apiVersion}/forum/${forumId}`, {
@@ -127,13 +185,10 @@ const SingleForum = () => {
     <>
       <Navbar />
       <Section>
-        <FilterContainer>
-          <ul>
-            <li>Most Popular</li>
-            <li>Explore Topics</li>
-            <li>Create a Forum</li>
-          </ul>
-        </FilterContainer>
+        <HeaderBtns>
+          <BackBtn link="/forums" />
+          <PostAnswerBtn>Post Answer</PostAnswerBtn>
+        </HeaderBtns>
         {forum && (
           <ForumContainer>
             <QuestionContainer>
@@ -147,23 +202,24 @@ const SingleForum = () => {
                 </div>
               </Question>
             </QuestionContainer>
-            <AnswerContainer>
-              <ChipWrapper>
-                <UserChip name="Nischal kharel" />
-              </ChipWrapper>
-              <AnswerDetails>
-                <RatingContainer></RatingContainer>
-                <Answer>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Dolores assumenda sed, et magnam est nemo tempora nam
-                    dolorum doloremque quia aliquam rem. Voluptate similique
-                    incidunt odit, culpa accusantium cum minima consectetur,
-                    quae aut, optio eveniet quis totam odio veritatis provident?
-                  </p>
-                </Answer>
-              </AnswerDetails>
-            </AnswerContainer>
+            {forum.answers.map((answer, index) => {
+              return (
+                <AnswerContainer>
+                  <ChipWrapper>
+                    <UserChip
+                      name={answer.answeredBy.name}
+                      photo={answer.answeredBy.photo}
+                    />
+                  </ChipWrapper>
+                  <AnswerDetails>
+                    <RatingContainer>{answer.upvotes.length}</RatingContainer>
+                    <Answer>
+                      <p>{answer.answer}</p>
+                    </Answer>
+                  </AnswerDetails>
+                </AnswerContainer>
+              );
+            })}
           </ForumContainer>
         )}
       </Section>
