@@ -7,6 +7,7 @@ import DetailsContainer from "./detailsContainer";
 import TimeCapsule from "./timeCapsule";
 import JoinCall from "./joinCall";
 import { teachCardProps } from "../../pages/classroom/classrooms";
+import AddLink from "./addLink";
 
 const OverviewContainer = styled.div`
   /* border: 1px solid red; */
@@ -59,7 +60,12 @@ interface overviewProps {
   _id: string;
 }
 
-const Overview = (props: overviewProps) => {
+type overallOverviewProps = overviewProps & {
+  userId: string;
+  userToken: string;
+};
+
+const Overview = (props: overallOverviewProps) => {
   return (
     props && (
       <>
@@ -71,7 +77,16 @@ const Overview = (props: overviewProps) => {
               classStartsAt={props.classStartsAt}
               classEndsAt={props.classEndsAt}
             />
-            <JoinCall callLink={props.callLink} />
+            {props.userId == props.createdBy._id ? (
+              <AddLink
+                callLink={props.callLink}
+                teachCardId={props._id}
+                userId={props.userId}
+                userToken={props.userToken}
+              />
+            ) : (
+              <JoinCall callLink={props.callLink} />
+            )}
           </CallDetailContainer>
           <ClassOverview>
             <ChipContainer>

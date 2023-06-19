@@ -13,6 +13,7 @@ const teachingCardController = require("../controllers/teachingCardController");
 const { protect } = require("../controllers/authController");
 const announcementRouter = require("./announcementRouter");
 const reviewRouter = require("./reviewRoutes");
+const announcementController = require("../controllers/announcementController");
 
 const router = express.Router();
 
@@ -35,6 +36,11 @@ router.get(
 router.patch(
   "/:teachCardId/interested",
   teachingCardController.interestedInTeachCard
+);
+router.patch(
+  "/:teachingCardId/callLink",
+  announcementController.restricToAdmin,
+  teachingCardController.updateClassLink
 );
 
 router.patch("/:teachCardId/enroll", teachingCardController.enrollInClass);

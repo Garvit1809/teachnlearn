@@ -341,4 +341,29 @@ exports.getCompletedClasses = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.updateClassLink = catchAsync(async (req, res, next) => {
+  const { callLink } = req.body;
+  const teachCardId = req.params.teachingCardId;
+
+  const updatedClassroom = await TeachingCard.findByIdAndUpdate(
+    teachCardId,
+    {
+      callLink,
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  if (!updatedClassroom) {
+    return next(new AppError("Couldnt update the classrrom!!"));
+  }
+
+  res.status(200).json({
+    status: "success",
+    updatedClassroom,
+  });
+});
+
 exports.topTeachCards = catchAsync(async (req, res, next) => {});

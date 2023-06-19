@@ -84,7 +84,9 @@ const SingleClassroom = () => {
 
   useEffect(() => {
     if (classroom) {
-      setElement(<Overview {...classroom} />);
+      setElement(
+        <Overview {...classroom} userId={userId} userToken={userToken} />
+      );
     }
   }, [classroom]);
 
@@ -95,7 +97,9 @@ const SingleClassroom = () => {
   useEffect(() => {
     if (classroom) {
       if (activeLink == "overview") {
-        setElement(<Overview {...classroom} />);
+        setElement(
+          <Overview {...classroom} userId={userId} userToken={userToken} />
+        );
       } else if (activeLink == "classroom") {
         setElement(
           <Classroom
