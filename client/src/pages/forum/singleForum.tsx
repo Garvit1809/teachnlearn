@@ -8,6 +8,8 @@ import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import axios from "axios";
 import { getHeaders } from "../../utils/helperFunctions";
 import BackBtn from "../../components/request-comp/backBtn";
+import PostAnswer from "../../components/forum-components/postAnswer";
+import QuestionContainer from "../../components/forum-components/questionContainer";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -30,7 +32,7 @@ const HeaderBtns = styled.div`
   margin-bottom: 1rem;
 `;
 
-const PostAnswerBtn = styled.div`
+export const PostBtn = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -54,62 +56,21 @@ const ForumContainer = styled.div`
   /* border: 1px solid red; */
 `;
 
-const QuestionContainer = styled.div`
-  display: flex;
-  border-bottom: 1px solid #cdd5df;
-  padding-bottom: 1.5rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-`;
-
-const RatingContainer = styled.div`
-  /* border: 1px solid red; */
-  width: 5%;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-`;
-
 const ChipWrapper = styled.div`
   /* border: 1px solid red; */
 `;
 
-const Question = styled.div`
-  width: 90%;
-  /* border: 2px solid green; */
-  display: flex;
-  flex-direction: column;
-  row-gap: 1rem;
-
-  h2 {
-    font-family: "Nunito";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 26px;
-    line-height: 35px;
-
-    color: #000000;
-  }
-
-  p {
-    font-family: "Nunito";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 26px;
-    color: #4a5578;
-  }
-`;
-
 const AnswerContainer = styled.div`
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   display: flex;
   flex-direction: column;
-  /* gap: 2rem; */
+  gap: 1rem;
   width: 90%;
   margin: 0 auto;
   padding: 1rem;
   box-sizing: border-box;
+  background-color: #d8eefe;
+  border-radius: 4px;
 `;
 
 const AnswerDetails = styled.div`
@@ -184,45 +145,41 @@ const SingleForum = () => {
   return (
     <>
       <Navbar />
-      <Section>
-        <HeaderBtns>
-          <BackBtn link="/forums" />
-          <PostAnswerBtn>Post Answer</PostAnswerBtn>
-        </HeaderBtns>
-        {forum && (
-          <ForumContainer>
-            <QuestionContainer>
-              <RatingContainer>{forum.upvotes.length}</RatingContainer>
-              <Question>
-                <div>
-                  <h2>{forum.tagline}</h2>
-                </div>
-                <div>
-                  <p>{forum.question}</p>
-                </div>
-              </Question>
-            </QuestionContainer>
-            {forum.answers.map((answer, index) => {
-              return (
-                <AnswerContainer>
-                  <ChipWrapper>
-                    <UserChip
-                      name={answer.answeredBy.name}
-                      photo={answer.answeredBy.photo}
-                    />
-                  </ChipWrapper>
-                  <AnswerDetails>
-                    <RatingContainer>{answer.upvotes.length}</RatingContainer>
-                    <Answer>
-                      <p>{answer.answer}</p>
-                    </Answer>
-                  </AnswerDetails>
-                </AnswerContainer>
-              );
-            })}
-          </ForumContainer>
-        )}
-      </Section>
+      {forum && (
+        <Section>
+          <HeaderBtns>
+            <BackBtn link="/forums" />
+            <PostAnswer forumId={forum?._id} />
+          </HeaderBtns>
+          {forum && (
+            <ForumContainer>
+              <QuestionContainer
+                question={forum.question}
+                rating={forum.upvotes.length}
+                tagline={forum.tagline}
+              />
+              {forum.answers.map((answer, index) => {
+                return (
+                  <AnswerContainer>
+                    <ChipWrapper>
+                      <UserChip
+                        name={answer.answeredBy.name}
+                        photo={answer.answeredBy.photo}
+                      />
+                    </ChipWrapper>
+                    <AnswerDetails>
+                      {/* <RatingContainer>{answer.upvotes.length}</RatingContainer> */}
+                      <Answer>
+                        <p>{answer.answer}</p>
+                      </Answer>
+                    </AnswerDetails>
+                  </AnswerContainer>
+                );
+              })}
+            </ForumContainer>
+          )}
+        </Section>
+      )}
       <FooterWrapper />
     </>
   );

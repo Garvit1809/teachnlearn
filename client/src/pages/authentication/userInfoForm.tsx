@@ -35,7 +35,7 @@ export const InputWrapper = styled.div`
 `;
 
 interface UserInfo {
-  profilePic: string;
+  img: string;
   number: string;
   course: string;
   interestedSubject: string;
@@ -54,7 +54,7 @@ const UserInfoForm = (props: UserInfoFormProps) => {
   return (
     <Section>
       <form action="">
-        {/* <UploadImage  /> */}
+        <UploadImage updateFields={props.updateFields} />
         <Inputholder 
           type="text"
           label="Phone Number"

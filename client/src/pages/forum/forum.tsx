@@ -10,11 +10,19 @@ import { getHeaders } from "../../utils/helperFunctions";
 import { UserCookie } from "../../utils/userCookie";
 import ForumOptions from "../../components/forum-components/forumOptions";
 import { useNavigate } from "react-router-dom";
+import { PostBtn } from "./singleForum";
 
 const Section = styled.div`
-  border: 1px solid brown;
+  /* border: 1px solid brown; */
   /* display: flex; */
   /* align-items: center; */
+`;
+
+const HeaderBtn = styled.div`
+  display: flex;
+  margin-top: 2rem;
+  justify-content: flex-end;
+  width: 90%;
 `;
 
 const TopBar = styled.div`
@@ -23,7 +31,7 @@ const TopBar = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 26px;
 `;
 
 const ForumGrid = styled.div`
@@ -34,7 +42,7 @@ const ForumGrid = styled.div`
 `;
 
 const CreateForumBtn = styled.div`
-  border: 1px solid red;
+  /* border: 1px solid red; */
 `;
 
 export interface forumProps {
@@ -84,18 +92,16 @@ const Forum = () => {
 
   const navigate = useNavigate();
   const postForumNavigator = () => {
-    navigate('/create-forum')
+    navigate("/create-forum");
   };
 
   return (
     <>
       <Navbar />
       <Section>
-        <CreateForumBtn>
-          <button type="button" onClick={postForumNavigator}>
-            Post Forum
-          </button>
-        </CreateForumBtn>
+        <HeaderBtn>
+          <PostBtn onClick={postForumNavigator}>Post Forum</PostBtn>
+        </HeaderBtn>
         <TopBar>
           <SearchBar placeholderText="Search n forums..." />
         </TopBar>

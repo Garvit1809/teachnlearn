@@ -101,7 +101,7 @@ interface USERDATA {
   email: string;
   password: string;
   confirmPassword: string;
-  profilePic: string;
+  img: string;
   number: string;
   course: string;
   interestedSubject: string;
@@ -118,7 +118,7 @@ const initialData: USERDATA = {
   email: "",
   password: "",
   confirmPassword: "",
-  profilePic: "",
+  img: "",
   number: "",
   course: "",
   interestedSubject: "",
@@ -150,22 +150,26 @@ const NewSignup = () => {
     else {
       e.preventDefault();
       console.log(userData);
-      const { data } = await axios.post(`${BASE_URL}${apiVersion}/auth/signup`, {
-        name: userData.fullName,
-        userName: userData.userName,
-        email: userData.email,
-        password: userData.password,
-        passwordConfirm: userData.confirmPassword,
-        phoneNumber: userData.number,
-        enrolledProgramme: userData.course,
-        interestedSubjects: userData.interestedSubjects,
-        strongSubjects: userData.strongSubjects,
-        preferredLanguages: userData.preferredLanguages,
-      });
+      const { data } = await axios.post(
+        `${BASE_URL}${apiVersion}/auth/signup`,
+        {
+          name: userData.fullName,
+          userName: userData.userName,
+          email: userData.email,
+          password: userData.password,
+          passwordConfirm: userData.confirmPassword,
+          photo: userData.img,
+          phoneNumber: userData.number,
+          enrolledProgramme: userData.course,
+          interestedSubjects: userData.interestedSubjects,
+          strongSubjects: userData.strongSubjects,
+          preferredLanguages: userData.preferredLanguages,
+        }
+      );
       console.log(data);
       if (data.status === "success") {
         data.user.token = data.token;
-        localStorage.setItem(localStorageUser, JSON.stringify(data.user))
+        localStorage.setItem(localStorageUser, JSON.stringify(data.user));
         // fetchLocalUserData()
         // setLocalUser()
         // navigateToHome();
