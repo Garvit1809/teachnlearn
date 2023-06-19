@@ -7,8 +7,23 @@ const User = require("../models/userModel");
 const TransactionHistory = require("../models/transactionHistoryModel");
 
 // filter cards acccoriding to their start date
-exports.getAllTeachCards = factory.getAll(TeachingCard);
-exports.getTeachCardOverview = factory.getOne(TeachingCard);
+// exports.getAllTeachCards = factory.getAll(TeachingCard);
+// exports.getTeachCardOverview = factory.getOne(TeachingCard);
+
+exports.getAllTeachCards = catchAsync(async (req, res, next) => {
+  const curentDate = new Date();
+
+  const teachCards = await TeachingCard.find({
+    classEndsAt: {
+      $gte: curentDate,
+    },
+  });
+
+  res.status(200).json({
+    status: "success",
+    teachCards,
+  });
+});
 
 exports.getTeachCardOverview = catchAsync(async (req, res, next) => {
   const teachCardId = req.params.teachCardId;

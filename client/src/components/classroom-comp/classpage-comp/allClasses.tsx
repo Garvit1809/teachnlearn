@@ -26,8 +26,8 @@ const AllClasses = (props: classElemProps) => {
         headers: getHeaders(props.userToken ?? ""),
       })
       .then(({ data }) => {
-        console.log(data.data.data);
-        setTeachCards(data.data.data);
+        console.log(data.teachCards);
+        setTeachCards(data.teachCards);
       });
   }
 
