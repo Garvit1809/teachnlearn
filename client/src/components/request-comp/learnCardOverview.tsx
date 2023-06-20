@@ -12,7 +12,9 @@ import UserChip from "../general-components/userChip";
 import DetailsContainer from "../classroom-comp/detailsContainer";
 import { Arrow, InterestedIcon } from "../general-components/svg";
 import { teachCardProps } from "../../pages/classroom/classrooms";
-import ClassroomCard from "../classroom-comp/classroomCard";
+import ClassroomCard, {
+  classroomCardProps,
+} from "../classroom-comp/classroomCard";
 import { cardSizes } from "../classroom-comp/classroomGrid";
 import BackBtn from "./backBtn";
 
@@ -163,13 +165,15 @@ const TeachCardGrid = styled.div`
 const LearnCardOverview = () => {
   const [learnCardId, setLearnCardId] = useState();
   const [learnCard, setlearnCard] = useState<learnCardProps>();
-  const [teachCards, setTeachCards] = useState<Array<teachCardProps>>();
+  const [teachCards, setTeachCards] = useState<Array<classroomCardProps>>();
+  const [backLink, setBackLink] = useState<string>('/');
 
   const location = useLocation();
   useEffect(() => {
     const learnCardId = location.state.learnCardId;
+    const link = location.state.backLink;
     setLearnCardId(learnCardId);
-    console.log(learnCardId);
+    setBackLink(link);
   }, []);
 
   async function fetchLearnCard() {
@@ -223,7 +227,7 @@ const LearnCardOverview = () => {
       <Navbar />
       {learnCard ? (
         <Section>
-          <BackBtn link="/requests" />
+          <BackBtn link={backLink} />
           <TopicCont>
             <h2>{learnCard.topic}</h2>
           </TopicCont>

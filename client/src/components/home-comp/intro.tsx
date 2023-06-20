@@ -96,7 +96,11 @@ const Buttons = styled.div`
   }
 `;
 
-const Intro = () => {
+interface introProps {
+  role: string;
+}
+
+const Intro = (props: introProps) => {
   return (
     <Section>
       <InfoContainer>
@@ -115,7 +119,7 @@ const Intro = () => {
               <Arrow strokeColor="white" />
             </button>
           </Link>
-          <Link to="/create-learn-request">
+          <Link to={`/create-${props.role}-request`}>
             <button className="request">
               <span>Create a request</span>
               <Arrow strokeColor="#364152" />

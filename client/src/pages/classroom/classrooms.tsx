@@ -8,6 +8,7 @@ import { UserCookie } from "../../utils/userCookie";
 import AllClasses from "../../components/classroom-comp/classpage-comp/allClasses";
 import UpcomingClasses from "../../components/classroom-comp/classpage-comp/upcomingClasses";
 import CompletedClasses from "../../components/classroom-comp/classpage-comp/completedClasses";
+import { useLocation } from "react-router-dom";
 
 const Section = styled.div`
   /* display: grid; */
@@ -62,18 +63,24 @@ export interface teachCardProps {
 const Classrooms = () => {
   const [userToken, setUserToken] = useState<string>("");
 
-  const { fetchLocalUserToken } = UserCookie();
-
-  useEffect(() => {
-    fetchLocalUserToken().then((token) => {
-      setUserToken(token);
-    });
-  }, [location]);
-
   const [activeLink, setActiveLink] = useState("all classes");
   const [element, setElement] = useState<ReactElement>(
     <AllClasses userToken={userToken} />
   );
+
+  const location = useLocation();
+
+  const { fetchLocalUserToken } = UserCookie();
+
+  useEffect(() => {
+    const link = location.state?.elemLink;
+    if (link) {
+      setActiveLink(link);
+    }
+    fetchLocalUserToken().then((token) => {
+      setUserToken(token);
+    });
+  }, [location]);
 
   useEffect(() => {
     if (userToken) {

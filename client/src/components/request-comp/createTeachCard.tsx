@@ -233,6 +233,10 @@ const CreateTeachCard = () => {
       });
   };
 
+  useEffect(() => {
+    console.log(teachCard);
+  }, [teachCard]);
+
   return (
     <>
       <Navbar />

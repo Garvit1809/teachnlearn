@@ -142,7 +142,7 @@ const LearnCard = (props: requestCardProps) => {
 
   const leanrCardOverviewNavigator = () => {
     navigate(`/learncard-overview/${props._id}`, {
-      state: { learnCardId: props._id },
+      state: { learnCardId: props._id, backLink: "/requests" },
     });
   };
 

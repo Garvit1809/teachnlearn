@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { classroomCardProps } from "../classroom-comp/classroomCard";
 import { Arrow } from "../general-components/svg";
+import { useNavigate } from "react-router-dom";
 import EnrolledClassCard from "./enrolledClassCard";
 import RequestCard from "./requestCard";
 
@@ -53,41 +55,32 @@ const CardGrid = styled.div`
 
 interface wrapperProps {
   heading: string;
-  cardArr: Array<cardObj>;
-  type: string;
+  cardArr: Array<classroomCardProps>;
 }
 
-interface cardObj {
-  category?: string;
-  title: string;
-  author: string;
-  interested?: number;
-  coins?: number;
-  startingTime?: string;
-  endTime?: string;
-}
+const RecommendedClassWrapper = (props: wrapperProps) => {
+  const navigate = useNavigate();
+  const classNavigator = () => {
+    navigate("/classes");
+  };
 
-const ClassSectionWrapper = (props: wrapperProps) => {
   return (
     <Section>
       <Header>
         <Heading>{props.heading}</Heading>
-        <SeeAll>
+        <SeeAll onClick={classNavigator}>
           <span>See All</span>
           <Arrow strokeColor="#384250" />
         </SeeAll>
       </Header>
       <CardGrid>
         {props.cardArr.map((card, index) => {
-          return props.type == "enrolled" ? (
-            <EnrolledClassCard key={index} {...card} />
-          ) : (
-            <RequestCard key={index} {...card} />
-          );
+          return "Hello";
+          //   return <RequestCard key={index} {...card} />;
         })}
       </CardGrid>
     </Section>
   );
 };
 
-export default ClassSectionWrapper;
+export default RecommendedClassWrapper;

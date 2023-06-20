@@ -3,13 +3,16 @@ import styled from "styled-components";
 import zoro from "../../assets/zoro.jpg";
 import { InterestedIcon, PurchaseCoinIcon } from "../general-components/svg";
 import UserChip from "../general-components/userChip";
+import { learnCardProps } from "../../pages/requests/requests";
+import { getReadableDate } from "../../utils/helperFunctions";
+import { useNavigate } from "react-router-dom";
 
 const Section = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 22px;
-  gap: 14px;
+  gap: 20px;
   background: #674ff1;
   border-radius: 16px;
   cursor: pointer;
@@ -47,10 +50,10 @@ const Topic = styled.div`
 
 const Stats = styled.div`
   /* border: 1px solid white; */
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
 
   div {
     display: flex;
@@ -66,33 +69,69 @@ const Stats = styled.div`
   }
 `;
 
-interface requestCardProps {
-  category?: string;
-  title: string;
-  author: string;
-  interested?: number;
-  coins?: number;
-}
+const UserWrapper = styled.div`
+  /* border: 1px solid red; */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
 
-const RequestCard = (props: requestCardProps) => {
+const DueCont = styled.div`
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #ffffff;
+`;
+
+const ExploreBtn = styled.div``;
+
+// interface requestCardProps {
+//   category?: string;
+//   title: string;
+//   author: string;
+//   interested?: number;
+//   coins?: number;
+// }
+
+const RequestCard = (props: learnCardProps) => {
+  const navigate = useNavigate();
+
+  const requestCardNavigator = () => {
+    navigate(`/learncard-overview/${props._id}`, {
+      state: {
+        learnCardId: props._id,
+        backLink: "/",
+      },
+    });
+  };
+
   return (
-    <Section>
+    <Section onClick={requestCardNavigator}>
       <Tag>
-        <h4>{props.category}</h4>
+        <h4>{props.subject}</h4>
       </Tag>
       <Topic>
-        <span>{props.title}</span>
+        <span>{props.topic}</span>
       </Topic>
-      <UserChip name={props.author} imgBorder="#FFFFFF" textColor="#FFFFFF" />
+      <UserWrapper>
+        <UserChip
+          name={props.createdBy.name}
+          photo={props.createdBy.photo}
+          imgBorder="#FFFFFF"
+          textColor="#FFFFFF"
+        />
+      </UserWrapper>
       <Stats>
         <div>
           <InterestedIcon />
-          <span>{props.interested} Interested</span>
+          <span>{props.interestedStudents.length} Interested</span>
         </div>
-        <div>
-          <PurchaseCoinIcon />
-          <span>{props.coins} Coins</span>
-        </div>
+        <DueCont>
+          <span>Due - {getReadableDate(props.dueDate)}</span>
+        </DueCont>
       </Stats>
     </Section>
   );

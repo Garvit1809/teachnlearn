@@ -252,19 +252,37 @@ const ClassroomCard = (props: classCardProps) => {
     }
   };
 
+  const checkClassTeacher = () => {
+    if (localUser) {
+      const isTeacher = props.teachCard.createdBy._id == localUser._id;
+      console.log(isTeacher);
+      return isTeacher;
+    } else {
+      return null;
+    }
+  };
+
   const enrollClassNavigator = () => {
-    if (checkEnrolledClass()) {
+    if (checkClassTeacher()) {
       navigate(`/classes/class/${props.teachCard._id}`, {
         state: {
           classroomId: props.teachCard._id,
         },
       });
     } else {
-      navigate(`/class-overviw/${props.teachCard._id}`, {
-        state: {
-          classroomId: props.teachCard._id,
-        },
-      });
+      if (checkEnrolledClass()) {
+        navigate(`/classes/class/${props.teachCard._id}`, {
+          state: {
+            classroomId: props.teachCard._id,
+          },
+        });
+      } else {
+        navigate(`/class-overviw/${props.teachCard._id}`, {
+          state: {
+            classroomId: props.teachCard._id,
+          },
+        });
+      }
     }
   };
 
@@ -311,10 +329,16 @@ const ClassroomCard = (props: classCardProps) => {
             onClick={enrollClassNavigator}
             btnSize={props.cssArr?.btnSize}
           >
-            <span>{checkEnrolledClass() ? "Check Class" : "Enroll Now"}</span>
+            <span>
+              {!checkClassTeacher()
+                ? checkEnrolledClass()
+                  ? "Check Class"
+                  : "Enroll Now"
+                : "Check Class"}
+            </span>
             <Arrow strokeColor="white" />
           </EnrollBtn>
-          {!checkEnrolledClass() ? (
+          {checkClassTeacher() ? null : !checkEnrolledClass() ? (
             <Coins
               svgSize={props.cssArr?.svgSize}
               btnSize={props.cssArr?.btnSize}

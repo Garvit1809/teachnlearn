@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Calender } from "../general-components/svg";
 import zoro from "../../assets/zoro.jpg";
+import { classroomCardProps } from "../classroom-comp/classroomCard";
+import { getReadableTime } from "../../utils/helperFunctions";
 
 const Section = styled.div`
   background: #e7e5f1;
@@ -73,28 +75,30 @@ const Teacher = styled.div`
   }
 `;
 
-interface enrolledCardProps {
-  title: string;
-  author: string;
-  startingTime?: string;
-  endTime?: string;
-}
+// interface enrolledCardProps {
+//   title: string;
+//   author: string;
+//   startingTime?: string;
+//   endTime?: string;
+// }
 
-const EnrolledClassCard = (props: enrolledCardProps) => {
+const EnrolledClassCard = (props: classroomCardProps) => {
   return (
     <Section>
       <TimeContainer>
         <Calender color="#1F2A37" />
         <span>
-          {props.startingTime} - {props.endTime}
+          {getReadableTime(props.classStartsAt) +
+            " - " +
+            getReadableTime(props.classEndsAt)}
         </span>
       </TimeContainer>
       <Topic>
-        <span>{props.title}</span>
+        <span>{props.topic}</span>
       </Topic>
       <Teacher>
-        <img src={zoro} alt="user-img" />
-        <span>{props.author}</span>
+        <img src={props.createdBy.photo} alt="user-img" />
+        <span>{props.createdBy.name}</span>
       </Teacher>
     </Section>
   );

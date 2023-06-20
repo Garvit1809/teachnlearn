@@ -16,12 +16,6 @@ const TeacherSection = styled.div`
 
 const StudentSection = styled.div``;
 
-const teacherObj = {
-  userImg: ethan,
-  userName: "ethanalex",
-  name: "Ethan Alexander",
-};
-
 interface participantProps {
   cardBanner: string;
   topic: string;
@@ -43,10 +37,12 @@ const Participants = (props: participantProps) => {
           <ParticipantList heading="Teachers" teacherObj={props.createdBy} />
         </TeacherSection>
         <StudentSection>
-          <ParticipantList
-            heading="Students"
-            listArr={props.studentsEnrolled}
-          />
+          {props.studentsEnrolled.length != 0 ? (
+            <ParticipantList
+              heading="Students"
+              listArr={props.studentsEnrolled}
+            />
+          ) : null}
         </StudentSection>
       </ParticipantWrapper>
     </div>
