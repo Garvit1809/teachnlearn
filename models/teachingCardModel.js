@@ -99,6 +99,17 @@ const teachingCardSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    averageRating: {
+      type: Number,
+      default: 1,
+      min: [1, "Rating must be above 1.0"],
+      max: [5, "Rating must be below 5.0"],
+      set: (val) => Math.round(val * 10) / 10,
+    },
+    ratingQuantity: {
+      type: Number,
+      default: 0,
+    },
     announcemets: [
       {
         type: mongoose.Schema.ObjectId,

@@ -1,7 +1,10 @@
+const Review = require("../models/reviewModel");
 const User = require("../models/userModel");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const factory = require("./handlerFactory");
+
+const mongoose = require("mongoose");
 
 exports.getMe = (req, res, next) => {
   req.params.userId = req.user.id;
@@ -199,5 +202,32 @@ exports.updateUserAcademicInfo = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     updatedUser,
+  });
+});
+
+exports.getUserRatings = catchAsync(async (req, res, next) => {
+  const id = req.params.userId;
+  var userId = new mongoose.Types.ObjectId(id);
+
+  console.log(typeof userId);
+  console.log(userId);
+  const stats = await Review.aggregate([
+    {
+      $match: { teacher: userId },
+    },
+    {
+      $group: {
+        _id: "$teacher",
+        nRatings: { $sum: 1 },
+        avgRating: { $avg: "$rating" },
+      },
+    },
+  ]);
+  console.log(stats);
+  res.status(200).json({
+    status: "success",
+    stats,
+    totalRatings: stats[0].nRatings,
+    avgRating: stats[0].avgRating,
   });
 });
