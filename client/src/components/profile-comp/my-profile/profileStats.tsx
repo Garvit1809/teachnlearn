@@ -89,8 +89,8 @@ const ProfileStats = (props: profileStatProps) => {
       .then(({ data }) => {
         console.log(data.stats[0]);
         if (data.stats[0]) {
-          setUserTotalRatings(data.totalRatings);
-          setUserRating(data.avgRating);
+          setUserTotalRatings(data.stats[0].nRatings);
+          setUserRating(data.stats[0].avgRating);
         }
       });
   }

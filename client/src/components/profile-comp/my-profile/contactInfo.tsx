@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import EditBtn from "./editBtn";
-import InfoWrapper from "./infoWrapper";
 import Modal from "react-modal";
 import ContactInfoModal from "./profileModals/contactInfoModal";
 

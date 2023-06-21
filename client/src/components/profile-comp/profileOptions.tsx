@@ -9,6 +9,7 @@ import {
 import MyProfile from "./my-profile/myProfile";
 import PurchaseCoins from "./purchaseCoins";
 import InviteFriends from "./inviteFriends";
+import DeleteProfileModal from "./deleteProfileModal";
 
 const Section = styled.div`
   box-sizing: border-box;
@@ -54,46 +55,12 @@ const MenuOptions = styled.div<menuOptionsProps>`
   line-height: 30px;
 `;
 
-const DeleteButton = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 16px 24px;
-  background: #fecdca;
-  border-radius: 41px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 30px;
-  color: #b42318;
-  font-family: "Nunito";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 30px;
-`;
-
 const profileOptions = [
   {
     option: "My profile",
     label: "MyProfile",
     icon: <MyProfileIcon />,
   },
-  // {
-  //   option: "Purchase Coins",
-  //   label: "PurchaseCoins",
-  //   icon: <CoinsIcon />,
-  // },
-  // {
-  //   option: "Invite Friends",
-  //   label: "InviteFriends",
-  //   icon: <FriendsIcon />,
-  // },
-  // {
-  //   option: "Redeem Items",
-  //   label: "redeem",
-  //   icon: <RedeemIcon />,
-  // },
 ];
 
 interface optionsProps {
@@ -123,7 +90,7 @@ const ProfileOptions = ({ setSelectedLeftScreen }: optionsProps) => {
           );
         })}
       </Menu>
-      <DeleteButton>Delete Account</DeleteButton>
+      <DeleteProfileModal />
     </Section>
   );
 };

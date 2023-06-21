@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./pages/landing-page/home";
 import Profile from "./pages/profile/profile";
 
@@ -31,10 +31,11 @@ function App() {
       <Routes>
         <Route path="/signup" element={<NewSignup />} />
         <Route path="/signin" element={<Signin />} />
-        {localUser ? (
-          <Route path="/" element={<Home />} />
-        ) : (
+        <Route path="/teachNlearn" element={<LandingPage />} />
+        {!localUser ? (
           <Route path="/" element={<LandingPage />} />
+        ) : (
+          <Route path="/" element={<Home />} />
         )}
         <Route path="/forums" element={<Forum />} />
         <Route path="/forum/:id" element={<SingleForum />} />
