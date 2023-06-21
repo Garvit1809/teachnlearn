@@ -59,6 +59,8 @@ const SingleClassroom = () => {
       })
       .then(({ data }) => {
         const card = data.teachCard;
+        console.log(data);
+
         setClassroom(card);
       });
   }
@@ -73,8 +75,6 @@ const SingleClassroom = () => {
 
   useEffect(() => {
     const link = location.state.navLink;
-    console.log(link);
-
     if (link) {
       setActiveLink(link);
     }

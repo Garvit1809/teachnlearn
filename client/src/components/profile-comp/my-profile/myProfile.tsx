@@ -1,25 +1,24 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import ModeToggle from "../modeToggle";
 import EditBtn from "./editBtn";
-import InfoWrapper from "./infoWrapper";
 import ContactInfo, { customStyles } from "./contactInfo";
 import AcademicInfo from "./academicInfo";
-import { localStorageUser } from "../../../utils/globalConstants";
 import Modal from "react-modal";
 import UserInfoModal from "./profileModals/userInfoModal";
 import axios from "axios";
 import { BASE_URL, apiVersion } from "../../../utils/apiRoutes";
 import { getHeaders } from "../../../utils/helperFunctions";
 import { UserCookie } from "../../../utils/userCookie";
+import ProfileStats from "./profileStats";
 
 const Section = styled.div`
   /* border: 1px solid red; */
   margin-left: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 44px;
   /* width: 95%; */
 `;
 
@@ -45,7 +44,7 @@ const UserContainer = styled.div`
   padding: 30px 28px;
   padding-right: 24px;
   gap: 1.2rem;
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
 
   border: 1px solid #d5d9eb;
   border-radius: 32px;
@@ -94,8 +93,6 @@ const UserDetails = styled.div`
     color: #697586;
   }
 `;
-
-const ProfileStats = styled.div``;
 
 export interface userProps {
   _id: string;
@@ -223,7 +220,12 @@ const MyProfile = () => {
           />
         </Modal>
       </UserContainer>
-      <ProfileStats></ProfileStats>
+      <ProfileStats
+        attended={localUser.classesEnrolled.length}
+        taught={localUser.classesTaken.length}
+        userId={localUser._id}
+        userToken={localUser.token}
+      />
       <ContactInfo
         username={localUser.userName}
         email={localUser.email}

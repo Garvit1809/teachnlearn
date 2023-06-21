@@ -17,6 +17,8 @@ import ClassroomCard, {
 } from "../classroom-comp/classroomCard";
 import { cardSizes } from "../classroom-comp/classroomGrid";
 import BackBtn from "./backBtn";
+import { UserCookie } from "../../utils/userCookie";
+import { getHeaders } from "../../utils/helperFunctions";
 
 const Section = styled.div`
   /* border: 1px solid brown; */
@@ -96,7 +98,9 @@ const LearnCardDetailContainer = styled.div`
   border: 1px solid #d5d9eb;
 `;
 
-const CardOverview = styled.div``;
+const CardOverview = styled.div`
+  /* border: 1px solid red; */
+`;
 
 const ChipContainer = styled.div`
   /* border: 1px solid red; */
@@ -127,6 +131,47 @@ const InterestedCont = styled.div`
   justify-content: center;
   gap: 6px;
   margin-right: 4rem;
+`;
+
+interface interestedBtnProps {
+  isInterested: boolean;
+}
+
+const BottonContainer = styled.div<interestedBtnProps>`
+  /* border: 1px solid red; */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 4rem;
+
+  button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 18px 40px;
+    gap: 10px;
+    cursor: pointer;
+
+    /* background: rgba(51, 42, 213, 0.6); */
+    background-color: ${(p) =>
+      p.isInterested ? "rgba(51, 42, 213, 0.6)" : "rgba(51, 42, 213, 1)"};
+    /* background-color: white; */
+    border-radius: 8px;
+    outline: none;
+    border: none;
+
+    /* border: 1px solid #332ad5; */
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 25px;
+    /* identical to box height */
+
+    color: #ffffff;
+  }
 `;
 
 const TagCont = styled.div`
@@ -166,7 +211,10 @@ const LearnCardOverview = () => {
   const [learnCardId, setLearnCardId] = useState();
   const [learnCard, setlearnCard] = useState<learnCardProps>();
   const [teachCards, setTeachCards] = useState<Array<classroomCardProps>>();
-  const [backLink, setBackLink] = useState<string>('/');
+  const [backLink, setBackLink] = useState<string>("/");
+
+  const [totalInterestedStudents, setTotalInterestedStudents] =
+    useState<number>();
 
   const location = useLocation();
   useEffect(() => {
@@ -180,9 +228,11 @@ const LearnCardOverview = () => {
     await axios
       .get(`${BASE_URL}${apiVersion}/learn/${learnCardId}`)
       .then(({ data }) => {
-        console.log(data.data.data);
+        // console.log(data.data.data);
         const cardData = data.data.data;
+        console.log(cardData);
         setlearnCard(cardData);
+        setTotalInterestedStudents(cardData.interestedStudents.length);
       });
   }
 
@@ -190,7 +240,7 @@ const LearnCardOverview = () => {
     await axios
       .get(`${BASE_URL}${apiVersion}/learn/${learnCardId}/teach`)
       .then(({ data }) => {
-        console.log(data.data.data);
+        // console.log(data.data.data);
         setTeachCards(data.data.data);
       });
   }
@@ -222,10 +272,48 @@ const LearnCardOverview = () => {
     }
   };
 
+  const { fetchLocalUserData } = UserCookie();
+  const [userId, setUserId] = useState<string>();
+  const [userToken, setUserToken] = useState<string>("");
+
+  useEffect(() => {
+    if (learnCard) {
+      fetchLocalUserData().then((data) => {
+        setUserId(data._id);
+        console.log(data._id);
+        console.log(learnCard.createdBy._id);
+        console.log(data._id === learnCard.createdBy._id);
+        setUserToken(data.token);
+      });
+    }
+  }, [learnCard]);
+
+  const interestedHandler = async () => {
+    await axios
+      .patch(
+        `${BASE_URL}${apiVersion}/learn/${learnCard?._id}/interested`,
+        {},
+        {
+          headers: getHeaders(userToken),
+        }
+      )
+      .then(({ data }) => {
+        console.log(data.updatedLearnCard.interestedStudents);
+        const newInterestedStudents: string[] =
+          data.updatedLearnCard.interestedStudents;
+        if (learnCard) {
+          const newLearnCard = learnCard;
+          newLearnCard.interestedStudents = newInterestedStudents;
+          setlearnCard(newLearnCard);
+          setTotalInterestedStudents(newInterestedStudents.length);
+        }
+      });
+  };
+
   return (
     <>
       <Navbar />
-      {learnCard ? (
+      {learnCard && userId ? (
         <Section>
           <BackBtn link={backLink} />
           <TopicCont>
@@ -262,13 +350,22 @@ const LearnCardOverview = () => {
                 />
                 <InterestedCont>
                   <InterestedIcon />
-                  <h3>{learnCard.interestedStudents.length} Interested</h3>
+                  {/* <h3>{learnCard.interestedStudents.length} Interested</h3> */}
+                  <h3>{totalInterestedStudents} Interested</h3>
                 </InterestedCont>
               </ChipContainer>
               <DetailsContainer
                 desciption={learnCard.description}
                 expectations={learnCard.expectations}
               />
+              {userId &&
+                (userId === learnCard.createdBy._id ? null : (
+                  <BottonContainer
+                    isInterested={learnCard.interestedStudents.includes(userId)}
+                  >
+                    <button onClick={interestedHandler}>Interested</button>
+                  </BottonContainer>
+                ))}
             </CardOverview>
           </OverviewContainer>
           {teachCards?.length != 0 ? (

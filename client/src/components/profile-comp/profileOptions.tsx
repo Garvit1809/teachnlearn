@@ -44,8 +44,14 @@ const MenuOptions = styled.div<menuOptionsProps>`
   gap: 16px;
   cursor: pointer;
   font-size: 16px;
-  background: ${(props) => (props.isSelected ? "#F3F6FF" : "none")};
+  background: ${(props) => (props.isSelected ? "#D8EEFE" : "none")};
   transition: all 0.5s ease;
+
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 30px;
 `;
 
 const DeleteButton = styled.div`
@@ -60,6 +66,11 @@ const DeleteButton = styled.div`
   font-size: 18px;
   line-height: 30px;
   color: #b42318;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
 `;
 
 const profileOptions = [

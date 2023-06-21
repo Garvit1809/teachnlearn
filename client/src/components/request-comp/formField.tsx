@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const Section = styled.div`
   display: grid;
-  grid-template-columns: 2.5fr 4fr;
+  grid-template-columns: 2fr 4fr;
 
   h3 {
     /* border: 1px solid red; */

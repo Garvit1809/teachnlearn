@@ -26,7 +26,7 @@ export interface learnCardProps {
   createdBy: {
     name: string;
     photo: string;
-    id: string;
+    _id: string;
   };
   subject: string;
   topic: string;
@@ -59,7 +59,7 @@ const Requests = () => {
     <>
       <Navbar />
       <Section>
-        <Intro />
+        <Intro role="learn" />
         {learnCards ? (
           <CardGrid>
             {learnCards.map((card, index) => {

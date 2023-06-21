@@ -227,7 +227,7 @@ exports.getUserRatings = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     stats,
-    totalRatings: stats[0].nRatings,
-    avgRating: stats[0].avgRating,
+    // totalRatings: stats[0].nRatings,
+    // avgRating: stats[0].avgRating,
   });
 });

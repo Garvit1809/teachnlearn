@@ -148,24 +148,30 @@ exports.interestedInLearnCard = catchAsync(async (req, res, next) => {
 
   const isAlreadyInterested = interestedStudents.includes(userId);
 
+  let updatedLearnCard;
   if (isAlreadyInterested) {
-    return next(
-      new AppError(
-        "User is already in the interested users for the Learn Card!!"
-      )
+    updatedLearnCard = await LearningCard.findByIdAndUpdate(
+      learnCardId,
+      {
+        $pull: { interestedStudents: userId },
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+  } else {
+    updatedLearnCard = await LearningCard.findByIdAndUpdate(
+      learnCardId,
+      {
+        $push: { interestedStudents: userId },
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
     );
   }
-
-  const updatedLearnCard = await LearningCard.findByIdAndUpdate(
-    learnCardId,
-    {
-      $push: { interestedStudents: userId },
-    },
-    {
-      new: true,
-      runValidators: true,
-    }
-  );
 
   if (!updatedLearnCard) {
     return next(new AppError("Learn Card couldnt be updated!! Try again!"));

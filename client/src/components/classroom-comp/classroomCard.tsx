@@ -255,7 +255,7 @@ const ClassroomCard = (props: classCardProps) => {
   const checkClassTeacher = () => {
     if (localUser) {
       const isTeacher = props.teachCard.createdBy._id == localUser._id;
-      console.log(isTeacher);
+      // console.log(isTeacher);
       return isTeacher;
     } else {
       return null;

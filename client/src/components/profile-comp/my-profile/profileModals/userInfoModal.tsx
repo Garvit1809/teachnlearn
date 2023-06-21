@@ -117,7 +117,8 @@ const UserInfoModal = (props: modalProps) => {
               label="Tagline"
               name="tagline"
               value={props.tagline}
-              updateFields={props.updateFields}
+              updateFields={props.updateFields} 
+              areaHeight="10rem"
             />
           }
           inputDesc="Change your Tagline :-"

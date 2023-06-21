@@ -12,7 +12,7 @@ const Section = styled.div`
   align-items: center;
   padding: 20px 28px;
   gap: 22px;
-  background: #332ad5;
+  background: #094067;
   border-radius: 61px;
   color: white;
 `;
@@ -32,6 +32,7 @@ const Slider = styled.span<ToggleCheckedProps>`
   overflow: hidden;
 
   background-color: #ccc;
+  background-color: #ffffff;
   border-radius: 25px;
 
   &::before {
@@ -43,6 +44,7 @@ const Slider = styled.span<ToggleCheckedProps>`
     left: 4px;
     bottom: 2px;
     background-color: white;
+    background-color: #674ff1;
     transition: 0.4s;
     transform: ${(props) => (props.isChecked ? "translateX(26px)" : "none")};
   }

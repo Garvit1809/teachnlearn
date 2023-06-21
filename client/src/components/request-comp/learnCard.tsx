@@ -4,6 +4,7 @@ import UserChip from "../general-components/userChip";
 import { InterestedIcon, PurchaseCoinIcon } from "../general-components/svg";
 import { getReadableDate } from "../../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
+import { learnCardProps } from "../../pages/requests/requests";
 
 const Section = styled.div`
   display: flex;
@@ -137,7 +138,7 @@ interface requestCardProps {
   tags: string[];
 }
 
-const LearnCard = (props: requestCardProps) => {
+const LearnCard = (props: learnCardProps) => {
   const navigate = useNavigate();
 
   const leanrCardOverviewNavigator = () => {

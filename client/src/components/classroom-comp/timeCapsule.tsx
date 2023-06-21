@@ -35,8 +35,6 @@ interface capsuleProps {
 }
 
 const TimeCapsule = (props: capsuleProps) => {
-  // console.log(getReadableTime(props.classStartsAt));
-  console.log(getReadableTime("Mon Jun 19 2023 15:05:00 GMT+0530"));
   let startingTime;
   let endingTime;
 

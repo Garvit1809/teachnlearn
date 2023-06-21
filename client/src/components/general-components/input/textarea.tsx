@@ -15,7 +15,8 @@ const Section = styled.div<heightProps>`
   textarea {
     width: 100%;
     /* height: 3rem; */
-    height: ${(p) => (p.areaHeight ? p.areaHeight : "3rem")};
+    height: ${(p) => (p.areaHeight ? p.areaHeight : "10rem")};
+    /* height: fit-content; */
     padding: 15px 0px 15px 10px;
     border: 1.5px solid #d5d9eb;
     box-sizing: content-box;
@@ -61,18 +62,6 @@ const Label = styled.span<labelProps>`
     padding: 0 5px;
   }
 `;
-
-interface learnCardDetails {
-  subject: string;
-  topic: string;
-  educationLevel: string;
-  standard: string;
-  preferredLanguage: string;
-  description: string;
-  expectations: string[];
-  tags: string[];
-  dueDate: string;
-}
 
 interface inputProps {
   value: string;
