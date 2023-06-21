@@ -1,7 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import UserChip from "../general-components/userChip";
-import { InterestedIcon, PurchaseCoinIcon } from "../general-components/svg";
+import {
+  InterestedIcon,
+  PurchaseCoinIcon,
+  RightArrowIcon,
+} from "../general-components/svg";
 import { getReadableDate } from "../../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
 import { learnCardProps } from "../../pages/requests/requests";
@@ -13,6 +17,7 @@ const Section = styled.div`
   padding: 22px;
   gap: 18px;
   background: #674ff1;
+  background: #094067;
   border-radius: 16px;
   /* cursor: pointer; */
   font-family: "Nunito";
@@ -27,12 +32,13 @@ const Section = styled.div`
 
 const Subject = styled.div`
   h4 {
-    font-weight: 500;
+    font-weight: 700;
     font-size: 16px;
     line-height: 22px;
     letter-spacing: 0.02em;
     text-transform: uppercase;
     color: #ffffff;
+    color: #ef4565;
   }
 `;
 
@@ -77,14 +83,17 @@ const TagBox = styled.div`
   display: flex;
   /* align-items: center; */
   column-gap: 12px;
-  row-gap: 12px;
+  row-gap: 16px;
   flex-wrap: wrap;
 
   div {
     /* border: 1px solid white; */
-    padding: 6px 8px;
+    padding: 6px 10px;
     border-radius: 4px;
     background-color: white;
+    background-color: #3da9fc;
+    color: white;
+    font-weight: 600;
   }
 `;
 
@@ -106,16 +115,31 @@ const DateCont = styled.div`
 
 const ExpandButton = styled.div`
   /* border: 1px solid red; */
+  margin-top: 1rem;
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
   button {
     /* margin-right: rem; */
     outline: none;
     cursor: pointer;
     border: none;
-    padding: 8px 12px;
+    padding: 14px 24px;
     border-radius: 4px;
+    background-color: #ef4565;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    /* line-height: 22px; */
+    letter-spacing: 0.02em;
+    color: #ffffff;
   }
 `;
 
@@ -153,7 +177,11 @@ const LearnCard = (props: learnCardProps) => {
         <h4>{props.subject}</h4>
       </Subject>
       <Topic>
-        <span>{props.topic}</span>
+        <span>
+          {props.topic.length > 52
+            ? props.topic.slice(0, 50) + "..."
+            : props.topic}
+        </span>
       </Topic>
       <UserChip
         name={props.createdBy.name}
@@ -183,7 +211,8 @@ const LearnCard = (props: learnCardProps) => {
       </TagBox>
       <ExpandButton>
         <button type="button" onClick={leanrCardOverviewNavigator}>
-          Expand -{">"}
+          <span>Expand</span>
+          <RightArrowIcon />
         </button>
       </ExpandButton>
     </Section>
