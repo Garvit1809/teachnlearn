@@ -5,6 +5,7 @@ import { Arrow } from "../general-components/svg";
 import { useNavigate } from "react-router-dom";
 import EnrolledClassCard from "./enrolledClassCard";
 import RequestCard from "./requestCard";
+import RecommendedClassCard from "./recommendedClassCard";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -56,6 +57,7 @@ const CardGrid = styled.div`
 interface wrapperProps {
   heading: string;
   cardArr: Array<classroomCardProps>;
+  userId: string;
 }
 
 const RecommendedClassWrapper = (props: wrapperProps) => {
@@ -75,8 +77,13 @@ const RecommendedClassWrapper = (props: wrapperProps) => {
       </Header>
       <CardGrid>
         {props.cardArr.map((card, index) => {
-          return "Hello";
-          //   return <RequestCard key={index} {...card} />;
+          return (
+            <RecommendedClassCard
+              key={index}
+              card={card}
+              userId={props.userId}
+            />
+          );
         })}
       </CardGrid>
     </Section>

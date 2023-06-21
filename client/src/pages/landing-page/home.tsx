@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../components/general-components/navbar";
 import styled from "styled-components";
 import Intro from "../../components/home-comp/intro";
-import RecommendedClasses from "../../components/home-comp/recommendedClasses";
 import Footer from "../../components/general-components/footer/footer";
-import ClassSectionWrapper from "../../components/home-comp/enrolledClassWrapper";
 import Popular from "../../components/home-comp/popular";
 import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
@@ -27,6 +25,7 @@ const Section = styled.div`
 const Home = () => {
   const [userToken, setUserToken] = useState<string>("");
   const [userRole, setUserRole] = useState<string>("");
+  const [userId, setuserId] = useState<string>("");
   const [upcomingClasses, setUpcomingClasses] =
     useState<Array<classroomCardProps>>();
   const [recommendedClasses, setRecommendedClasses] =
@@ -38,6 +37,7 @@ const Home = () => {
   useEffect(() => {
     fetchLocalUserData().then((data) => {
       setUserToken(data.token);
+      setuserId(data._id)
       setUserRole(data.role);
     });
   }, []);
@@ -94,6 +94,7 @@ const Home = () => {
           <RecommendedClassWrapper
             heading="Classes recommended for you!"
             cardArr={recommendedClasses}
+            userId={userId}
           />
         )}
         {upcomingClasses && upcomingClasses.length != 0 && (

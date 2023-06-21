@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import zoro from "../../assets/zoro.jpg";
 import { InterestedIcon, PurchaseCoinIcon } from "../general-components/svg";
 import UserChip from "../general-components/userChip";
 import { learnCardProps } from "../../pages/requests/requests";
@@ -12,8 +11,9 @@ const Section = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding: 22px;
-  gap: 20px;
+  gap: 22px;
   background: #674ff1;
+  background: #2A7E79;;
   border-radius: 16px;
   cursor: pointer;
   font-family: "Nunito";

@@ -38,15 +38,3 @@ app.all("*", (req, res, next) => {
 app.use(globalErrorHandler);
 
 module.exports = app;
-
-// auth complete
-// teach card and learning card APIs
-// Permanent Gig/Cards
-// Specific Cards
-// Classroom API
-// review Model, APIS
-
-// forum API
-
-// faq --> UI
-// contact us

@@ -21,7 +21,7 @@ const AllClasses = (props: classElemProps) => {
     await axios
       .get(`${BASE_URL}${apiVersion}/teach`, {
         params: {
-          sort: "classStartsAt",
+          sort: "date",
         },
         headers: getHeaders(props.userToken ?? ""),
       })

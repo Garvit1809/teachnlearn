@@ -5,6 +5,7 @@ const AppError = require("../utils/appError");
 const TeachingCard = require("../models/teachingCardModel");
 const User = require("../models/userModel");
 const TransactionHistory = require("../models/transactionHistoryModel");
+const APIFeatures = require("../utils/apiFeatures");
 
 // filter cards acccoriding to their start date
 // exports.getAllTeachCards = factory.getAll(TeachingCard);
@@ -13,11 +14,26 @@ const TransactionHistory = require("../models/transactionHistoryModel");
 exports.getAllTeachCards = catchAsync(async (req, res, next) => {
   const curentDate = new Date();
 
-  const teachCards = await TeachingCard.find({
-    classEndsAt: {
-      $gte: curentDate,
-    },
-  });
+  // const teachCards = await TeachingCard.find({
+  //   classEndsAt: {
+  //     $gte: curentDate,
+  //   },
+  // });
+
+  const features = new APIFeatures(
+    TeachingCard.find({
+      classEndsAt: {
+        $gte: curentDate,
+      },
+    }),
+    req.query
+  )
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const teachCards = await features.query;
 
   res.status(200).json({
     status: "success",
@@ -341,10 +357,38 @@ exports.getUpcomingClasses = catchAsync(async (req, res, next) => {
 
   console.log(currentDate);
 
-  const upcomingClasses = await TeachingCard.find({
-    studentsEnrolled: { $in: [userId] },
-    classEndsAt: { $gte: currentDate },
-  });
+  // const upcomingClasses = await TeachingCard.find({
+  //   classEndsAt: { $gte: currentDate },
+  //   $or: [
+  //     {
+  //       studentsEnrolled: { $in: [userId] },
+  //     },
+  //     {
+  //       createdBy: userId,
+  //     },
+  //   ],
+  // });
+
+  const features = new APIFeatures(
+    TeachingCard.find({
+      classEndsAt: { $gte: currentDate },
+      $or: [
+        {
+          studentsEnrolled: { $in: [userId] },
+        },
+        {
+          createdBy: userId,
+        },
+      ],
+    }),
+    req.query
+  )
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const upcomingClasses = await features.query;
 
   res.status(200).json({
     status: "success",
@@ -359,10 +403,38 @@ exports.getCompletedClasses = catchAsync(async (req, res, next) => {
 
   console.log(currentDate);
 
-  const completedClasses = await TeachingCard.find({
-    studentsEnrolled: { $in: [userId] },
-    classEndsAt: { $lte: currentDate },
-  });
+  // const completedClasses = await TeachingCard.find({
+  //   classEndsAt: { $lte: currentDate },
+  //   $or: [
+  //     {
+  //       studentsEnrolled: { $in: [userId] },
+  //     },
+  //     {
+  //       createdBy: userId,
+  //     },
+  //   ],
+  // });
+
+  const features = new APIFeatures(
+    TeachingCard.find({
+      classEndsAt: { $lte: currentDate },
+      $or: [
+        {
+          studentsEnrolled: { $in: [userId] },
+        },
+        {
+          createdBy: userId,
+        },
+      ],
+    }),
+    req.query
+  )
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const completedClasses = await features.query;
 
   res.status(200).json({
     status: "success",
@@ -396,3 +468,7 @@ exports.updateClassLink = catchAsync(async (req, res, next) => {
 });
 
 exports.topTeachCards = catchAsync(async (req, res, next) => {});
+
+exports.popularTeachCards = catchAsync(async (req, res, next) => {
+  // sort
+});
