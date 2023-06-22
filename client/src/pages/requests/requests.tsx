@@ -12,6 +12,7 @@ const Section = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
+  /* margin-top: 4rem; */
 `;
 
 const CardGrid = styled.div`

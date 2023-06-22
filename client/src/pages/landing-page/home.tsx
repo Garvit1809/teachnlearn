@@ -7,12 +7,13 @@ import Popular from "../../components/home-comp/popular";
 import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunctions";
-import { classroomCardProps } from "../../components/classroom-comp/classroomCard";
 import { UserCookie } from "../../utils/userCookie";
 import { learnCardProps } from "../requests/requests";
 import EnrolledClassWrapper from "../../components/home-comp/enrolledClassWrapper";
 import RequestCardWrapper from "../../components/home-comp/requestCardWrapper";
 import RecommendedClassWrapper from "../../components/home-comp/recommendedClassWrapper";
+import { teachingCardProps } from "../../types/teachingCardType";
+import FeedbackForm from "../../components/home-comp/feedbackForm";
 
 const Section = styled.div`
   /* border: 1px solid brown; */
@@ -27,9 +28,9 @@ const Home = () => {
   const [userRole, setUserRole] = useState<string>("");
   const [userId, setuserId] = useState<string>("");
   const [upcomingClasses, setUpcomingClasses] =
-    useState<Array<classroomCardProps>>();
+    useState<Array<teachingCardProps>>();
   const [recommendedClasses, setRecommendedClasses] =
-    useState<Array<classroomCardProps>>();
+    useState<Array<teachingCardProps>>();
   const [learnCards, setLearnCards] = useState<Array<learnCardProps>>();
 
   const { fetchLocalUserData } = UserCookie();
@@ -109,6 +110,7 @@ const Home = () => {
             requestCard={learnCards}
           />
         )}
+        <FeedbackForm />
         <Footer />
       </Section>
     </>
