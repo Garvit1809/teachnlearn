@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import EnrolledClassCard from "./enrolledClassCard";
 import RequestCard from "./requestCard";
 import RecommendedClassCard from "./recommendedClassCard";
+import { topNavigator } from "../../utils/helperFunctions";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -63,6 +64,7 @@ interface wrapperProps {
 const RecommendedClassWrapper = (props: wrapperProps) => {
   const navigate = useNavigate();
   const classNavigator = () => {
+    topNavigator();
     navigate("/classes");
   };
 

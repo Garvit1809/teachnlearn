@@ -147,7 +147,6 @@ const CreateTeachCard = () => {
           tags: navProps.tags,
         };
       });
-      // console.log(location);
       setLearnCardId(navProps.learnCardId);
       setIsLearnCardReferred(true);
     }
@@ -201,6 +200,7 @@ const CreateTeachCard = () => {
       .then(({ data }) => {
         console.log(data);
         setTeachCard(initialData);
+        window.location.reload();
       });
   };
 
@@ -243,7 +243,7 @@ const CreateTeachCard = () => {
       <Section>
         <BackBtn
           link={learnCardId ? `/learncard-overview/${learnCardId}` : "/"}
-          cardId={learnCardId ? learnCardId : undefined}
+          learnCardId={learnCardId ? learnCardId : undefined}
         />
         <h2>Let's get started with your Teach Card</h2>
         <form>

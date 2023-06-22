@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { InterestedIcon, PurchaseCoinIcon } from "../general-components/svg";
 import UserChip from "../general-components/userChip";
 import { learnCardProps } from "../../pages/requests/requests";
-import { getReadableDate } from "../../utils/helperFunctions";
+import { getReadableDate, topNavigator } from "../../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
 
 const Section = styled.div`
@@ -86,20 +86,13 @@ const DueCont = styled.div`
   color: #ffffff;
 `;
 
-const ExploreBtn = styled.div``;
-
-// interface requestCardProps {
-//   category?: string;
-//   title: string;
-//   author: string;
-//   interested?: number;
-//   coins?: number;
-// }
+// const ExploreBtn = styled.div``;
 
 const RequestCard = (props: learnCardProps) => {
   const navigate = useNavigate();
 
   const requestCardNavigator = () => {
+    topNavigator();
     navigate(`/learncard-overview/${props._id}`, {
       state: {
         learnCardId: props._id,

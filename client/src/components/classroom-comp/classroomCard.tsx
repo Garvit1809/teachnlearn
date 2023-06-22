@@ -213,6 +213,7 @@ export interface classroomCardProps {
 interface classCardProps {
   cssArr?: obj;
   teachCard: classroomCardProps;
+  elemType: string;
 }
 
 interface obj {
@@ -267,6 +268,7 @@ const ClassroomCard = (props: classCardProps) => {
       navigate(`/classes/class/${props.teachCard._id}`, {
         state: {
           classroomId: props.teachCard._id,
+          elemType: props.elemType,
         },
       });
     } else {
@@ -274,12 +276,14 @@ const ClassroomCard = (props: classCardProps) => {
         navigate(`/classes/class/${props.teachCard._id}`, {
           state: {
             classroomId: props.teachCard._id,
+            elemType: props.elemType,
           },
         });
       } else {
         navigate(`/class-overviw/${props.teachCard._id}`, {
           state: {
             classroomId: props.teachCard._id,
+            elemType: props.elemType,
           },
         });
       }

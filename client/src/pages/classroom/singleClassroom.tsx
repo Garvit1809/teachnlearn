@@ -13,6 +13,7 @@ import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunctions";
 import { UserCookie } from "../../utils/userCookie";
 import { teachCardProps } from "./classrooms";
+import BackBtn from "../../components/request-comp/backBtn";
 
 const Section = styled.div`
   /* margin: 2rem 0 3rem; */
@@ -37,15 +38,22 @@ const SingleClassroom = () => {
 
   const [classroom, setClassroom] = useState<teachCardProps>();
 
+  const [backLink, setBackLink] = useState<string>("/classes");
+
   const location = useLocation();
 
   const { fetchLocalUserData } = UserCookie();
 
   useEffect(() => {
-    const id = location.state.classroomId;
     console.log(location.state);
-
+    const id = location.state.classroomId;
     setClassroomId(id);
+
+    const link = location.state.backPageLink;
+    if (link) {
+      setBackLink(link);
+    }
+
     fetchLocalUserData().then((data) => {
       setUserToken(data.token);
       setUserId(data._id);
@@ -72,11 +80,16 @@ const SingleClassroom = () => {
   }, [classroomId]);
 
   const [activeLink, setActiveLink] = useState("overview");
+  const [classElemType, setClassElemType] = useState<string>("all classes");
 
   useEffect(() => {
     const link = location.state.navLink;
     if (link) {
       setActiveLink(link);
+    }
+    const elemLink = location.state.elemType;
+    if (elemLink) {
+      setClassElemType(elemLink);
     }
   }, [location]);
 
@@ -135,6 +148,7 @@ const SingleClassroom = () => {
     <>
       <Navbar />
       <Section>
+        <BackBtn link={backLink} classElem={classElemType} />
         <HorizontalNavigator
           activeLink={activeLink}
           labelArr={labels}

@@ -8,7 +8,7 @@ const ClassroomRouter = styled.div`
   justify-content: center;
   transition: all 0.15s linear;
   width: 100%;
-  margin: 0 auto;
+  margin: 2rem auto 0;
   font-family: "Nunito";
   font-style: normal;
   text-align: center;

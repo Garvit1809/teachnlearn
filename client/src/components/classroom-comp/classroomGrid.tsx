@@ -13,6 +13,7 @@ const Section = styled.div`
 
 interface gridProps {
   teachCards: Array<classroomCardProps>;
+  elemType: string,
 }
 
 export const cardSizes = {
@@ -33,7 +34,7 @@ const ClassroomGrid = (props: gridProps) => {
     <Section>
       {props.teachCards.map((teachCard, index) => {
         return (
-          <ClassroomCard cssArr={cardSizes} teachCard={teachCard} key={index} />
+          <ClassroomCard cssArr={cardSizes} teachCard={teachCard} key={index} elemType={props.elemType} />
         );
       })}
     </Section>

@@ -7,6 +7,7 @@ import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import axios from "axios";
 import { localStorageUser } from "../../utils/globalConstants";
 import { UserCookie } from "../../utils/userCookie";
+import { topNavigator } from "../../utils/helperFunctions";
 
 const Section = styled.div`
   display: flex;
@@ -57,7 +58,8 @@ const FormContainer = styled.div`
     margin-top: 1.5rem;
     padding: 0;
 
-    a {
+    span.link {
+      cursor: pointer;
       color: #332ad5;
       font-weight: 600;
     }
@@ -101,9 +103,9 @@ const Signin = () => {
 
   const navigate = useNavigate();
 
-  const navigateToHome = () => {
-    document.body.scrollTop = document.documentElement.scrollTop = 0;
-    navigate("/");
+  const navigationHandler = (link: string) => {
+    topNavigator();
+    navigate(link);
   };
 
   const loginHandler = async (e: any) => {
@@ -112,12 +114,10 @@ const Signin = () => {
       email: loginData.email,
       password: loginData.password,
     });
-    // console.log(data);
     if (data.status === "success") {
       data.data.user.token = data.token;
       localStorage.setItem(localStorageUser, JSON.stringify(data.data.user));
-      navigateToHome();
-      // fetchLocalUserData();
+      navigationHandler('/')
     }
   };
 
@@ -132,7 +132,10 @@ const Signin = () => {
             </button>
           </ButtonContainer>
           <span className="login">
-            Don't have an account? <Link to="/signup">Sign Up!!</Link>{" "}
+            Don't have an account?{" "}
+            <span className="link" onClick={() => navigationHandler("/signup")}>
+              Sign Up!!
+            </span>{" "}
           </span>
         </FormContainer>
       </LeftContainer>

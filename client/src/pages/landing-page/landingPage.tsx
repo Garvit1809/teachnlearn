@@ -16,6 +16,8 @@ import wave from "../../assets/wave.png";
 import wave2 from "../../assets/wave2.png";
 import { navigateTo } from "../../utils/navigationHook";
 import YoutubeLinks from "../../components/home-comp/youtubeLinks";
+// import { topNavigator } from "../../utils/helperFunctions";
+import { useNavigate } from "react-router-dom";
 
 const Section = styled.div`
   display: flex;
@@ -269,9 +271,12 @@ const slideData = [
 
 const LandingPage = () => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
-  // const totalSlides = 6;
 
-  const loginNavigator = () => {};
+  const navigate = useNavigate();
+  const navigationHandler = (link: string) => {
+    // topNavigator();
+    navigate(link);
+  };
 
   return (
     <>
@@ -281,8 +286,15 @@ const LandingPage = () => {
             <img src={TNLLogo} alt="tnl-logo" />
           </ImageContainer>
           <AuthButtons>
-            <AuthButton>Login</AuthButton>
-            <AuthButton className="signup">Signup</AuthButton>
+            <AuthButton onClick={() => navigationHandler("/signin")}>
+              Login
+            </AuthButton>
+            <AuthButton
+              className="signup"
+              onClick={() => navigationHandler("/signup")}
+            >
+              Signup
+            </AuthButton>
           </AuthButtons>
         </Header>
         <BlogHeader>

@@ -4,6 +4,7 @@ import { learnCardProps } from "../../pages/requests/requests";
 import { Arrow } from "../general-components/svg";
 import RequestCard from "./requestCard";
 import { Link, useNavigate } from "react-router-dom";
+import { topNavigator } from "../../utils/helperFunctions";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -60,6 +61,7 @@ interface requestWrapperProps {
 const RequestCardWrapper = (props: requestWrapperProps) => {
   const navigate = useNavigate();
   const requestNavigator = () => {
+    topNavigator();
     navigate("/requests");
   };
 

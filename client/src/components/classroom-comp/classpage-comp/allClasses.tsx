@@ -38,7 +38,11 @@ const AllClasses = (props: classElemProps) => {
   }, [props.userToken]);
 
   return (
-    <Section>{teachCards && <ClassroomGrid teachCards={teachCards} />}</Section>
+    <Section>
+      {teachCards && (
+        <ClassroomGrid teachCards={teachCards} elemType="all classes" />
+      )}
+    </Section>
   );
 };
 

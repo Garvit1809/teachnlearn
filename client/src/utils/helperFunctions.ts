@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { months } from "./globalConstants";
 
 export const getHeaders = (token: string) => {
@@ -28,4 +29,8 @@ export const getReadableTime = (ISODate: string) => {
   const concatedTime = hours + ":" + minutes;
 
   return concatedTime;
+};
+
+export const topNavigator = () => {
+  document.body.scrollTop = document.documentElement.scrollTop = 0;
 };

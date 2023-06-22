@@ -211,7 +211,7 @@ const LearnCardOverview = () => {
   const [learnCardId, setLearnCardId] = useState();
   const [learnCard, setlearnCard] = useState<learnCardProps>();
   const [teachCards, setTeachCards] = useState<Array<classroomCardProps>>();
-  const [backLink, setBackLink] = useState<string>("/");
+  const [backLink, setBackLink] = useState<string>("/requests");
 
   const [totalInterestedStudents, setTotalInterestedStudents] =
     useState<number>();
@@ -219,9 +219,12 @@ const LearnCardOverview = () => {
   const location = useLocation();
   useEffect(() => {
     const learnCardId = location.state.learnCardId;
+    console.log(learnCardId);
     const link = location.state.backLink;
     setLearnCardId(learnCardId);
-    setBackLink(link);
+    if (link) {
+      setBackLink(link);
+    }
   }, []);
 
   async function fetchLearnCard() {

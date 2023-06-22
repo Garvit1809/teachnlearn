@@ -81,6 +81,8 @@ const ClassroomOverview = () => {
   const [userToken, setUserToken] = useState<string>();
   const [userCredit, setUserCredit] = useState<number>();
 
+  const [backLink, setBackLink] = useState<string>("/classes");
+
   const location = useLocation();
 
   const { fetchLocalUserToken, fetchUserCredit } = UserCookie();
@@ -89,6 +91,11 @@ const ClassroomOverview = () => {
     const cardId = location.state.classroomId;
     console.log(cardId);
     setTeachCardId(cardId);
+
+    const link = location.state.backPageLink;
+    if (link) {
+      setBackLink(link);
+    }
   }, [location]);
 
   useEffect(() => {
@@ -123,7 +130,7 @@ const ClassroomOverview = () => {
       <Navbar />
       {teachCard && (
         <Section>
-          <BackBtn link="/classes" />
+          <BackBtn link={backLink} />
           <ClassBanner img={teachCard?.cardBanner} title={teachCard.topic} />
           <OverviewContainer>
             <CallDetailContainer>

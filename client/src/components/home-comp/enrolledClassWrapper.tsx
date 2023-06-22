@@ -5,6 +5,7 @@ import EnrolledClassCard from "./enrolledClassCard";
 import RequestCard from "./requestCard";
 import { classroomCardProps } from "../classroom-comp/classroomCard";
 import { useNavigate } from "react-router-dom";
+import { topNavigator } from "../../utils/helperFunctions";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -62,6 +63,7 @@ const EnrolledClassWrapper = (props: wrapperProps) => {
   const navigate = useNavigate();
 
   const enrolledClassNavigator = () => {
+    topNavigator();
     navigate("/classes", {
       state: {
         elemLink: "upcoming",
@@ -80,7 +82,13 @@ const EnrolledClassWrapper = (props: wrapperProps) => {
       </Header>
       <CardGrid>
         {props.cardArr.map((card, index) => {
-          return <EnrolledClassCard key={index} {...card} />;
+          return (
+            <EnrolledClassCard
+              key={index}
+              card={card}
+              isFirstCard={index == 0}
+            />
+          );
         })}
       </CardGrid>
     </Section>

@@ -10,6 +10,7 @@ import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { localStorageUser } from "../../utils/globalConstants";
 import { UserCookie } from "../../utils/userCookie";
+import { topNavigator } from "../../utils/helperFunctions";
 
 const Section = styled.div`
   display: flex;
@@ -180,7 +181,7 @@ const NewSignup = () => {
   const navigate = useNavigate();
 
   const navigateLink = () => {
-    document.body.scrollTop = document.documentElement.scrollTop = 0;
+    topNavigator();
     navigate("/signin");
   };
 

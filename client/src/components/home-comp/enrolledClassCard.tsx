@@ -3,10 +3,16 @@ import styled from "styled-components";
 import { Calender } from "../general-components/svg";
 import zoro from "../../assets/zoro.jpg";
 import { classroomCardProps } from "../classroom-comp/classroomCard";
-import { getReadableTime } from "../../utils/helperFunctions";
+import { getReadableTime, topNavigator } from "../../utils/helperFunctions";
+import UserChip from "../general-components/userChip";
+import { useNavigate } from "react-router-dom";
 
-const Section = styled.div`
-  background: #e7e5f1;
+interface styleProps {
+  isFirstCard: boolean;
+}
+
+const Section = styled.div<styleProps>`
+  background: ${(p) => (p.isFirstCard ? "#094067" : "#D8EEFE")};
   border-radius: 16px;
   display: flex;
   flex-direction: column;
@@ -24,8 +30,11 @@ const Section = styled.div`
   }
 `;
 
-const TimeContainer = styled.div`
+const TimeContainer = styled.div<styleProps>`
   background: rgba(0, 0, 0, 0.1);
+  background: #094067;
+  background-color: ${(p) =>
+    p.isFirstCard ? "rgba(255, 255, 255, 0.15)" : "#094067"};
   border-radius: 46px;
 
   display: flex;
@@ -38,68 +47,56 @@ const TimeContainer = styled.div`
     font-weight: 500;
     font-size: 15px;
     line-height: 20px;
-    color: #1f2a37;
+    color: #ffffff;
   }
 `;
 
-const Topic = styled.div`
+const Topic = styled.div<styleProps>`
   font-weight: 700;
   font-size: 22px;
   line-height: 26px;
-  color: #000000;
-
+  /* color: #000000; */
+  color: ${(p) => (p.isFirstCard ? "#FFFFFF" : "#000000")};
   font-size: 24px;
   line-height: 33px;
 `;
 
-const Teacher = styled.div`
-  display: flex;
-  align-items: center;
-  /* border: 1px solid red; */
+interface enrolledClassCardProps {
+  card: classroomCardProps;
+  isFirstCard: boolean;
+}
 
-  img {
-    display: block;
-    width: 28px;
-    height: 28px;
-    border: 1px solid #000000;
-    border-radius: 50%;
-    object-fit: contain;
-    margin-right: 0.4rem;
-  }
+const EnrolledClassCard = ({ card, isFirstCard }: enrolledClassCardProps) => {
+  const navigate = useNavigate();
+  const classNavigator = () => {
+    topNavigator();
+    navigate(`/classes/class/${card._id}`, {
+      state: {
+        classroomId: card._id,
+        backPageLink: "/",
+      },
+    });
+  };
 
-  span {
-    font-weight: 400;
-    font-size: 18px;
-    /* line-height: 25px; */
-    color: #000000;
-  }
-`;
-
-// interface enrolledCardProps {
-//   title: string;
-//   author: string;
-//   startingTime?: string;
-//   endTime?: string;
-// }
-
-const EnrolledClassCard = (props: classroomCardProps) => {
   return (
-    <Section>
-      <TimeContainer>
-        <Calender color="#1F2A37" />
+    <Section isFirstCard={isFirstCard} onClick={classNavigator}>
+      <TimeContainer isFirstCard={isFirstCard}>
+        <Calender color="#FFFFFF" />
         <span>
-          {getReadableTime(props.classStartsAt) +
+          {getReadableTime(card.classStartsAt) +
             " - " +
-            getReadableTime(props.classEndsAt)}
+            getReadableTime(card.classEndsAt)}
         </span>
       </TimeContainer>
-      <Topic>
-        <span>{props.topic}</span>
+      <Topic isFirstCard={isFirstCard}>
+        <span>{card.topic}</span>
       </Topic>
-      <Teacher>
-        <img src={props.createdBy.photo} alt="user-img" />
-        <span>{props.createdBy.name}</span>
-      </Teacher>
+      <UserChip
+        name={card.createdBy.name}
+        photo={card.createdBy.photo}
+        imgBorder={isFirstCard ? "white" : "black"}
+        textColor={isFirstCard ? "white" : "black"}
+      />
     </Section>
   );
 };

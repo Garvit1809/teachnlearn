@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { classroomCardProps } from "../classroom-comp/classroomCard";
 import UserChip from "../general-components/userChip";
-import { getReadableDate, getReadableTime } from "../../utils/helperFunctions";
+import {
+  getReadableDate,
+  getReadableTime,
+  topNavigator,
+} from "../../utils/helperFunctions";
 import { InterestedIcon, PurchaseCoinIcon } from "../general-components/svg";
 import { useNavigate } from "react-router-dom";
 
@@ -118,7 +122,7 @@ const RecommendedClassCard = ({ card, userId }: cardProps) => {
     const arr = enrolledStudents.filter((student) => {
       return student == userId;
     });
-    console.log(arr);
+    // console.log("CHECK:- " + arr);
     return arr;
   };
 
@@ -130,23 +134,27 @@ const RecommendedClassCard = ({ card, userId }: cardProps) => {
   const navigate = useNavigate();
 
   const classNavigator = () => {
+    topNavigator();
     if (isTeacher()) {
       navigate(`/classes/class/${card._id}`, {
         state: {
           classroomId: card._id,
+          backPageLink: "/",
         },
       });
     } else {
-      if (checkIfUserEnrolled()) {
+      if (checkIfUserEnrolled().length == 1) {
         navigate(`/classes/class/${card._id}`, {
           state: {
             classroomId: card._id,
+            backPageLink: "/",
           },
         });
       } else {
         navigate(`/class-overviw/${card._id}`, {
           state: {
             classroomId: card._id,
+            backPageLink: "/",
           },
         });
       }

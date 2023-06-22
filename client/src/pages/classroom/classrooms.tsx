@@ -77,6 +77,7 @@ const Classrooms = () => {
     if (link) {
       setActiveLink(link);
     }
+
     fetchLocalUserToken().then((token) => {
       setUserToken(token);
     });

@@ -147,7 +147,7 @@ const DeleteProfileModal = () => {
           </Header>
           <h2>Are you sure you want to delete your account??</h2>
           <BottomButtons>
-            <button>Go Back</button>
+            <button onClick={closeModal}>Go Back</button>
             <button className="delete" onClick={accountDeleteHandler}>
               Delete Account
             </button>

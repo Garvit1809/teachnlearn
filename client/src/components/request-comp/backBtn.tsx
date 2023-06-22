@@ -13,6 +13,7 @@ const Section = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 6px;
+  cursor: pointer;
 
   span {
     font-family: "Nunito";
@@ -21,22 +22,28 @@ const Section = styled.div`
     font-size: 16px;
     line-height: 22px;
     color: #4b5565;
-    cursor: pointer;
   }
 `;
 
 interface backProps {
   link: string;
-  cardId?: string;
+  learnCardId?: string;
+  classElem?: string;
 }
 
 const BackBtn = (props: backProps) => {
   const navigate = useNavigate();
 
   const navigationHandler = () => {
-    if (props.cardId) {
-      navigate(`/learncard-overview/${props.cardId}`, {
-        state: { learnCardId: props.cardId },
+    if (props.learnCardId) {
+      navigate(`/learncard-overview/${props.learnCardId}`, {
+        state: { learnCardId: props.learnCardId },
+      });
+    } else if (props.classElem) {
+      navigate("/classes", {
+        state: {
+          elemLink: props.classElem,
+        },
       });
     } else {
       navigate(props.link);
