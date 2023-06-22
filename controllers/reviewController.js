@@ -1,5 +1,6 @@
 const Review = require("../models/reviewModel");
 const TeachingCard = require("../models/teachingCardModel");
+const User = require("../models/userModel");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 
@@ -24,16 +25,38 @@ exports.restrictToEnrolledUser = catchAsync(async (req, res, next) => {
 
   const teachCard = await TeachingCard.findById(teachCardId);
 
+  const date = new Date();
+
+  // date check
+  if (date < teachCard.classEndsAt) {
+    return next(
+      new AppError("Class hasnt ended yet, cannot give review yet!!")
+    );
+  }
+
+  // teacher check
+  if (userId == teachCard.createdBy._id) {
+    return next(new AppError("Teacher cannot review themself!!"));
+  }
+
+  // enrolled user check
   const enrolledStudents = teachCard.studentsEnrolled;
   const isEnrolled = enrolledStudents.filter((student) => {
     return student._id == userId;
   });
 
-  // console.log(enrolledStudents);
-  // console.log(isEnrolled);
-
   if (isEnrolled.length == 0) {
     new AppError("User is not enrolled in the classroom!!");
+  }
+
+  // check if already reviewed
+  const reviews = teachCard.reviews;
+  const filteredArr = reviews.filter((review) => {
+    return review.user._id == userId;
+  });
+
+  if (filteredArr.length != 0) {
+    return next(new AppError("User has already given review!!"));
   }
 
   next();
@@ -45,7 +68,6 @@ exports.postReview = catchAsync(async (req, res, next) => {
 
   const { review, rating, teacherID } = req.body;
 
-  // check if user is enrolled in class
   //  update user model review -> true
 
   if (!review || !rating || !teacherID) {
@@ -64,8 +86,35 @@ exports.postReview = catchAsync(async (req, res, next) => {
     new AppError("Review couldnt be created!!");
   }
 
+  const updateTeachCard = await TeachingCard.findByIdAndUpdate(
+    teachCardId,
+    {
+      $push: {
+        reviews: newReview._id,
+      },
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  const updatedUser = await User.updateOne(
+    {
+      _id: userId,
+      "classesEnrolled.class": teachCardId,
+    },
+    {
+      $set: {
+        "classesEnrolled.$.isReviewed": true,
+      },
+    }
+  );
+
   res.status(201).json({
     status: "success",
     newReview,
+    updateTeachCard,
+    updatedUser,
   });
 });

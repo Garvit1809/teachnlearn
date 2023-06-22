@@ -6,6 +6,7 @@ const reviewSchema = new mongoose.Schema(
     review: {
       type: String,
       required: [true, "Review can not be empty!"],
+      trim: true,
     },
     rating: {
       type: Number,
@@ -21,19 +22,19 @@ const reviewSchema = new mongoose.Schema(
     teacher: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
-      required: [true, "Review must belong to a User."],
+      required: [true, "Review must be for a User."],
     },
     user: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
-      required: [true, "Review must belong to a user"],
+      required: [true, "Review must belong to a User"],
     },
   },
-  { timestamps: true }
-  // {
-  //   toJSON: { virtuals: true },
-  //   toObject: { virtuals: true },
-  // }
+  { timestamps: true },
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
 );
 
 reviewSchema.index({ classroom: 1, user: 1 }, { unique: true });
@@ -41,9 +42,6 @@ reviewSchema.index({ classroom: 1, user: 1 }, { unique: true });
 reviewSchema.pre(/^find/, function (next) {
   this.populate({
     path: "user",
-    select: "name photo",
-  }).populate({
-    path: "teacher",
     select: "name photo",
   });
   next();

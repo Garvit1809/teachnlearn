@@ -7,18 +7,8 @@ const User = require("../models/userModel");
 const TransactionHistory = require("../models/transactionHistoryModel");
 const APIFeatures = require("../utils/apiFeatures");
 
-// filter cards acccoriding to their start date
-// exports.getAllTeachCards = factory.getAll(TeachingCard);
-// exports.getTeachCardOverview = factory.getOne(TeachingCard);
-
 exports.getAllTeachCards = catchAsync(async (req, res, next) => {
   const curentDate = new Date();
-
-  // const teachCards = await TeachingCard.find({
-  //   classEndsAt: {
-  //     $gte: curentDate,
-  //   },
-  // });
 
   const features = new APIFeatures(
     TeachingCard.find({
@@ -194,6 +184,8 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
   if (userId == teacher) {
     return next(new AppError("Teacher cannot enroll in thier own class"));
   }
+
+  // if any reviews left
 
   const enrolledCheck = teachCard.studentsEnrolled.filter((student) => {
     console.log(student.id.valueOf());

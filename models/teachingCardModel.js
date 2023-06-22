@@ -110,6 +110,12 @@ const teachingCardSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    reviews: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "Review",
+      },
+    ],
     announcemets: [
       {
         type: mongoose.Schema.ObjectId,
@@ -125,10 +131,6 @@ teachingCardSchema.pre(/^find/, function (next) {
     path: "createdBy",
     select: "name photo",
   });
-  // .populate({
-  //   path: "studentsEnrolled",
-  //   select: "name photo",
-  // })
   next();
 });
 
@@ -136,18 +138,23 @@ teachingCardSchema.pre(/^findOne/, function (next) {
   this.populate({
     path: "createdBy",
     select: "name photo userName",
-  }).populate({
-    path: "studentsEnrolled",
-    select: "name photo userName",
-  });
+  })
+    .populate({
+      path: "studentsEnrolled",
+      select: "name photo userName",
+    })
+    .populate({
+      path: "reviews",
+      select: "user",
+    });
   next();
 });
 
-teachingCardSchema.virtual("reviews", {
-  ref: "Review",
-  foreignField: "classroom",
-  localField: "_id",
-});
+// teachingCardSchema.virtual("reviews", {
+//   ref: "Review",
+//   foreignField: "classroom",
+//   localField: "_id",
+// });
 
 const TeachingCard = mongoose.model("TeachingCard", teachingCardSchema);
 
