@@ -63,7 +63,6 @@ const SubmitButton = styled.div`
 
 interface userInfo {
   name: string;
-  photo: string;
   tagline: string;
   userToken: string;
   closeModal: any;
@@ -81,7 +80,6 @@ const UserInfoModal = (props: modalProps) => {
         {
           name: props.name,
           tagline: props.tagline,
-          photo: props.photo,
         },
         {
           headers: getHeaders(props.userToken ?? ""),
@@ -117,7 +115,7 @@ const UserInfoModal = (props: modalProps) => {
               label="Tagline"
               name="tagline"
               value={props.tagline}
-              updateFields={props.updateFields} 
+              updateFields={props.updateFields}
               areaHeight="10rem"
             />
           }

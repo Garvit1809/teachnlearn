@@ -1,9 +1,8 @@
-import React from "react";
 import styled from "styled-components";
 import { learnCardProps } from "../../pages/requests/requests";
 import { Arrow } from "../general-components/svg";
 import RequestCard from "./requestCard";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { topNavigator } from "../../utils/helperFunctions";
 
 const Section = styled.div`

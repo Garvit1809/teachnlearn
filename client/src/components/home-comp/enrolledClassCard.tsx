@@ -1,11 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { Calender } from "../general-components/svg";
-import zoro from "../../assets/zoro.jpg";
-import { classroomCardProps } from "../classroom-comp/classroomCard";
 import { getReadableTime, topNavigator } from "../../utils/helperFunctions";
 import UserChip from "../general-components/userChip";
 import { useNavigate } from "react-router-dom";
+import { teachingCardProps } from "../../types/teachingCardType";
 
 interface styleProps {
   isFirstCard: boolean;
@@ -62,7 +61,7 @@ const Topic = styled.div<styleProps>`
 `;
 
 interface enrolledClassCardProps {
-  card: classroomCardProps;
+  card: teachingCardProps;
   isFirstCard: boolean;
 }
 

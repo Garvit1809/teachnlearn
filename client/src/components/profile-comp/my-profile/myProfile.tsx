@@ -12,6 +12,7 @@ import { BASE_URL, apiVersion } from "../../../utils/apiRoutes";
 import { getHeaders } from "../../../utils/helperFunctions";
 import { UserCookie } from "../../../utils/userCookie";
 import ProfileStats from "./profileStats";
+import ProfileImage from "./profileImage";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -48,24 +49,6 @@ const UserContainer = styled.div`
 
   border: 1px solid #d5d9eb;
   border-radius: 32px;
-`;
-
-const ImageContainer = styled.div`
-  box-sizing: border-box;
-
-  width: 84.54px;
-  height: 84.54px;
-  padding: 2px;
-  border: 0.87156px solid #d5d9eb;
-  border-radius: 50%;
-
-  img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    display: block;
-    object-fit: cover;
-  }
 `;
 
 const UserDetails = styled.div`
@@ -192,9 +175,12 @@ const MyProfile = () => {
         <ModeToggle userToken={localUser.token} role={localUser.role} />
       </Header>
       <UserContainer>
-        <ImageContainer>
-          <img src={localUser.photo} alt="user-img" />
-        </ImageContainer>
+        <ProfileImage
+          photo={localUser.photo}
+          closeModal={closeModal}
+          updateFields={updateFields}
+          userToken={localUser.token}
+        />
         <UserDetails>
           <h4>{localUser.name}</h4>
           {localUser.tagline ? (
@@ -212,7 +198,6 @@ const MyProfile = () => {
         >
           <UserInfoModal
             name={localUser.name}
-            photo={localUser.photo}
             tagline={localUser.tagline}
             updateFields={updateFields}
             userToken={localUser.token}

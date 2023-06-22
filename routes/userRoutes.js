@@ -15,6 +15,7 @@ router.patch("/deleteMe", userController.deleteMe);
 router.patch("/myMode", userController.updateUserMode);
 router.patch("/myInfo", userController.updateUserInfo);
 router.patch("/mycontactInfo", userController.updateUserContactInfo);
+router.patch("/myPhoto", userController.updateUserPhoto);
 router.patch("/myacademicInfo", userController.updateUserAcademicInfo);
 router.get("/:userId", userController.getOtherUser);
 router.get("/:userId/myratings", userController.getUserRatings);

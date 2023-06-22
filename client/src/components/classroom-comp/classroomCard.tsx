@@ -9,6 +9,7 @@ import UserChip from "../general-components/userChip";
 import { useNavigate } from "react-router-dom";
 import { UserCookie, userProps } from "../../utils/userCookie";
 import { getReadableDate, getReadableTime } from "../../utils/helperFunctions";
+import { teachingCardProps } from "../../types/teachingCardType";
 
 const Section = styled.div<cardAnimationProps>`
   box-shadow: 0px 20px 24px -4px rgba(16, 24, 40, 0.08),
@@ -182,37 +183,9 @@ const TimeCont = styled.span`
   line-height: 20px;
 `;
 
-export interface classroomCardProps {
-  announcements: string[];
-  callLink: string;
-  cardBanner: string;
-  classStartsAt: string;
-  classEndsAt: string;
-  createdBy: {
-    name: string;
-    photo: string;
-    _id: string;
-    userName: string;
-  };
-  date: string;
-  description: string;
-  expectations: string[];
-  interestedStudents: string[];
-  isLearningCardReferred: boolean;
-  preferredLanguage: string;
-  price: number;
-  programme: string;
-  standard: string;
-  studentsEnrolled: string[];
-  subject: string;
-  tags: string[];
-  topic: string;
-  _id: string;
-}
-
 interface classCardProps {
   cssArr?: obj;
-  teachCard: classroomCardProps;
+  teachCard: teachingCardProps;
   elemType: string;
 }
 
@@ -240,6 +213,7 @@ const ClassroomCard = (props: classCardProps) => {
     fetchLocalUserData().then((data) => {
       setLocalUser(data);
     });
+    checkIsCompleted();
   }, []);
 
   const checkEnrolledClass = () => {
@@ -261,6 +235,28 @@ const ClassroomCard = (props: classCardProps) => {
     } else {
       return null;
     }
+  };
+
+  const checkIsCompleted = () => {
+    const date = new Date();
+    const classEndingDate = props.teachCard.classEndsAt;
+    const ISOstring = new Date(classEndingDate);
+    return date > ISOstring;
+  };
+
+  const checkIsReviewed = () => {
+    const userId = localUser?._id;
+    const reviews = props.teachCard.reviews;
+
+    let hasReviewed = false;
+
+    reviews.forEach((element) => {
+      if (element.user._id == userId) {
+        hasReviewed = true;
+      }
+    });
+
+    return hasReviewed;
   };
 
   const enrollClassNavigator = () => {
@@ -334,11 +330,28 @@ const ClassroomCard = (props: classCardProps) => {
             btnSize={props.cssArr?.btnSize}
           >
             <span>
-              {!checkClassTeacher()
+              {/* {
+              checkIsCompleted()
+                ? 
+                (checkIsReviewed()
+                  ? "Check Class"
+                  : "Give Review")
+                : 
+                (!checkClassTeacher()
                 ? checkEnrolledClass()
                   ? "Check Class"
                   : "Enroll Now"
-                : "Check Class"}
+                : "Check Class")
+                } */}
+              {checkClassTeacher()
+                ? "Check Class"
+                : checkEnrolledClass()
+                ? !checkIsCompleted()
+                  ? "Check Class"
+                  : checkIsReviewed()
+                  ? "Check Class"
+                  : "Give Review"
+                : "Enroll Now"}
             </span>
             <Arrow strokeColor="white" />
           </EnrollBtn>

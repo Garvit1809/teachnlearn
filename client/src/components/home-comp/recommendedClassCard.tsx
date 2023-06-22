@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { classroomCardProps } from "../classroom-comp/classroomCard";
 import UserChip from "../general-components/userChip";
 import {
   getReadableDate,
@@ -8,6 +7,7 @@ import {
 } from "../../utils/helperFunctions";
 import { InterestedIcon, PurchaseCoinIcon } from "../general-components/svg";
 import { useNavigate } from "react-router-dom";
+import { teachingCardProps } from "../../types/teachingCardType";
 
 const Section = styled.div`
   display: flex;
@@ -109,20 +109,16 @@ const Coins = styled.div`
 `;
 
 interface cardProps {
-  card: classroomCardProps;
+  card: teachingCardProps;
   userId: string;
 }
 
 const RecommendedClassCard = ({ card, userId }: cardProps) => {
-  // userid
-  // check teach admin == userid
-
   const checkIfUserEnrolled = () => {
     const enrolledStudents = card.studentsEnrolled;
     const arr = enrolledStudents.filter((student) => {
       return student == userId;
     });
-    // console.log("CHECK:- " + arr);
     return arr;
   };
 

@@ -88,7 +88,7 @@ const Popular = () => {
         <PopularFilter />
       </FilterContainer>
       <ClassroomCardContainer>
-        <ClassroomCard cssArr={cardSizes} />
+        {/* <ClassroomCard cssArr={cardSizes} teachCard={} /> */}
         <PopularTag>
           <span>Popular</span>
         </PopularTag>
@@ -97,7 +97,7 @@ const Popular = () => {
         {CARDDATA.map((card, index) => {
           return (
             <CardCont key={index}>
-              <RequestCard {...card} />
+              {/* <RequestCard {...card} /> */}
             </CardCont>
           );
         })}

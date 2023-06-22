@@ -102,10 +102,10 @@ exports.updateUserMode = catchAsync(async (req, res, next) => {
 });
 
 exports.updateUserInfo = catchAsync(async (req, res, next) => {
-  const { name, tagline, photo } = req.body;
+  const { name, tagline } = req.body;
   const userId = req.user.id;
 
-  if (!name && !tagline && !photo) {
+  if (!name && !tagline) {
     return next(new AppError("Please provide sufficient data!!"));
   }
 
@@ -114,6 +114,34 @@ exports.updateUserInfo = catchAsync(async (req, res, next) => {
     {
       name,
       tagline,
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  if (!updatedUser) {
+    return next(new AppError("User couldnt be updated!!"));
+  }
+
+  res.status(200).json({
+    status: "success",
+    updatedUser,
+  });
+});
+
+exports.updateUserPhoto = catchAsync(async (req, res, next) => {
+  const { photo } = req.body;
+  const userId = req.user.id;
+
+  if (!photo) {
+    return next(new AppError("Please provide sufficient data!!"));
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    {
       photo,
     },
     {

@@ -1,12 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { classroomCardProps } from "../classroom-comp/classroomCard";
 import { Arrow } from "../general-components/svg";
 import { useNavigate } from "react-router-dom";
-import EnrolledClassCard from "./enrolledClassCard";
-import RequestCard from "./requestCard";
 import RecommendedClassCard from "./recommendedClassCard";
 import { topNavigator } from "../../utils/helperFunctions";
+import { teachingCardProps } from "../../types/teachingCardType";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -57,7 +55,7 @@ const CardGrid = styled.div`
 
 interface wrapperProps {
   heading: string;
-  cardArr: Array<classroomCardProps>;
+  cardArr: Array<teachingCardProps>;
   userId: string;
 }
 
