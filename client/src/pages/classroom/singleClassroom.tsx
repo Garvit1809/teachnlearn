@@ -49,7 +49,7 @@ const SingleClassroom = () => {
     const id = location.state.classroomId;
     setClassroomId(id);
 
-    const link = location.state.backPageLink;
+    const link = location.state?.backPageLink;
     if (link) {
       setBackLink(link);
     }
@@ -83,11 +83,11 @@ const SingleClassroom = () => {
   const [classElemType, setClassElemType] = useState<string>("all classes");
 
   useEffect(() => {
-    const link = location.state.navLink;
+    const link = location.state?.navLink;
     if (link) {
       setActiveLink(link);
     }
-    const elemLink = location.state.elemType;
+    const elemLink = location.state?.elemType;
     if (elemLink) {
       setClassElemType(elemLink);
     }

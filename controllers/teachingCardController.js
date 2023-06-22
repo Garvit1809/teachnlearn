@@ -185,7 +185,18 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
     return next(new AppError("Teacher cannot enroll in thier own class"));
   }
 
-  // if any reviews left
+  // if any reviews left check
+  const enrolledCLasses = req.user.classesEnrolled;
+
+  enrolledCLasses.forEach((elem) => {
+    if (currentDate > elem.endsAt) {
+      if (!elem.isReviewed) {
+        return next(
+          new AppError("Please review every completed class first!!")
+        );
+      }
+    }
+  });
 
   const enrolledCheck = teachCard.studentsEnrolled.filter((student) => {
     console.log(student.id.valueOf());
