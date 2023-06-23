@@ -11,9 +11,10 @@ const Section = styled.div<heightProps>`
   /* height: 20px; */
   /* margin-bottom: 2rem; */
   box-sizing: border-box;
-
+  
   textarea {
     width: 100%;
+    box-sizing: border-box;
     /* height: 3rem; */
     height: ${(p) => (p.areaHeight ? p.areaHeight : "10rem")};
     /* height: fit-content; */
@@ -28,8 +29,6 @@ const Section = styled.div<heightProps>`
     resize: none;
   }
 `;
-
-const Input = styled.input``;
 
 interface labelProps {
   isValid: boolean;

@@ -11,7 +11,7 @@ const Section = styled.div`
   flex-direction: column;
   gap: 2rem;
   margin-top: 2rem;
-  /* margin-bottom: 4rem; */
+  margin-bottom: 4rem;
 `;
 
 const Header = styled.div`

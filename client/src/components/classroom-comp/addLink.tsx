@@ -10,7 +10,7 @@ import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunctions";
 import { Link } from "react-router-dom";
 
-const LinkContainer = styled.div`
+export const LinkContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;

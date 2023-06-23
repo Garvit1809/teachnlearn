@@ -14,6 +14,7 @@ import RequestCardWrapper from "../../components/home-comp/requestCardWrapper";
 import RecommendedClassWrapper from "../../components/home-comp/recommendedClassWrapper";
 import { teachingCardProps } from "../../types/teachingCardType";
 import FeedbackForm from "../../components/home-comp/feedbackForm";
+import YoutubeCarousel from "../../components/home-comp/youtubeCarousel";
 
 const Section = styled.div`
   /* border: 1px solid brown; */
@@ -38,7 +39,7 @@ const Home = () => {
   useEffect(() => {
     fetchLocalUserData().then((data) => {
       setUserToken(data.token);
-      setuserId(data._id)
+      setuserId(data._id);
       setUserRole(data.role);
     });
   }, []);
@@ -110,6 +111,7 @@ const Home = () => {
             requestCard={learnCards}
           />
         )}
+        <YoutubeCarousel />
         <FeedbackForm />
         <Footer />
       </Section>

@@ -330,19 +330,6 @@ const ClassroomCard = (props: classCardProps) => {
             btnSize={props.cssArr?.btnSize}
           >
             <span>
-              {/* {
-              checkIsCompleted()
-                ? 
-                (checkIsReviewed()
-                  ? "Check Class"
-                  : "Give Review")
-                : 
-                (!checkClassTeacher()
-                ? checkEnrolledClass()
-                  ? "Check Class"
-                  : "Enroll Now"
-                : "Check Class")
-                } */}
               {checkClassTeacher()
                 ? "Check Class"
                 : checkEnrolledClass()
@@ -351,6 +338,8 @@ const ClassroomCard = (props: classCardProps) => {
                   : checkIsReviewed()
                   ? "Check Class"
                   : "Give Review"
+                : checkIsCompleted()
+                ? "Check Class"
                 : "Enroll Now"}
             </span>
             <Arrow strokeColor="white" />
