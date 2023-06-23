@@ -18,6 +18,8 @@ import { navigateTo } from "../../utils/navigationHook";
 import YoutubeLinks from "../../components/home-comp/youtubeLinks";
 // import { topNavigator } from "../../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
+import YoutubeCarousel from "../../components/home-comp/youtubeCarousel";
+import { topNavigator } from "../../utils/helperFunctions";
 
 const Section = styled.div`
   display: flex;
@@ -230,6 +232,61 @@ const WaveCont = styled.div`
   }
 `;
 
+const DescContainer = styled.div`
+  display: flex;
+  /* width: 77.5rem; */
+  width: 90%;
+  margin: 4rem auto 0;
+  padding: 3.75rem 0rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+  border-radius: 10px;
+  background: #d8eefe;
+  h2 {
+    color: #2b2c34;
+    font-size: 3.625rem;
+    font-family: Nunito;
+    font-weight: 500;
+
+    span {
+      color: #3da9fc;
+      font-weight: 700;
+    }
+  }
+
+  p {
+    width: 55%;
+    color: #2b2c34;
+    text-align: center;
+    font-size: 1.35rem;
+    font-family: "Nunito";
+    line-height: 141.9%;
+    font-weight: 500;
+  }
+
+  button {
+    display: flex;
+    padding: 1.375rem 2.125rem;
+    align-items: flex-start;
+    gap: 0.625rem;
+    border-radius: 2px;
+    background: #3da9fc;
+    color: #fffffe;
+    font-size: 1.125rem;
+    font-family: "Nunito";
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+  }
+`;
+
+const YoutubeWrapper = styled.div`
+  /* border: 1px solid red; */
+  width: 90%;
+  margin: 4rem auto 0;
+`;
+
 const slideData = [
   {
     heading1: "Connect with students from all across the globe",
@@ -274,7 +331,7 @@ const LandingPage = () => {
 
   const navigate = useNavigate();
   const navigationHandler = (link: string) => {
-    // topNavigator();
+    topNavigator();
     navigate(link);
   };
 
@@ -343,7 +400,25 @@ const LandingPage = () => {
           <img src={wave2} alt="" />
         </div>
       </WaveCont>
-      <YoutubeLinks />
+      <YoutubeWrapper>
+        <YoutubeCarousel />
+      </YoutubeWrapper>
+      <DescContainer>
+        <h2>
+          "The
+          <span> no-brainer </span>
+          choice"
+        </h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in velit
+          libero. Maecenas ullamcorper rhoncus tempor. Integer sit amet amet
+          purussem lacinia bibendum. Sed fringilla justo vitae mi tristique
+          malesuada nulla condimentum.
+        </p>
+        <button type="button" onClick={() => navigationHandler("/signup")}>
+          Create an account
+        </button>
+      </DescContainer>
       <Footer />
     </>
   );

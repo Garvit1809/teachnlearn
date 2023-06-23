@@ -29,14 +29,14 @@ function App() {
   return (
     <div className="App">
       <Routes>
+        {localUser ? (
+          <Route path="/" element={<Home />} />
+        ) : (
+          <Route path="/" element={<LandingPage />} />
+        )}
         <Route path="/signup" element={<NewSignup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/teachNlearn" element={<LandingPage />} />
-        {!localUser ? (
-          <Route path="/" element={<LandingPage />} />
-        ) : (
-          <Route path="/" element={<Home />} />
-        )}
         <Route path="/forums" element={<Forum />} />
         <Route path="/forum/:id" element={<SingleForum />} />
         <Route path="/create-forum" element={<CreateForum />} />

@@ -19,8 +19,9 @@ const Section = styled.div`
 const YoutubeVideoContainer = styled.div`
   /* border: 1px solid red; */
   display: flex;
-  width: 22rem;
+  max-width: 25rem;
   height: 20em;
+  margin-right: 1rem;
   flex-direction: column;
   align-items: flex-start;
 
@@ -38,7 +39,7 @@ const FrameDetails = styled.div`
   display: flex;
   padding: 1.25rem;
   box-sizing: border-box;
-  width: 22rem;
+  width: 100%;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.5rem;
