@@ -186,7 +186,7 @@ const TimeCont = styled.span`
 interface classCardProps {
   cssArr?: obj;
   teachCard: teachingCardProps;
-  elemType: string;
+  elemType?: string;
 }
 
 interface obj {

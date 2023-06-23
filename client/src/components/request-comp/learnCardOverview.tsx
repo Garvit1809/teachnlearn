@@ -12,13 +12,12 @@ import UserChip from "../general-components/userChip";
 import DetailsContainer from "../classroom-comp/detailsContainer";
 import { Arrow, InterestedIcon } from "../general-components/svg";
 import { teachCardProps } from "../../pages/classroom/classrooms";
-import ClassroomCard, {
-  classroomCardProps,
-} from "../classroom-comp/classroomCard";
+import ClassroomCard from "../classroom-comp/classroomCard";
 import { cardSizes } from "../classroom-comp/classroomGrid";
 import BackBtn from "./backBtn";
 import { UserCookie } from "../../utils/userCookie";
 import { getHeaders } from "../../utils/helperFunctions";
+import { teachingCardProps } from "../../types/teachingCardType";
 
 const Section = styled.div`
   /* border: 1px solid brown; */
@@ -210,7 +209,7 @@ const TeachCardGrid = styled.div`
 const LearnCardOverview = () => {
   const [learnCardId, setLearnCardId] = useState();
   const [learnCard, setlearnCard] = useState<learnCardProps>();
-  const [teachCards, setTeachCards] = useState<Array<classroomCardProps>>();
+  const [teachCards, setTeachCards] = useState<Array<teachingCardProps>>();
   const [backLink, setBackLink] = useState<string>("/requests");
 
   const [totalInterestedStudents, setTotalInterestedStudents] =
