@@ -1,6 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const mongoose = require("mongoose");
+
 
 process.on("uncaughtException", (err) => {
   console.log("UNCAUGHT EXCEPTION! 💥 Shutting down...");
@@ -13,10 +13,6 @@ const app = require("./app");
 dotenv.config({ path: "./.env" });
 
 const PORT = process.env.PORT || 8000;
-
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("DB connection success"));
 
 if (process.env.NODE_ENV == "production") {
   const path = require("path");

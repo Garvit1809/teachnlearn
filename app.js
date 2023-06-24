@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 
@@ -18,6 +20,12 @@ const learningRouter = require("./routes/learningCardRoutes");
 const teachingRouter = require("./routes/teachingCardRoutes");
 const announcementRouter = require("./routes/announcementRouter");
 const ForumRouter = require("./routes/forumRoutes");
+
+dotenv.config({ path: "./.env" });
+
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("DB connection success"));
 
 const app = express();
 
