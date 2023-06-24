@@ -45,4 +45,36 @@ app.all("*", (req, res, next) => {
 
 app.use(globalErrorHandler);
 
-module.exports = app;
+// module.exports = app;
+// const express = require("express");
+// const dotenv = require("dotenv");
+
+process.on("uncaughtException", (err) => {
+  console.log("UNCAUGHT EXCEPTION! 💥 Shutting down...");
+  console.log(err);
+  console.log(err.name, err.message);
+  process.exit(1);
+});
+
+// if (process.env.NODE_ENV == "production") {
+//   const path = require("path");
+
+//   app.get("/", (req, res) => {
+//     app.use(express.static(path.resolve(__dirname, "client", "dist")));
+//     res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
+//   });
+// }
+
+const PORT = process.env.PORT || 8000;
+
+const server = app.listen(PORT, () => {
+  console.log(`Server running to port ${PORT}`);
+});
+
+process.on("unhandledRejection", (err) => {
+  console.log("UNHANDLED REJECTION! 💥 Shutting down...");
+  console.log(err.name, err.message);
+  server.close(() => {
+    process.exit(1);
+  });
+});
