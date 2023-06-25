@@ -91,7 +91,7 @@ const UploadImage = ({ updateFields }: uploadImageProps) => {
       })
         .then((res) => res.json())
         .then((data) => {
-          updateFields({ img: data.url.toString() });
+          updateFields({ photo: data.url.toString() });
           console.log(data);
           console.log(data.url.toString());
         })

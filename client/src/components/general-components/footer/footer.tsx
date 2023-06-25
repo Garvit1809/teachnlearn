@@ -11,6 +11,8 @@ const Section = styled.div`
   font-family: "Nunito";
   font-style: normal;
   margin-top: 4rem;
+  /* padding: 3.75rem 6.25rem; */
+  /* background-color: #094067; */
 `;
 
 const Links = styled.div`

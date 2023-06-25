@@ -35,7 +35,7 @@ export const InputWrapper = styled.div`
 `;
 
 interface UserInfo {
-  img: string;
+  photo: string;
   number: string;
   course: string;
   interestedSubject: string;

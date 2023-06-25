@@ -102,7 +102,7 @@ interface USERDATA {
   email: string;
   password: string;
   confirmPassword: string;
-  img: string;
+  photo: string;
   number: string;
   course: string;
   interestedSubject: string;
@@ -119,7 +119,7 @@ const initialData: USERDATA = {
   email: "",
   password: "",
   confirmPassword: "",
-  img: "",
+  photo: "",
   number: "",
   course: "",
   interestedSubject: "",
@@ -150,37 +150,39 @@ const NewSignup = () => {
     if (!isLastStep) return next();
     else {
       e.preventDefault();
-      console.log(userData);
-      const { data } = await axios.post(
-        `${BASE_URL}${apiVersion}/auth/signup`,
-        {
+      // console.log(userData);
+      await axios
+        .post(`${BASE_URL}${apiVersion}/auth/signup`, {
           name: userData.fullName,
           userName: userData.userName,
           email: userData.email,
           password: userData.password,
           passwordConfirm: userData.confirmPassword,
-          photo: userData.img,
+          photo: userData.photo,
           phoneNumber: userData.number,
           enrolledProgramme: userData.course,
           interestedSubjects: userData.interestedSubjects,
           strongSubjects: userData.strongSubjects,
           preferredLanguages: userData.preferredLanguages,
-        }
-      );
-      console.log(data);
-      if (data.status === "success") {
-        data.user.token = data.token;
-        localStorage.setItem(localStorageUser, JSON.stringify(data.user));
-        navigateLink();
-      }
+        })
+        .then(({ data }) => {
+          console.log(data);
+          console.log(data.token);
+          data.data.user.token = data.token;
+          localStorage.setItem(
+            localStorageUser,
+            JSON.stringify(data.data.user)
+          );
+          navigateLink("/");
+        });
     }
   };
 
   const navigate = useNavigate();
 
-  const navigateLink = () => {
+  const navigateLink = (link: string) => {
     topNavigator();
-    navigate("/signin");
+    navigate(link);
   };
 
   return (
@@ -200,7 +202,8 @@ const NewSignup = () => {
             )}
           </ButtonContainer>
           <span className="login">
-            Already have an account? <h5 onClick={navigateLink}>Sign In!!</h5>
+            Already have an account?{" "}
+            <h5 onClick={() => navigateLink("/signin")}>Sign In!!</h5>
           </span>
         </FormContainer>
       </LeftContainer>

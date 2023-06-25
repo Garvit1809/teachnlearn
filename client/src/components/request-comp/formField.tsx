@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const Section = styled.div`
+interface stylingProps {
+  alignCenter?: boolean;
+  marginTop?: string;
+}
+
+const Section = styled.div<stylingProps>`
   display: grid;
   grid-template-columns: 2fr 4fr;
+  /* border: 1px solid red; */
 
   h3 {
     /* border: 1px solid red; */
-    margin-top: 1rem;
+    margin-top: ${(p) => (p.marginTop ? p.marginTop : "1rem")};
     display: flex;
-    align-items: flex-start;
+    align-items: ${(p) => (p.alignCenter ? "center" : "flex-start")};
     justify-content: flex-start;
 
     font-family: "Nunito";
@@ -21,7 +27,7 @@ const Section = styled.div`
 
 const ElementWrapper = styled.div`
   /* border: 1px solid red; */
-  width: 80%;
+  /* width: 100%; */
   display: flex;
   margin-left: 32px;
 `;
@@ -29,6 +35,8 @@ const ElementWrapper = styled.div`
 interface fieldProps {
   inputDesc: string;
   elem: JSX.Element;
+  alignCenter?: boolean;
+  marginTop?: string;
 }
 
 const FormField = (props: fieldProps) => {

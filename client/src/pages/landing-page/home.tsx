@@ -39,12 +39,15 @@ const Home = () => {
 
   const navigate = useNavigate();
 
+  const [renderHome, setRenderHome] = useState(false);
+
   useEffect(() => {
     fetchLocalUserData()
       .then((data) => {
         setUserToken(data.token);
         setuserId(data._id);
         setUserRole(data.role);
+        setRenderHome(true);
       })
       .catch(() => {
         navigate("/teachNlearn");
@@ -93,7 +96,7 @@ const Home = () => {
     }
   }, [userToken]);
 
-  return (
+  return renderHome ? (
     <>
       <Navbar />
       <Section>
@@ -123,7 +126,7 @@ const Home = () => {
         <Footer />
       </Section>
     </>
-  );
+  ) : null;
 };
 
 export default Home;

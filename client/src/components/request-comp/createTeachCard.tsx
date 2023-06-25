@@ -91,7 +91,7 @@ interface teachCardDetails {
   programme: string;
   standard: string;
   preferredLanguage: string;
-  img: string;
+  photo: string;
   date: string;
   description: string;
   expectation: string;
@@ -109,7 +109,7 @@ const initialData: teachCardDetails = {
   programme: "",
   standard: "",
   preferredLanguage: "",
-  img: "",
+  photo: "",
   date: "",
   description: "",
   expectation: "",
@@ -188,7 +188,7 @@ const CreateTeachCard = () => {
           expectations: teachCard.expectations,
           tags: teachCard.tags,
           date: teachCard.date,
-          cardBanner: teachCard.img,
+          cardBanner: teachCard.photo,
           price: teachCard.price,
           classStartsAt: teachCard.startingTime,
           classEndsAt: teachCard.endingTime,
@@ -218,7 +218,7 @@ const CreateTeachCard = () => {
           expectations: teachCard.expectations,
           tags: teachCard.tags,
           date: teachCard.date,
-          cardBanner: teachCard.img,
+          cardBanner: teachCard.photo,
           price: teachCard.price,
           classStartsAt: teachCard.startingTime,
           classEndsAt: teachCard.endingTime,

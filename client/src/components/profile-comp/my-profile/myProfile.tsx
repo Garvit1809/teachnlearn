@@ -177,7 +177,6 @@ const MyProfile = () => {
       <UserContainer>
         <ProfileImage
           photo={localUser.photo}
-          closeModal={closeModal}
           updateFields={updateFields}
           userToken={localUser.token}
         />

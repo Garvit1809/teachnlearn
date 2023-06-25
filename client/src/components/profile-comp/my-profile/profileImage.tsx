@@ -2,25 +2,42 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { userProps } from "./myProfile";
 import Modal from "react-modal";
-import { customStyles } from "./contactInfo";
 import UploadImage from "../../general-components/input/uploadImage";
-import ModalField from "../../classroom-comp/modalField";
 import FormField from "../../request-comp/formField";
+import { SubmitButton } from "./profileModals/academicInfoModal";
+import axios from "axios";
+import { BASE_URL, apiVersion } from "../../../utils/apiRoutes";
+import { getHeaders } from "../../../utils/helperFunctions";
+import { localStorageUser } from "../../../utils/globalConstants";
 
 const Section = styled.div`
+  /* border: 1px solid red; */
   width: 50vw;
   padding: 20px 32px;
+  box-sizing: border-box;
+  overflow: hidden;
+  z-index: 3;
+
+  button {
+    &:first-child {
+      margin-right: 1rem;
+    }
+  }
 `;
 
-const ImageContainer = styled.div`
-  box-sizing: border-box;
+interface imgProps {
+  modalIsOpen: boolean;
+}
 
+const ImageContainer = styled.div<imgProps>`
+  box-sizing: border-box;
   width: 84.54px;
   height: 84.54px;
   padding: 2px;
   border: 0.87156px solid #d5d9eb;
   border-radius: 50%;
   cursor: pointer;
+  position: relative;
 
   img {
     width: 100%;
@@ -28,6 +45,28 @@ const ImageContainer = styled.div`
     border-radius: 50%;
     display: block;
     object-fit: cover;
+    z-index: 1;
+  }
+
+  &:hover {
+    img {
+      filter: blur(0.5px);
+      -webkit-filter: blur(0.5px);
+    }
+
+    &:before {
+      content: "Edit";
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      display: block;
+      display: ${(p) => (p.modalIsOpen ? "none" : "block")};
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 22px;
+      font-weight: 700;
+      mix-blend-mode: hard-light;
+    }
   }
 `;
 
@@ -45,7 +84,10 @@ const Header = styled.div`
 `;
 
 const ImagePreview = styled.div`
-  /* border: 1px solid red; */
+  border: 1px solid #7d89b0;
+  border-radius: 6px;
+  padding: 1rem;
+  box-sizing: border-box;
   width: 100%;
   height: 40vh;
   margin-bottom: 4rem;
@@ -54,24 +96,39 @@ const ImagePreview = styled.div`
     width: 100%;
     height: 100%;
     object-fit: contain;
+    border-radius: 6px;
   }
 `;
 
-const BottomButtons = styled.div`
-  border: 1px solid red;
+const FieldWrapper = styled.div`
+  /* border: 1px solid red; */
+  margin-bottom: 3rem;
 `;
 
 interface profileImageProps {
   photo: string;
   userToken: string;
-  closeModal: any;
 }
 
 type modalProps = profileImageProps & {
   updateFields: (fields: Partial<userProps>) => void;
 };
 
+const customStyles = {
+  content: {
+    width: "50vw",
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+
 const ProfileImage = (props: modalProps) => {
+  const [prevImage, setPrevImage] = useState(props.photo);
+
   const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {
@@ -82,9 +139,34 @@ const ProfileImage = (props: modalProps) => {
     setIsOpen(false);
   }
 
+  const updateImageCancelHandler = async () => {
+    props.updateFields({ photo: prevImage });
+    closeModal();
+  };
+
+  const updateUserImageHandler = async () => {
+    await axios
+      .patch(
+        `${BASE_URL}${apiVersion}/user/myPhoto`,
+        {
+          photo: props.photo,
+        },
+        {
+          headers: getHeaders(props.userToken),
+        }
+      )
+      .then(({ data }) => {
+        console.log(data.updatedUser);
+        const user = data.updatedUser;
+        user.token = props.userToken;
+        localStorage.setItem(localStorageUser, JSON.stringify(user));
+        closeModal();
+      });
+  };
+
   return (
     <div>
-      <ImageContainer onClick={openModal}>
+      <ImageContainer onClick={openModal} modalIsOpen={modalIsOpen}>
         <img src={props.photo} alt="user-img" />
       </ImageContainer>
       <Modal
@@ -100,14 +182,20 @@ const ProfileImage = (props: modalProps) => {
           <ImagePreview>
             <img src={props.photo} alt="" />
           </ImagePreview>
-          {/* <ModalField title="Change your profile picture" value={
-            <UploadImage updateFields={props.updateFields} />
-          } /> */}
-          <FormField
-            elem={<UploadImage updateFields={props.updateFields} />}
-            inputDesc="Change your profile picture"
-          />
-          <BottomButtons></BottomButtons>
+          <FieldWrapper>
+            <FormField
+              elem={<UploadImage updateFields={props.updateFields} />}
+              inputDesc="Change profile image"
+            />
+          </FieldWrapper>
+          <SubmitButton>
+            <button type="submit" onClick={updateImageCancelHandler}>
+              Go back
+            </button>
+            <button type="submit" onClick={updateUserImageHandler}>
+              Edit Academic Info
+            </button>
+          </SubmitButton>
         </Section>
       </Modal>
     </div>
