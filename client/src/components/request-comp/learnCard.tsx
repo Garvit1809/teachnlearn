@@ -6,7 +6,7 @@ import {
   PurchaseCoinIcon,
   RightArrowIcon,
 } from "../general-components/svg";
-import { getReadableDate } from "../../utils/helperFunctions";
+import { getReadableDate, topNavigator } from "../../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
 import { learnCardProps } from "../../pages/requests/requests";
 
@@ -143,29 +143,11 @@ const ExpandButton = styled.div`
   }
 `;
 
-interface requestCardProps {
-  _id: string;
-  createdBy: {
-    name: string;
-    photo: string;
-    id: string;
-  };
-  subject: string;
-  topic: string;
-  programme: string;
-  standard: string;
-  dueDate: string;
-  interestedStudents: string[];
-  preferredLanguage: string;
-  description: string;
-  expectations: string[];
-  tags: string[];
-}
-
 const LearnCard = (props: learnCardProps) => {
   const navigate = useNavigate();
 
   const leanrCardOverviewNavigator = () => {
+    topNavigator();
     navigate(`/learncard-overview/${props._id}`, {
       state: { learnCardId: props._id, backLink: "/requests" },
     });

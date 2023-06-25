@@ -8,7 +8,11 @@ import {
 import UserChip from "../general-components/userChip";
 import { useNavigate } from "react-router-dom";
 import { UserCookie, userProps } from "../../utils/userCookie";
-import { getReadableDate, getReadableTime } from "../../utils/helperFunctions";
+import {
+  getReadableDate,
+  getReadableTime,
+  topNavigator,
+} from "../../utils/helperFunctions";
 import { teachingCardProps } from "../../types/teachingCardType";
 
 const Section = styled.div<cardAnimationProps>`
@@ -140,8 +144,8 @@ const EnrollBtn = styled.div<buttonProps>`
   gap: 8px;
   background: #332ad5;
   background: #ef4565;
-  background: #094067;
-  background: #3da9fc;
+  /* background: #094067; */
+  /* background: #3da9fc; */
   border-radius: 4px;
   cursor: pointer;
 
@@ -273,6 +277,7 @@ const ClassroomCard = (props: classCardProps) => {
   };
 
   const enrollClassNavigator = () => {
+    topNavigator();
     if (checkClassTeacher()) {
       navigate(`/classes/class/${props.teachCard._id}`, {
         state: {

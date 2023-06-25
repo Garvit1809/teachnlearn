@@ -4,6 +4,7 @@ import { Comments, Plus } from "../general-components/svg";
 import { useNavigate } from "react-router-dom";
 import { forumProps } from "../../pages/forum/forum";
 import moment from "moment";
+import { topNavigator } from "../../utils/helperFunctions";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -118,6 +119,7 @@ const ForumCard = (props: forumCardProps) => {
   const navigate = useNavigate();
 
   const forumNavigator = () => {
+    topNavigator();
     navigate(`/forum/${props._id}`, {
       state: {
         forumId: props._id,

@@ -117,7 +117,7 @@ const RecommendedClassCard = ({ card, userId }: cardProps) => {
   const checkIfUserEnrolled = () => {
     const enrolledStudents = card.studentsEnrolled;
     const arr = enrolledStudents.filter((student) => {
-      return student == userId;
+      return student._id == userId;
     });
     return arr;
   };

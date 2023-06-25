@@ -16,7 +16,7 @@ import ClassroomCard from "../classroom-comp/classroomCard";
 import { cardSizes } from "../classroom-comp/classroomGrid";
 import BackBtn from "./backBtn";
 import { UserCookie } from "../../utils/userCookie";
-import { getHeaders } from "../../utils/helperFunctions";
+import { getHeaders, topNavigator } from "../../utils/helperFunctions";
 import { teachingCardProps } from "../../types/teachingCardType";
 
 const Section = styled.div`
@@ -258,6 +258,7 @@ const LearnCardOverview = () => {
   const navigate = useNavigate();
 
   const teachCardNavigator = () => {
+    topNavigator();
     if (learnCard) {
       navigate("/create-teach-request", {
         state: {

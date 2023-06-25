@@ -3,7 +3,8 @@ import styled from "styled-components";
 import IntroImg from "../../assets/home-intro-img.png";
 // import Arrow from "../../assets/Arrow.svg";
 import { Arrow } from "../general-components/svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { topNavigator } from "../../utils/helperFunctions";
 
 const Section = styled.div`
   /* border: 1px solid pink; */
@@ -101,6 +102,13 @@ interface introProps {
 }
 
 const Intro = (props: introProps) => {
+  const navigate = useNavigate();
+
+  const navigationHandler = (link: string) => {
+    topNavigator();
+    navigate(link);
+  };
+
   return (
     <Section>
       <InfoContainer>
@@ -113,18 +121,17 @@ const Intro = (props: introProps) => {
           fun for everyone, regardless of prior knowledge.
         </p>
         <Buttons>
-          <Link to="/classes">
-            <button>
-              <span>See all classes</span>
-              <Arrow strokeColor="white" />
-            </button>
-          </Link>
-          <Link to={`/create-${props.role}-request`}>
-            <button className="request">
-              <span>Create a request</span>
-              <Arrow strokeColor="#364152" />
-            </button>
-          </Link>
+          <button onClick={() => navigationHandler("/classes")}>
+            <span>See all classes</span>
+            <Arrow strokeColor="white" />
+          </button>
+          <button
+            className="request"
+            onClick={() => navigationHandler(`/create-${props.role}-request`)}
+          >
+            <span>Create a request</span>
+            <Arrow strokeColor="#364152" />
+          </button>
         </Buttons>
       </InfoContainer>
       <ImageContainer>

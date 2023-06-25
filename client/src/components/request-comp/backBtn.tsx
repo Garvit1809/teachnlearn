@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { BackArrowIcon } from "../general-components/svg";
+import { topNavigator } from "../../utils/helperFunctions";
 
 const Section = styled.div`
   border: 1px solid #d5d9eb;
@@ -35,6 +36,7 @@ const BackBtn = (props: backProps) => {
   const navigate = useNavigate();
 
   const navigationHandler = () => {
+    topNavigator();
     if (props.learnCardId) {
       navigate(`/learncard-overview/${props.learnCardId}`, {
         state: { learnCardId: props.learnCardId },
