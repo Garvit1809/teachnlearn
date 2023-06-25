@@ -74,6 +74,10 @@ const Overview = (props: overallOverviewProps) => {
     return date > ISOstring;
   };
 
+  const checkHasReviewed = () => {
+
+  }
+
   return (
     props && (
       <>
@@ -100,7 +104,7 @@ const Overview = (props: overallOverviewProps) => {
               <JoinCall callLink={props.callLink} />
             )
             ) : (
-              <ReviewClass />
+              <ReviewClass teachCardId={props._id} userToken={props.userToken} teacherID={props.createdBy._id} />
             )
           }
           </CallDetailContainer>

@@ -7,6 +7,10 @@ import { customStyles } from "../profile-comp/my-profile/contactInfo";
 import Textarea from "../general-components/input/textarea";
 import { SubmitButton } from "../profile-comp/my-profile/profileModals/academicInfoModal";
 import star from "../../assets/star.svg";
+import Rating from "./rating";
+import axios from "axios";
+import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
+import { getHeaders } from "../../utils/helperFunctions";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -35,8 +39,7 @@ const RatingContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  /* row-gap: 1rem; */
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 
   span {
     /* border: 1px solid red; */
@@ -59,7 +62,13 @@ const RatingContainer = styled.div`
   }
 `;
 
-const ReviewClass = () => {
+interface reviewProps {
+  teachCardId: string;
+  userToken: string;
+  teacherID: string;
+}
+
+const ReviewClass = (props: reviewProps) => {
   const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {
@@ -70,14 +79,42 @@ const ReviewClass = () => {
     setIsOpen(false);
   }
 
+  const [rating, setRating] = useState<number>(1);
   const [review, setReview] = useState("");
+
+  const [hasReviewed, setHasReviewed] = useState(false);
 
   const updateReview = (content: string) => {
     setReview(content);
   };
 
-  const submitReviewHandler = () => {
+  function thanksGiving() {
+    setInterval(() => {
+      closeModal();
+      window.location.reload();
+    }, 8000);
+  }
+
+  const submitReviewHandler = async () => {
+    console.log(rating);
     console.log(review);
+
+    await axios
+      .post(
+        `${BASE_URL}${apiVersion}/teach/${props.teachCardId}/reviews`,
+        {
+          review,
+          rating,
+          teacherID: props.teacherID,
+        },
+        {
+          headers: getHeaders(props.userToken),
+        }
+      )
+      .then(({ data }) => {
+        setHasReviewed(true);
+        thanksGiving();
+      });
   };
 
   return (
@@ -91,28 +128,35 @@ const ReviewClass = () => {
         onRequestClose={closeModal}
         style={customStyles}
       >
-        <Section>
-          <Header>
-            <h4>Class Feedback</h4>
-          </Header>
-          <RatingContainer>
-            <span>Rate your experience</span>
-            <h4>Are you satisfied with the teacher</h4>
-            {/* <img src={star} alt="" /> */}
-          </RatingContainer>
-          <Textarea
-            label="Brief Review"
-            name="review"
-            value={review}
-            areaHeight="10rem"
-            updateSingleField={updateReview}
-          />
-          <SubmitButton>
-            <button type="submit" onClick={submitReviewHandler}>
-              <span>Submit Review</span>
-            </button>
-          </SubmitButton>
-        </Section>
+        {!hasReviewed ? (
+          <Section>
+            <Header>
+              <h4>Class Feedback</h4>
+            </Header>
+            <RatingContainer>
+              <span>Rate your experience</span>
+              <h4>Are you satisfied with the teacher</h4>
+              <Rating
+                onRating={(rate: number) => setRating(rate)}
+                rating={rating}
+              />
+            </RatingContainer>
+            <Textarea
+              label="Brief Review"
+              name="review"
+              value={review}
+              areaHeight="10rem"
+              updateSingleField={updateReview}
+            />
+            <SubmitButton>
+              <button type="submit" onClick={submitReviewHandler}>
+                <span>Submit Review</span>
+              </button>
+            </SubmitButton>
+          </Section>
+        ) : (
+          <h2>Thanks for reviewing!!</h2>
+        )}
       </Modal>
     </>
   );
