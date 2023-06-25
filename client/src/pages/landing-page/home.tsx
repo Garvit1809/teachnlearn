@@ -15,6 +15,7 @@ import RecommendedClassWrapper from "../../components/home-comp/recommendedClass
 import { teachingCardProps } from "../../types/teachingCardType";
 import FeedbackForm from "../../components/home-comp/feedbackForm";
 import YoutubeCarousel from "../../components/home-comp/youtubeCarousel";
+import { useNavigate } from "react-router-dom";
 
 const Section = styled.div`
   /* border: 1px solid brown; */
@@ -36,12 +37,18 @@ const Home = () => {
 
   const { fetchLocalUserData } = UserCookie();
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    fetchLocalUserData().then((data) => {
-      setUserToken(data.token);
-      setuserId(data._id);
-      setUserRole(data.role);
-    });
+    fetchLocalUserData()
+      .then((data) => {
+        setUserToken(data.token);
+        setuserId(data._id);
+        setUserRole(data.role);
+      })
+      .catch(() => {
+        navigate("/teachNlearn");
+      });
   }, []);
 
   async function fetchAllTeachCards() {

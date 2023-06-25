@@ -14,26 +14,38 @@ import CreateTeachCard from "./components/request-comp/createTeachCard";
 import Requests from "./pages/requests/requests";
 import LearnCardOverview from "./components/request-comp/learnCardOverview";
 import { UserCookie } from "./utils/userCookie";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import LandingPage from "./pages/landing-page/landingPage";
 import ClassroomOverview from "./pages/classroom/classroomOverview";
 import CreateForum from "./components/forum-components/createForum";
+import { userProps } from "./components/profile-comp/my-profile/myProfile";
 
 function App() {
-  const { fetchLocalUserData, localUser } = UserCookie();
+  const { fetchLocalUserData } = UserCookie();
+
+  const [localUser, setLocalUser] = useState<userProps>();
+
+  // const loca = document.location.pathname;
 
   useEffect(() => {
-    fetchLocalUserData();
+    fetchLocalUserData().then((data) => {
+      setLocalUser(data);
+    });
+    // console.log("LOCA :-" + loca);
   }, []);
+
+  // useEffect(() => {
+  //   console.log(localUser);
+  // }, [localUser]);
 
   return (
     <div className="App">
       <Routes>
-        {localUser ? (
-          <Route path="/" element={<Home />} />
-        ) : (
-          <Route path="/" element={<LandingPage />} />
-        )}
+        {/* {localUser ? (
+          ) : (
+            <Route path="/teachNlearn" element={<LandingPage />} />
+            )} */}
+        <Route path="/" element={<Home />} />
         <Route path="/signup" element={<NewSignup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/teachNlearn" element={<LandingPage />} />

@@ -29,18 +29,21 @@ export function UserCookie() {
   }, [localUser]);
 
   async function fetchLocalUserData() {
-    const data = await JSON.parse(
-      localStorage.getItem(localStorageUser) || "{}"
-    );
-    // console.log(data);
+    const user = localStorage.getItem(localStorageUser);
+    let data;
+    if (user) {
+      data = await JSON.parse(user);
+    }
     setLocalUser(data);
     return data;
   }
 
   async function fetchLocalUserToken() {
-    const data = await JSON.parse(
-      localStorage.getItem(localStorageUser) || "{}"
-    );
+    const user = localStorage.getItem(localStorageUser);
+    let data;
+    if (user) {
+      data = await JSON.parse(user);
+    }
     return data.token;
   }
 

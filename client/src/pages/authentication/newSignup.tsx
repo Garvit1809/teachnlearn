@@ -171,9 +171,7 @@ const NewSignup = () => {
       if (data.status === "success") {
         data.user.token = data.token;
         localStorage.setItem(localStorageUser, JSON.stringify(data.user));
-        // fetchLocalUserData()
-        // setLocalUser()
-        // navigateToHome();
+        navigateLink();
       }
     }
   };
