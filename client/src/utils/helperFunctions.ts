@@ -26,7 +26,15 @@ export const getReadableTime = (ISODate: string) => {
 
   const hours = dateWithOffset.getHours();
   let minutes = dateWithOffset.getMinutes();
-  const concatedTime = hours + ":" + minutes;
+
+  let concatedTime;
+  if (minutes < 10) {
+    concatedTime = String(hours + ":" + minutes) + "0";
+  } else {
+    concatedTime = String(hours + ":" + minutes);
+  }
+
+  console.log(typeof concatedTime);
 
   return concatedTime;
 };

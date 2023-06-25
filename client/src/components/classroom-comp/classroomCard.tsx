@@ -18,6 +18,7 @@ const Section = styled.div<cardAnimationProps>`
   overflow: hidden;
   background: #f6f6f6;
   background: #d8eefe;
+  background: #094067;
   transition: all 0.15s linear;
 
   &:hover {
@@ -73,6 +74,7 @@ const DetailContainer = styled.div<detailProps>`
   gap: ${(p) => p.gapSize || "24px"};
   background: #f6f6f6;
   background: #d8eefe;
+  background: #094067;
   font-family: "Nunito";
 `;
 
@@ -84,13 +86,14 @@ const Header = styled.div<headerProps>`
   /* border: 1px solid red; */
 
   h4 {
-    font-weight: 500;
+    font-weight: 700;
     font-size: ${(props) => props.headerSize || "18px"};
     line-height: 1;
     line-height: 25px;
     letter-spacing: 0.02em;
     text-transform: uppercase;
     color: #000000;
+    color: #ef4565;
   }
 `;
 
@@ -105,6 +108,7 @@ const Interested = styled.div<headerProps>`
     font-size: ${(props) => props.headerSize || "18px"};
     line-height: 25px;
     color: #000000;
+    color: white;
     text-transform: capitalize;
   }
 `;
@@ -116,6 +120,8 @@ const Title = styled.p<titleProps>`
   font-size: ${(p) => p.titleSize || "24px"};
   line-height: ${(p) => p.titleLineHeight || "35px"};
   color: #000000;
+  color: white;
+  color: #d8eefe;
 `;
 
 const EnrollCont = styled.div`
@@ -135,6 +141,7 @@ const EnrollBtn = styled.div<buttonProps>`
   background: #332ad5;
   background: #ef4565;
   background: #094067;
+  background: #3da9fc;
   border-radius: 4px;
   cursor: pointer;
 
@@ -159,6 +166,7 @@ const Coins = styled.div<buttonProps>`
   gap: 6px;
 
   svg {
+    /* fill: white; */
     width: ${(p) => p.svgSize || "18px"};
     height: ${(p) => p.svgSize || "18px"};
   }
@@ -167,6 +175,7 @@ const Coins = styled.div<buttonProps>`
     font-weight: 600;
     font-size: ${(p) => p.btnSize || "18px"};
     color: #000000;
+    color: white;
   }
 `;
 
@@ -184,6 +193,7 @@ const TimeCont = styled.span`
   font-weight: 600;
   font-size: 16px;
   line-height: 20px;
+  color: white;
 `;
 
 interface classCardProps {
@@ -314,8 +324,8 @@ const ClassroomCard = (props: classCardProps) => {
           <UserChip
             name={props.teachCard.createdBy.name}
             photo={props.teachCard.createdBy.photo}
-            imgBorder="#000000"
-            textColor="#000000"
+            imgBorder="#ffffff"
+            textColor="#ffffff"
             imgSize={props.cssArr?.userChipImgSize}
             textSize={props.cssArr?.userChipTextSize}
           />
@@ -352,7 +362,7 @@ const ClassroomCard = (props: classCardProps) => {
               svgSize={props.cssArr?.svgSize}
               btnSize={props.cssArr?.btnSize}
             >
-              <PurchaseCoinIcon color="black" />
+              <PurchaseCoinIcon color="white" />
               <span>{props.teachCard.price} Coins</span>
             </Coins>
           ) : null}
