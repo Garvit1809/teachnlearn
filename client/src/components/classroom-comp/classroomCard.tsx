@@ -17,6 +17,7 @@ const Section = styled.div<cardAnimationProps>`
   border-radius: 16px;
   overflow: hidden;
   background: #f6f6f6;
+  background: #d8eefe;
   transition: all 0.15s linear;
 
   &:hover {
@@ -71,6 +72,7 @@ const DetailContainer = styled.div<detailProps>`
   gap: 24px;
   gap: ${(p) => p.gapSize || "24px"};
   background: #f6f6f6;
+  background: #d8eefe;
   font-family: "Nunito";
 `;
 
@@ -131,6 +133,8 @@ const EnrollBtn = styled.div<buttonProps>`
   padding: 12px 24px;
   gap: 8px;
   background: #332ad5;
+  background: #ef4565;
+  background: #094067;
   border-radius: 4px;
   cursor: pointer;
 
@@ -138,7 +142,6 @@ const EnrollBtn = styled.div<buttonProps>`
     font-weight: 500;
     font-size: 16px;
     font-size: ${(p) => p.btnSize || "16px"};
-    /* font-size: 10px; */
     letter-spacing: 0.02em;
     color: #ffffff;
   }
@@ -219,7 +222,7 @@ const ClassroomCard = (props: classCardProps) => {
   const checkEnrolledClass = () => {
     if (localUser) {
       const bool = props.teachCard.studentsEnrolled.filter((student) => {
-        return student == localUser._id;
+        return student._id == localUser._id;
       });
       return bool.length;
     } else {

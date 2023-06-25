@@ -14,6 +14,7 @@ import { getHeaders } from "../../utils/helperFunctions";
 import { UserCookie } from "../../utils/userCookie";
 import { teachCardProps } from "./classrooms";
 import BackBtn from "../../components/request-comp/backBtn";
+import { teachingCardProps } from "../../types/teachingCardType";
 
 const Section = styled.div`
   /* margin: 2rem 0 3rem; */
@@ -36,7 +37,7 @@ const SingleClassroom = () => {
   const [userToken, setUserToken] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
 
-  const [classroom, setClassroom] = useState<teachCardProps>();
+  const [classroom, setClassroom] = useState<teachingCardProps>();
 
   const [backLink, setBackLink] = useState<string>("/classes");
 
@@ -68,7 +69,6 @@ const SingleClassroom = () => {
       .then(({ data }) => {
         const card = data.teachCard;
         console.log(data);
-
         setClassroom(card);
       });
   }

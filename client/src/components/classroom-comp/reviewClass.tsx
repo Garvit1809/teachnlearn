@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { LinkContainer } from "./addLink";
-import { Arrow } from "../general-components/svg";
+import { Arrow, ThumbsUp } from "../general-components/svg";
 import Modal from "react-modal";
 import { customStyles } from "../profile-comp/my-profile/contactInfo";
 import Textarea from "../general-components/input/textarea";
@@ -11,9 +11,11 @@ import Rating from "./rating";
 import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunctions";
+import ReviewSubmitted from "./reviewSubmitted";
 
 const Section = styled.div`
   /* border: 1px solid red; */
+  width: 50vw;
   textarea {
     margin-bottom: 2rem;
     width: 90%;
@@ -21,7 +23,6 @@ const Section = styled.div`
 `;
 
 const Header = styled.div`
-  width: 50vw;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -91,14 +92,10 @@ const ReviewClass = (props: reviewProps) => {
   function thanksGiving() {
     setInterval(() => {
       closeModal();
-      window.location.reload();
-    }, 8000);
+    }, 2500);
   }
 
   const submitReviewHandler = async () => {
-    console.log(rating);
-    console.log(review);
-
     await axios
       .post(
         `${BASE_URL}${apiVersion}/teach/${props.teachCardId}/reviews`,
@@ -112,6 +109,7 @@ const ReviewClass = (props: reviewProps) => {
         }
       )
       .then(({ data }) => {
+        console.log(data);
         setHasReviewed(true);
         thanksGiving();
       });
@@ -155,7 +153,7 @@ const ReviewClass = (props: reviewProps) => {
             </SubmitButton>
           </Section>
         ) : (
-          <h2>Thanks for reviewing!!</h2>
+          <ReviewSubmitted />
         )}
       </Modal>
     </>

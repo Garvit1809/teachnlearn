@@ -9,6 +9,7 @@ import JoinCall from "./joinCall";
 import { teachCardProps } from "../../pages/classroom/classrooms";
 import AddLink from "./addLink";
 import ReviewClass from "./reviewClass";
+import { teachingCardProps } from "../../types/teachingCardType";
 
 const OverviewContainer = styled.div`
   /* border: 1px solid red; */
@@ -61,7 +62,7 @@ interface overviewProps {
   _id: string;
 }
 
-type overallOverviewProps = overviewProps & {
+type overallOverviewProps = teachingCardProps & {
   userId: string;
   userToken: string;
 };
@@ -75,8 +76,15 @@ const Overview = (props: overallOverviewProps) => {
   };
 
   const checkHasReviewed = () => {
+    const userID = props.userId;
+    const reviews = props.reviews;
 
-  }
+    const isReviewed = reviews.filter((review) => {
+      return review.user._id == userID;
+    });
+
+    return isReviewed.length == 1;
+  };
 
   return (
     props && (
@@ -89,24 +97,25 @@ const Overview = (props: overallOverviewProps) => {
               classStartsAt={props.classStartsAt}
               classEndsAt={props.classEndsAt}
             />
-            {
-            !checkIsCompleted() ? 
-            (
-
+            {!checkIsCompleted() ? (
               props.userId == props.createdBy._id ? (
                 <AddLink
-                callLink={props.callLink}
+                  callLink={props.callLink}
+                  teachCardId={props._id}
+                  userId={props.userId}
+                  userToken={props.userToken}
+                />
+              ) : (
+                <JoinCall callLink={props.callLink} />
+              )
+            ) : props.userId ==
+              props.createdBy._id ? null : !checkHasReviewed() ? (
+              <ReviewClass
                 teachCardId={props._id}
-                userId={props.userId}
                 userToken={props.userToken}
+                teacherID={props.createdBy._id}
               />
-            ) : (
-              <JoinCall callLink={props.callLink} />
-            )
-            ) : (
-              <ReviewClass teachCardId={props._id} userToken={props.userToken} teacherID={props.createdBy._id} />
-            )
-          }
+            ) : null}
           </CallDetailContainer>
           <ClassOverview>
             <ChipContainer>
