@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useOutsideAlerter } from "../../../utils/helperFunctions";
+import { HideEyeIcon } from "../svg";
 
 const Section = styled.div`
   position: relative;
@@ -10,6 +11,22 @@ const Section = styled.div`
   height: fit-content;
   display: flex;
   flex-direction: column;
+
+  div.icon {
+    /* border: 1px solid red; */
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  span.show-password {
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
 `;
 
 const Input = styled.input`
@@ -91,33 +108,18 @@ const DropdownMenu = styled.div`
   }
 `;
 
-interface USERDATA {
-  fullName: string;
-  userName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  profilePic: string;
-  number: string;
-  course: string;
-  interestedSubjects: string[];
-  subject: string;
-  strongSubjects: string[];
-  preferredLanguages: string[];
-}
-
 interface inputProps {
   value: string | number;
   type: string;
   label: string;
   name: string;
-  // updateFields: (fields: Partial<USERDATA>) => void;
   updateFields: any;
   hasDropdown?: boolean;
   dropdownData?: string[];
 }
 
 const Inputholder = (props: inputProps) => {
+  const [inputType, setInputType] = useState(props.type);
   const [isValid, setisValid] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -158,15 +160,32 @@ const Inputholder = (props: inputProps) => {
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, closeDropDown);
 
+  const hideUnhideHandler = () => {
+    if (inputType == "password") {
+      setInputType("string");
+    } else if (inputType == "string") {
+      setInputType("password");
+    }
+  };
+
   return (
     <Section>
       <Input
-        type={props.type}
+        type={inputType}
         required
         value={props.value}
         name={props.name}
         onChange={(e) => inputhandler(e)}
       />
+      {props.type == "password" && (
+        <div className="icon" onClick={hideUnhideHandler}>
+          {inputType == "password" ? (
+            <span className="show-password">Show</span>
+          ) : (
+            <HideEyeIcon />
+          )}
+        </div>
+      )}
       <Label isValid={isValid}>{props.label}</Label>
       {props.hasDropdown
         ? props.value == ""

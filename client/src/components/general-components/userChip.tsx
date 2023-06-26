@@ -1,6 +1,4 @@
-import React from "react";
 import styled from "styled-components";
-import zoro from "../../assets/zoro.jpg";
 
 interface styleProps {
   imgBorder?: string;
@@ -58,7 +56,7 @@ const UserChip = ({
       imgSize={imgSize}
       textSize={textSize}
     >
-      <img src={photo ? photo : zoro} alt="user-img" />
+      <img src={photo} alt="user-img" />
       <span>{name}</span>
     </Section>
   );

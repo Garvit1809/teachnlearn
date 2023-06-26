@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import TNLLogo from "../../assets/tnl-logo.png";
-import { Arrow, WaveSVG } from "../../components/general-components/svg";
+import { Arrow } from "../../components/general-components/svg";
 
 import img1 from "../../assets/landingPageImg1.png";
 import img2 from "../../assets/landingPageImg2.png";
@@ -14,9 +14,6 @@ import Footer from "../../components/general-components/footer/footer";
 
 import wave from "../../assets/wave.png";
 import wave2 from "../../assets/wave2.png";
-import { navigateTo } from "../../utils/navigationHook";
-import YoutubeLinks from "../../components/home-comp/youtubeLinks";
-// import { topNavigator } from "../../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
 import YoutubeCarousel from "../../components/home-comp/youtubeCarousel";
 import { topNavigator } from "../../utils/helperFunctions";
