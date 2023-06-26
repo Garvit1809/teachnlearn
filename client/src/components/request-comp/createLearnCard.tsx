@@ -15,6 +15,8 @@ import { getHeaders } from "../../utils/helperFunctions";
 import { UserCookie } from "../../utils/userCookie";
 
 import { subjects } from "../../data/SUBJECT_LIST.json";
+import { standard } from "../../data/STANDARD_LIST.json";
+import { languages } from "../../data/LANGUAGE_LIST.json";
 
 const Section = styled.div`
   border: 1px solid red;
@@ -147,38 +149,6 @@ const Expectation = styled.div`
   }
 `;
 
-const DropdownInputWrapper = styled.div`
-  /* border: 1px solid red; */
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  position: relative;
-  box-sizing: border-box;
-`;
-
-const DropdownMenu = styled.div`
-  /* border: 1px solid red; */
-  display: flex;
-  flex-direction: column;
-  max-height: 12rem;
-  overflow-y: auto;
-  position: absolute;
-  top: 100%;
-  z-index: 100;
-  background-color: white;
-  box-sizing: border-box;
-  padding: 0.4rem 1rem;
-  width: 100%;
-  border: 1.5px solid #d5d9eb;
-  border-radius: 8px;
-
-  span {
-    /* border: 1px solid red; */
-    padding: 4px 0;
-    cursor: pointer;
-  }
-`;
-
 interface learnCardDetails {
   subject: string;
   topic: string;
@@ -280,14 +250,13 @@ const CreateLearnCard = () => {
         <form>
           <FormField
             elem={
-              // <DropdownInputWrapper>
               <Inputholder
                 type="text"
                 label="Subject"
                 value={learnCard.subject}
                 name="subject"
                 updateFields={updateFields}
-                hasDropdoen={true}
+                hasDropdown={true}
                 dropdownData={subjects}
               />
             }
@@ -301,7 +270,7 @@ const CreateLearnCard = () => {
                 value={learnCard.topic}
                 name="topic"
                 updateFields={updateFields}
-                hasDropdoen={false}
+                hasDropdown={false}
               />
             }
             inputDesc="Specify the topic for the card"
@@ -314,7 +283,7 @@ const CreateLearnCard = () => {
                 value={learnCard.programme}
                 name="programme"
                 updateFields={updateFields}
-                hasDropdoen={false}
+                hasDropdown={false}
               />
             }
             inputDesc="Specify Education Level for the lesson"
@@ -327,6 +296,8 @@ const CreateLearnCard = () => {
                 value={learnCard.standard}
                 name="standard"
                 updateFields={updateFields}
+                hasDropdown={true}
+                dropdownData={standard}
               />
             }
             inputDesc="Specify the Standard for the lesson"
@@ -339,6 +310,8 @@ const CreateLearnCard = () => {
                 value={learnCard.preferredLanguage}
                 name="preferredLanguage"
                 updateFields={updateFields}
+                hasDropdown={true}
+                dropdownData={languages}
               />
             }
             inputDesc="Language that you prefer"

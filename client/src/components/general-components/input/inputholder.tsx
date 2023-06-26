@@ -113,7 +113,7 @@ interface inputProps {
   name: string;
   // updateFields: (fields: Partial<USERDATA>) => void;
   updateFields: any;
-  hasDropdoen?: boolean;
+  hasDropdown?: boolean;
   dropdownData?: string[];
 }
 
@@ -168,7 +168,7 @@ const Inputholder = (props: inputProps) => {
         onChange={(e) => inputhandler(e)}
       />
       <Label isValid={isValid}>{props.label}</Label>
-      {props.hasDropdoen
+      {props.hasDropdown
         ? props.value == ""
           ? null
           : showDropdown &&
