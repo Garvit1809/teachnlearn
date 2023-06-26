@@ -1,7 +1,6 @@
 import ClassBanner from "./classBanner";
 import ParticipantList from "./participantList";
 import styled from "styled-components";
-import ethan from "../../assets/ethan.jpg";
 import { student } from "../../pages/classroom/classrooms";
 
 const ParticipantWrapper = styled.div`

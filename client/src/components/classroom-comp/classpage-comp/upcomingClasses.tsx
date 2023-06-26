@@ -6,7 +6,7 @@ import { BASE_URL, apiVersion } from "../../../utils/apiRoutes";
 import { getHeaders } from "../../../utils/helperFunctions";
 import { classElemProps } from "./allClasses";
 import ClassroomGrid from "../classroomGrid";
-import { teachingCardProps } from "../../../types/teachingCardType";
+import { teachingCardProps } from "../../../types/classroomType";
 
 const Section = styled.div``;
 

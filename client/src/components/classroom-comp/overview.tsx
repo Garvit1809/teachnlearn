@@ -9,7 +9,7 @@ import JoinCall from "./joinCall";
 import { teachCardProps } from "../../pages/classroom/classrooms";
 import AddLink from "./addLink";
 import ReviewClass from "./reviewClass";
-import { teachingCardProps } from "../../types/teachingCardType";
+import { classroomProps } from "../../types/classroomType";
 
 const OverviewContainer = styled.div`
   /* border: 1px solid red; */
@@ -40,29 +40,8 @@ const ChipContainer = styled.div`
   }
 `;
 
-interface overviewProps {
-  callLink: string;
-  cardBanner: string;
-  classStartsAt: string;
-  classEndsAt: string;
-  createdBy: {
-    name: string;
-    photo: string;
-    _id: string;
-  };
-  date: string;
-  description: string;
-  expectations: string[];
-  preferredLanguage: string;
-  programme: string;
-  standard: string;
-  subject: string;
-  tags: string[];
-  topic: string;
-  _id: string;
-}
 
-type overallOverviewProps = teachingCardProps & {
+type overallOverviewProps = classroomProps & {
   userId: string;
   userToken: string;
 };

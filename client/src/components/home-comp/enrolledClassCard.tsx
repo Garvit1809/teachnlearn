@@ -4,7 +4,7 @@ import { Calender } from "../general-components/svg";
 import { getReadableTime, topNavigator } from "../../utils/helperFunctions";
 import UserChip from "../general-components/userChip";
 import { useNavigate } from "react-router-dom";
-import { teachingCardProps } from "../../types/teachingCardType";
+import { teachinCardProps } from "../../types/teachingCardType";
 
 interface styleProps {
   isFirstCard: boolean;
@@ -61,7 +61,7 @@ const Topic = styled.div<styleProps>`
 `;
 
 interface enrolledClassCardProps {
-  card: teachingCardProps;
+  card: teachinCardProps;
   isFirstCard: boolean;
 }
 

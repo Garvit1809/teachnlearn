@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import styled from "styled-components";
-import { FilledIcon, StarIcon } from "../general-components/svg";
+import { FilledIcon } from "../general-components/svg";
 
 const Section = styled.div`
   display: flex;
@@ -24,9 +24,7 @@ const IconWrapper = styled.div<svgColorProps>`
 `;
 
 interface ratingProps {
-  // count: number,
   rating: number;
-  // color: string,
   onRating: any;
 }
 

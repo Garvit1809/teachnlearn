@@ -14,7 +14,7 @@ import { getHeaders } from "../../utils/helperFunctions";
 import { UserCookie } from "../../utils/userCookie";
 import { teachCardProps } from "./classrooms";
 import BackBtn from "../../components/request-comp/backBtn";
-import { teachingCardProps } from "../../types/teachingCardType";
+import { teachingCardProps } from "../../types/classroomType";
 
 const Section = styled.div`
   /* margin: 2rem 0 3rem; */

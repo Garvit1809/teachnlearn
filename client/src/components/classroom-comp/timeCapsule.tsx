@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { getReadableDate, getReadableTime } from "../../utils/helperFunctions";
 

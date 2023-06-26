@@ -12,10 +12,10 @@ import { learnCardProps } from "../requests/requests";
 import EnrolledClassWrapper from "../../components/home-comp/enrolledClassWrapper";
 import RequestCardWrapper from "../../components/home-comp/requestCardWrapper";
 import RecommendedClassWrapper from "../../components/home-comp/recommendedClassWrapper";
-import { teachingCardProps } from "../../types/teachingCardType";
 import FeedbackForm from "../../components/home-comp/feedbackForm";
 import YoutubeCarousel from "../../components/home-comp/youtubeCarousel";
 import { useNavigate } from "react-router-dom";
+import { teachinCardProps } from "../../types/teachingCardType";
 
 const Section = styled.div`
   /* border: 1px solid brown; */
@@ -30,9 +30,9 @@ const Home = () => {
   const [userRole, setUserRole] = useState<string>("");
   const [userId, setuserId] = useState<string>("");
   const [upcomingClasses, setUpcomingClasses] =
-    useState<Array<teachingCardProps>>();
+    useState<Array<teachinCardProps>>();
   const [recommendedClasses, setRecommendedClasses] =
-    useState<Array<teachingCardProps>>();
+    useState<Array<teachinCardProps>>();
   const [learnCards, setLearnCards] = useState<Array<learnCardProps>>();
 
   const { fetchLocalUserData } = UserCookie();

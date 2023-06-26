@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ClassroomCard from "./classroomCard";
-import { teachCardProps } from "../../pages/classroom/classrooms";
-import { teachingCardProps } from "../../types/teachingCardType";
+import { teachinCardProps } from "../../types/teachingCardType";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -13,7 +12,7 @@ const Section = styled.div`
 `;
 
 interface gridProps {
-  teachCards: Array<teachingCardProps>;
+  teachCards: Array<teachinCardProps>;
   elemType: string,
 }
 

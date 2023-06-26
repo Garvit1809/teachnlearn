@@ -7,7 +7,7 @@ import {
 } from "../../utils/helperFunctions";
 import { InterestedIcon, PurchaseCoinIcon } from "../general-components/svg";
 import { useNavigate } from "react-router-dom";
-import { teachingCardProps } from "../../types/teachingCardType";
+import { teachinCardProps } from "../../types/teachingCardType";
 
 const Section = styled.div`
   display: flex;
@@ -109,7 +109,7 @@ const Coins = styled.div`
 `;
 
 interface cardProps {
-  card: teachingCardProps;
+  card: teachinCardProps;
   userId: string;
 }
 
@@ -117,7 +117,7 @@ const RecommendedClassCard = ({ card, userId }: cardProps) => {
   const checkIfUserEnrolled = () => {
     const enrolledStudents = card.studentsEnrolled;
     const arr = enrolledStudents.filter((student) => {
-      return student._id == userId;
+      return student == userId;
     });
     return arr;
   };
@@ -167,7 +167,6 @@ const RecommendedClassCard = ({ card, userId }: cardProps) => {
           {card.topic.length > 50
             ? card.topic.slice(0, 50) + " ..."
             : card.topic}
-          {/* {card.topic} */}
         </span>
       </Topic>
       <UserWrapper>

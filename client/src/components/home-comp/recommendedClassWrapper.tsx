@@ -4,7 +4,7 @@ import { Arrow } from "../general-components/svg";
 import { useNavigate } from "react-router-dom";
 import RecommendedClassCard from "./recommendedClassCard";
 import { topNavigator } from "../../utils/helperFunctions";
-import { teachingCardProps } from "../../types/teachingCardType";
+import { teachinCardProps } from "../../types/teachingCardType";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -55,7 +55,7 @@ const CardGrid = styled.div`
 
 interface wrapperProps {
   heading: string;
-  cardArr: Array<teachingCardProps>;
+  cardArr: Array<teachinCardProps>;
   userId: string;
 }
 

@@ -13,7 +13,7 @@ import {
   getReadableTime,
   topNavigator,
 } from "../../utils/helperFunctions";
-import { teachingCardProps } from "../../types/teachingCardType";
+import { teachinCardProps } from "../../types/teachingCardType";
 
 const Section = styled.div<cardAnimationProps>`
   box-shadow: 0px 20px 24px -4px rgba(16, 24, 40, 0.08),
@@ -202,7 +202,7 @@ const TimeCont = styled.span`
 
 interface classCardProps {
   cssArr?: obj;
-  teachCard: teachingCardProps;
+  teachCard: teachinCardProps;
   elemType?: string;
 }
 
@@ -238,7 +238,7 @@ const ClassroomCard = (props: classCardProps) => {
       console.log(props.teachCard.studentsEnrolled);
 
       const bool = props.teachCard.studentsEnrolled.filter((student) => {
-        return student._id == localUser._id;
+        return student == localUser._id;
       });
       console.log(bool);
       return bool.length;
@@ -250,7 +250,6 @@ const ClassroomCard = (props: classCardProps) => {
   const checkClassTeacher = () => {
     if (localUser) {
       const isTeacher = props.teachCard.createdBy._id == localUser._id;
-      // console.log(isTeacher);
       return isTeacher;
     } else {
       return null;

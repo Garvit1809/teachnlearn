@@ -17,7 +17,7 @@ import { cardSizes } from "../classroom-comp/classroomGrid";
 import BackBtn from "./backBtn";
 import { UserCookie } from "../../utils/userCookie";
 import { getHeaders, topNavigator } from "../../utils/helperFunctions";
-import { teachingCardProps } from "../../types/teachingCardType";
+import { teachingCardProps } from "../../types/classroomType";
 
 const Section = styled.div`
   /* border: 1px solid brown; */

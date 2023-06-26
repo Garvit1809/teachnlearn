@@ -1,6 +1,7 @@
 import { reviewProps } from "./reviewType";
+import { student } from "./studentType";
 
-export interface teachinCardProps {
+export interface classroomProps {
   announcements: string[];
   averageRating: number;
   callLink: string;
@@ -24,7 +25,7 @@ export interface teachinCardProps {
   ratingQuantity: number;
   reviews: reviewProps[];
   standard: string;
-  studentsEnrolled: string[];
+  studentsEnrolled: student[];
   subject: string;
   tags: string[];
   topic: string;
