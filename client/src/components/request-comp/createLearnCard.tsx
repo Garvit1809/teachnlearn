@@ -14,6 +14,8 @@ import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunctions";
 import { UserCookie } from "../../utils/userCookie";
 
+import { subjects } from "../../data/SUBJECT_LIST.json";
+
 const Section = styled.div`
   border: 1px solid red;
 
@@ -145,6 +147,38 @@ const Expectation = styled.div`
   }
 `;
 
+const DropdownInputWrapper = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+`;
+
+const DropdownMenu = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  max-height: 12rem;
+  overflow-y: auto;
+  position: absolute;
+  top: 100%;
+  z-index: 100;
+  background-color: white;
+  box-sizing: border-box;
+  padding: 0.4rem 1rem;
+  width: 100%;
+  border: 1.5px solid #d5d9eb;
+  border-radius: 8px;
+
+  span {
+    /* border: 1px solid red; */
+    padding: 4px 0;
+    cursor: pointer;
+  }
+`;
+
 interface learnCardDetails {
   subject: string;
   topic: string;
@@ -246,12 +280,15 @@ const CreateLearnCard = () => {
         <form>
           <FormField
             elem={
+              // <DropdownInputWrapper>
               <Inputholder
                 type="text"
                 label="Subject"
                 value={learnCard.subject}
                 name="subject"
                 updateFields={updateFields}
+                hasDropdoen={true}
+                dropdownData={subjects}
               />
             }
             inputDesc="Pick a Subject"
@@ -264,6 +301,7 @@ const CreateLearnCard = () => {
                 value={learnCard.topic}
                 name="topic"
                 updateFields={updateFields}
+                hasDropdoen={false}
               />
             }
             inputDesc="Specify the topic for the card"
@@ -276,6 +314,7 @@ const CreateLearnCard = () => {
                 value={learnCard.programme}
                 name="programme"
                 updateFields={updateFields}
+                hasDropdoen={false}
               />
             }
             inputDesc="Specify Education Level for the lesson"

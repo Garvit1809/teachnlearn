@@ -235,9 +235,12 @@ const ClassroomCard = (props: classCardProps) => {
 
   const checkEnrolledClass = () => {
     if (localUser) {
+      console.log(props.teachCard.studentsEnrolled);
+
       const bool = props.teachCard.studentsEnrolled.filter((student) => {
         return student._id == localUser._id;
       });
+      console.log(bool);
       return bool.length;
     } else {
       return null;
@@ -350,7 +353,7 @@ const ClassroomCard = (props: classCardProps) => {
             <span>
               {checkClassTeacher()
                 ? "Check Class"
-                : checkEnrolledClass()
+                : checkEnrolledClass() == 1
                 ? !checkIsCompleted()
                   ? "Check Class"
                   : checkIsReviewed()
@@ -362,7 +365,7 @@ const ClassroomCard = (props: classCardProps) => {
             </span>
             <Arrow strokeColor="white" />
           </EnrollBtn>
-          {checkClassTeacher() ? null : !checkEnrolledClass() ? (
+          {checkClassTeacher() ? null : checkEnrolledClass() == 0 ? (
             <Coins
               svgSize={props.cssArr?.svgSize}
               btnSize={props.cssArr?.btnSize}

@@ -4,8 +4,6 @@ import styled from "styled-components";
 const Section = styled.div`
   position: relative;
   width: 100%;
-  height: 20px;
-  margin-bottom: 2rem;
   box-sizing: border-box;
 
   input {
@@ -13,7 +11,7 @@ const Section = styled.div`
     height: 100%;
     padding: 15px 0px 15px 10px;
     border: 1.5px solid #d5d9eb;
-    box-sizing: content-box;
+    box-sizing: border-box;
     border-radius: 8px;
     color: #000000;
     outline: none;

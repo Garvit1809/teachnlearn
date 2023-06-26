@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { months } from "./globalConstants";
+import { useEffect } from "react";
 
 export const getHeaders = (token: string) => {
   return {
@@ -42,3 +43,22 @@ export const getReadableTime = (ISODate: string) => {
 export const topNavigator = () => {
   document.body.scrollTop = document.documentElement.scrollTop = 0;
 };
+
+export function useOutsideAlerter(
+  ref: any,
+  func: any
+) {
+  useEffect(() => {
+    function handleClickOutside(event: any) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        // setShowDropdown(true);
+        func()
+        // alert('djb')
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref]);
+}
