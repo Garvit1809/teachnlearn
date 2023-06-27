@@ -1,9 +1,11 @@
 import { ReactElement, useState } from "react";
+import { topNavigator } from "../../utils/helperFunctions";
 
 export function useMultiStepForm(steps: ReactElement[]) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
   function next() {
+    topNavigator();
     setCurrentStepIndex((index) => {
       if (index >= steps.length - 1) {
         return index;
@@ -13,6 +15,7 @@ export function useMultiStepForm(steps: ReactElement[]) {
   }
 
   function back() {
+    topNavigator();
     setCurrentStepIndex((index) => {
       if (index <= 0) {
         return index;

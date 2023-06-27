@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { UploadIcon } from "../svg";
+import { CrossIcon, UploadIcon } from "../svg";
 
 const Section = styled.div`
   position: relative;
@@ -15,13 +15,24 @@ const Section = styled.div`
   color: #000000;
   outline: none;
   z-index: 1;
+
+  input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    opacity: 0;
+    /* cursor: pointer; */
+    font-size: 24px;
+    height: 100%;
+  }
 `;
 
 const Input = styled.input`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 2;
   opacity: 0;
   /* cursor: pointer; */
   font-size: 24px;
@@ -60,6 +71,21 @@ const InputPlaceholder = styled.div`
   gap: 8px;
 `;
 
+const CrossContainer = styled.div`
+  /* border: 1px solid red; */
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  z-index: 3;
+  cursor: pointer;
+  svg {
+    width: 20px;
+    height: 16px;
+  }
+`;
+
 interface uploadImageProps {
   updateFields: any;
 }
@@ -79,6 +105,8 @@ const UploadImage = ({ updateFields }: uploadImageProps) => {
         setFileName(name);
       }
     }
+    console.log(pics[0]);
+
     const pic = pics[0];
     if (pic.type === "image/jpeg" || pic.type === "image/png") {
       const data = new FormData();
@@ -103,14 +131,22 @@ const UploadImage = ({ updateFields }: uploadImageProps) => {
     }
   };
 
+  const imageRemoveHandler = () => {
+    updateFields({ photo: "" });
+    setFileName("");
+  };
+
   return (
     <Section>
-      <Input
+      <input
         type="file"
         accept="image/*"
         ref={inputRef}
         onChange={(e) => postImage(e.target.files)}
       />
+      <CrossContainer onClick={imageRemoveHandler}>
+        <CrossIcon />
+      </CrossContainer>
       <Label>Profile Pic</Label>
       <InputPlaceholder>
         {fileName ? (
