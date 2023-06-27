@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { UserCookie } from "../../utils/userCookie";
 import { UpvoteIcon } from "../general-components/svg";
+import axios from "axios";
+import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
+import { getHeaders } from "../../utils/helperFunctions";
 
 interface ratingStyleProps {
   isAnswer: boolean;
@@ -32,23 +35,67 @@ const Section = styled.div<ratingStyleProps>`
   }
 `;
 
+const SvgWrapper = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+`;
+
 interface ratingProps {
-  upvotes: string[];
   userId: string;
+  userToken: string;
   isAnswer: boolean;
+  upvotes: string[];
+  forumId: string;
+  answerId?: string;
 }
 
 const RatingContainer = (props: ratingProps) => {
+  const [upvoteArr, setUpvoteArr] = useState(props.upvotes);
+
   const upvoteCheck = () => {
-    return props.upvotes.includes(props.userId);
+    return upvoteArr.includes(props.userId);
+  };
+
+  const upvoteHandler = async () => {
+    if (!props.isAnswer) {
+      await axios
+        .patch(
+          `${BASE_URL}${apiVersion}/forum/${props.forumId}`,
+          {},
+          {
+            headers: getHeaders(props.userToken),
+          }
+        )
+        .then(({ data }) => {
+          console.log(data);
+          const newUpvotes = data.updatedForum.upvotes;
+          setUpvoteArr(newUpvotes);
+        });
+    } else {
+      await axios
+        .patch(
+          `${BASE_URL}${apiVersion}/forum/${props.forumId}/answers/${props.answerId}`,
+          {},
+          {
+            headers: getHeaders(props.userToken),
+          }
+        )
+        .then(({ data }) => {
+          console.log(data);
+          const newUpvotes = data.updatedAnswer.upvotes;
+          setUpvoteArr(newUpvotes);
+        });
+    }
   };
 
   return (
     <Section isAnswer={props.isAnswer}>
-      <UpvoteIcon
-        color={upvoteCheck() ? "#094067" : "rgba(125, 137, 176, 0.4)"}
-      />
-      <span>{props.upvotes.length}</span>
+      <SvgWrapper onClick={upvoteHandler}>
+        <UpvoteIcon
+          color={upvoteCheck() ? "#094067" : "rgba(125, 137, 176, 0.4)"}
+        />
+      </SvgWrapper>
+      <span>{upvoteArr.length}</span>
     </Section>
   );
 };

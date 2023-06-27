@@ -1,5 +1,7 @@
 const ForumAnswer = require("../models/answerModel");
 const Forum = require("../models/forumModel");
+const User = require("../models/userModel");
+const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 
 exports.createAnswer = catchAsync(async (req, res, next) => {
@@ -52,11 +54,16 @@ exports.upvoteForum = catchAsync(async (req, res, next) => {
     return next(new AppError("No Answer exists woth such ID!!"));
   }
 
-  const upvotesOnAmswer = answer.upvotes;
+  if (userId == answer.answeredBy._id) {
+    return next(new AppError("Ha ye krlo phle!!"));
+  }
 
-  const checkUpvoted = upvotesOnAmswer.includes(userId);
+  const upvotesOnAnswer = answer.upvotes;
+
+  const checkUpvoted = upvotesOnAnswer.includes(userId);
 
   let updatedAnswer;
+  let updatedTeacher;
 
   if (checkUpvoted) {
     updatedAnswer = await ForumAnswer.findByIdAndUpdate(
@@ -71,6 +78,17 @@ exports.upvoteForum = catchAsync(async (req, res, next) => {
         runValidators: true,
       }
     );
+
+    updatedTeacher = await User.findByIdAndUpdate(
+      answer.answeredBy._id,
+      {
+        $inc: { forumCoins: 1 },
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
   } else {
     updatedAnswer = await ForumAnswer.findByIdAndUpdate(
       answerId,
@@ -78,6 +96,17 @@ exports.upvoteForum = catchAsync(async (req, res, next) => {
         $push: {
           upvotes: userId,
         },
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    updatedTeacher = await User.findByIdAndUpdate(
+      answer.answeredBy._id,
+      {
+        $inc: { forumCoins: -1 },
       },
       {
         new: true,

@@ -71,6 +71,10 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 1000000,
   },
+  forumCoins: {
+    type: Number,
+    default: 0,
+  },
   classesEnrolled: [
     {
       class: {

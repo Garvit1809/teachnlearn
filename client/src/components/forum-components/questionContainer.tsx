@@ -45,7 +45,9 @@ interface questionProps {
   tagline: string;
   question: string;
   upvotes: string[];
+  forumId: string;
   userId: string;
+  userToken: string;
 }
 
 const QuestionContainer = (props: questionProps) => {
@@ -55,6 +57,8 @@ const QuestionContainer = (props: questionProps) => {
         upvotes={props.upvotes}
         userId={props.userId}
         isAnswer={false}
+        forumId={props.forumId}
+        userToken={props.userToken}
       />
       <Question>
         <div>

@@ -132,7 +132,7 @@ interface forumProps {
 const SingleForum = () => {
   const [forum, setForum] = useState<forumProps>();
   const [forumId, setForumId] = useState<string>();
-  const [userToken, setuserToken] = useState<string>();
+  const [userToken, setuserToken] = useState<string>("");
 
   const location = useLocation();
 
@@ -188,7 +188,9 @@ const SingleForum = () => {
                 question={forum.question}
                 upvotes={forum.upvotes}
                 tagline={forum.tagline}
+                forumId={forum._id}
                 userId={userId}
+                userToken={userToken}
               />
               <AnswerWrapper>
                 {forum.answers.map((answer, index) => {
@@ -206,9 +208,12 @@ const SingleForum = () => {
                       </ChipWrapper>
                       <AnswerDetails>
                         <RatingContainer
-                          upvotes={answer.upvotes}
+                          userToken={userToken}
                           userId={userId}
                           isAnswer={true}
+                          upvotes={answer.upvotes}
+                          forumId={forum._id}
+                          answerId={answer._id}
                         />
                         <Answer>
                           <p>{answer.answer}</p>
