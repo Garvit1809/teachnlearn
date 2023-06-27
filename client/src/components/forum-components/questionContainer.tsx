@@ -3,7 +3,9 @@ import styled from "styled-components";
 import RatingContainer from "./ratingContainer";
 
 const Section = styled.div`
-  display: flex;
+  /* display: flex; */
+  display: grid;
+  grid-template-columns: 0.5fr 9fr;
   border-bottom: 1px solid #cdd5df;
   padding-bottom: 1.5rem;
   margin-top: 2rem;
@@ -42,13 +44,18 @@ const Question = styled.div`
 interface questionProps {
   tagline: string;
   question: string;
-  rating: number;
+  upvotes: string[];
+  userId: string;
 }
 
 const QuestionContainer = (props: questionProps) => {
   return (
     <Section>
-      <RatingContainer rating={props.rating} />
+      <RatingContainer
+        upvotes={props.upvotes}
+        userId={props.userId}
+        isAnswer={false}
+      />
       <Question>
         <div>
           <h2>{props.tagline}</h2>

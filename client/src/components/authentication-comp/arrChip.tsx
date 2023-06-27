@@ -22,16 +22,18 @@ const Chip = styled.div`
   align-items: center;
   padding: 6px 12px;
   gap: 8px;
-  background: #000000;
+  /* background: #000000; */
+  background: #d8eefe;
   border-radius: 22px;
 
   font-family: "Nunito";
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 14px;
   line-height: 19px;
   letter-spacing: 0.02em;
   color: #ffffff;
+  color: #000;
 
   svg {
     cursor: pointer;

@@ -61,9 +61,19 @@ exports.getOne = (Model, popOptions) =>
       param = req.params.forumId;
     }
 
-    let query = Model.findById(param);
-    if (popOptions) query = query.populate(popOptions);
-    const doc = await query;
+    // let query = Model.findById(param);
+    // if (popOptions) query = query.populate(popOptions);
+    // const doc = await query;
+
+    const features = new APIFeatures(
+      Model.findById(param).populate(popOptions),
+      req.query
+    )
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+    const doc = await features.query;
 
     if (!doc) {
       return next(new AppError("No document found with that ID", 404));

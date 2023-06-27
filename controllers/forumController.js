@@ -76,4 +76,7 @@ exports.upvoteForum = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getOneForum = factory.getOne(Forum, "answers");
+exports.getOneForum = factory.getOne(Forum, {
+  path: "answers",
+  options: { sort: { createdAt: -1 } },
+});

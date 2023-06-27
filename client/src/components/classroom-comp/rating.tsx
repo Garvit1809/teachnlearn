@@ -17,8 +17,6 @@ const IconWrapper = styled.div<svgColorProps>`
     cursor: pointer;
     width: 40px;
     height: 40px;
-    fill: #f7f036;
-    fill: rgba(125, 137, 176, 0.2);
     fill: ${(p) => (p.colored ? "#f7f036" : "rgba(125, 137, 176, 0.2);")};
   }
 `;

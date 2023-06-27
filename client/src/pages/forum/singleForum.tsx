@@ -10,6 +10,9 @@ import { getHeaders } from "../../utils/helperFunctions";
 import BackBtn from "../../components/request-comp/backBtn";
 import PostAnswer from "../../components/forum-components/postAnswer";
 import QuestionContainer from "../../components/forum-components/questionContainer";
+import moment from "moment";
+import { UserCookie } from "../../utils/userCookie";
+import RatingContainer from "../../components/forum-components/ratingContainer";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -58,26 +61,44 @@ const ForumContainer = styled.div`
 
 const ChipWrapper = styled.div`
   /* border: 1px solid red; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  div.time {
+    color: #4a5578;
+    font-size: 14px;
+  }
+`;
+
+const AnswerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
 `;
 
 const AnswerContainer = styled.div`
-  /* border: 1px solid blue; */
   display: flex;
   flex-direction: column;
   gap: 1rem;
   width: 90%;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 1.5rem 2rem;
   box-sizing: border-box;
-  background-color: #d8eefe;
-  border-radius: 4px;
+  border: 1px solid #d5d9eb;
+  border-radius: 26px;
 `;
 
 const AnswerDetails = styled.div`
-  display: flex;
+  /* border: 1px solid #d5d9eb; */
+  display: grid;
+  grid-template-columns: 0.8fr 20fr;
 `;
 
-const Answer = styled.div``;
+const Answer = styled.div`
+  /* border: 1px solid #d5d9eb; */
+  padding-left: 6px;
+`;
 
 interface answerProps {
   _id: string;
@@ -124,14 +145,24 @@ const SingleForum = () => {
     setuserToken(token);
   }, [location]);
 
+  const { fetchLocalUserData } = UserCookie();
+
+  const [userId, setUserId] = useState<string>("");
+
+  useEffect(() => {
+    fetchLocalUserData().then((data) => {
+      setUserId(data._id);
+    });
+  }, []);
+
   async function fetchForum() {
     await axios
       .get(`${BASE_URL}${apiVersion}/forum/${forumId}`, {
         headers: getHeaders(userToken ?? ""),
       })
       .then(({ data }) => {
-        const forumData = data.data.data;
-        console.log(data.data.data);
+        const forumData = data.data.data[0];
+        console.log(data.data.data[0]);
         setForum(forumData);
       });
   }
@@ -155,27 +186,38 @@ const SingleForum = () => {
             <ForumContainer>
               <QuestionContainer
                 question={forum.question}
-                rating={forum.upvotes.length}
+                upvotes={forum.upvotes}
                 tagline={forum.tagline}
+                userId={userId}
               />
-              {forum.answers.map((answer, index) => {
-                return (
-                  <AnswerContainer>
-                    <ChipWrapper>
-                      <UserChip
-                        name={answer.answeredBy.name}
-                        photo={answer.answeredBy.photo}
-                      />
-                    </ChipWrapper>
-                    <AnswerDetails>
-                      {/* <RatingContainer>{answer.upvotes.length}</RatingContainer> */}
-                      <Answer>
-                        <p>{answer.answer}</p>
-                      </Answer>
-                    </AnswerDetails>
-                  </AnswerContainer>
-                );
-              })}
+              <AnswerWrapper>
+                {forum.answers.map((answer, index) => {
+                  return (
+                    <AnswerContainer>
+                      <ChipWrapper>
+                        <UserChip
+                          name={answer.answeredBy.name}
+                          photo={answer.answeredBy.photo}
+                          imgBorder="black"
+                        />
+                        <div className="time">
+                          {moment(answer.createdAt).fromNow()}
+                        </div>
+                      </ChipWrapper>
+                      <AnswerDetails>
+                        <RatingContainer
+                          upvotes={answer.upvotes}
+                          userId={userId}
+                          isAnswer={true}
+                        />
+                        <Answer>
+                          <p>{answer.answer}</p>
+                        </Answer>
+                      </AnswerDetails>
+                    </AnswerContainer>
+                  );
+                })}
+              </AnswerWrapper>
             </ForumContainer>
           )}
         </Section>
