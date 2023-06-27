@@ -119,8 +119,8 @@ interface forumProps {
   createdBy: {
     _id: string;
     userName: string;
-    name?: string;
-    photo?: string;
+    name: string;
+    photo: string;
   };
   tagline: string;
   question: string;
@@ -185,6 +185,7 @@ const SingleForum = () => {
           {forum && (
             <ForumContainer>
               <QuestionContainer
+                createdBy={forum.createdBy}
                 question={forum.question}
                 upvotes={forum.upvotes}
                 tagline={forum.tagline}

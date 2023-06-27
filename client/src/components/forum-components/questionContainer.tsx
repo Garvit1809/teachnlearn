@@ -3,20 +3,31 @@ import styled from "styled-components";
 import RatingContainer from "./ratingContainer";
 
 const Section = styled.div`
-  /* display: flex; */
-  display: grid;
-  grid-template-columns: 0.5fr 9fr;
-  border-bottom: 1px solid #cdd5df;
-  padding-bottom: 1.5rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  width: 100%;
   /* border: 2px solid red; */
+  display: grid;
+  grid-template-columns: 0.6fr 9fr 0.5fr;
+  row-gap: 1rem;
+  border-bottom: 1px solid #cdd5df;
+  padding-bottom: 2.5rem;
+  margin-top: 2rem;
+  margin-bottom: 2.5rem;
+  width: 100%;
+`;
+
+const UserWrapper = styled.div`
+  /* border: 1px solid red; */
+
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid black;
+    cursor: pointer;
+  }
 `;
 
 const Question = styled.div`
-  /* border: 2px solid green; */
-  width: 90%;
   display: flex;
   flex-direction: column;
   row-gap: 1rem;
@@ -48,6 +59,12 @@ interface questionProps {
   forumId: string;
   userId: string;
   userToken: string;
+  createdBy: {
+    _id: string;
+    userName: string;
+    name: string;
+    photo: string;
+  };
 }
 
 const QuestionContainer = (props: questionProps) => {
@@ -68,6 +85,9 @@ const QuestionContainer = (props: questionProps) => {
           <p>{props.question}</p>
         </div>
       </Question>
+      <UserWrapper>
+        <img src={props.createdBy.photo} alt="" />
+      </UserWrapper>
     </Section>
   );
 };

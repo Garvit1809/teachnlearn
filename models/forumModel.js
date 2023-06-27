@@ -39,14 +39,6 @@ const forumSchema = mongoose.Schema(
 forumSchema.pre(/^find/, function (next) {
   this.populate({
     path: "createdBy",
-    select: "userName",
-  });
-  next();
-});
-
-forumSchema.pre(/^findOne/, function (next) {
-  this.populate({
-    path: "createdBy",
     select: "name photo userName",
   });
   next();
