@@ -17,7 +17,9 @@ import { cardSizes } from "../classroom-comp/classroomGrid";
 import BackBtn from "./backBtn";
 import { UserCookie } from "../../utils/userCookie";
 import { getHeaders, topNavigator } from "../../utils/helperFunctions";
-import { teachingCardProps } from "../../types/classroomType";
+import { teachinCardProps } from "../../types/teachingCardType";
+// import { classroomProps } from "../../types/classroomType";
+// import { teachingCardProps } from "../../types/classroomType";
 
 const Section = styled.div`
   /* border: 1px solid brown; */
@@ -209,7 +211,7 @@ const TeachCardGrid = styled.div`
 const LearnCardOverview = () => {
   const [learnCardId, setLearnCardId] = useState();
   const [learnCard, setlearnCard] = useState<learnCardProps>();
-  const [teachCards, setTeachCards] = useState<Array<teachingCardProps>>();
+  const [teachCards, setTeachCards] = useState<Array<teachinCardProps>>();
   const [backLink, setBackLink] = useState<string>("/requests");
 
   const [totalInterestedStudents, setTotalInterestedStudents] =
@@ -231,7 +233,7 @@ const LearnCardOverview = () => {
       .get(`${BASE_URL}${apiVersion}/learn/${learnCardId}`)
       .then(({ data }) => {
         // console.log(data.data.data);
-        const cardData = data.data.data;
+        const cardData = data.data.data[0];
         console.log(cardData);
         setlearnCard(cardData);
         setTotalInterestedStudents(cardData.interestedStudents.length);

@@ -137,7 +137,7 @@ const MyProfile = () => {
         headers: getHeaders(userToken),
       })
       .then(({ data }) => {
-        const user = data.data.data;
+        const user = data.data.data[0];
         user.token = userToken;
         console.log(user);
         setLocalUser(user);

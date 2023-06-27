@@ -18,7 +18,6 @@ const Section = styled.div`
 
 const ProfileContainer = styled.div`
   border-left: 1px solid #d5d9eb;
-  /* width: /1; */
 `;
 
 const Profile = () => {
