@@ -5,6 +5,7 @@ import styled from "styled-components";
 import MyProfile from "../../components/profile-comp/my-profile/myProfile";
 import InviteFriends from "../../components/profile-comp/inviteFriends";
 import PurchaseCoins from "../../components/profile-comp/purchaseCoins";
+import Footer from "../../components/general-components/footer/footer";
 
 const Section = styled.div`
   border: 2px solid #d5d9eb;
@@ -44,6 +45,7 @@ const Profile = () => {
         <ProfileOptions setSelectedLeftScreen={setSelectedLeftScreen} />
         <ProfileContainer>{element}</ProfileContainer>
       </Section>
+      <Footer />
     </>
   );
 };

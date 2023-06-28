@@ -107,16 +107,18 @@ const BlogHeader = styled.div`
 `;
 
 const SlideContainer = styled.div`
-  display: flex;
-  /* flex-direction: row; */
-  /* align-items: center; */
-  padding: 0px;
   /* border: 1px solid red; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px;
   width: 80%;
 `;
 
 const InfoContainer = styled.div`
-  width: 60%;
+  /* border: 1px solid red; */
+  /* width: 60%; */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -128,6 +130,14 @@ const InfoContainer = styled.div`
 
 const Diagram = styled.div`
   /* border: 1px solid green; */
+  width: 20.1875rem;
+  height: 18.75rem;
+
+  img {
+    width: 20.1875rem;
+    height: 18.75rem;
+    object-fit: contain;
+  }
 `;
 
 const Headings = styled.div`
@@ -138,6 +148,14 @@ const Headings = styled.div`
   font-size: 32px;
   line-height: 1.2;
   color: #000000;
+
+  h2 {
+    color: #000;
+    font-size: 3.75rem;
+    font-family: Nunito;
+    font-weight: 700;
+    line-height: 124.9%;
+  }
 `;
 
 const Description = styled.div`
@@ -233,7 +251,7 @@ const DescContainer = styled.div`
   display: flex;
   /* width: 77.5rem; */
   width: 90%;
-  margin: 4rem auto 0;
+  margin: 4rem auto 8rem;
   padding: 3.75rem 0rem;
   flex-direction: column;
   align-items: center;
@@ -362,7 +380,7 @@ const LandingPage = () => {
             <Headings>
               <h2>Connect with students from all across the globe</h2>
             </Headings>
-            <Description>
+            {/* <Description>
               <p>
                 Leverage our interactive platform to foster cross cultural
                 connections and collaborative learning with students from all
@@ -374,7 +392,7 @@ const LandingPage = () => {
               <span>
                 You can join and enroll in your first class in under 3 minutes!
               </span>
-            </GetStartedContainer>
+            </GetStartedContainer> */}
             <Indicator>
               {slideData.map((slide, index) => {
                 console.log(index);

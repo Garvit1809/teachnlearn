@@ -8,6 +8,7 @@ const Section = styled.div`
     font-size: 17px;
     line-height: 25px;
     color: #344054;
+    color: #d8eefe;
     margin-bottom: 1rem;
   }
 
@@ -21,6 +22,7 @@ const Section = styled.div`
       font-size: 22px;
       line-height: 30px;
       color: #000000;
+      color: #FFFFFF;
       margin-bottom: 0.7rem;
       cursor: pointer;
     }

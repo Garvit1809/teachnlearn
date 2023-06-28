@@ -112,8 +112,8 @@ const Classrooms = () => {
           navigationHandler={navigationHandler}
         />
         <ElementWrapper>{element}</ElementWrapper>
-        <Footer />
       </Section>
+      <Footer />
     </>
   );
 };

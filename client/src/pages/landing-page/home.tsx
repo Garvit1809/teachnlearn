@@ -124,8 +124,8 @@ const Home = () => {
         )}
         <YoutubeCarousel />
         <FeedbackForm userToken={userToken} />
-        <Footer />
       </Section>
+      <Footer />
     </>
   ) : null;
 };

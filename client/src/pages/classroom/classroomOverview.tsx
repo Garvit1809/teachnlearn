@@ -15,6 +15,7 @@ import DetailsContainer from "../../components/classroom-comp/detailsContainer";
 import EnrollBtn from "../../components/classroom-comp/enrollBtn";
 import { PurchaseCoinIcon } from "../../components/general-components/svg";
 import BackBtn from "../../components/request-comp/backBtn";
+import Footer from "../../components/general-components/footer/footer";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -173,7 +174,7 @@ const ClassroomOverview = () => {
           </OverviewContainer>
         </Section>
       )}
-      <FooterWrapper />
+      <Footer />
     </>
   );
 };

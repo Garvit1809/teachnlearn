@@ -88,9 +88,15 @@ const CrossContainer = styled.div`
 
 interface uploadImageProps {
   updateFields: any;
+  photoOnCross?: string;
+  photoName?: string;
 }
 
-const UploadImage = ({ updateFields }: uploadImageProps) => {
+const UploadImage = ({
+  updateFields,
+  photoOnCross,
+  photoName,
+}: uploadImageProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [fileName, setFileName] = useState("");
@@ -132,8 +138,8 @@ const UploadImage = ({ updateFields }: uploadImageProps) => {
   };
 
   const imageRemoveHandler = () => {
-    updateFields({ photo: "" });
-    setFileName("");
+    updateFields({ photo: photoOnCross ? photoOnCross : "" });
+    setFileName(photoName ? photoName : "");
   };
 
   return (

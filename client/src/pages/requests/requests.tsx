@@ -6,6 +6,7 @@ import Intro from "../../components/home-comp/intro";
 import LearnCard from "../../components/request-comp/learnCard";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import axios from "axios";
+import Footer from "../../components/general-components/footer/footer";
 
 const Section = styled.div`
   padding: 0 6.3vw;
@@ -69,7 +70,7 @@ const Requests = () => {
           </CardGrid>
         ) : null}
       </Section>
-      <FooterWrapper />
+      <Footer />
     </>
   );
 };

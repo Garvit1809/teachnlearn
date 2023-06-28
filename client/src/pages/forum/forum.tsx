@@ -11,6 +11,7 @@ import { UserCookie } from "../../utils/userCookie";
 import ForumOptions from "../../components/forum-components/forumOptions";
 import { useNavigate } from "react-router-dom";
 import { PostBtn } from "./singleForum";
+import Footer from "../../components/general-components/footer/footer";
 
 const Section = styled.div`
   /* border: 1px solid brown; */
@@ -113,7 +114,7 @@ const Forum = () => {
             })}
         </ForumGrid>
       </Section>
-      <FooterWrapper />
+      <Footer />
     </>
   );
 };

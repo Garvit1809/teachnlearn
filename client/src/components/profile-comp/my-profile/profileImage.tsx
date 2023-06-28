@@ -184,7 +184,7 @@ const ProfileImage = (props: modalProps) => {
           </ImagePreview>
           <FieldWrapper>
             <FormField
-              elem={<UploadImage updateFields={props.updateFields} />}
+              elem={<UploadImage updateFields={props.updateFields} photoName="" photoOnCross={prevImage} />}
               inputDesc="Change profile image"
             />
           </FieldWrapper>

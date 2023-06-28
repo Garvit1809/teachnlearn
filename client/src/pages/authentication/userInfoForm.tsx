@@ -55,7 +55,7 @@ const UserInfoForm = (props: UserInfoFormProps) => {
     <Section>
       <form action="">
         <UploadImage updateFields={props.updateFields} />
-        <Inputholder 
+        <Inputholder
           type="text"
           label="Phone Number"
           value={props.number}

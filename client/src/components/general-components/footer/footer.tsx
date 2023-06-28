@@ -6,13 +6,13 @@ import FooterLinks from "./footerLinks";
 import { Facebook, Instagram, LinkedIn, Twitter } from "../svg";
 
 const Section = styled.div`
-  border-top: 1px solid #7d89b0;
+  /* border-top: 1px solid #7d89b0; */
   padding: 40px 0px 20px;
   font-family: "Nunito";
   font-style: normal;
   margin-top: 4rem;
-  /* padding: 3.75rem 6.25rem; */
-  /* background-color: #094067; */
+  padding: 3.75rem 6.25rem 1.5rem;
+  background-color: #094067;
 `;
 
 const Links = styled.div`
@@ -39,6 +39,7 @@ const Copyright = styled.div`
     font-size: 18px;
     line-height: 25px;
     color: #344054;
+    color: #d8eefe;
   }
 `;
 
@@ -59,6 +60,7 @@ const GetApp = styled.div`
     font-size: 18px;
     line-height: 25px;
     color: #000000;
+    color: #d8eefe;
   }
 `;
 
