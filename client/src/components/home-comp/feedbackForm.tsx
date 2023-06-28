@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Textarea from "../general-components/input/textarea";
+import axios from "axios";
+import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
+import { getHeaders } from "../../utils/helperFunctions";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -52,15 +55,33 @@ const Section = styled.div`
   }
 `;
 
-const FeedbackForm = () => {
+interface feedbackProps {
+  userToken: string;
+}
+
+const FeedbackForm = (props: feedbackProps) => {
   const [feedback, setFeedback] = useState<string>("");
 
   function updateFields(content: string) {
     setFeedback(content);
   }
 
-  const feedbackHandler = () => {
+  const feedbackHandler = async () => {
     console.log(feedback);
+    await axios
+      .post(
+        `${BASE_URL}${apiVersion}/user/my-feedback`,
+        { feedback },
+        {
+          headers: getHeaders(props.userToken),
+        }
+      )
+      .then(({ data }) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

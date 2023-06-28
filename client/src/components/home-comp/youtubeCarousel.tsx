@@ -83,58 +83,6 @@ const carouselData = [
     ),
     text: "The Feynman Technique of Learning Anything",
   },
-  {
-    iframe: (
-      <iframe
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/9Rg4NKwCsZw"
-        title="YouTube video player"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowFullScreen
-      ></iframe>
-    ),
-    text: "The Feynman Technique of Learning Anything",
-  },
-  {
-    iframe: (
-      <iframe
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/9Rg4NKwCsZw"
-        title="YouTube video player"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowFullScreen
-      ></iframe>
-    ),
-    text: "The Feynman Technique of Learning Anything",
-  },
-  {
-    iframe: (
-      <iframe
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/9Rg4NKwCsZw"
-        title="YouTube video player"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowFullScreen
-      ></iframe>
-    ),
-    text: "The Feynman Technique of Learning Anything",
-  },
-  {
-    iframe: (
-      <iframe
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/9Rg4NKwCsZw"
-        title="YouTube video player"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowFullScreen
-      ></iframe>
-    ),
-    text: "The Feynman Technique of Learning Anything",
-  },
 ];
 
 const items = carouselData.map((data, index) => {

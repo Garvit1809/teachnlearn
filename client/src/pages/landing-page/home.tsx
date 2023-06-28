@@ -54,24 +54,21 @@ const Home = () => {
       });
   }, []);
 
-  async function fetchAllTeachCards() {
+  async function fetchRecommendedTeachCards() {
     await axios
-      .get(`${BASE_URL}${apiVersion}/teach`, {
-        params: {
-          sort: "classStartsAt",
-        },
+      .get(`${BASE_URL}${apiVersion}/teach/recommended-classes`, {
         headers: getHeaders(userToken ?? ""),
       })
       .then(({ data }) => {
-        console.log(data.teachCards);
-        setRecommendedClasses(data.teachCards);
+        console.log(data.stats);
+        setRecommendedClasses(data.stats);
       });
   }
 
   async function fetchAllUpcomingClasses() {
     await axios
       .get(`${BASE_URL}${apiVersion}/user/myclasses/upcoming`, {
-        headers: getHeaders(userToken ?? ""),
+        headers: getHeaders(userToken),
       })
       .then(({ data }) => {
         const classes = data.upcomingClasses;
@@ -80,19 +77,23 @@ const Home = () => {
       });
   }
 
-  const fetchLearnCards = async () => {
-    await axios.get(`${BASE_URL}${apiVersion}/learn`).then(({ data }) => {
-      console.log(data.data.data);
-      const learnCardData = data.data.data;
-      setLearnCards(learnCardData);
-    });
+  const fetchTopLearnCards = async () => {
+    await axios
+      .get(`${BASE_URL}${apiVersion}/learn/top-requests`, {
+        headers: getHeaders(userToken),
+      })
+      .then(({ data }) => {
+        console.log(data.stats);
+        const learnCardData = data.stats;
+        setLearnCards(learnCardData);
+      });
   };
 
   useEffect(() => {
     if (userToken) {
-      fetchAllTeachCards();
+      fetchRecommendedTeachCards();
       fetchAllUpcomingClasses();
-      fetchLearnCards();
+      fetchTopLearnCards();
     }
   }, [userToken]);
 
@@ -122,7 +123,7 @@ const Home = () => {
           />
         )}
         <YoutubeCarousel />
-        <FeedbackForm />
+        <FeedbackForm userToken={userToken} />
         <Footer />
       </Section>
     </>

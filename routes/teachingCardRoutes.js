@@ -22,6 +22,8 @@ router.use("/:teachingCardId/reviews", reviewRouter);
 
 router.use(protect);
 
+router.get("/recommended-classes", teachingCardController.topTeachCards);
+
 router
   .route("/")
   .get(teachingCardController.getAllTeachCards)

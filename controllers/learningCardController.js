@@ -182,3 +182,43 @@ exports.interestedInLearnCard = catchAsync(async (req, res, next) => {
     updatedLearnCard,
   });
 });
+
+exports.topLearnCards = catchAsync(async (req, res, next) => {
+  const currentDate = new Date();
+  const stats = await LearningCard.aggregate([
+    // {
+    //   $match: {
+    //     dueDate: {
+    //       $gte: currentDate,
+    //     },
+    //   },
+    // },
+    {
+      $project: {
+        createdBy: 1,
+        subject: 1,
+        topic: 1,
+        programme: 1,
+        preferredLanguage: 1,
+        description: 1,
+        expectations: 1,
+        tags: 1,
+        dueDate: 1,
+        interestedStudents: 1,
+        length: { $size: "$interestedStudents" },
+      },
+    },
+    { $sort: { length: -1, date: 1 } },
+    { $limit: 6 },
+  ]);
+
+  await LearningCard.populate(stats, {
+    path: "createdBy",
+    select: "name photo",
+  });
+
+  res.status(200).json({
+    status: "success",
+    stats,
+  });
+});

@@ -82,7 +82,7 @@ exports.upvoteForum = catchAsync(async (req, res, next) => {
     updatedTeacher = await User.findByIdAndUpdate(
       answer.answeredBy._id,
       {
-        $inc: { forumCoins: 1 },
+        $inc: { forumCoins: -1 },
       },
       {
         new: true,
@@ -106,7 +106,7 @@ exports.upvoteForum = catchAsync(async (req, res, next) => {
     updatedTeacher = await User.findByIdAndUpdate(
       answer.answeredBy._id,
       {
-        $inc: { forumCoins: -1 },
+        $inc: { forumCoins: 1 },
       },
       {
         new: true,
@@ -118,5 +118,6 @@ exports.upvoteForum = catchAsync(async (req, res, next) => {
   res.status(201).json({
     status: "success",
     updatedAnswer,
+    updatedTeacher,
   });
 });

@@ -1,3 +1,4 @@
+const Feedback = require("../models/feedbackModel");
 const Review = require("../models/reviewModel");
 const User = require("../models/userModel");
 const AppError = require("../utils/appError");
@@ -255,7 +256,24 @@ exports.getUserRatings = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     stats,
-    // totalRatings: stats[0].nRatings,
-    // avgRating: stats[0].avgRating,
+  });
+});
+
+exports.postUserFeedback = catchAsync(async (req, res, next) => {
+  const userId = req.user.id;
+  const { feedback } = req.body;
+
+  const newFeedback = await Feedback.create({
+    feedbackBy: userId,
+    feedback,
+  });
+
+  if (!newFeedback) {
+    return next(new AppError("Feedback cpuldnt be submitted!!"));
+  }
+
+  res.status(201).json({
+    status: "success",
+    newFeedback,
   });
 });

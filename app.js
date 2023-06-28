@@ -45,10 +45,6 @@ app.all("*", (req, res, next) => {
 
 app.use(globalErrorHandler);
 
-// module.exports = app;
-// const express = require("express");
-// const dotenv = require("dotenv");
-
 process.on("uncaughtException", (err) => {
   console.log("UNCAUGHT EXCEPTION! 💥 Shutting down...");
   console.log(err);

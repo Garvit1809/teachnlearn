@@ -34,9 +34,6 @@ export const getReadableTime = (ISODate: string) => {
   } else {
     concatedTime = String(hours + ":" + minutes);
   }
-
-  console.log(typeof concatedTime);
-
   return concatedTime;
 };
 
@@ -44,15 +41,12 @@ export const topNavigator = () => {
   document.body.scrollTop = document.documentElement.scrollTop = 0;
 };
 
-export function useOutsideAlerter(
-  ref: any,
-  func: any
-) {
+export function useOutsideAlerter(ref: any, func: any) {
   useEffect(() => {
     function handleClickOutside(event: any) {
       if (ref.current && !ref.current.contains(event.target)) {
         // setShowDropdown(true);
-        func()
+        func();
         // alert('djb')
       }
     }

@@ -374,7 +374,7 @@ exports.getUpcomingClasses = catchAsync(async (req, res, next) => {
 
   const features = new APIFeatures(
     TeachingCard.find({
-      classEndsAt: { $gte: currentDate },
+      // classEndsAt: { $gte: currentDate },
       $or: [
         {
           studentsEnrolled: { $in: [userId] },
@@ -470,8 +470,48 @@ exports.updateClassLink = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.topTeachCards = catchAsync(async (req, res, next) => {});
+exports.topTeachCards = catchAsync(async (req, res, next) => {
+  const currentDate = new Date();
+  const stats = await TeachingCard.aggregate([
+    // {
+    //   $match: {
+    //     dueDate: {
+    //       $gte: currentDate,
+    //     },
+    //   },
+    // },
+    {
+      $project: {
+        createdBy: 1,
+        subject: 1,
+        topic: 1,
+        programme: 1,
+        standard: 1,
+        preferredLanguage: 1,
+        date: 1,
+        classStartsAt: 1,
+        classEndsAt: 1,
+        tags: 1,
+        price: 1,
+        studentsEnrolled: 1,
+        length: { $size: "$studentsEnrolled" },
+      },
+    },
+    { $sort: { length: -1, date: 1 } },
+    { $limit: 6 },
+  ]);
 
-exports.popularTeachCards = catchAsync(async (req, res, next) => {
-  // sort
+  await TeachingCard.populate(stats, {
+    path: "createdBy",
+    select: "name photo",
+  });
+
+  res.status(200).json({
+    status: "success",
+    stats,
+  });
 });
+
+// exports.popularTeachCards = catchAsync(async (req, res, next) => {
+//   // sort
+// });
