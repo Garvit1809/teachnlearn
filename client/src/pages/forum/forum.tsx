@@ -27,8 +27,9 @@ const HeaderBtn = styled.div`
 `;
 
 const TopBar = styled.div`
-  width: 100%;
   /* border: 1px solid red; */
+  width: 50%;
+  margin: 1rem auto;
   display: flex;
   align-items: center;
   justify-content: center;

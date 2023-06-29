@@ -12,35 +12,68 @@ import img5 from "../../assets/landingPageImg5.png";
 import img6 from "../../assets/landingPageImg6.png";
 import Footer from "../../components/general-components/footer/footer";
 
-import wave from "../../assets/wave.png";
-import wave2 from "../../assets/wave2.png";
 import { useNavigate } from "react-router-dom";
 import YoutubeCarousel from "../../components/home-comp/youtubeCarousel";
 import { topNavigator } from "../../utils/helperFunctions";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 const Section = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0px 0px 50px;
-  gap: 40px;
+  padding: 0px 0px 40px;
+  gap: 18px;
   background: #d8eefe;
   /* min-height: 100vh; */
-  /* border: 1px solid red; */
+
+  div.carousel-wrapper {
+    /* border: 1px solid red; */
+    width: 90vw;
+    position: relative;
+  }
+
+  .carousel-container {
+    width: 90vw;
+    position: unset;
+
+    .react-multiple-carousel__arrow {
+      position: absolute;
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .react-multiple-carousel__arrow--left {
+      left: calc(-4% + 2px);
+      /* width: 2rem; */
+      /* height: 2rem; */
+      border-radius: 2.6875rem;
+      background: #094067;
+    }
+
+    .react-multiple-carousel__arrow--right {
+      right: calc(-4% + 1px);
+      /* width: 2rem; */
+      /* height: 2rem; */
+      border-radius: 2.6875rem;
+      background: #094067;
+    }
+  }
 `;
 const Header = styled.div`
   width: 100%;
   /* border: 1px solid red; */
   display: flex;
   justify-content: space-between;
+  /* padding: 20px 4vw 0; */
   padding-top: 20px;
 `;
 
 const ImageContainer = styled.div`
   /* border: 1px solid red; */
-  width: 200px;
-  height: 80px;
-  margin-left: 2vw;
+  width: 160px;
+  height: 60px;
+  margin-left: 4vw;
   img {
     width: 100%;
     height: 100%;
@@ -51,18 +84,14 @@ const ImageContainer = styled.div`
 const AuthButtons = styled.div`
   /* border: 1px solid red; */
   display: flex;
+  margin-right: 4vw;
   align-items: center;
   justify-content: center;
-  margin-right: 4rem;
+  /* margin-right: 4rem; */
   gap: 20px;
 
   div.signup {
     background: #3da9fc;
-    font-family: "Nunito";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 22px;
     color: #fffffe;
   }
 `;
@@ -71,7 +100,7 @@ const AuthButton = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  padding: 16px 32px;
+  padding: 12px 26px;
   gap: 10px;
   background: #ffffff;
   border-radius: 2px;
@@ -80,7 +109,7 @@ const AuthButton = styled.div`
   font-family: "Nunito";
   font-style: normal;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 22px;
   color: #2b2c34;
   cursor: pointer;
@@ -93,27 +122,33 @@ const BlogHeader = styled.div`
   align-items: center;
   padding: 12px 16px;
   gap: 20px;
-  width: 80%;
+  width: 85%;
   background: #094067;
   border-radius: 4px;
 
   font-family: "Nunito";
   font-style: normal;
   font-weight: 500;
-  font-size: 18px;
-  line-height: 25px;
+  font-size: 16px;
+  line-height: 18px;
   color: #ffffff;
   cursor: pointer;
+  box-sizing: border-box;
+
+  span.bold {
+    color: #ef4565;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
 `;
 
 const SlideContainer = styled.div`
   /* border: 1px solid red; */
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: space-between;
   padding: 0px;
-  width: 80%;
+  box-sizing: border-box;
 `;
 
 const InfoContainer = styled.div`
@@ -122,10 +157,13 @@ const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: flex-start;
+  /* align-items: center; */
+  justify-content: center;
+  box-sizing: border-box;
   gap: 32px;
   padding: 0px;
-  padding-top: 60px;
+  padding-left: 20px;
+  /* padding-top: 60px; */
 `;
 
 const Diagram = styled.div`
@@ -142,69 +180,13 @@ const Diagram = styled.div`
 
 const Headings = styled.div`
   /* border: 1px solid green; */
-  font-family: "Nunito";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 1.2;
-  color: #000000;
 
   h2 {
     color: #000;
     font-size: 3.75rem;
-    font-family: Nunito;
+    font-family: "Nunito";
     font-weight: 700;
     line-height: 124.9%;
-  }
-`;
-
-const Description = styled.div`
-  /* border: 1px solid red; */
-  font-family: "Nunito";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 22px;
-  line-height: 33px;
-  color: #000000;
-  width: 85%;
-`;
-
-const GetStartedContainer = styled.div`
-  /* border: 1px solid green; */
-  display: flex;
-  flex-direction: row;
-  /* align-items: center; */
-  padding: 0px;
-  gap: 20px;
-  width: 80%;
-
-  div {
-    display: flex;
-    align-items: flex-start;
-    padding: 22px 34px;
-    gap: 10px;
-    background: #ef4565;
-    border-radius: 2px;
-
-    font-family: "Nunito";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 25px;
-    letter-spacing: 0.02em;
-    color: #ffffff;
-    cursor: pointer;
-  }
-
-  span {
-    /* border: 1px solid red; */
-    width: 40%;
-    font-family: "Nunito";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 19px;
-    color: #000000;
   }
 `;
 
@@ -213,10 +195,11 @@ const Indicator = styled.div`
   display: flex;
   align-items: center;
   padding: 0px;
-  gap: 4px;
-  transition: all 0.15s linear;
+  margin-right: 1rem;
+  cursor: pointer;
 
   div {
+    transition: all 0.15s linear;
     width: 12px;
     height: 12px;
     background: #094067;
@@ -224,26 +207,9 @@ const Indicator = styled.div`
   }
 
   div.rect {
+    transition: all 0.15s linear;
     width: 32px;
     height: 10px;
-  }
-`;
-
-const WaveCont = styled.div`
-  /* overflow-x: hidden; */
-  /* border: 1px solid yellow; */
-  position: relative;
-  z-index: 1;
-
-  img {
-    z-index: 1;
-    width: 100%;
-  }
-
-  div {
-    position: absolute;
-    top: 4px;
-    z-index: -1;
   }
 `;
 
@@ -299,18 +265,18 @@ const DescContainer = styled.div`
 const YoutubeWrapper = styled.div`
   /* border: 1px solid red; */
   width: 90%;
-  margin: 4rem auto 0;
+  margin: 2rem auto 0;
 `;
 
 const slideData = [
   {
-    heading1: "Connect with students from all across the globe",
+    heading: "Connect with students from all across the globe",
     description:
       "Leverage our interactive platform to foster cross cultural connections and collaborative learning with students from all around the world.",
     img: img1,
   },
   {
-    heading1: "Share your problems Share their solutions.",
+    heading: "Share your problems Share their solutions.",
     description:
       "Participate in open discussions to share your problems, while gaining insights and solutions from others in a collaborative environment.",
     img: img2,
@@ -341,9 +307,48 @@ const slideData = [
   },
 ];
 
-const LandingPage = () => {
-  const [currentSlide, setCurrentSlide] = useState<number>(0);
+const responsive = {
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 1,
+    slidesToSlide: 1, // optional, default to 1.
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 1,
+    slidesToSlide: 1, // optional, default to 1.
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1,
+    slidesToSlide: 1, // optional, default to 1.
+  },
+};
 
+const CustomDot = ({ onMove, index, onClick, active }: any) => {
+  return (
+    <Indicator onClick={() => onClick()}>
+      <div className={active ? "rect" : undefined}></div>
+    </Indicator>
+  );
+};
+
+const slides = slideData.map((data, index) => {
+  return (
+    <SlideContainer key={index}>
+      <InfoContainer>
+        <Headings>
+          <h2>{data.heading}</h2>
+        </Headings>
+      </InfoContainer>
+      <Diagram>
+        <img src={data.img} alt="" />
+      </Diagram>
+    </SlideContainer>
+  );
+});
+
+const LandingPage = () => {
   const navigate = useNavigate();
   const navigationHandler = (link: string) => {
     topNavigator();
@@ -371,50 +376,27 @@ const LandingPage = () => {
         </Header>
         <BlogHeader>
           <span>
-            Check out our blog to learn about Feyman’s Technique and much more
+            Check out our <span className="bold">blog</span> to learn about
+            Feyman’s Technique and much more
           </span>
           <Arrow strokeColor="#FFFFFF" />
         </BlogHeader>
-        <SlideContainer>
-          <InfoContainer>
-            <Headings>
-              <h2>Connect with students from all across the globe</h2>
-            </Headings>
-            {/* <Description>
-              <p>
-                Leverage our interactive platform to foster cross cultural
-                connections and collaborative learning with students from all
-                around the world.
-              </p>
-            </Description>
-            <GetStartedContainer>
-              <div>Get Started</div>
-              <span>
-                You can join and enroll in your first class in under 3 minutes!
-              </span>
-            </GetStartedContainer> */}
-            <Indicator>
-              {slideData.map((slide, index) => {
-                console.log(index);
-                return (
-                  <div
-                    className={currentSlide == index ? "rect" : undefined}
-                  ></div>
-                );
-              })}
-            </Indicator>
-          </InfoContainer>
-          <Diagram>
-            <img src={img1} alt="" />
-          </Diagram>
-        </SlideContainer>
-      </Section>
-      <WaveCont>
-        <img src={wave} alt="" />
-        <div className="wave2">
-          <img src={wave2} alt="" />
+        <div className="carousel-wrapper">
+          <Carousel
+            containerClass="carousel-container"
+            responsive={responsive}
+            infinite={true}
+            showDots={true}
+            autoPlay={true}
+            autoPlaySpeed={5000}
+            customTransition="all 1s"
+            transitionDuration={1000}
+            customDot={<CustomDot />}
+          >
+            {slides}
+          </Carousel>
         </div>
-      </WaveCont>
+      </Section>
       <YoutubeWrapper>
         <YoutubeCarousel />
       </YoutubeWrapper>

@@ -1,0 +1,99 @@
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { topNavigator } from "../../utils/helperFunctions";
+import { useNavigate } from "react-router-dom";
+
+const Menu = styled.div`
+  margin: 0 6.3vw;
+  padding: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-radius: 0.5rem;
+  background: #d8eefe;
+`;
+
+interface menuItemProps {
+  isActive: boolean;
+}
+
+const MenuItem = styled.div<menuItemProps>`
+  display: flex;
+  padding: 1rem 1.25rem;
+  align-items: flex-start;
+  gap: 0.625rem;
+  border-radius: 0.25rem;
+  background: ${(p) => (p.isActive ? "#094067" : "none")};
+  color: ${(p) => (p.isActive ? "white" : "black")};
+  font-size: 1.125rem;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  cursor: pointer;
+  transition: all 0.15s linear;
+`;
+
+const navOptions = [
+  {
+    title: "Home",
+    link: "/",
+  },
+  {
+    title: "Classes",
+    link: "/classes",
+  },
+  {
+    title: "Requests",
+    link: "/requests",
+  },
+  {
+    title: "Forum",
+    link: "/forums",
+  },
+  {
+    title: "Blogs",
+    link: "/blogs",
+  },
+  {
+    title: "My Groups",
+    link: "/grps",
+  },
+  {
+    title: "My AI Assistant",
+    link: "/myai",
+  },
+];
+
+const NavbarLinks = () => {
+  const [currentPath, setCurrentPath] = useState("");
+
+  useEffect(() => {
+    console.log(window.location.pathname);
+    setCurrentPath(window.location.pathname);
+  }, [window.location.pathname]);
+
+  const navigate = useNavigate();
+  const navigationhandler = (link: string) => {
+    topNavigator();
+    setCurrentPath(link);
+    navigate(link);
+  };
+  return (
+    <Menu>
+      {navOptions.map((option, index) => {
+        return (
+          <MenuItem
+            key={index}
+            isActive={option.link == currentPath}
+            onClick={() => navigationhandler(option.link)}
+          >
+            <span>{option.title}</span>
+          </MenuItem>
+        );
+      })}
+    </Menu>
+  );
+};
+
+export default NavbarLinks;

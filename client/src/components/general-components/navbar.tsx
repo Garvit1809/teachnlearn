@@ -1,30 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TNL_Logo from "../../assets/TNL-logo.png";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import SearchBar from "./searchBar";
+import UserChip from "./userChip";
+import { UserCookie, userProps } from "../../utils/userCookie";
+import NavbarLinks from "./navbarLinks";
+import { topNavigator } from "../../utils/helperFunctions";
+import { useNavigate } from "react-router-dom";
 
 const Section = styled.div`
   /* border: 1px solid red; */
-  display: flex;
+  /* padding: 1.75rem 3.5vw 0rem 3.5vw; */
+  padding-top: 1.75rem;
+  display: grid;
+  grid-template-columns: 1.8fr 6fr 2.2fr;
+  /* display: flex; */
+  box-sizing: border-box;
+  column-gap: 2.5rem;
   align-items: center;
-  justify-content: space-between;
-  padding-top: 0.5rem;
   font-family: "Nunito";
+  margin: 0 6.3vw 2.5rem 6.3vw;
 `;
 
 const SearchContainer = styled.div`
   /* border: 1px solid red; */
   display: flex;
   align-items: center;
-  margin-left: 2.5vw;
+  /* width: 100%; */
 `;
 
 const ImageContainer = styled.div`
   /* border: 1px solid red; */
   width: 200px;
   height: 80px;
-  margin-right: 2vw;
   img {
     width: 100%;
     height: 100%;
@@ -32,75 +40,68 @@ const ImageContainer = styled.div`
   }
 `;
 
-const Menu = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  /* border: 1px solid red; */
-  /* margin-right: 1rem; */
-`;
+const UserWrapper = styled.div`
+  border-radius: 4px;
+  border: 1px solid #d5d9eb;
+  width: fit-content;
+  height: fit-content;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
 
-const MenuItem = styled.div`
-  /* border: 1px solid lightblue; */
-  /* margin: 0 1rem; */
-  margin-right: 1.5rem;
-  padding: 0.5rem;
-  border-radius: 10px;
+  img {
+    /* margin-right: 0rem; */
+  }
 
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 25px;
-  color: #000000;
-
-  &:last-child {
-    margin-right: 2.5rem;
+  span {
+    /* border: 1px solid red; */
   }
 `;
 
-const navOptions = [
-  {
-    title: "Home",
-    link: "/",
-  },
-  {
-    title: "Forum",
-    link: "/forums",
-  },
-  {
-    title: "Classes",
-    link: "/classes",
-  },
-  {
-    title: "Requests",
-    link: "/requests",
-  },
-  {
-    title: "Profile",
-    link: "/me",
-  },
-];
-
 const Navbar = () => {
+  const [localUser, setLocalUser] = useState<userProps>();
+
+  const { fetchLocalUserData } = UserCookie();
+
+  useEffect(() => {
+    fetchLocalUserData().then((user) => {
+      setLocalUser(user);
+    });
+  }, []);
+
+  const navigate = useNavigate();
+
+  const profileNavigation = () => {
+    topNavigator();
+    navigate("/me");
+  };
+
   return (
-    <Section>
-      <SearchContainer>
+    <>
+      <Section>
         <ImageContainer>
           <img src={TNL_Logo} alt="tnl_logo" />
         </ImageContainer>
-        <SearchBar />
-      </SearchContainer>
-      <Menu>
-        {navOptions.map((option, index) => {
-          return (
-            <MenuItem key={index}>
-              <Link to={option.link}>
-                <span>{option.title}</span>
-              </Link>
-            </MenuItem>
-          );
-        })}
-      </Menu>
-    </Section>
+        <SearchContainer>
+          <SearchBar />
+        </SearchContainer>
+        {localUser && (
+          <UserWrapper onClick={profileNavigation}>
+            <UserChip
+              // name={localUser.name.split(" ")[0]}
+              name={
+                localUser.name.length > 16
+                  ? localUser.name.split(" ")[0]
+                  : localUser.name
+              }
+              photo={localUser.photo}
+              imgSize="1.75rem"
+              textSize="1.25em"
+            />
+          </UserWrapper>
+        )}
+      </Section>
+      <NavbarLinks />
+    </>
   );
 };
 

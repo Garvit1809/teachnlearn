@@ -43,6 +43,7 @@ export const PostBtn = styled.div`
   padding: 14px 30px;
   gap: 10px;
   background: rgb(51, 42, 213);
+  background: #ef4565;
   border-radius: 8px;
   outline: none;
   border: none;

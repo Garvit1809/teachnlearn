@@ -9,6 +9,7 @@ import { topNavigator } from "../../utils/helperFunctions";
 const Section = styled.div`
   /* border: 1px solid red; */
   background: #ffffff;
+  background: #094067;
   box-shadow: -4px 12px 16px -4px rgba(16, 24, 40, 0.08),
     -2px 4px 6px -2px rgba(16, 24, 40, 0.03);
   border-radius: 8px;
@@ -32,6 +33,7 @@ const Header = styled.div`
 
 const Tag = styled.div`
   color: #332ad5;
+  color: #ef4565;
   font-size: 20px;
   line-height: 27px;
   font-weight: 600;
@@ -45,6 +47,7 @@ const Question = styled.div`
   /* line-height: 35px; */
 
   color: #000000;
+  color: #d8eefe;
 
   font-family: "Nunito";
   font-style: normal;
@@ -70,6 +73,7 @@ const User = styled.div`
     font-weight: 500;
     font-size: 18px;
     color: #98a2b3;
+    color: #ffffff;
     letter-spacing: 0.035em;
   }
 
@@ -84,6 +88,7 @@ const User = styled.div`
     height: 5px;
     width: 5px;
     background-color: #bbb;
+    background-color: #fff;
     border-radius: 50%;
     display: inline-block;
   }
@@ -106,6 +111,7 @@ const Stats = styled.div`
       font-weight: 500;
       font-size: 18px;
       color: #475467;
+      color: #fff;
       letter-spacing: 0.035em;
     }
   }
@@ -155,7 +161,7 @@ const ForumCard = (props: forumCardProps) => {
         </User>
         <Stats>
           <div>
-            <Plus />
+            <Plus color="#fff" />
             <span>{props.upvotes.length}</span>
           </div>
           <div>
