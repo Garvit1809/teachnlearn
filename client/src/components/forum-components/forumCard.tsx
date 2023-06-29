@@ -134,7 +134,7 @@ const ForumCard = (props: forumCardProps) => {
     });
   };
 
-  return (
+  return props._id ? (
     <Section onClick={forumNavigator}>
       <Header>
         <Tag>{props.topic}</Tag>
@@ -171,7 +171,7 @@ const ForumCard = (props: forumCardProps) => {
         </Stats>
       </Details>
     </Section>
-  );
+  ) : null;
 };
 
 export default ForumCard;

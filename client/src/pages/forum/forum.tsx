@@ -12,6 +12,7 @@ import ForumOptions from "../../components/forum-components/forumOptions";
 import { useNavigate } from "react-router-dom";
 import { PostBtn } from "./singleForum";
 import Footer from "../../components/general-components/footer/footer";
+import LoadMore from "../../components/general-components/loadMore";
 
 const Section = styled.div`
   /* border: 1px solid brown; */
@@ -37,14 +38,11 @@ const TopBar = styled.div`
 `;
 
 const ForumGrid = styled.div`
+  /* border: 1px solid red; */
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem 2.5rem;
-  margin: 2rem 15vw 1rem;
-`;
-
-const CreateForumBtn = styled.div`
-  /* border: 1px solid red; */
+  margin: 2rem 15vw 4rem;
 `;
 
 export interface forumProps {
@@ -64,8 +62,11 @@ export interface forumProps {
 }
 
 const Forum = () => {
-  const [forums, setForums] = useState<Array<forumProps>>();
+  const [forums, setForums] = useState<Array<forumProps>>([]);
   const [userToken, setUserToken] = useState<string>();
+  const [forumPageSet, setForumPageSet] = useState<number>(1);
+  const [dataLimit, setDataLimit] = useState(10);
+  const [hasMoreData, sethasMoreData] = useState(true);
 
   const { fetchLocalUserToken } = UserCookie();
 
@@ -75,16 +76,37 @@ const Forum = () => {
     });
   }, []);
 
+  const checkMoreData = (arr: Array<forumProps>) => {
+    if (arr.length == 0) {
+      sethasMoreData(false);
+      return;
+    } else if (arr.length % dataLimit != 0) {
+      sethasMoreData(false);
+    }
+  };
+
   async function fetchAllForums() {
     await axios
       .get(`${BASE_URL}${apiVersion}/forum`, {
+        params: {
+          page: forumPageSet,
+        },
         headers: getHeaders(userToken ?? ""),
       })
       .then(({ data }) => {
-        console.log(data.data.data);
-        setForums(data.data.data);
+        const forums = data.data.data;
+        checkMoreData(forums);
+        console.log(forums);
+        setForums((prev) => [...prev, ...forums]);
+        setForumPageSet((prev) => prev + 1);
       });
   }
+
+  useEffect(() => {
+    if (forums) {
+      console.log(forums);
+    }
+  }, [forums]);
 
   useEffect(() => {
     if (userToken) {
@@ -114,6 +136,7 @@ const Forum = () => {
               return <ForumCard key={index} {...forum} userToken={userToken} />;
             })}
         </ForumGrid>
+        {forums && hasMoreData && <LoadMore onClick={fetchAllForums} />}
       </Section>
       <Footer />
     </>
