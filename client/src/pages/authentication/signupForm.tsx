@@ -12,15 +12,14 @@ const Section = styled.div`
   /* border: 1px solid red; */
 
   form {
-    width: 90%;
+    width: 100%;
+    width: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* padding: 0px; */
-    padding-right: 10px;
-    row-gap: 20px;
+    row-gap: 25px;
   }
 `;
 

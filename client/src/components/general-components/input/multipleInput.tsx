@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { useOutsideAlerter } from "../../../utils/helperFunctions";
 
 const Section = styled.div`
   position: relative;
@@ -51,6 +52,30 @@ const Label = styled.span<labelProps>`
   }
 `;
 
+const DropdownMenu = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  max-height: 12rem;
+  overflow-y: auto;
+  position: absolute;
+  top: 100%;
+  z-index: 100;
+  background-color: white;
+  box-sizing: border-box;
+  padding: 0.4rem 1rem;
+  width: 100%;
+  border: 1.5px solid #d5d9eb;
+  /* border: 1.5px solid red; */
+  border-radius: 8px;
+
+  span {
+    /* border: 1px solid red; */
+    padding: 4px 0;
+    cursor: pointer;
+  }
+`;
+
 export interface USERDATA {
   fullName: string;
   userName: string;
@@ -70,14 +95,16 @@ interface inputProps {
   value: string;
   label: string;
   name: string;
-  // allSubjects?: string[];
   arr: string[];
   elemName: string;
   updateFields: (fields: Partial<USERDATA>) => void;
+  hasDropdown?: boolean;
+  dropdownData?: string[];
 }
 
 const MultipleInput = (props: inputProps) => {
   const [isValid, setisValid] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
     if (props.value?.trim().length > 0) {
@@ -86,6 +113,7 @@ const MultipleInput = (props: inputProps) => {
   }, []);
 
   const inputhandler = (e: any) => {
+    setShowDropdown(true);
     props.updateFields({ [props.elemName]: e.target.value });
 
     const value = e.target.value;
@@ -106,6 +134,18 @@ const MultipleInput = (props: inputProps) => {
     }
   };
 
+  const dropdownMenuhandler = (data: string) => {
+    props.updateFields({ [props.elemName]: data });
+    setShowDropdown(false);
+  };
+
+  const closeDropDown = () => {
+    setShowDropdown(false);
+  };
+
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef, closeDropDown);
+
   return (
     <Section>
       <input
@@ -117,6 +157,37 @@ const MultipleInput = (props: inputProps) => {
         onKeyDown={keyHandler}
       />
       <Label isValid={isValid}>{props.label}</Label>
+      {props.hasDropdown
+        ? props.value == ""
+          ? null
+          : showDropdown &&
+            (props.dropdownData?.filter((val) => {
+              if (typeof props.value == "string") {
+                return val.toLowerCase().includes(props.value.toLowerCase());
+              }
+            }).length == 0 ? null : (
+              <DropdownMenu ref={wrapperRef}>
+                {props.dropdownData
+                  ?.filter((val) => {
+                    if (typeof props.value == "string") {
+                      return val
+                        .toLowerCase()
+                        .includes(props.value.toLowerCase());
+                    }
+                  })
+                  .map((data, index) => {
+                    return (
+                      <span
+                        key={index}
+                        onClick={() => dropdownMenuhandler(data)}
+                      >
+                        {data}
+                      </span>
+                    );
+                  })}
+              </DropdownMenu>
+            ))
+        : null}
     </Section>
   );
 };

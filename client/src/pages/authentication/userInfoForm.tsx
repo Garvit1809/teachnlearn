@@ -4,6 +4,9 @@ import Inputholder from "../../components/general-components/input/inputholder";
 import MultipleInput from "../../components/general-components/input/multipleInput";
 import ArrChip from "../../components/authentication-comp/arrChip";
 import UploadImage from "../../components/general-components/input/uploadImage";
+// import { } from '../../data/PROGRAMME_LIST.json'
+import { subjects } from "../../data/SUBJECT_LIST.json";
+import { languages } from "../../data/LANGUAGE_LIST.json";
 
 const Section = styled.div`
   display: flex;
@@ -12,17 +15,16 @@ const Section = styled.div`
   width: 75%;
   margin: auto;
   margin-bottom: 2rem;
-  /* border: 1px solid red; */
 
   form {
-    width: 90%;
+    /* border: 1px solid red; */
+    width: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-right: 10px;
-    gap: 20px;
+    gap: 25px;
   }
 `;
 
@@ -68,6 +70,8 @@ const UserInfoForm = (props: UserInfoFormProps) => {
           value={props.course}
           name="course"
           updateFields={props.updateFields}
+          // hasDropdown={true}
+          // dropdownData={}
         />
         <InputWrapper>
           <MultipleInput
@@ -77,6 +81,8 @@ const UserInfoForm = (props: UserInfoFormProps) => {
             elemName="interestedSubject"
             updateFields={props.updateFields}
             arr={props.interestedSubjects}
+            hasDropdown={true}
+            dropdownData={subjects}
           />
           {props.interestedSubjects.length != 0 ? (
             <ArrChip
@@ -94,6 +100,8 @@ const UserInfoForm = (props: UserInfoFormProps) => {
             name="strongSubjects"
             updateFields={props.updateFields}
             arr={props.strongSubjects}
+            hasDropdown={true}
+            dropdownData={subjects}
           />
           {props.strongSubjects.length != 0 ? (
             <ArrChip
@@ -111,6 +119,8 @@ const UserInfoForm = (props: UserInfoFormProps) => {
             name="preferredLanguages"
             updateFields={props.updateFields}
             arr={props.preferredLanguages}
+            hasDropdown={true}
+            dropdownData={languages}
           />
           {props.preferredLanguages.length != 0 ? (
             <ArrChip

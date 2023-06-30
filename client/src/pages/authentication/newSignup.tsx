@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 import DescriptionBox from "../../components/authentication-comp/descriptionBox";
 import { useMultiStepForm } from "../../components/authentication-comp/useMultiStepForm";
@@ -75,7 +75,11 @@ const FormContainer = styled.div`
 
 const ButtonContainer = styled.div`
   /* border: 1px solid red; */
-  width: 70%;
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   button {
     background: #332ad5;
@@ -89,6 +93,7 @@ const ButtonContainer = styled.div`
     cursor: pointer;
     width: 100%;
     margin: 0rem auto;
+    box-sizing: border-box;
 
     &:nth-child(2) {
       margin-top: 0.8rem;
@@ -131,6 +136,14 @@ const initialData: USERDATA = {
 };
 
 const NewSignup = () => {
+  const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if (localStorage.getItem(localStorageUser)) {
+  //     navigate("/");
+  //   }
+  // }, [navigate]);
+
   const [userData, setUserData] = useState<USERDATA>(initialData);
 
   function updateFields(fields: Partial<USERDATA>) {
@@ -177,8 +190,6 @@ const NewSignup = () => {
         });
     }
   };
-
-  const navigate = useNavigate();
 
   const navigateLink = (link: string) => {
     topNavigator();
