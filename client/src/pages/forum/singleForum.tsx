@@ -13,6 +13,7 @@ import QuestionContainer from "../../components/forum-components/questionContain
 import moment from "moment";
 import { UserCookie } from "../../utils/userCookie";
 import RatingContainer from "../../components/forum-components/ratingContainer";
+import Footer from "../../components/general-components/footer/footer";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -229,7 +230,7 @@ const SingleForum = () => {
           )}
         </Section>
       )}
-      <FooterWrapper />
+      <Footer />
     </>
   );
 };

@@ -13,7 +13,7 @@ const Section = styled.div`
   padding: 22px;
   gap: 22px;
   background: #674ff1;
-  background: #2A7E79;;
+  background: #2a7e79;
   border-radius: 16px;
   cursor: pointer;
   font-family: "Nunito";
@@ -107,7 +107,11 @@ const RequestCard = (props: learnCardProps) => {
         <h4>{props.subject}</h4>
       </Tag>
       <Topic>
-        <span>{props.topic}</span>
+        <span>
+          {props.topic.length > 50
+            ? props.topic.slice(0, 50) + " ..."
+            : props.topic}
+        </span>
       </Topic>
       <UserWrapper>
         <UserChip

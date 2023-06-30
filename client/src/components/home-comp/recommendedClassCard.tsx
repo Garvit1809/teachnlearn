@@ -73,7 +73,7 @@ const Stats = styled.div`
   }
 `;
 
-const UserWrapper = styled.div`
+export const UserWrapper = styled.div`
   /* border: 1px solid red; */
   width: 100%;
   display: flex;
@@ -81,7 +81,7 @@ const UserWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const DueCont = styled.div`
+export const DueCont = styled.div`
   font-family: "Nunito";
   font-style: normal;
   font-weight: 500;

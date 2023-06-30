@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import DescriptionBox from "../../components/authentication-comp/descriptionBox";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,6 +8,9 @@ import axios from "axios";
 import { localStorageUser } from "../../utils/globalConstants";
 import { UserCookie } from "../../utils/userCookie";
 import { topNavigator } from "../../utils/helperFunctions";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Section = styled.div`
   display: flex;
@@ -90,6 +93,14 @@ interface loginDataProps {
 }
 
 const Signin = () => {
+  const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if (localStorage.getItem(localStorageUser)) {
+  //     navigate("/");
+  //   }
+  // }, [navigate]);
+
   const [loginData, setLoginData] = useState<loginDataProps>({
     email: "",
     password: "",
@@ -101,23 +112,56 @@ const Signin = () => {
     });
   }
 
-  const navigate = useNavigate();
-
   const navigationHandler = (link: string) => {
     topNavigator();
     navigate(link);
   };
 
+  const toastOptions = {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 6000,
+    pauseOnHover: true,
+    draggable: true,
+  };
+
+  function isValidEmail(email: string) {
+    return /\S+@\S+\.\S+/.test(email);
+  }
+
+  const handleValidation = () => {
+    const { email, password } = loginData;
+    if (email === "" || password === "") {
+      toast.error("Fill in all the details", toastOptions);
+      return false;
+    } else if (!isValidEmail(email)) {
+      toast.error("Email is not valid!!", toastOptions);
+      return false;
+    } else if (password.length < 6) {
+      toast.error("Password is short", toastOptions);
+      return false;
+    }
+    return true;
+  };
+
   const loginHandler = async (e: any) => {
     e.preventDefault();
-    const { data } = await axios.post(`${BASE_URL}${apiVersion}/auth/login`, {
-      email: loginData.email,
-      password: loginData.password,
-    });
-    if (data.status === "success") {
-      data.data.user.token = data.token;
-      localStorage.setItem(localStorageUser, JSON.stringify(data.data.user));
-      navigationHandler('/')
+    if (handleValidation()) {
+      await axios
+        .post(`${BASE_URL}${apiVersion}/auth/login`, {
+          email: loginData.email,
+          password: loginData.password,
+        })
+        .then(({ data }) => {
+          const user = data.data.user;
+          user.token = data.token;
+          localStorage.setItem(localStorageUser, JSON.stringify(user));
+          navigationHandler("/");
+        })
+        .catch((data) => {
+          const errMsg = data.response.data.message;
+          console.log(errMsg);
+          toast.error(errMsg, toastOptions);
+        });
     }
   };
 
@@ -142,6 +186,7 @@ const Signin = () => {
       <RightContainer>
         <DescriptionBox heading="Welcome Back!!" />
       </RightContainer>
+      <ToastContainer theme="dark" />
     </Section>
   );
 };

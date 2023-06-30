@@ -1,10 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { Calender } from "../general-components/svg";
-import { getReadableTime, topNavigator } from "../../utils/helperFunctions";
+import {
+  getReadableDate,
+  getReadableTime,
+  topNavigator,
+} from "../../utils/helperFunctions";
 import UserChip from "../general-components/userChip";
 import { useNavigate } from "react-router-dom";
 import { teachinCardProps } from "../../types/teachingCardType";
+import { DueCont, UserWrapper } from "./recommendedClassCard";
 
 interface styleProps {
   isFirstCard: boolean;
@@ -88,14 +93,20 @@ const EnrolledClassCard = ({ card, isFirstCard }: enrolledClassCardProps) => {
         </span>
       </TimeContainer>
       <Topic isFirstCard={isFirstCard}>
-        <span>{card.topic}</span>
+        <span>
+          {card.topic.length > 50
+            ? card.topic.slice(0, 50) + " ..."
+            : card.topic}
+        </span>
       </Topic>
-      <UserChip
-        name={card.createdBy.name}
-        photo={card.createdBy.photo}
-        imgBorder={isFirstCard ? "white" : "black"}
-        textColor={isFirstCard ? "white" : "black"}
-      />
+      <UserWrapper>
+        <UserChip
+          name={card.createdBy.name}
+          photo={card.createdBy.photo}
+          imgBorder={isFirstCard ? "white" : "black"}
+          textColor={isFirstCard ? "white" : "black"}
+        />
+      </UserWrapper>
     </Section>
   );
 };

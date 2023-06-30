@@ -24,3 +24,11 @@ p {
   margin: 0;
   padding: 0;
 }
+
+.toast-message {
+  background: darkblue;
+  color: #fff;
+  font-size: 20px;
+  width: 34vw;
+  padding: 30px 20px;
+}
