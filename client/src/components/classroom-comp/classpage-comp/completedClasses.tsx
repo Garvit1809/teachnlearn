@@ -6,16 +6,20 @@ import { BASE_URL, apiVersion } from "../../../utils/apiRoutes";
 import { getHeaders } from "../../../utils/helperFunctions";
 import axios from "axios";
 import ClassroomGrid from "../classroomGrid";
-import { teachingCardProps } from "../../../types/classroomType";
+import { teachinCardProps } from "../../../types/teachingCardType";
 
 const Section = styled.div``;
 
 const CompletedClasses = (props: classElemProps) => {
-  const [teachCards, setTeachCards] = useState<Array<teachingCardProps>>();
+  const [teachCards, setTeachCards] = useState<Array<teachinCardProps>>();
 
   async function fetchAllCompletedClasses() {
     await axios
       .get(`${BASE_URL}${apiVersion}/user/myclasses/completed`, {
+        params: {
+          sort: "-classStartsAt",
+          limit: 2,
+        },
         headers: getHeaders(props.userToken ?? ""),
       })
       .then(({ data }) => {
@@ -33,7 +37,11 @@ const CompletedClasses = (props: classElemProps) => {
   }, [props.userToken]);
 
   return (
-    <Section>{teachCards && <ClassroomGrid teachCards={teachCards} elemType="completed" />}</Section>
+    <Section>
+      {teachCards && (
+        <ClassroomGrid teachCards={teachCards} elemType="completed" />
+      )}
+    </Section>
   );
 };
 

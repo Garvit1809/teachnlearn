@@ -14,3 +14,6 @@ export const months = [
   "Nov",
   "Dec",
 ];
+
+
+export const DATA_LIMIT = 2

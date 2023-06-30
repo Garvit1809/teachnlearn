@@ -47,7 +47,7 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/forums" element={<Forum />} />
         <Route path="/forum/:id" element={<SingleForum />} />
-        <Route path="/create-forum" element={<CreateForum />} />
+        <Route path="/forums/create-forum" element={<CreateForum />} />
         <Route path="/classes" element={<Classrooms />} />
         <Route path="/class-overviw/:id" element={<ClassroomOverview />} />
         <Route path="/classes/class/:id" element={<SingleClassroom />} />

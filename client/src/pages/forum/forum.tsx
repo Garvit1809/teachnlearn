@@ -3,16 +3,15 @@ import Navbar from "../../components/general-components/navbar";
 import SearchBar from "../../components/general-components/searchBar";
 import styled from "styled-components";
 import ForumCard from "../../components/forum-components/forumCard";
-import FooterWrapper from "../../components/general-components/footer/footerWrapper";
 import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunctions";
 import { UserCookie } from "../../utils/userCookie";
-import ForumOptions from "../../components/forum-components/forumOptions";
 import { useNavigate } from "react-router-dom";
 import { PostBtn } from "./singleForum";
 import Footer from "../../components/general-components/footer/footer";
 import LoadMore from "../../components/general-components/loadMore";
+import { DATA_LIMIT } from "../../utils/globalConstants";
 
 const Section = styled.div`
   /* border: 1px solid brown; */
@@ -65,8 +64,8 @@ const Forum = () => {
   const [forums, setForums] = useState<Array<forumProps>>([]);
   const [userToken, setUserToken] = useState<string>();
   const [forumPageSet, setForumPageSet] = useState<number>(1);
-  const [dataLimit, setDataLimit] = useState(10);
-  const [hasMoreData, sethasMoreData] = useState(true);
+  const [dataLimit, setDataLimit] = useState(2);
+  const [hasMoreData, sethasMoreData] = useState(false);
 
   const { fetchLocalUserToken } = UserCookie();
 
@@ -82,13 +81,16 @@ const Forum = () => {
       return;
     } else if (arr.length % dataLimit != 0) {
       sethasMoreData(false);
+      return;
     }
+    sethasMoreData(true);
   };
 
   async function fetchAllForums() {
     await axios
       .get(`${BASE_URL}${apiVersion}/forum`, {
         params: {
+          limit: DATA_LIMIT,
           page: forumPageSet,
         },
         headers: getHeaders(userToken ?? ""),
@@ -103,12 +105,6 @@ const Forum = () => {
   }
 
   useEffect(() => {
-    if (forums) {
-      console.log(forums);
-    }
-  }, [forums]);
-
-  useEffect(() => {
     if (userToken) {
       fetchAllForums();
     }
@@ -116,7 +112,7 @@ const Forum = () => {
 
   const navigate = useNavigate();
   const postForumNavigator = () => {
-    navigate("/create-forum");
+    navigate("/forums/create-forum");
   };
 
   return (

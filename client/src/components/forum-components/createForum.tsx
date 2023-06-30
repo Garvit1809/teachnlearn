@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../general-components/navbar";
-import FooterWrapper from "../general-components/footer/footerWrapper";
 import BackBtn from "../request-comp/backBtn";
 import FormField from "../request-comp/formField";
 import Inputholder from "../general-components/input/inputholder";
-import { forumProps } from "../../pages/forum/forum";
 import Textarea from "../general-components/input/textarea";
 import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { UserCookie } from "../../utils/userCookie";
 import { getHeaders } from "../../utils/helperFunctions";
+import Footer from "../general-components/footer/footer";
 
 const Section = styled.div`
   border: 1px solid #d5d9eb;
@@ -164,7 +163,7 @@ const CreateForum = () => {
           </button>
         </FormButtonCont>
       </Section>
-      <FooterWrapper />
+      <Footer />
     </>
   );
 };

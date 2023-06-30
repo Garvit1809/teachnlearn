@@ -79,13 +79,22 @@ const NavbarLinks = () => {
     setCurrentPath(link);
     navigate(link);
   };
+
+  const checkIsActive = (optionLink: string) => {
+    if (optionLink == "/") {
+      return optionLink == currentPath;
+    } else {
+      return currentPath.includes(optionLink);
+    }
+  };
+
   return (
     <Menu>
       {navOptions.map((option, index) => {
         return (
           <MenuItem
             key={index}
-            isActive={option.link == currentPath}
+            isActive={checkIsActive(option.link)}
             onClick={() => navigationhandler(option.link)}
           >
             <span>{option.title}</span>

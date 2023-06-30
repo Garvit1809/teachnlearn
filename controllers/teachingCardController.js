@@ -355,22 +355,7 @@ exports.getUserEnrolledClasses = catchAsync(async (req, res, next) => {
 
 exports.getUpcomingClasses = catchAsync(async (req, res, next) => {
   const userId = req.user.id;
-
   const currentDate = new Date();
-
-  console.log(currentDate);
-
-  // const upcomingClasses = await TeachingCard.find({
-  //   classEndsAt: { $gte: currentDate },
-  //   $or: [
-  //     {
-  //       studentsEnrolled: { $in: [userId] },
-  //     },
-  //     {
-  //       createdBy: userId,
-  //     },
-  //   ],
-  // });
 
   const features = new APIFeatures(
     TeachingCard.find({
@@ -401,22 +386,7 @@ exports.getUpcomingClasses = catchAsync(async (req, res, next) => {
 
 exports.getCompletedClasses = catchAsync(async (req, res, next) => {
   const userId = req.user.id;
-
   const currentDate = new Date();
-
-  console.log(currentDate);
-
-  // const completedClasses = await TeachingCard.find({
-  //   classEndsAt: { $lte: currentDate },
-  //   $or: [
-  //     {
-  //       studentsEnrolled: { $in: [userId] },
-  //     },
-  //     {
-  //       createdBy: userId,
-  //     },
-  //   ],
-  // });
 
   const features = new APIFeatures(
     TeachingCard.find({

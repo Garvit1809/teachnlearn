@@ -18,6 +18,10 @@ import { UserCookie } from "../../utils/userCookie";
 import { getHeaders } from "../../utils/helperFunctions";
 import { useLocation } from "react-router-dom";
 
+import { languages } from "../../data/LANGUAGE_LIST.json";
+import { subjects } from "../../data/SUBJECT_LIST.json";
+import { standard } from "../../data/STANDARD_LIST.json";
+
 const Section = styled.div`
   border: 1px solid red;
 
@@ -251,6 +255,8 @@ const CreateTeachCard = () => {
                 value={teachCard.subject}
                 name="subject"
                 updateFields={updateFields}
+                hasDropdown={true}
+                dropdownData={subjects}
               />
             }
             inputDesc="Pick a Subject"
@@ -286,6 +292,8 @@ const CreateTeachCard = () => {
                 value={teachCard.standard}
                 name="standard"
                 updateFields={updateFields}
+                hasDropdown={true}
+                dropdownData={standard}
               />
             }
             inputDesc="Specify the Standard for the lesson"
@@ -298,6 +306,8 @@ const CreateTeachCard = () => {
                 value={teachCard.preferredLanguage}
                 name="preferredLanguage"
                 updateFields={updateFields}
+                hasDropdown={true}
+                dropdownData={languages}
               />
             }
             inputDesc="Language that you prefer"
