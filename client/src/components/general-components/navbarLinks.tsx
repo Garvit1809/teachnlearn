@@ -57,7 +57,7 @@ const navOptions = [
   },
   {
     title: "My Groups",
-    link: "/grps",
+    link: "/groups",
   },
   {
     title: "My AI Assistant",

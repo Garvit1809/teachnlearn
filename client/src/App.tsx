@@ -19,6 +19,9 @@ import LandingPage from "./pages/landing-page/landingPage";
 import ClassroomOverview from "./pages/classroom/classroomOverview";
 import CreateForum from "./components/forum-components/createForum";
 import { userProps } from "./components/profile-comp/my-profile/myProfile";
+import Blogs from "./pages/blogs/blogs";
+import Groups from "./pages/groups/groups";
+import MyAI from "./pages/ai/myAI";
 
 function App() {
   const { fetchLocalUserData } = UserCookie();
@@ -58,6 +61,9 @@ function App() {
         />
         <Route path="/create-learn-request" element={<CreateLearnCard />} />
         <Route path="/create-teach-request" element={<CreateTeachCard />} />
+        <Route path="/blogs" element={<Blogs />} />
+        <Route path="/groups" element={<Groups />} />
+        <Route path="/myai" element={<MyAI />} />
         <Route path="/me" element={<Profile />} />
       </Routes>
     </div>
