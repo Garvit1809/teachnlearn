@@ -6,6 +6,7 @@ const learningCardSchema = new mongoose.Schema({
   createdBy: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
+    required: [true, "Every leaern card must have a user!!"],
   },
   subject: {
     type: String,

@@ -22,6 +22,9 @@ import { languages } from "../../data/LANGUAGE_LIST.json";
 import { subjects } from "../../data/SUBJECT_LIST.json";
 import { standard } from "../../data/STANDARD_LIST.json";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Section = styled.div`
   border: 1px solid red;
 
@@ -175,66 +178,142 @@ const CreateTeachCard = () => {
     updateFields({ [e.target.name]: e.target.value });
   };
 
+  const toastOptions = {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 6000,
+    pauseOnHover: true,
+    draggable: true,
+  };
+
+  const handleValidation = () => {
+    const {
+      subject,
+      topic,
+      programme,
+      standard,
+      preferredLanguage,
+      date,
+      startingTime,
+      endingTime,
+      description,
+      expectations,
+      photo,
+      price,
+      tags,
+    } = teachCard;
+
+    const currentDate = new Date();
+    const ISODueDate = new Date(date);
+    const ISOStartingTime = new Date(startingTime);
+    const ISOEndingTime = new Date(endingTime);
+
+    if (
+      subject === "" ||
+      topic === "" ||
+      programme === "" ||
+      standard === "" ||
+      preferredLanguage === "" ||
+      date === "" ||
+      startingTime === "" ||
+      endingTime === "" ||
+      description === "" ||
+      photo === "" ||
+      expectations.length == 0
+    ) {
+      toast.error("Fill in all the details", toastOptions);
+      return false;
+    } else if (topic.length < 30) {
+      toast.error("Topic must be greater than 30 characters", toastOptions);
+      return false;
+    } else if (ISODueDate < currentDate) {
+      toast.error("Pick another date for class", toastOptions);
+      return false;
+    } else if (ISOStartingTime < ISOEndingTime) {
+      toast.error(
+        "Class End time cannot be less than Start time",
+        toastOptions
+      );
+      return false;
+    }
+    return true;
+  };
+
   const teachCardHandler = async (e: any) => {
     e.preventDefault();
     console.log(teachCard);
 
-    await axios
-      .post(
-        `${BASE_URL}${apiVersion}/teach`,
-        {
-          subject: teachCard.subject,
-          topic: teachCard.topic,
-          programme: teachCard.programme,
-          standard: teachCard.standard,
-          preferredLanguage: teachCard.preferredLanguage,
-          description: teachCard.description,
-          expectations: teachCard.expectations,
-          tags: teachCard.tags,
-          date: teachCard.date,
-          cardBanner: teachCard.photo,
-          price: teachCard.price,
-          classStartsAt: teachCard.startingTime,
-          classEndsAt: teachCard.endingTime,
-        },
-        {
-          headers: getHeaders(token ?? ""),
-        }
-      )
-      .then(({ data }) => {
-        console.log(data);
-        setTeachCard(initialData);
-        window.location.reload();
-      });
+    if (handleValidation()) {
+      await axios
+        .post(
+          `${BASE_URL}${apiVersion}/teach`,
+          {
+            subject: teachCard.subject,
+            topic: teachCard.topic,
+            programme: teachCard.programme,
+            standard: teachCard.standard,
+            preferredLanguage: teachCard.preferredLanguage,
+            description: teachCard.description,
+            expectations: teachCard.expectations,
+            tags: teachCard.tags,
+            date: teachCard.date,
+            cardBanner: teachCard.photo,
+            price: teachCard.price,
+            classStartsAt: teachCard.startingTime,
+            classEndsAt: teachCard.endingTime,
+          },
+          {
+            headers: getHeaders(token ?? ""),
+          }
+        )
+        .then(({ data }) => {
+          console.log(data);
+          setTeachCard(initialData);
+          window.location.reload();
+        })
+        .catch((data) => {
+          const errors = data.response.data.error.errors;
+          Object.keys(errors).forEach(function (err, index) {
+            toast.error(errors[err].message, toastOptions);
+          });
+        });
+    }
   };
 
   const teachCardOnLeanrCardHandler = async (e: any) => {
-    await axios
-      .post(
-        `${BASE_URL}${apiVersion}/learn/${learnCardId}/teach`,
-        {
-          subject: teachCard.subject,
-          topic: teachCard.topic,
-          programme: teachCard.programme,
-          standard: teachCard.standard,
-          preferredLanguage: teachCard.preferredLanguage,
-          description: teachCard.description,
-          expectations: teachCard.expectations,
-          tags: teachCard.tags,
-          date: teachCard.date,
-          cardBanner: teachCard.photo,
-          price: teachCard.price,
-          classStartsAt: teachCard.startingTime,
-          classEndsAt: teachCard.endingTime,
-        },
-        {
-          headers: getHeaders(token ?? ""),
-        }
-      )
-      .then(({ data }) => {
-        console.log(data);
-        setTeachCard(initialData);
-      });
+    if (handleValidation()) {
+      await axios
+        .post(
+          `${BASE_URL}${apiVersion}/learn/${learnCardId}/teach`,
+          {
+            subject: teachCard.subject,
+            topic: teachCard.topic,
+            programme: teachCard.programme,
+            standard: teachCard.standard,
+            preferredLanguage: teachCard.preferredLanguage,
+            description: teachCard.description,
+            expectations: teachCard.expectations,
+            tags: teachCard.tags,
+            date: teachCard.date,
+            cardBanner: teachCard.photo,
+            price: teachCard.price,
+            classStartsAt: teachCard.startingTime,
+            classEndsAt: teachCard.endingTime,
+          },
+          {
+            headers: getHeaders(token ?? ""),
+          }
+        )
+        .then(({ data }) => {
+          console.log(data);
+          setTeachCard(initialData);
+        })
+        .catch((data) => {
+          const errors = data.response.data.error.errors;
+          Object.keys(errors).forEach(function (err, index) {
+            toast.error(errors[err].message, toastOptions);
+          });
+        });
+    }
   };
 
   return (
@@ -421,7 +500,8 @@ const CreateTeachCard = () => {
           </button>
         </FormButtonCont>
       </Section>
-      <FooterWrapper />
+      <Footer />
+      <ToastContainer theme="dark" />
     </>
   );
 };

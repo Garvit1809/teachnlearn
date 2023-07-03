@@ -17,6 +17,10 @@ import { UserCookie } from "../../utils/userCookie";
 import { subjects } from "../../data/SUBJECT_LIST.json";
 import { standard } from "../../data/STANDARD_LIST.json";
 import { languages } from "../../data/LANGUAGE_LIST.json";
+import Footer from "../general-components/footer/footer";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Section = styled.div`
   border: 1px solid red;
@@ -184,7 +188,6 @@ const CreateLearnCard = () => {
 
   useEffect(() => {
     fetchLocalUserToken().then((token) => {
-      console.log(token);
       setToken(token);
     });
   }, []);
@@ -214,31 +217,84 @@ const CreateLearnCard = () => {
     updateFields({ expectations: filteredArr });
   };
 
+  const toastOptions = {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 6000,
+    pauseOnHover: true,
+    draggable: true,
+  };
+
+  const handleValidation = () => {
+    const {
+      subject,
+      topic,
+      programme,
+      standard,
+      preferredLanguage,
+      dueDate,
+      description,
+      expectations,
+      tags,
+    } = learnCard;
+
+    const currentDate = new Date();
+    const ISODueDate = new Date(dueDate);
+
+    if (
+      subject === "" ||
+      topic === "" ||
+      programme === "" ||
+      standard === "" ||
+      preferredLanguage === "" ||
+      dueDate === "" ||
+      description === "" ||
+      expectations.length == 0
+    ) {
+      toast.error("Fill in all the details", toastOptions);
+      return false;
+    } else if (topic.length < 35) {
+      toast.error("Topic must be greater than 35 characters", toastOptions);
+      return false;
+    } else if (ISODueDate < currentDate) {
+      toast.error("Pick another due date", toastOptions);
+      return false;
+    }
+    return true;
+  };
+
   const learnCardHandler = async (e: any) => {
     e.preventDefault();
     console.log(learnCard);
-    await axios
-      .post(
-        `${BASE_URL}${apiVersion}/learn`,
-        {
-          subject: learnCard.subject,
-          topic: learnCard.topic,
-          programme: learnCard.programme,
-          standard: learnCard.standard,
-          preferredLanguage: learnCard.preferredLanguage,
-          description: learnCard.description,
-          expectations: learnCard.expectations,
-          tags: learnCard.tags,
-          dueDate: learnCard.dueDate,
-        },
-        {
-          headers: getHeaders(token ?? ""),
-        }
-      )
-      .then(({ data }) => {
-        console.log(data);
-        setLearnCard(initialData);
-      });
+    if (handleValidation()) {
+      await axios
+        .post(
+          `${BASE_URL}${apiVersion}/learn`,
+          {
+            subject: learnCard.subject,
+            topic: learnCard.topic,
+            programme: learnCard.programme,
+            standard: learnCard.standard,
+            preferredLanguage: learnCard.preferredLanguage,
+            description: learnCard.description,
+            expectations: learnCard.expectations,
+            tags: learnCard.tags,
+            dueDate: learnCard.dueDate,
+          },
+          {
+            headers: getHeaders(token ?? ""),
+          }
+        )
+        .then(({ data }) => {
+          console.log(data);
+          setLearnCard(initialData);
+        })
+        .catch((data) => {
+          const errors = data.response.data.error.errors;
+          Object.keys(errors).forEach(function (err, index) {
+            toast.error(errors[err].message, toastOptions);
+          });
+        });
+    }
   };
 
   return (
@@ -397,7 +453,8 @@ const CreateLearnCard = () => {
           </button>
         </FormButtonCont>
       </Section>
-      <FooterWrapper />
+      <Footer />
+      <ToastContainer theme="dark" />
     </>
   );
 };
