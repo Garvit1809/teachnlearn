@@ -5,6 +5,8 @@ import { UpvoteIcon } from "../general-components/svg";
 import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunctions";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface ratingStyleProps {
   isAnswer: boolean;
@@ -56,6 +58,13 @@ const RatingContainer = (props: ratingProps) => {
     return upvoteArr.includes(props.userId);
   };
 
+  const toastOptions = {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 4000,
+    pauseOnHover: true,
+    draggable: true,
+  };
+
   const upvoteHandler = async () => {
     if (!props.isAnswer) {
       await axios
@@ -70,6 +79,10 @@ const RatingContainer = (props: ratingProps) => {
           console.log(data);
           const newUpvotes = data.updatedForum.upvotes;
           setUpvoteArr(newUpvotes);
+        })
+        .catch((data) => {
+          // console.log(data.response.data.message);
+          toast.error(data.response.data.message, toastOptions);
         });
     } else {
       await axios
@@ -84,6 +97,10 @@ const RatingContainer = (props: ratingProps) => {
           console.log(data);
           const newUpvotes = data.updatedAnswer.upvotes;
           setUpvoteArr(newUpvotes);
+        })
+        .catch((data) => {
+          // console.log(data.response.data.message);
+          toast.error(data.response.data.message, toastOptions);
         });
     }
   };
@@ -96,6 +113,7 @@ const RatingContainer = (props: ratingProps) => {
         />
       </SvgWrapper>
       <span>{upvoteArr.length}</span>
+      <ToastContainer theme="dark" />
     </Section>
   );
 };

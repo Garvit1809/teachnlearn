@@ -10,6 +10,8 @@ import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { UserCookie } from "../../utils/userCookie";
 import { getHeaders } from "../../utils/helperFunctions";
 import Footer from "../general-components/footer/footer";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Section = styled.div`
   border: 1px solid #d5d9eb;
@@ -94,24 +96,52 @@ const CreateForum = () => {
     });
   }, [location]);
 
+  const toastOptions = {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 6000,
+    pauseOnHover: true,
+    draggable: true,
+  };
+
+  const handleValidation = () => {
+    const { topic, tagline, question } = forum;
+    if (topic === "" || tagline === "" || question === "") {
+      toast.error("Fill in all the details", toastOptions);
+      return false;
+    } else if (tagline.length > 250) {
+      toast.error("Tagline cannot be longer than 250 characters", toastOptions);
+      return false;
+    }
+    return true;
+  };
+
   const createForumHandler = async () => {
     console.log(forum);
     const { topic, tagline, question } = forum;
-    await axios
-      .post(
-        `${BASE_URL}${apiVersion}/forum`,
-        {
-          topic,
-          tagline,
-          question,
-        },
-        {
-          headers: getHeaders(userToken ?? ""),
-        }
-      )
-      .then(() => {
-        setForum(initialForumData);
-      });
+    if (handleValidation()) {
+      await axios
+        .post(
+          `${BASE_URL}${apiVersion}/forum`,
+          {
+            topic,
+            tagline,
+            question,
+          },
+          {
+            headers: getHeaders(userToken ?? ""),
+          }
+        )
+        .then(() => {
+          setForum(initialForumData);
+          toast.success("Forum successfully created", toastOptions);
+        })
+        .catch((data) => {
+          const errors = data.response.data.error.errors;
+          Object.keys(errors).forEach(function (err, index) {
+            toast.error(errors[err].message, toastOptions);
+          });
+        });
+    }
   };
 
   return (
@@ -164,6 +194,7 @@ const CreateForum = () => {
         </FormButtonCont>
       </Section>
       <Footer />
+      <ToastContainer theme="dark" />
     </>
   );
 };

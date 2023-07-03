@@ -10,6 +10,8 @@ import { Arrow } from "../general-components/svg";
 import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunctions";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Section = styled.div`
   width: 50vw;
@@ -58,20 +60,42 @@ const PostAnswer = (props: forumanswerProps) => {
     setAnswer(content);
   }
 
+  const toastOptions = {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 6000,
+    pauseOnHover: true,
+    draggable: true,
+  };
+
+  const handleValidation = () => {
+    if (answer === "") {
+      toast.error("Answer cannot be empty", toastOptions);
+      return false;
+    }
+    return true;
+  };
+
   const answerhandler = async () => {
-    await axios
-      .post(
-        `${BASE_URL}${apiVersion}/forum/${props.forumId}/answers`,
-        {
-          answer,
-        },
-        {
-          headers: getHeaders(userToken ?? ""),
-        }
-      )
-      .then(() => {
-        window.location.reload();
-      });
+    if (handleValidation()) {
+      await axios
+        .post(
+          `${BASE_URL}${apiVersion}/forum/${props.forumId}/answers`,
+          {
+            answer,
+          },
+          {
+            headers: getHeaders(userToken ?? ""),
+          }
+        )
+        .then(() => {
+          setAnswer("");
+          toast.success("Answer posted on Forum :)", toastOptions);
+          window.location.reload();
+        })
+        .catch((data) => {
+          toast.error(data.response.data.message, toastOptions);
+        });
+    }
   };
 
   return (
