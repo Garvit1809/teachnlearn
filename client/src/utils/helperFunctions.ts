@@ -56,3 +56,7 @@ export function useOutsideAlerter(ref: any, func: any) {
     };
   }, [ref]);
 }
+
+export function isValidEmail(email: string) {
+  return /\S+@\S+\.\S+/.test(email);
+}

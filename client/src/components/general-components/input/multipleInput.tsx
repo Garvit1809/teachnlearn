@@ -100,6 +100,7 @@ interface inputProps {
   updateFields: (fields: Partial<USERDATA>) => void;
   hasDropdown?: boolean;
   dropdownData?: string[];
+  maxLimit?: number;
 }
 
 const MultipleInput = (props: inputProps) => {
@@ -155,6 +156,7 @@ const MultipleInput = (props: inputProps) => {
         name={props.name}
         onChange={(e) => inputhandler(e)}
         onKeyDown={keyHandler}
+        disabled={props.arr.length == props.maxLimit}
       />
       <Label isValid={isValid}>{props.label}</Label>
       {props.hasDropdown

@@ -10,7 +10,9 @@ import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { localStorageUser } from "../../utils/globalConstants";
 import { UserCookie } from "../../utils/userCookie";
-import { topNavigator } from "../../utils/helperFunctions";
+import { isValidEmail, topNavigator } from "../../utils/helperFunctions";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Section = styled.div`
   display: flex;
@@ -158,36 +160,97 @@ const NewSignup = () => {
       <UserInfoForm {...userData} updateFields={updateFields} />,
     ]);
 
+  const toastOptions = {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 6000,
+    pauseOnHover: true,
+    draggable: true,
+  };
+
+  const handleValidation = () => {
+    const {
+      fullName,
+      userName,
+      email,
+      password,
+      confirmPassword,
+      photo,
+      number,
+      course,
+      interestedSubjects,
+      strongSubjects,
+      preferredLanguages,
+    } = userData;
+    if (
+      fullName === "" ||
+      userName === "" ||
+      email === "" ||
+      password === "" ||
+      confirmPassword === "" ||
+      number === "" ||
+      course === ""
+    ) {
+      toast.error("Fill in all the details", toastOptions);
+      return false;
+    } else if (!isValidEmail(email)) {
+      toast.error("Email is not valid!!", toastOptions);
+      return false;
+    } else if (userName.length > 25) {
+      toast.error("Username cannot be greater than 25 char!!", toastOptions);
+      return false;
+    } else if (password.length < 6) {
+      toast.error("Password is short", toastOptions);
+      return false;
+    } else if (confirmPassword.length < 6) {
+      toast.error("Both passwords are not same", toastOptions);
+      return false;
+    } else if (password != confirmPassword) {
+      toast.error("Both passwords are not same", toastOptions);
+      return false;
+    }
+    return true;
+  };
+
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!isLastStep) return next();
     else {
       e.preventDefault();
       // console.log(userData);
-      await axios
-        .post(`${BASE_URL}${apiVersion}/auth/signup`, {
-          name: userData.fullName,
-          userName: userData.userName,
-          email: userData.email,
-          password: userData.password,
-          passwordConfirm: userData.confirmPassword,
-          photo: userData.photo,
-          phoneNumber: userData.number,
-          enrolledProgramme: userData.course,
-          interestedSubjects: userData.interestedSubjects,
-          strongSubjects: userData.strongSubjects,
-          preferredLanguages: userData.preferredLanguages,
-        })
-        .then(({ data }) => {
-          console.log(data);
-          console.log(data.token);
-          data.data.user.token = data.token;
-          localStorage.setItem(
-            localStorageUser,
-            JSON.stringify(data.data.user)
-          );
-          navigateLink("/");
-        });
+      if (handleValidation()) {
+        await axios
+          .post(`${BASE_URL}${apiVersion}/auth/signup`, {
+            name: userData.fullName,
+            userName: userData.userName,
+            email: userData.email,
+            password: userData.password,
+            passwordConfirm: userData.confirmPassword,
+            photo: userData.photo,
+            phoneNumber: userData.number,
+            enrolledProgramme: userData.course,
+            interestedSubjects: userData.interestedSubjects,
+            strongSubjects: userData.strongSubjects,
+            preferredLanguages: userData.preferredLanguages,
+          })
+          .then(({ data }) => {
+            console.log(data);
+            console.log(data.token);
+            data.data.user.token = data.token;
+            localStorage.setItem(
+              localStorageUser,
+              JSON.stringify(data.data.user)
+            );
+            navigateLink("/");
+          })
+          .catch((data) => {
+            // console.log(data.response.data.error.errors);
+            const errors = data.response.data.error.errors;
+            Object.keys(errors).forEach(function (err, index) {
+              // console.log(errors[err].message);
+              toast.error(errors[err].message, toastOptions);
+            });
+          });
+      }
     }
   };
 
@@ -223,6 +286,7 @@ const NewSignup = () => {
           heading={isFirstStep ? "Get Started!" : "Just a little more..."}
         />
       </RightContainer>
+      <ToastContainer theme="dark" />
     </Section>
   );
 };

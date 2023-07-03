@@ -7,7 +7,7 @@ import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import axios from "axios";
 import { localStorageUser } from "../../utils/globalConstants";
 import { UserCookie } from "../../utils/userCookie";
-import { topNavigator } from "../../utils/helperFunctions";
+import { isValidEmail, topNavigator } from "../../utils/helperFunctions";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -117,17 +117,14 @@ const Signin = () => {
     navigate(link);
   };
 
-  const toastOptions = {
+ const toastOptions = {
     position: toast.POSITION.BOTTOM_RIGHT,
     autoClose: 6000,
     pauseOnHover: true,
     draggable: true,
   };
 
-  function isValidEmail(email: string) {
-    return /\S+@\S+\.\S+/.test(email);
-  }
-
+ 
   const handleValidation = () => {
     const { email, password } = loginData;
     if (email === "" || password === "") {

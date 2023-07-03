@@ -388,7 +388,7 @@ const LandingPage = () => {
             infinite={true}
             showDots={true}
             autoPlay={true}
-            autoPlaySpeed={5000}
+            autoPlaySpeed={3500}
             customTransition="all 1s"
             transitionDuration={1000}
             customDot={<CustomDot />}

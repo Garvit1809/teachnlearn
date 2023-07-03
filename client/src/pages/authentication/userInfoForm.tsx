@@ -83,6 +83,7 @@ const UserInfoForm = (props: UserInfoFormProps) => {
             arr={props.interestedSubjects}
             hasDropdown={true}
             dropdownData={subjects}
+            maxLimit={5}
           />
           {props.interestedSubjects.length != 0 ? (
             <ArrChip
@@ -102,6 +103,7 @@ const UserInfoForm = (props: UserInfoFormProps) => {
             arr={props.strongSubjects}
             hasDropdown={true}
             dropdownData={subjects}
+            maxLimit={5}
           />
           {props.strongSubjects.length != 0 ? (
             <ArrChip

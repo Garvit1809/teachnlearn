@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../general-components/navbar";
-import FooterWrapper from "../general-components/footer/footerWrapper";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
-import LearnCard from "./learnCard";
 import { learnCardProps } from "../../pages/requests/requests";
 import TimeCapsule from "../classroom-comp/timeCapsule";
 import UserChip from "../general-components/userChip";
 import DetailsContainer from "../classroom-comp/detailsContainer";
 import { Arrow, InterestedIcon } from "../general-components/svg";
-import { teachCardProps } from "../../pages/classroom/classrooms";
 import ClassroomCard from "../classroom-comp/classroomCard";
 import { cardSizes } from "../classroom-comp/classroomGrid";
 import BackBtn from "./backBtn";
 import { UserCookie } from "../../utils/userCookie";
 import { getHeaders, topNavigator } from "../../utils/helperFunctions";
 import { teachinCardProps } from "../../types/teachingCardType";
+import Footer from "../general-components/footer/footer";
 // import { classroomProps } from "../../types/classroomType";
 // import { teachingCardProps } from "../../types/classroomType";
 
@@ -393,7 +391,7 @@ const LearnCardOverview = () => {
       ) : (
         <h3>Loading...</h3>
       )}
-      <FooterWrapper />
+      <Footer />
     </>
   );
 };
