@@ -4,6 +4,9 @@ import styled from "styled-components";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunctions";
 import { localStorageUser } from "../../utils/globalConstants";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { UserCookie } from "../../utils/userCookie";
 
 const Section = styled.div`
   display: flex;
@@ -88,7 +91,34 @@ interface toggleProps {
 }
 
 const ModeToggle = (props: toggleProps) => {
-  const [mode, setMode] = useState(props.role);
+  // console.log("ROLE :- " + props.role);
+
+  // const [mode, setMode] = useState(props.role);
+
+  // const [localUser, setLocalUser] = useState<userProps>();
+  const [mode, setMode] = useState<string>();
+
+  const { fetchLocalUserData } = UserCookie();
+
+  useEffect(() => {
+    fetchLocalUserData().then((user) => {
+      setMode(user.role);
+    });
+
+    window.addEventListener("storage", () => {
+      console.log("Change to local storage!");
+      fetchLocalUserData().then((user) => {
+        setMode(user.role);
+      });
+    });
+  }, []);
+
+  const toastOptions = {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 6000,
+    pauseOnHover: true,
+    draggable: true,
+  };
 
   const toggleHandler = async () => {
     if (mode == "learn") {
@@ -107,6 +137,11 @@ const ModeToggle = (props: toggleProps) => {
           user.token = props.userToken;
           console.log(user);
           localStorage.setItem(localStorageUser, JSON.stringify(user));
+          window.dispatchEvent(new Event("storage"));
+          toast.success("Mode updated", toastOptions);
+        })
+        .catch((data) => {
+          toast.error(data.response.data.message);
         });
       setMode("teach");
     } else {
@@ -125,6 +160,11 @@ const ModeToggle = (props: toggleProps) => {
           user.token = props.userToken;
           console.log(user);
           localStorage.setItem(localStorageUser, JSON.stringify(user));
+          window.dispatchEvent(new Event("storage"));
+          toast.success("Mode updated", toastOptions);
+        })
+        .catch((data) => {
+          toast.error(data.response.data.message);
         });
       setMode("learn");
     }
@@ -142,6 +182,7 @@ const ModeToggle = (props: toggleProps) => {
         <Slider className="slider" isChecked={mode == "learn"} />
       </ToggleBtn>
       <TeachText isChecked={mode == "learn"}>Learn Mode</TeachText>
+      <ToastContainer theme="dark" />
     </Section>
   );
 };

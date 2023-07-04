@@ -8,6 +8,7 @@ import NavbarLinks from "./navbarLinks";
 import { topNavigator } from "../../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
 import ModeToggle from "../profile-comp/modeToggle";
+import { localStorageUser } from "../../utils/globalConstants";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -81,6 +82,10 @@ const Navbar = () => {
     topNavigator();
     navigate("/me");
   };
+
+  useEffect(() => {
+    console.log(localUser?.role);
+  }, [localUser]);
 
   return (
     <>

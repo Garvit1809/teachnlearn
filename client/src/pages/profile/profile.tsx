@@ -40,7 +40,7 @@ const Profile = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar  />
       <Section>
         <ProfileOptions setSelectedLeftScreen={setSelectedLeftScreen} />
         <ProfileContainer>{element}</ProfileContainer>

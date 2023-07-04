@@ -243,12 +243,18 @@ const NewSignup = () => {
             navigateLink("/");
           })
           .catch((data) => {
-            // console.log(data.response.data.error.errors);
-            const errors = data.response.data.error.errors;
-            Object.keys(errors).forEach(function (err, index) {
-              // console.log(errors[err].message);
-              toast.error(errors[err].message, toastOptions);
-            });
+            console.log(data);
+            if (!data.response) {
+              toast.error(data.message, toastOptions);
+              return;
+            }
+            const error = data.response.data.message;
+            toast.error(error, toastOptions);
+            // const errors = data.response.data.error.errors;
+            // Object.keys(errors).forEach(function (err, index) {
+            //   // console.log(errors[err].message);
+            //   toast.error(errors[err].message, toastOptions);
+            // });
           });
       }
     }

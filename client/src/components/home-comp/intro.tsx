@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import IntroImg from "../../assets/home-intro-img.png";
 // import Arrow from "../../assets/Arrow.svg";
 import { Arrow } from "../general-components/svg";
 import { Link, useNavigate } from "react-router-dom";
 import { topNavigator } from "../../utils/helperFunctions";
+import { UserCookie } from "../../utils/userCookie";
+import { localStorageUser } from "../../utils/globalConstants";
 
 const Section = styled.div`
   /* border: 1px solid pink; */
@@ -108,6 +110,16 @@ const Intro = ({ role }: introProps) => {
     topNavigator();
     navigate(link);
   };
+
+  // const [role, setRole] = useState();
+
+  // const { fetchLocalUserData } = UserCookie();
+
+  // useEffect(() => {
+  //   fetchLocalUserData().then((data) => {
+  //     setRole(data.role);
+  //   });
+  // }, []);
 
   return (
     <Section>
