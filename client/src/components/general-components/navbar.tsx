@@ -7,6 +7,7 @@ import { UserCookie, userProps } from "../../utils/userCookie";
 import NavbarLinks from "./navbarLinks";
 import { topNavigator } from "../../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
+import ModeToggle from "../profile-comp/modeToggle";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -57,6 +58,12 @@ const UserWrapper = styled.div`
   }
 `;
 
+const ModeWrapper = styled.div`
+  /* border: 1px solid red; */
+  width: 60%;
+  margin: 0 auto 2.5rem;
+`;
+
 const Navbar = () => {
   const [localUser, setLocalUser] = useState<userProps>();
 
@@ -100,6 +107,11 @@ const Navbar = () => {
           </UserWrapper>
         )}
       </Section>
+      <ModeWrapper>
+        {localUser && (
+          <ModeToggle role={localUser.role} userToken={localUser.token} />
+        )}
+      </ModeWrapper>
       <NavbarLinks />
     </>
   );

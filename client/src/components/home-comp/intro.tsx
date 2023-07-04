@@ -101,7 +101,7 @@ interface introProps {
   role: string;
 }
 
-const Intro = (props: introProps) => {
+const Intro = ({ role }: introProps) => {
   const navigate = useNavigate();
 
   const navigationHandler = (link: string) => {
@@ -121,15 +121,21 @@ const Intro = (props: introProps) => {
           fun for everyone, regardless of prior knowledge.
         </p>
         <Buttons>
-          <button onClick={() => navigationHandler("/classes")}>
-            <span>See all classes</span>
+          <button
+            onClick={() =>
+              navigationHandler(role == "learn" ? "/classes" : "/requests")
+            }
+          >
+            <span>
+              {role == "learn" ? "See all classes" : "See all requests"}
+            </span>
             <Arrow strokeColor="white" />
           </button>
           <button
             className="request"
-            onClick={() => navigationHandler(`/create-${props.role}-request`)}
+            onClick={() => navigationHandler(`/create-${role}-request`)}
           >
-            <span>Create a request</span>
+            <span>Create a {role == "learn" ? "request" : "class"}</span>
             <Arrow strokeColor="#364152" />
           </button>
         </Buttons>

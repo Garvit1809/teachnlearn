@@ -10,6 +10,7 @@ const Section = styled.div`
   flex-direction: row;
   /* justify-content: space-between; */
   align-items: center;
+  justify-content: center;
   padding: 20px 28px;
   gap: 22px;
   background: #094067;
