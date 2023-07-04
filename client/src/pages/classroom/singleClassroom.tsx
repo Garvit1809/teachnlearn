@@ -3,7 +3,6 @@ import Navbar from "../../components/general-components/navbar";
 import styled from "styled-components";
 import Overview from "../../components/classroom-comp/overview";
 import Participants from "../../components/classroom-comp/participants";
-import Footer from "../../components/general-components/footer/footer";
 import Classroom from "../../components/classroom-comp/classroom";
 import HorizontalNavigator from "../../components/general-components/horizontalNavigator";
 import FooterWrapper from "../../components/general-components/footer/footerWrapper";
@@ -12,9 +11,8 @@ import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunctions";
 import { UserCookie } from "../../utils/userCookie";
-import { teachCardProps } from "./classrooms";
 import BackBtn from "../../components/request-comp/backBtn";
-import { teachingCardProps } from "../../types/classroomType";
+import { classroomProps } from "../../types/classroomType";
 
 const Section = styled.div`
   /* margin: 2rem 0 3rem; */
@@ -37,7 +35,7 @@ const SingleClassroom = () => {
   const [userToken, setUserToken] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
 
-  const [classroom, setClassroom] = useState<teachingCardProps>();
+  const [classroom, setClassroom] = useState<classroomProps>();
 
   const [backLink, setBackLink] = useState<string>("/classes");
 
