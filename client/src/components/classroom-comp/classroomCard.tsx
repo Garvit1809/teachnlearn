@@ -235,12 +235,12 @@ const ClassroomCard = (props: classCardProps) => {
 
   const checkEnrolledClass = () => {
     if (localUser) {
-      console.log(props.teachCard.studentsEnrolled);
+      // console.log(props.teachCard.studentsEnrolled);
 
       const bool = props.teachCard.studentsEnrolled.filter((student) => {
         return student == localUser._id;
       });
-      console.log(bool);
+      // console.log(bool);
       return bool.length;
     } else {
       return null;

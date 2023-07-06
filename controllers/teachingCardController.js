@@ -359,7 +359,7 @@ exports.getUpcomingClasses = catchAsync(async (req, res, next) => {
 
   const features = new APIFeatures(
     TeachingCard.find({
-      // classEndsAt: { $gte: currentDate },
+      classEndsAt: { $gte: currentDate },
       $or: [
         {
           studentsEnrolled: { $in: [userId] },
@@ -443,13 +443,13 @@ exports.updateClassLink = catchAsync(async (req, res, next) => {
 exports.topTeachCards = catchAsync(async (req, res, next) => {
   const currentDate = new Date();
   const stats = await TeachingCard.aggregate([
-    // {
-    //   $match: {
-    //     dueDate: {
-    //       $gte: currentDate,
-    //     },
-    //   },
-    // },
+    {
+      $match: {
+        dueDate: {
+          $gte: currentDate,
+        },
+      },
+    },
     {
       $project: {
         createdBy: 1,

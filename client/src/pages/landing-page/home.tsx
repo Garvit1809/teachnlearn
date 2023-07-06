@@ -116,7 +116,7 @@ const Home = () => {
             cardArr={upcomingClasses}
           />
         )}
-        {learnCards && (
+        {learnCards && learnCards.length != 0 && (
           <RequestCardWrapper
             heading="Rising Requests"
             requestCard={learnCards}

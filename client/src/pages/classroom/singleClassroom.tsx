@@ -5,7 +5,6 @@ import Overview from "../../components/classroom-comp/overview";
 import Participants from "../../components/classroom-comp/participants";
 import Classroom from "../../components/classroom-comp/classroom";
 import HorizontalNavigator from "../../components/general-components/horizontalNavigator";
-import FooterWrapper from "../../components/general-components/footer/footerWrapper";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
@@ -13,10 +12,12 @@ import { getHeaders } from "../../utils/helperFunctions";
 import { UserCookie } from "../../utils/userCookie";
 import BackBtn from "../../components/request-comp/backBtn";
 import { classroomProps } from "../../types/classroomType";
+import Footer from "../../components/general-components/footer/footer";
 
 const Section = styled.div`
   /* margin: 2rem 0 3rem; */
-  padding: 2rem 15vw 0;
+  padding: 0rem 15vw;
+  margin-top: 4rem;
   display: flex;
   flex-direction: column;
   /* border: 1px solid red; */
@@ -40,6 +41,8 @@ const SingleClassroom = () => {
   const [backLink, setBackLink] = useState<string>("/classes");
 
   const location = useLocation();
+
+  // location props :- classroomId || backPageLink || navLink || elemType
 
   const { fetchLocalUserData } = UserCookie();
 
@@ -154,7 +157,7 @@ const SingleClassroom = () => {
         />
         <ElementWrapper>{element}</ElementWrapper>
       </Section>
-      <FooterWrapper />
+      <Footer />
     </>
   );
 };

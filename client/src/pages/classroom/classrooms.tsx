@@ -70,6 +70,8 @@ const Classrooms = () => {
 
   const location = useLocation();
 
+  // location props :- elemLink
+
   const { fetchLocalUserToken } = UserCookie();
 
   useEffect(() => {

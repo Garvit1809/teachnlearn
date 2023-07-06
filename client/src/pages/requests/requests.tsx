@@ -7,12 +7,16 @@ import LearnCard from "../../components/request-comp/learnCard";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import axios from "axios";
 import Footer from "../../components/general-components/footer/footer";
+import LoadMore from "../../components/general-components/loadMore";
+import { DATA_LIMIT } from "../../utils/globalConstants";
+import { UserCookie } from "../../utils/userCookie";
+import { getHeaders } from "../../utils/helperFunctions";
 
 const Section = styled.div`
   padding: 0 6.3vw;
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 4rem;
   /* margin-top: 4rem; */
 `;
 
@@ -43,19 +47,55 @@ export interface learnCardProps {
 }
 
 const Requests = () => {
-  const [learnCards, setLearnCards] = useState<Array<learnCardProps>>();
+  const [learnCards, setLearnCards] = useState<Array<learnCardProps>>([]);
+  const [requestPageSet, setrequestPageSet] = useState<number>(1);
+  const [hasMoreData, sethasMoreData] = useState(false);
+
+  const [userToken, setUserToken] = useState<string>();
+
+  const { fetchLocalUserToken } = UserCookie();
+
+  useEffect(() => {
+    fetchLocalUserToken().then((token) => {
+      setUserToken(token);
+    });
+  }, []);
+
+  const checkMoreData = (arr: Array<any>) => {
+    if (arr.length == 0) {
+      sethasMoreData(false);
+      return;
+    } else if (arr.length % DATA_LIMIT != 0) {
+      sethasMoreData(false);
+      return;
+    }
+    sethasMoreData(true);
+  };
 
   const fetchLearnCards = async () => {
-    await axios.get(`${BASE_URL}${apiVersion}/learn`).then(({ data }) => {
-      console.log(data.data.data);
-      const learnCardData = data.data.data;
-      setLearnCards(learnCardData);
-    });
+    await axios
+      .get(`${BASE_URL}${apiVersion}/learn`, {
+        params: {
+          limit: DATA_LIMIT,
+          page: requestPageSet,
+        },
+        headers: getHeaders(userToken ?? ""),
+      })
+      .then(({ data }) => {
+        console.log(data);
+        const learnCardData = data.data.data;
+        checkMoreData(learnCardData);
+        setLearnCards((prev) => [...prev, ...learnCardData]);
+        setrequestPageSet((prev) => prev + 1);
+      });
   };
 
   useEffect(() => {
-    fetchLearnCards();
-  }, []);
+    if (userToken) {
+      fetchLearnCards();
+      console.log("CHECKIN");
+    }
+  }, [userToken]);
 
   return (
     <>
@@ -69,6 +109,7 @@ const Requests = () => {
             })}
           </CardGrid>
         ) : null}
+        {learnCards && hasMoreData && <LoadMore onClick={fetchLearnCards} />}
       </Section>
       <Footer />
     </>

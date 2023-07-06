@@ -27,6 +27,13 @@ const Announcements = styled.div`
   row-gap: 2.5rem;
 `;
 
+const NoAnnouncement = styled.h2`
+  /* border: 1px solid red; */
+  margin-top: 1rem;
+  font-size: 2rem;
+  font-weight: 600;
+`;
+
 interface classProps {
   topic: string;
   cardBanner: string;
@@ -83,12 +90,16 @@ const Classroom = (props: classProps) => {
           )}
           <JoinCall callLink={props.callLink} />
         </AdminContainer>
-        <Announcements>
-          {announcements &&
-            announcements.map((announcement, index) => {
-              return <Announcement {...announcement} key={index} />;
-            })}
-        </Announcements>
+        {announcements?.length != 0 ? (
+          <Announcements>
+            {announcements &&
+              announcements.map((announcement, index) => {
+                return <Announcement {...announcement} key={index} />;
+              })}
+          </Announcements>
+        ) : (
+          <NoAnnouncement>No announcements yet!!</NoAnnouncement>
+        )}
       </ClassroomContainer>
     </>
   );

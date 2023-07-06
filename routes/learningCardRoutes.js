@@ -8,7 +8,7 @@ router.get("/top-requests", protect, learningCardController.topLearnCards);
 
 router
   .route("/")
-  .get(learningCardController.getAllLearnCards)
+  .get(protect, learningCardController.getAllLearnCards)
   .post(protect, learningCardController.createLearnCard);
 
 router.get("/:learnCardId", learningCardController.getOneLearnCard);
