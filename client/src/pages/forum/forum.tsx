@@ -12,6 +12,7 @@ import { PostBtn } from "./singleForum";
 import Footer from "../../components/general-components/footer/footer";
 import LoadMore from "../../components/general-components/loadMore";
 import { DATA_LIMIT } from "../../utils/globalConstants";
+import Loader from "../../components/general-components/loader";
 
 const Section = styled.div`
   /* border: 1px solid brown; */
@@ -67,6 +68,9 @@ const Forum = () => {
   const [dataLimit, setDataLimit] = useState(2);
   const [hasMoreData, sethasMoreData] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(true);
+  const [loaderLoading, setLoaderLoading] = useState(true);
+
   const { fetchLocalUserToken } = UserCookie();
 
   useEffect(() => {
@@ -87,6 +91,7 @@ const Forum = () => {
   };
 
   async function fetchAllForums() {
+    setLoaderLoading(true);
     await axios
       .get(`${BASE_URL}${apiVersion}/forum`, {
         params: {
@@ -97,10 +102,17 @@ const Forum = () => {
       })
       .then(({ data }) => {
         const forums = data.data.data;
-        checkMoreData(forums);
         console.log(forums);
+        checkMoreData(forums);
         setForums((prev) => [...prev, ...forums]);
+        setIsLoading(false);
+        setLoaderLoading(false);
         setForumPageSet((prev) => prev + 1);
+      })
+      .catch((data) => {
+        console.log(data);
+        setIsLoading(false);
+        setLoaderLoading(false);
       });
   }
 
@@ -126,13 +138,19 @@ const Forum = () => {
           <SearchBar placeholderText="Search n forums..." />
         </TopBar>
         <ForumGrid>
-          {forums &&
+          {isLoading ? (
+            <Loader />
+          ) : (
+            forums &&
             userToken &&
             forums.map((forum, index) => {
               return <ForumCard key={index} {...forum} userToken={userToken} />;
-            })}
+            })
+          )}
         </ForumGrid>
-        {forums && hasMoreData && <LoadMore onClick={fetchAllForums} />}
+        {forums && hasMoreData && (
+          <LoadMore loaderLoading={loaderLoading} onClick={fetchAllForums} />
+        )}
       </Section>
       <Footer />
     </>

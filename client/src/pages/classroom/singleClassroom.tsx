@@ -35,9 +35,9 @@ const SingleClassroom = () => {
   const [classroomId, setClassroomId] = useState<string>();
   const [userToken, setUserToken] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
-
   const [classroom, setClassroom] = useState<classroomProps>();
-
+  const [activeLink, setActiveLink] = useState("overview");
+  const [classElemType, setClassElemType] = useState<string>("all classes");
   const [backLink, setBackLink] = useState<string>("/classes");
 
   const location = useLocation();
@@ -47,7 +47,9 @@ const SingleClassroom = () => {
   const { fetchLocalUserData } = UserCookie();
 
   useEffect(() => {
+    console.log("CHECKING");
     console.log(location.state);
+
     const id = location.state.classroomId;
     setClassroomId(id);
 
@@ -56,11 +58,20 @@ const SingleClassroom = () => {
       setBackLink(link);
     }
 
+    const navLink = location.state?.navLink;
+    if (navLink) {
+      setActiveLink(navLink);
+    }
+    const elemLink = location.state?.elemType;
+    if (elemLink) {
+      setClassElemType(elemLink);
+    }
+
     fetchLocalUserData().then((data) => {
       setUserToken(data.token);
       setUserId(data._id);
     });
-  }, [location]);
+  }, [location.state]);
 
   async function fetchClassroom() {
     await axios
@@ -78,21 +89,7 @@ const SingleClassroom = () => {
     if (classroomId && userToken) {
       fetchClassroom();
     }
-  }, [classroomId]);
-
-  const [activeLink, setActiveLink] = useState("overview");
-  const [classElemType, setClassElemType] = useState<string>("all classes");
-
-  useEffect(() => {
-    const link = location.state?.navLink;
-    if (link) {
-      setActiveLink(link);
-    }
-    const elemLink = location.state?.elemType;
-    if (elemLink) {
-      setClassElemType(elemLink);
-    }
-  }, [location]);
+  }, [classroomId, userToken]);
 
   const [element, setElement] = useState<ReactElement>();
 
@@ -123,6 +120,7 @@ const SingleClassroom = () => {
             isTeacher={checkTeacher(userId, classroom.createdBy._id)}
             teachCardId={classroom._id}
             userToken={userToken}
+            classElemType={classElemType}
           />
         );
       } else if (activeLink == "people") {

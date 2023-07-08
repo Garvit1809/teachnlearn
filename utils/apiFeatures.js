@@ -13,8 +13,8 @@ class APIFeatures {
     // { difficulty: 'easy, duration: { $gte: 5 }} --> Obj we pass in query filter
     // { difficulty: 'easy, duration: { gte: 5 }} --> Obj we get from req.query
     let queryStr = JSON.stringify(queryObj);
-    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-    // console.log(JSON.parse(queryStr));
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `${match}`);
+    console.log(JSON.parse(queryStr));
 
     this.query = this.query.find(JSON.parse(queryStr));
 

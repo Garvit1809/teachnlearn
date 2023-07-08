@@ -11,6 +11,7 @@ import LoadMore from "../../components/general-components/loadMore";
 import { DATA_LIMIT } from "../../utils/globalConstants";
 import { UserCookie } from "../../utils/userCookie";
 import { getHeaders } from "../../utils/helperFunctions";
+import Loader from "../../components/general-components/loader";
 
 const Section = styled.div`
   padding: 0 6.3vw;
@@ -53,6 +54,9 @@ const Requests = () => {
 
   const [userToken, setUserToken] = useState<string>();
 
+  const [isLoading, setIsLoading] = useState(true);
+  const [loaderLoading, setLoaderLoading] = useState(true);
+
   const { fetchLocalUserToken } = UserCookie();
 
   useEffect(() => {
@@ -73,11 +77,16 @@ const Requests = () => {
   };
 
   const fetchLearnCards = async () => {
+    setLoaderLoading(true);
+    const curentDate = new Date();
     await axios
       .get(`${BASE_URL}${apiVersion}/learn`, {
         params: {
           limit: DATA_LIMIT,
           page: requestPageSet,
+          // dueDate: {
+          // $gte: curentDate,
+          // },
         },
         headers: getHeaders(userToken ?? ""),
       })
@@ -86,7 +95,14 @@ const Requests = () => {
         const learnCardData = data.data.data;
         checkMoreData(learnCardData);
         setLearnCards((prev) => [...prev, ...learnCardData]);
+        setIsLoading(false);
+        setLoaderLoading(false);
         setrequestPageSet((prev) => prev + 1);
+      })
+      .catch((data) => {
+        console.log(data);
+        setIsLoading(false);
+        setLoaderLoading(false);
       });
   };
 
@@ -102,14 +118,18 @@ const Requests = () => {
       <Navbar />
       <Section>
         <Intro role="learn" />
-        {learnCards ? (
+        {isLoading ? (
+          <Loader />
+        ) : learnCards.length != 0 ? (
           <CardGrid>
             {learnCards.map((card, index) => {
               return <LearnCard key={index} {...card} />;
             })}
           </CardGrid>
         ) : null}
-        {learnCards && hasMoreData && <LoadMore onClick={fetchLearnCards} />}
+        {learnCards && hasMoreData && (
+          <LoadMore loaderLoading={loaderLoading} onClick={fetchLearnCards} />
+        )}
       </Section>
       <Footer />
     </>

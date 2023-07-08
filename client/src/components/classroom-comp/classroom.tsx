@@ -41,6 +41,7 @@ interface classProps {
   isTeacher: boolean;
   teachCardId: string;
   userToken: string;
+  classElemType: string;
 }
 
 export interface announcementProps {
@@ -78,6 +79,11 @@ const Classroom = (props: classProps) => {
     if (props.userToken) {
       fetchAnnouncements();
     }
+
+    window.addEventListener("announcement", () => {
+      console.log("Announcement added!");
+      fetchAnnouncements();
+    });
   }, [props.userToken]);
 
   return (

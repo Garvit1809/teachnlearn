@@ -16,6 +16,7 @@ import { UserCookie } from "../../utils/userCookie";
 import { getHeaders, topNavigator } from "../../utils/helperFunctions";
 import { teachinCardProps } from "../../types/teachingCardType";
 import Footer from "../general-components/footer/footer";
+import Loader from "../general-components/loader";
 // import { classroomProps } from "../../types/classroomType";
 // import { teachingCardProps } from "../../types/classroomType";
 
@@ -24,9 +25,21 @@ const Section = styled.div`
   padding: 0 6.3vw;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  margin-top: 2.5rem;
+  margin-top: 4rem;
   gap: 2rem;
+
+  div.went-wrong {
+    /* border: 1px solid red; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 26px;
+    padding: 1rem 0;
+    line-height: 25px;
+  }
 `;
 
 const TopicCont = styled.div`
@@ -75,6 +88,7 @@ const CreateTeachCardBtn = styled.div`
     border-radius: 8px;
     border: none;
     outline: none;
+    cursor: pointer;
 
     font-family: "Nunito";
     font-style: normal;
@@ -189,6 +203,7 @@ const TagCont = styled.div`
 `;
 
 const TeachCardsOnLearnCard = styled.div`
+  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
   row-gap: 2rem;
@@ -212,6 +227,9 @@ const LearnCardOverview = () => {
   const [teachCards, setTeachCards] = useState<Array<teachinCardProps>>();
   const [backLink, setBackLink] = useState<string>("/requests");
 
+  const [isLoading, setIsLoading] = useState(true);
+  const [teachCardLoader, setTeachCardLoader] = useState(true);
+
   const [totalInterestedStudents, setTotalInterestedStudents] =
     useState<number>();
 
@@ -234,6 +252,7 @@ const LearnCardOverview = () => {
         const cardData = data.data.data[0];
         console.log(cardData);
         setlearnCard(cardData);
+        setIsLoading(false);
         setTotalInterestedStudents(cardData.interestedStudents.length);
       });
   }
@@ -244,6 +263,7 @@ const LearnCardOverview = () => {
       .then(({ data }) => {
         // console.log(data.data.data);
         setTeachCards(data.data.data);
+        setTeachCardLoader(false);
       });
   }
 
@@ -316,81 +336,91 @@ const LearnCardOverview = () => {
   return (
     <>
       <Navbar />
-      {learnCard && userId ? (
-        <Section>
-          <BackBtn link={backLink} />
-          <TopicCont>
-            <h2>{learnCard.topic}</h2>
-          </TopicCont>
-          <OverviewContainer>
-            <LeftContainer>
-              <LearnCardDetailContainer>
-                <TimeCapsule date={learnCard.dueDate} />
-                <TagCont>
-                  {learnCard.tags.map((tag, index) => {
-                    return (
-                      <div key={index}>
-                        <span>{tag}</span>
-                      </div>
-                    );
-                  })}
-                </TagCont>
-              </LearnCardDetailContainer>
-              <CreateTeachCardBtn>
-                <button type="button" onClick={teachCardNavigator}>
-                  <span>Create teach Card</span>
-                  <Arrow strokeColor="#FFFFFF" />
-                </button>
-              </CreateTeachCardBtn>
-            </LeftContainer>
-            <CardOverview>
-              <ChipContainer>
-                <UserChip
-                  name={learnCard?.createdBy.name}
-                  photo={learnCard.createdBy.photo}
-                  imgBorder="white"
-                  textColor="black"
+      <Section>
+        <BackBtn link={backLink} />
+        {isLoading ? (
+          <Loader />
+        ) : learnCard && userId ? (
+          <>
+            <TopicCont>
+              <h2>{learnCard.topic}</h2>
+            </TopicCont>
+            <OverviewContainer>
+              <LeftContainer>
+                <LearnCardDetailContainer>
+                  <TimeCapsule date={learnCard.dueDate} />
+                  <TagCont>
+                    {learnCard.tags.map((tag, index) => {
+                      return (
+                        <div key={index}>
+                          <span>{tag}</span>
+                        </div>
+                      );
+                    })}
+                  </TagCont>
+                </LearnCardDetailContainer>
+                <CreateTeachCardBtn>
+                  <button type="button" onClick={teachCardNavigator}>
+                    <span>Create teach Card</span>
+                    <Arrow strokeColor="#FFFFFF" />
+                  </button>
+                </CreateTeachCardBtn>
+              </LeftContainer>
+              <CardOverview>
+                <ChipContainer>
+                  <UserChip
+                    name={learnCard?.createdBy.name}
+                    photo={learnCard.createdBy.photo}
+                    imgBorder="white"
+                    textColor="black"
+                  />
+                  <InterestedCont>
+                    <InterestedIcon />
+                    {/* <h3>{learnCard.interestedStudents.length} Interested</h3> */}
+                    <h3>{totalInterestedStudents} Interested</h3>
+                  </InterestedCont>
+                </ChipContainer>
+                <DetailsContainer
+                  desciption={learnCard.description}
+                  expectations={learnCard.expectations}
                 />
-                <InterestedCont>
-                  <InterestedIcon />
-                  {/* <h3>{learnCard.interestedStudents.length} Interested</h3> */}
-                  <h3>{totalInterestedStudents} Interested</h3>
-                </InterestedCont>
-              </ChipContainer>
-              <DetailsContainer
-                desciption={learnCard.description}
-                expectations={learnCard.expectations}
-              />
-              {userId &&
-                (userId === learnCard.createdBy._id ? null : (
-                  <BottonContainer
-                    isInterested={learnCard.interestedStudents.includes(userId)}
-                  >
-                    <button onClick={interestedHandler}>Interested</button>
-                  </BottonContainer>
-                ))}
-            </CardOverview>
-          </OverviewContainer>
-          {teachCards?.length != 0 ? (
-            <TeachCardsOnLearnCard>
-              <h2>Teach Cards on this Learn Card</h2>
-              <TeachCardGrid>
-                {teachCards?.map((teachCard, index) => {
-                  return (
-                    <ClassroomCard
-                      teachCard={teachCard}
-                      cssArr={cardSizes}
-                      key={index}
-                    />
-                  );
-                })}
-              </TeachCardGrid>
-            </TeachCardsOnLearnCard>
-          ) : null}
-        </Section>
-      ) : (
-        <h3>Loading...</h3>
-      )}
+                {userId &&
+                  (userId === learnCard.createdBy._id ? null : (
+                    <BottonContainer
+                      isInterested={learnCard.interestedStudents.includes(
+                        userId
+                      )}
+                    >
+                      <button onClick={interestedHandler}>Interested</button>
+                    </BottonContainer>
+                  ))}
+              </CardOverview>
+            </OverviewContainer>
+            {teachCards?.length != 0 ? (
+              <TeachCardsOnLearnCard>
+                <h2>Teach Cards on this Learn Card</h2>
+                {teachCardLoader ? (
+                  <Loader />
+                ) : (
+                  <TeachCardGrid>
+                    {teachCards?.map((teachCard, index) => {
+                      return (
+                        <ClassroomCard
+                          teachCard={teachCard}
+                          cssArr={cardSizes}
+                          key={index}
+                        />
+                      );
+                    })}
+                  </TeachCardGrid>
+                )}
+              </TeachCardsOnLearnCard>
+            ) : null}
+          </>
+        ) : (
+          <div className="went-wrong">Something went wrong</div>
+        )}
+      </Section>
       <Footer />
     </>
   );

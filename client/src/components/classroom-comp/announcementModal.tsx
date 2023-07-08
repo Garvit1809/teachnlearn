@@ -41,9 +41,12 @@ const Header = styled.div`
 interface announcementModalProps {
   teachCardId: string;
   closeModal: any;
+  classElemType: string;
 }
 
 const AnnouncementModal = (props: announcementModalProps) => {
+  console.log(props.classElemType);
+
   const [userToken, setUserToken] = useState<string>();
 
   const { fetchLocalUserToken } = UserCookie();
@@ -76,13 +79,16 @@ const AnnouncementModal = (props: announcementModalProps) => {
       )
       .then(({ data }) => {
         console.log(data);
+        window.dispatchEvent(new Event("announcement"));
         props.closeModal();
-        navigate(`/classes/class/${props.teachCardId}`, {
-          state: {
-            classroomId: props.teachCardId,
-            navLink: "overview",
-          },
-        });
+        // window.location.reload();
+        // navigate(`/classes/class/${props.teachCardId}`, {
+        //   state: {
+        //     classroomId: props.teachCardId,
+        //     navLink: "classroom",
+        //     elemType: props.classElemType,
+        //   },
+        // });
       });
   };
 

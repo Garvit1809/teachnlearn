@@ -14,6 +14,7 @@ import moment from "moment";
 import { UserCookie } from "../../utils/userCookie";
 import RatingContainer from "../../components/forum-components/ratingContainer";
 import Footer from "../../components/general-components/footer/footer";
+import Loader from "../../components/general-components/loader";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -26,6 +27,19 @@ const Section = styled.div`
   margin: 2.5rem auto;
   display: flex;
   flex-direction: column;
+
+  div.went-wrong {
+    /* border: 1px solid red; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 26px;
+    padding: 1rem 0;
+    line-height: 25px;
+  }
 `;
 
 const HeaderBtns = styled.div`
@@ -136,6 +150,8 @@ const SingleForum = () => {
   const [forumId, setForumId] = useState<string>();
   const [userToken, setuserToken] = useState<string>("");
 
+  const [isLoading, setIsLoading] = useState(true);
+
   const location = useLocation();
 
   useEffect(() => {
@@ -166,6 +182,11 @@ const SingleForum = () => {
         const forumData = data.data.data[0];
         console.log(data.data.data[0]);
         setForum(forumData);
+        setIsLoading(false);
+      })
+      .catch((data) => {
+        console.log(data);
+        setIsLoading(false);
       });
   }
 
@@ -178,13 +199,15 @@ const SingleForum = () => {
   return (
     <>
       <Navbar />
-      {forum && (
-        <Section>
-          <HeaderBtns>
-            <BackBtn link="/forums" />
-            <PostAnswer forumId={forum?._id} />
-          </HeaderBtns>
-          {forum && (
+      <Section>
+        {isLoading ? (
+          <Loader />
+        ) : forum ? (
+          <>
+            <HeaderBtns>
+              <BackBtn link="/forums" />
+              <PostAnswer forumId={forum?._id} />
+            </HeaderBtns>
             <ForumContainer>
               <QuestionContainer
                 createdBy={forum.createdBy}
@@ -227,9 +250,11 @@ const SingleForum = () => {
                 })}
               </AnswerWrapper>
             </ForumContainer>
-          )}
-        </Section>
-      )}
+          </>
+        ) : (
+          <div className="went-wrong">Something went wrong</div>
+        )}
+      </Section>
       <Footer />
     </>
   );
