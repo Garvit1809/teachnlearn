@@ -74,6 +74,13 @@ const Navbar = () => {
     fetchLocalUserData().then((user) => {
       setLocalUser(user);
     });
+
+    window.addEventListener("storage", () => {
+      console.log("Change to local storage!");
+      fetchLocalUserData().then((user) => {
+        setLocalUser(user);
+      });
+    });
   }, []);
 
   const navigate = useNavigate();
@@ -99,7 +106,7 @@ const Navbar = () => {
         {localUser && (
           <UserWrapper onClick={profileNavigation}>
             <UserChip
-              // name={localUser.name.split(" ")[0]}
+              // name={localUser.name}
               name={
                 localUser.name.length > 16
                   ? localUser.name.split(" ")[0]

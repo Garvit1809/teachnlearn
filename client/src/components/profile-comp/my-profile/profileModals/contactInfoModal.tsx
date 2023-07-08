@@ -85,6 +85,7 @@ const ContactInfoModal = (props: modalProps) => {
     autoClose: 6000,
     pauseOnHover: true,
     draggable: true,
+    toastId: "toast1",
   };
 
   const handleValidation = () => {

@@ -9,6 +9,7 @@ import { BASE_URL, apiVersion } from "../../../../utils/apiRoutes";
 import { getHeaders } from "../../../../utils/helperFunctions";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { localStorageUser } from "../../../../utils/globalConstants";
 
 const Section = styled.div`
   width: 50vw;
@@ -116,8 +117,8 @@ const UserInfoModal = (props: modalProps) => {
           console.log(data.updatedUser);
           const user = data.updatedUser;
           user.token = props.userToken;
-          // localStorage.setItem(localStorageUser, JSON.stringify(user));
-          // window.dispatchEvent(new Event("storage"));
+          localStorage.setItem(localStorageUser, JSON.stringify(user));
+          window.dispatchEvent(new Event("storage"));
           // props.closeModal();
           window.location.reload();
         })
