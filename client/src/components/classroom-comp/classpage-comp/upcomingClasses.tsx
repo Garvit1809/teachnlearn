@@ -10,6 +10,7 @@ import { teachinCardProps } from "../../../types/teachingCardType";
 import NoClassComp from "../noClassComp";
 import LoadMore from "../../general-components/loadMore";
 import { DATA_LIMIT } from "../../../utils/globalConstants";
+import Loader from "../../general-components/loader";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -25,6 +26,9 @@ const UpcomingClasses = (props: classElemProps) => {
   const [dataLimit, setDataLimit] = useState(2);
   const [hasMoreData, sethasMoreData] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(true);
+  const [loaderLoading, setLoaderLoading] = useState(true);
+
   const checkMoreData = (arr: Array<any>) => {
     if (arr.length == 0) {
       sethasMoreData(false);
@@ -37,6 +41,7 @@ const UpcomingClasses = (props: classElemProps) => {
   };
 
   async function fetchAllUpcomingClasses() {
+    setLoaderLoading(true);
     await axios
       .get(`${BASE_URL}${apiVersion}/user/myclasses/upcoming`, {
         params: {
@@ -51,7 +56,14 @@ const UpcomingClasses = (props: classElemProps) => {
         console.log(classes);
         checkMoreData(classes);
         setTeachCards((prev) => [...prev, ...classes]);
+        setIsLoading(false);
+        setLoaderLoading(false);
         setUpcomingClassSet((prev) => prev + 1);
+      })
+      .catch((data) => {
+        console.log(data);
+        setIsLoading(false);
+        setLoaderLoading(false);
       });
   }
 
@@ -63,14 +75,23 @@ const UpcomingClasses = (props: classElemProps) => {
 
   return (
     <Section>
-      {teachCards.length != 0 ? (
+      {isLoading ? (
+        <Loader />
+      ) : teachCards.length != 0 ? (
         <ClassroomGrid teachCards={teachCards} elemType="upcoming" />
       ) : (
-        <NoClassComp elemLink="all classes" heading="No upcoming classes" subHeading="You don't have any upcoming classes. Enroll in a class and start your
-        learning" />
+        <NoClassComp
+          elemLink="all classes"
+          heading="No upcoming classes"
+          subHeading="You don't have any upcoming classes. Enroll in a class and start your
+        learning"
+        />
       )}
       {teachCards && hasMoreData && (
-        <LoadMore onClick={fetchAllUpcomingClasses} />
+        <LoadMore
+          loaderLoading={loaderLoading}
+          onClick={fetchAllUpcomingClasses}
+        />
       )}
     </Section>
   );

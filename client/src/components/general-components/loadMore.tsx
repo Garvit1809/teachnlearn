@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { TailSpin } from "react-loader-spinner";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -26,12 +27,25 @@ const Section = styled.div`
 
 interface loadMoreProps {
   onClick: any;
+  loaderLoading: boolean;
 }
 
 const LoadMore = (props: loadMoreProps) => {
   return (
     <Section>
-      <span onClick={props.onClick}>Load More</span>
+      <span onClick={props.onClick}>
+        {props.loaderLoading ? (
+          <TailSpin
+            height="30"
+            width="30"
+            color="#ffffff"
+            ariaLabel="tail-spin-loading"
+            radius="1"
+          />
+        ) : (
+          "Load More"
+        )}
+      </span>
     </Section>
   );
 };

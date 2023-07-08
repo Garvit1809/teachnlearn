@@ -10,6 +10,7 @@ import { teachinCardProps } from "../../../types/teachingCardType";
 import { DATA_LIMIT } from "../../../utils/globalConstants";
 import LoadMore from "../../general-components/loadMore";
 import NoClassComp from "../noClassComp";
+import Loader from "../../general-components/loader";
 
 const Section = styled.div`
   display: flex;
@@ -24,6 +25,9 @@ const CompletedClasses = (props: classElemProps) => {
   const [dataLimit, setDataLimit] = useState(2);
   const [hasMoreData, sethasMoreData] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(true);
+  const [loaderLoading, setLoaderLoading] = useState(true);
+
   const checkMoreData = (arr: Array<any>) => {
     if (arr.length == 0) {
       sethasMoreData(false);
@@ -36,6 +40,7 @@ const CompletedClasses = (props: classElemProps) => {
   };
 
   async function fetchAllCompletedClasses() {
+    setLoaderLoading(true);
     await axios
       .get(`${BASE_URL}${apiVersion}/user/myclasses/completed`, {
         params: {
@@ -50,7 +55,14 @@ const CompletedClasses = (props: classElemProps) => {
         const classes = data.completedClasses;
         checkMoreData(classes);
         setTeachCards((prev) => [...prev, ...classes]);
+        setIsLoading(false);
+        setLoaderLoading(false);
         setCompletedClassSet((prev) => prev + 1);
+      })
+      .catch((data) => {
+        console.log(data);
+        setIsLoading(false);
+        setLoaderLoading(false);
       });
   }
 
@@ -62,7 +74,9 @@ const CompletedClasses = (props: classElemProps) => {
 
   return (
     <Section>
-      {teachCards.length != 0 ? (
+      {isLoading ? (
+        <Loader />
+      ) : teachCards.length != 0 ? (
         <ClassroomGrid teachCards={teachCards} elemType="completed" />
       ) : (
         <NoClassComp
@@ -72,7 +86,10 @@ const CompletedClasses = (props: classElemProps) => {
         />
       )}
       {teachCards && hasMoreData && (
-        <LoadMore onClick={fetchAllCompletedClasses} />
+        <LoadMore
+          loaderLoading={loaderLoading}
+          onClick={fetchAllCompletedClasses}
+        />
       )}
     </Section>
   );
