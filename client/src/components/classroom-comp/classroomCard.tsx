@@ -144,8 +144,6 @@ const EnrollBtn = styled.div<buttonProps>`
   gap: 8px;
   background: #332ad5;
   background: #ef4565;
-  /* background: #094067; */
-  /* background: #3da9fc; */
   border-radius: 4px;
   cursor: pointer;
 
@@ -204,6 +202,8 @@ interface classCardProps {
   cssArr?: obj;
   teachCard: teachinCardProps;
   elemType?: string;
+  fromLearnCard?: boolean;
+  learnCardId?: string;
 }
 
 interface obj {
@@ -281,27 +281,57 @@ const ClassroomCard = (props: classCardProps) => {
   const enrollClassNavigator = () => {
     topNavigator();
     if (checkClassTeacher()) {
-      navigate(`/classes/class/${props.teachCard._id}`, {
-        state: {
-          classroomId: props.teachCard._id,
-          elemType: props.elemType,
-        },
-      });
-    } else {
-      if (checkEnrolledClass()) {
+      if (props.fromLearnCard) {
+        navigate(`/classes/class/${props.teachCard._id}`, {
+          state: {
+            classroomId: props.teachCard._id,
+            elemType: props.elemType,
+            learnCardId: props.learnCardId,
+          },
+        });
+      } else {
         navigate(`/classes/class/${props.teachCard._id}`, {
           state: {
             classroomId: props.teachCard._id,
             elemType: props.elemType,
           },
         });
+      }
+    } else {
+      if (checkEnrolledClass()) {
+        if (props.fromLearnCard) {
+          navigate(`/classes/class/${props.teachCard._id}`, {
+            state: {
+              classroomId: props.teachCard._id,
+              elemType: props.elemType,
+              learnCardId: props.learnCardId,
+            },
+          });
+        } else {
+          navigate(`/classes/class/${props.teachCard._id}`, {
+            state: {
+              classroomId: props.teachCard._id,
+              elemType: props.elemType,
+            },
+          });
+        }
       } else {
-        navigate(`/class-overviw/${props.teachCard._id}`, {
-          state: {
-            classroomId: props.teachCard._id,
-            elemType: props.elemType,
-          },
-        });
+        if (props.fromLearnCard) {
+          navigate(`/class-overviw/${props.teachCard._id}`, {
+            state: {
+              classroomId: props.teachCard._id,
+              elemType: props.elemType,
+              learnCardId: props.learnCardId,
+            },
+          });
+        } else {
+          navigate(`/class-overviw/${props.teachCard._id}`, {
+            state: {
+              classroomId: props.teachCard._id,
+              elemType: props.elemType,
+            },
+          });
+        }
       }
     }
   };

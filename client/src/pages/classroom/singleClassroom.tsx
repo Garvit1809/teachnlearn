@@ -13,6 +13,7 @@ import { UserCookie } from "../../utils/userCookie";
 import BackBtn from "../../components/request-comp/backBtn";
 import { classroomProps } from "../../types/classroomType";
 import Footer from "../../components/general-components/footer/footer";
+import Loader from "../../components/general-components/loader";
 
 const Section = styled.div`
   /* margin: 2rem 0 3rem; */
@@ -39,6 +40,9 @@ const SingleClassroom = () => {
   const [activeLink, setActiveLink] = useState("overview");
   const [classElemType, setClassElemType] = useState<string>("all classes");
   const [backLink, setBackLink] = useState<string>("/classes");
+  const [learnCardId, setlearnCardId] = useState<string>("");
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const location = useLocation();
 
@@ -67,6 +71,11 @@ const SingleClassroom = () => {
       setClassElemType(elemLink);
     }
 
+    const learnCardId = location.state.learnCardId;
+    if (learnCardId) {
+      setlearnCardId(learnCardId);
+    }
+
     fetchLocalUserData().then((data) => {
       setUserToken(data.token);
       setUserId(data._id);
@@ -82,6 +91,11 @@ const SingleClassroom = () => {
         const card = data.teachCard;
         console.log(data);
         setClassroom(card);
+        setIsLoading(false);
+      })
+      .catch((data) => {
+        console.log(data);
+        setIsLoading(false);
       });
   }
 
@@ -147,13 +161,23 @@ const SingleClassroom = () => {
     <>
       <Navbar />
       <Section>
-        <BackBtn link={backLink} classElem={classElemType} />
+        <BackBtn
+          link={backLink}
+          classElem={classElemType}
+          learnCardId={learnCardId}
+        />
         <HorizontalNavigator
           activeLink={activeLink}
           labelArr={labels}
           navigationHandler={navigationHandler}
         />
-        <ElementWrapper>{element}</ElementWrapper>
+        {isLoading ? (
+          <ElementWrapper>
+            <Loader />
+          </ElementWrapper>
+        ) : (
+          <ElementWrapper>{element}</ElementWrapper>
+        )}
       </Section>
       <Footer />
     </>

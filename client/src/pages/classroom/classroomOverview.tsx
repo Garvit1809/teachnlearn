@@ -81,14 +81,16 @@ const ClassroomOverview = () => {
   const [teachCardId, setTeachCardId] = useState<string>();
   const [userToken, setUserToken] = useState<string>();
   const [userCredit, setUserCredit] = useState<number>();
-
   const [backLink, setBackLink] = useState<string>("/classes");
+  const [learnCardId, setlearnCardId] = useState<string>("");
 
   const location = useLocation();
 
   const { fetchLocalUserToken, fetchUserCredit } = UserCookie();
 
   useEffect(() => {
+    console.log(location.state);
+    
     const cardId = location.state.classroomId;
     console.log(cardId);
     setTeachCardId(cardId);
@@ -96,6 +98,11 @@ const ClassroomOverview = () => {
     const link = location.state.backPageLink;
     if (link) {
       setBackLink(link);
+    }
+
+    const learnCardId = location.state.learnCardId;
+    if (learnCardId) {
+      setlearnCardId(learnCardId);
     }
   }, [location]);
 
@@ -126,12 +133,22 @@ const ClassroomOverview = () => {
     }
   }, [teachCardId]);
 
+  const checkEnrollTimeLimit = () => {
+    const currentDate = new Date();
+    const limit = teachCard?.classStartsAt;
+    if (limit) {
+      const ISOstring = new Date(limit);
+      return ISOstring > currentDate;
+    }
+    // return false
+  };
+
   return (
     <>
       <Navbar />
       {teachCard && (
         <Section>
-          <BackBtn link={backLink} />
+          <BackBtn link={backLink} learnCardId={learnCardId} />
           <ClassBanner img={teachCard?.cardBanner} title={teachCard.topic} />
           <OverviewContainer>
             <CallDetailContainer>
@@ -140,7 +157,7 @@ const ClassroomOverview = () => {
                 classEndsAt={teachCard.classEndsAt}
                 classStartsAt={teachCard.classStartsAt}
               />
-              {userCredit && userToken && (
+              {userCredit && userToken && checkEnrollTimeLimit() && (
                 <EnrollBtn
                   title={teachCard.topic}
                   price={teachCard.price}

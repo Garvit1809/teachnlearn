@@ -7,9 +7,12 @@ import Announcement from "./announcement";
 import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunctions";
+import { DATA_LIMIT } from "../../utils/globalConstants";
+import LoadMore from "../general-components/loadMore";
+import Loader from "../general-components/loader";
 
 const ClassroomContainer = styled.div`
-  margin: 2rem 0;
+  margin: 2rem 0 4rem;
   display: grid;
   grid-template-columns: 1.3fr 3fr;
 `;
@@ -58,20 +61,53 @@ export interface announcementProps {
 }
 
 const Classroom = (props: classProps) => {
-  const [announcements, setAnnouncements] =
-    useState<Array<announcementProps>>();
+  const [announcements, setAnnouncements] = useState<Array<announcementProps>>(
+    []
+  );
+
+  const [announcementSet, setAnnouncementSet] = useState<number>(1);
+  const [dataLimit, setDataLimit] = useState(2);
+  const [hasMoreData, sethasMoreData] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loaderLoading, setLoaderLoading] = useState(true);
+
+  const checkMoreData = (arr: Array<any>) => {
+    if (arr.length == 0) {
+      sethasMoreData(false);
+      return;
+    } else if (arr.length % dataLimit != 0) {
+      sethasMoreData(false);
+      return;
+    }
+    sethasMoreData(true);
+  };
 
   async function fetchAnnouncements() {
+    setLoaderLoading(true);
     await axios
       .get(
         `${BASE_URL}${apiVersion}/teach/${props.teachCardId}/announcements`,
         {
+          params: {
+            limit: DATA_LIMIT,
+            page: announcementSet,
+          },
           headers: getHeaders(props.userToken ?? ""),
         }
       )
       .then(({ data }) => {
         console.log(data.announcements);
-        setAnnouncements(data.announcements);
+        checkMoreData(data.announcements);
+        setAnnouncements((prev) => [...prev, ...data.announcements]);
+        setIsLoading(false);
+        setLoaderLoading(false);
+        setAnnouncementSet((prev) => prev + 1);
+      })
+      .catch((data) => {
+        console.log(data);
+        setIsLoading(false);
+        setLoaderLoading(false);
+        setLoaderLoading(false);
       });
   }
 
@@ -96,7 +132,9 @@ const Classroom = (props: classProps) => {
           )}
           <JoinCall callLink={props.callLink} />
         </AdminContainer>
-        {announcements?.length != 0 ? (
+        {isLoading ? (
+          <Loader />
+        ) : announcements?.length != 0 ? (
           <Announcements>
             {announcements &&
               announcements.map((announcement, index) => {
@@ -107,6 +145,9 @@ const Classroom = (props: classProps) => {
           <NoAnnouncement>No announcements yet!!</NoAnnouncement>
         )}
       </ClassroomContainer>
+      {announcements && hasMoreData && (
+        <LoadMore loaderLoading={loaderLoading} onClick={fetchAnnouncements} />
+      )}
     </>
   );
 };

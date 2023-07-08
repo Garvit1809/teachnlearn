@@ -17,8 +17,6 @@ import { getHeaders, topNavigator } from "../../utils/helperFunctions";
 import { teachinCardProps } from "../../types/teachingCardType";
 import Footer from "../general-components/footer/footer";
 import Loader from "../general-components/loader";
-// import { classroomProps } from "../../types/classroomType";
-// import { teachingCardProps } from "../../types/classroomType";
 
 const Section = styled.div`
   /* border: 1px solid brown; */
@@ -369,7 +367,7 @@ const LearnCardOverview = () => {
               <CardOverview>
                 <ChipContainer>
                   <UserChip
-                    name={learnCard?.createdBy.name}
+                    name={learnCard.createdBy.name}
                     photo={learnCard.createdBy.photo}
                     imgBorder="white"
                     textColor="black"
@@ -409,6 +407,8 @@ const LearnCardOverview = () => {
                           teachCard={teachCard}
                           cssArr={cardSizes}
                           key={index}
+                          fromLearnCard={true}
+                          learnCardId={learnCard._id}
                         />
                       );
                     })}
