@@ -72,7 +72,8 @@ module.exports = (err, req, res, next) => {
   } else if (process.env.NODE_ENV === "production") {
     let error = { ...err };
 
-    console.log("ERR NAME :- " + err.name);
+    // console.log(err);
+    // console.log(Object.keys(err));
 
     if (error.code === 11000) error = handleDuplicateFieldsDB(error);
     if (error.name === "CastError") error = handleCastErrorDB(error);

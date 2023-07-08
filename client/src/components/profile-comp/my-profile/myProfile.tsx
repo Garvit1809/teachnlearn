@@ -13,6 +13,9 @@ import { getHeaders } from "../../../utils/helperFunctions";
 import { UserCookie } from "../../../utils/userCookie";
 import ProfileStats from "./profileStats";
 import ProfileImage from "./profileImage";
+import { localStorageUser } from "../../../utils/globalConstants";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -129,6 +132,13 @@ const MyProfile = () => {
     fetchLocalUserToken().then((token) => {
       setUserToken(token);
     });
+
+    // window.addEventListener("storage", () => {
+    //   console.log("Change to local storage!");
+    //   fetchLocalUserToken().then((token) => {
+    //     setUserToken(token);
+    //   });
+    // });
   }, []);
 
   async function fetchMyDetails() {
@@ -198,7 +208,7 @@ const MyProfile = () => {
           <UserInfoModal
             name={localUser.name}
             tagline={localUser.tagline}
-            updateFields={updateFields}
+            // updateFields={updateFields}
             userToken={localUser.token}
             closeModal={closeModal}
           />
@@ -228,6 +238,7 @@ const MyProfile = () => {
         updateFields={updateFields}
         userToken={userToken}
       />
+      <ToastContainer theme="dark" />
     </Section>
   ) : (
     <h3>Loading</h3>

@@ -141,7 +141,7 @@ const ModeToggle = (props: toggleProps) => {
           toast.success("Mode updated", toastOptions);
         })
         .catch((data) => {
-          toast.error(data.response.data.message);
+          toast.error(data.response.data.message, toastOptions);
         });
       setMode("teach");
     } else {

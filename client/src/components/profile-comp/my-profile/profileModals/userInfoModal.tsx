@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { userProps } from "../myProfile";
 import FormField from "../../../request-comp/formField";
@@ -7,6 +7,8 @@ import Textarea from "../../../general-components/input/textarea";
 import axios from "axios";
 import { BASE_URL, apiVersion } from "../../../../utils/apiRoutes";
 import { getHeaders } from "../../../../utils/helperFunctions";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Section = styled.div`
   width: 50vw;
@@ -61,34 +63,75 @@ const SubmitButton = styled.div`
   }
 `;
 
-interface userInfo {
+interface userInfoProps {
   name: string;
   tagline: string;
-  userToken: string;
-  closeModal: any;
 }
 
-type modalProps = userInfo & {
-  updateFields: (fields: Partial<userProps>) => void;
+type modalProps = userInfoProps & {
+  userToken: string;
+  closeModal: any;
+  // updateFields: (fields: Partial<userProps>) => void;
 };
 
 const UserInfoModal = (props: modalProps) => {
+  const [userInfo, setUserInfo] = useState<userInfoProps>({
+    name: props.name,
+    tagline: props.tagline,
+  });
+
+  const toastOptions = {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 6000,
+    pauseOnHover: true,
+    draggable: true,
+  };
+
+  const handleValidation = () => {
+    const { name, tagline } = userInfo;
+    if (name == "" || tagline == "") {
+      toast.error("Fill in all the details", toastOptions);
+      return false;
+    } else if (tagline.length < 30) {
+      toast.error("Tagline in too short", toastOptions);
+      return false;
+    }
+    return true;
+  };
+
   const updateUserInfoHandler = async () => {
-    await axios
-      .patch(
-        `${BASE_URL}${apiVersion}/user/myInfo`,
-        {
-          name: props.name,
-          tagline: props.tagline,
-        },
-        {
-          headers: getHeaders(props.userToken ?? ""),
-        }
-      )
-      .then(({ data }) => {
-        console.log(data.updatedUser);
-        props.closeModal();
-      });
+    if (handleValidation()) {
+      await axios
+        .patch(
+          `${BASE_URL}${apiVersion}/user/myInfo`,
+          {
+            name: userInfo.name,
+            tagline: userInfo.tagline,
+          },
+          {
+            headers: getHeaders(props.userToken ?? ""),
+          }
+        )
+        .then(({ data }) => {
+          console.log(data.updatedUser);
+          const user = data.updatedUser;
+          user.token = props.userToken;
+          // localStorage.setItem(localStorageUser, JSON.stringify(user));
+          // window.dispatchEvent(new Event("storage"));
+          // props.closeModal();
+          window.location.reload();
+        })
+        .catch((data) => {
+          // console.log(data);
+          toast.error("Some error occured, couldnt update", toastOptions);
+        });
+    }
+  };
+
+  const updateFields = (fields: Partial<userInfoProps>) => {
+    setUserInfo((prev) => {
+      return { ...prev, ...fields };
+    });
   };
 
   return (
@@ -103,8 +146,8 @@ const UserInfoModal = (props: modalProps) => {
               label="Name"
               name="name"
               type="text"
-              value={props.name}
-              updateFields={props.updateFields}
+              value={userInfo.name}
+              updateFields={updateFields}
             />
           }
           inputDesc="Change your Name :-"
@@ -114,8 +157,8 @@ const UserInfoModal = (props: modalProps) => {
             <Textarea
               label="Tagline"
               name="tagline"
-              value={props.tagline}
-              updateFields={props.updateFields}
+              value={userInfo.tagline}
+              updateFields={updateFields}
               areaHeight="10rem"
             />
           }
@@ -127,6 +170,7 @@ const UserInfoModal = (props: modalProps) => {
           Edit User Info
         </button>
       </SubmitButton>
+      {/* <ToastContainer theme="dark" /> */}
     </Section>
   );
 };

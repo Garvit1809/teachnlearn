@@ -123,6 +123,7 @@ const UserInfoForm = (props: UserInfoFormProps) => {
             arr={props.preferredLanguages}
             hasDropdown={true}
             dropdownData={languages}
+            maxLimit={3}
           />
           {props.preferredLanguages.length != 0 ? (
             <ArrChip

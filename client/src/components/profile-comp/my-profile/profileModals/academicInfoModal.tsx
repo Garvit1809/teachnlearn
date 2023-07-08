@@ -9,6 +9,9 @@ import { BASE_URL, apiVersion } from "../../../../utils/apiRoutes";
 import { getHeaders } from "../../../../utils/helperFunctions";
 import axios from "axios";
 import { localStorageUser } from "../../../../utils/globalConstants";
+import { toast } from "react-toastify";
+import { subjects } from "../../../../data/SUBJECT_LIST.json";
+import { languages } from "../../../../data/LANGUAGE_LIST.json";
 
 const Section = styled.div`
   width: 50vw;
@@ -75,42 +78,93 @@ const MultipleInputWrapper = styled.div`
 
 interface AcademicProps {
   course: string;
-  strongSubject: string;
   strongSubjects: string[];
-  interestedSubject: string;
   interstedSubjects: Array<string>;
-  language: string;
   preferredLanguages: string[];
-  userToken: string;
-  closeModal: any;
+  strongSubject: string;
+  interestedSubject: string;
+  language: string;
 }
 
 type modalProps = AcademicProps & {
+  strongSubject: string;
+  interestedSubject: string;
+  language: string;
+  userToken: string;
+  closeModal: any;
   updateFields: (fields: Partial<userProps>) => void;
 };
 
 const AcademicInfoModal = (props: modalProps) => {
+  const [academicInfo, setAcademicInfo] = useState<AcademicProps>({
+    course: props.course,
+    interstedSubjects: props.interstedSubjects,
+    strongSubjects: props.strongSubjects,
+    preferredLanguages: props.preferredLanguages,
+    strongSubject: props.strongSubject,
+    interestedSubject: props.interestedSubject,
+    language: props.language,
+  });
+
+  const toastOptions = {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 6000,
+    pauseOnHover: true,
+    draggable: true,
+  };
+
+  const handleValidation = () => {
+    const { course, interstedSubjects, preferredLanguages, strongSubjects } =
+      academicInfo;
+    if (
+      course == "" ||
+      interstedSubjects.length == 0 ||
+      strongSubjects.length == 0 ||
+      preferredLanguages.length == 0
+    ) {
+      toast.error("Fill in all the details", toastOptions);
+      return false;
+    } else if (interstedSubjects.length > 5 || strongSubjects.length > 5) {
+      toast.error("Cannot select more than 5 subjects ", toastOptions);
+      return false;
+    } else if (preferredLanguages.length > 3) {
+      toast.error("Cannot select more than 3 languages ", toastOptions);
+      return false;
+    }
+    return true;
+  };
+
   const updateUserAcademicInfoHandler = async () => {
-    await axios
-      .patch(
-        `${BASE_URL}${apiVersion}/user/myacademicInfo`,
-        {
-          enrolledProgramme: props.course,
-          strongSubjects: props.strongSubjects,
-          interestedSubjects: props.interstedSubjects,
-          preferredLanguages: props.preferredLanguages,
-        },
-        {
-          headers: getHeaders(props.userToken),
-        }
-      )
-      .then(({ data }) => {
-        console.log(data.updatedUser);
-        const user = data.updatedUser;
-        user.token = props.userToken;
-        localStorage.setItem(localStorageUser, JSON.stringify(user));
-        props.closeModal();
-      });
+    if (handleValidation()) {
+      console.log(academicInfo);
+      await axios
+        .patch(
+          `${BASE_URL}${apiVersion}/user/myacademicInfo`,
+          {
+            enrolledProgramme: academicInfo.course,
+            strongSubjects: academicInfo.strongSubjects,
+            interestedSubjects: academicInfo.interstedSubjects,
+            preferredLanguages: academicInfo.preferredLanguages,
+          },
+          {
+            headers: getHeaders(props.userToken),
+          }
+        )
+        .then(({ data }) => {
+          console.log(data.updatedUser);
+          window.location.reload();
+        })
+        .catch((data) => {
+          console.log(data);
+          toast.error("Some error occured", toastOptions);
+        });
+    }
+  };
+
+  const updateFields = (fields: Partial<AcademicProps>) => {
+    setAcademicInfo((prev) => {
+      return { ...prev, ...fields };
+    });
   };
 
   return (
@@ -125,8 +179,8 @@ const AcademicInfoModal = (props: modalProps) => {
               label="Entrolled Programme"
               name="course"
               type="text"
-              updateFields={props.updateFields}
-              value={props.course}
+              updateFields={updateFields}
+              value={academicInfo.course}
             />
           }
           inputDesc="Change your Course"
@@ -136,15 +190,18 @@ const AcademicInfoModal = (props: modalProps) => {
             <MultipleInputWrapper>
               <MultipleInput
                 label="Strong Subjects"
-                value={props.strongSubject}
+                value={academicInfo.strongSubject}
                 elemName="strongSubject"
                 name="strongSubjects"
-                arr={props.strongSubjects}
-                updateFields={props.updateFields}
+                arr={academicInfo.strongSubjects}
+                updateFields={updateFields}
+                hasDropdown={true}
+                dropdownData={subjects}
+                maxLimit={5}
               />
               <ArrChip
-                listArr={props.strongSubjects}
-                updateFields={props.updateFields}
+                listArr={academicInfo.strongSubjects}
+                updateFields={updateFields}
                 name="strongSubjects"
               />
             </MultipleInputWrapper>
@@ -156,15 +213,18 @@ const AcademicInfoModal = (props: modalProps) => {
             <MultipleInputWrapper>
               <MultipleInput
                 label="Interested Subjects"
-                value={props.interestedSubject}
+                value={academicInfo.interestedSubject}
                 elemName="interestedSubject"
                 name="interstedSubjects"
-                arr={props.interstedSubjects}
-                updateFields={props.updateFields}
+                arr={academicInfo.interstedSubjects}
+                updateFields={updateFields}
+                hasDropdown={true}
+                dropdownData={subjects}
+                maxLimit={5}
               />
               <ArrChip
-                listArr={props.interstedSubjects}
-                updateFields={props.updateFields}
+                listArr={academicInfo.interstedSubjects}
+                updateFields={updateFields}
                 name="interstedSubjects"
               />
             </MultipleInputWrapper>
@@ -176,15 +236,18 @@ const AcademicInfoModal = (props: modalProps) => {
             <MultipleInputWrapper>
               <MultipleInput
                 label="Preferred Language"
-                value={props.language}
+                value={academicInfo.language}
                 elemName="language"
                 name="preferredLanguages"
-                arr={props.preferredLanguages}
-                updateFields={props.updateFields}
+                arr={academicInfo.preferredLanguages}
+                updateFields={updateFields}
+                hasDropdown={true}
+                dropdownData={languages}
+                maxLimit={3}
               />
               <ArrChip
-                listArr={props.preferredLanguages}
-                updateFields={props.updateFields}
+                listArr={academicInfo.preferredLanguages}
+                updateFields={updateFields}
                 name="preferredLanguages"
               />
             </MultipleInputWrapper>

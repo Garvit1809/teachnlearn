@@ -118,7 +118,7 @@ const ContactInfo = (props: ContactProps) => {
           email={props.email}
           phone={props.phone}
           username={props.username}
-          updateFields={props.updateFields}
+          // updateFields={props.updateFields}
           userToken={props.userToken}
           closeModal={closeModal}
         />

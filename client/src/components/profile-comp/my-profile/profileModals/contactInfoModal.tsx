@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Inputholder from "../../../general-components/input/inputholder";
 import FormField from "../../../request-comp/formField";
 import { userProps } from "../myProfile";
 import axios from "axios";
 import { BASE_URL, apiVersion } from "../../../../utils/apiRoutes";
-import { getHeaders } from "../../../../utils/helperFunctions";
+import { getHeaders, isValidEmail } from "../../../../utils/helperFunctions";
 import { localStorageUser } from "../../../../utils/globalConstants";
+import { toast } from "react-toastify";
 
 const Section = styled.div`
   width: 50vw;
@@ -65,35 +66,72 @@ interface ContactProps {
   username: string;
   email: string;
   phone: string;
-  userToken: string;
-  closeModal: any;
 }
 
 type modalProps = ContactProps & {
-  updateFields: (fields: Partial<userProps>) => void;
+  userToken: string;
+  closeModal: any;
 };
 
 const ContactInfoModal = (props: modalProps) => {
+  const [contactInfo, setContactInfo] = useState<ContactProps>({
+    username: props.username,
+    email: props.email,
+    phone: props.phone,
+  });
+
+  const toastOptions = {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 6000,
+    pauseOnHover: true,
+    draggable: true,
+  };
+
+  const handleValidation = () => {
+    const { email, phone, username } = contactInfo;
+    if (email == "" || phone == "" || username == "") {
+      toast.error("Fill in all the details", toastOptions);
+      return false;
+    } else if (!isValidEmail(email)) {
+      toast.error("Not a valid email", toastOptions);
+      return false;
+    }
+    return true;
+  };
+
   const updateContactUserHandler = async () => {
-    await axios
-      .patch(
-        `${BASE_URL}${apiVersion}/user/mycontactInfo`,
-        {
-          userName: props.username,
-          email: props.email,
-          phoneNumber: props.phone,
-        },
-        {
-          headers: getHeaders(props.userToken),
-        }
-      )
-      .then(({ data }) => {
-        console.log(data.updatedUser);
-        const user = data.updatedUser;
-        user.token = props.userToken;
-        localStorage.setItem(localStorageUser, JSON.stringify(user));
-        props.closeModal();
-      });
+    if (handleValidation()) {
+      await axios
+        .patch(
+          `${BASE_URL}${apiVersion}/user/mycontactInfo`,
+          {
+            userName: contactInfo.username,
+            email: contactInfo.email,
+            phoneNumber: contactInfo.phone,
+          },
+          {
+            headers: getHeaders(props.userToken),
+          }
+        )
+        .then(({ data }) => {
+          console.log(data.updatedUser);
+          window.location.reload();
+        })
+        .catch((data) => {
+          console.log(data);
+          if (data.response.data.message) {
+            toast.error(data.response.data.message, toastOptions);
+          } else {
+            toast.error("Some error occured, couldnt update", toastOptions);
+          }
+        });
+    }
+  };
+
+  const updateFields = (fields: Partial<ContactProps>) => {
+    setContactInfo((prev) => {
+      return { ...prev, ...fields };
+    });
   };
 
   return (
@@ -106,10 +144,10 @@ const ContactInfoModal = (props: modalProps) => {
           elem={
             <Inputholder
               label="UserName"
-              name="userName"
+              name="username"
               type="text"
-              value={props.username}
-              updateFields={props.updateFields}
+              value={contactInfo.username}
+              updateFields={updateFields}
             />
           }
           inputDesc="Change your Username :-"
@@ -120,8 +158,8 @@ const ContactInfoModal = (props: modalProps) => {
               label="Email"
               name="email"
               type="email"
-              value={props.email}
-              updateFields={props.updateFields}
+              value={contactInfo.email}
+              updateFields={updateFields}
             />
           }
           inputDesc="Change your Email :-"
@@ -130,10 +168,10 @@ const ContactInfoModal = (props: modalProps) => {
           elem={
             <Inputholder
               label="Phone Number"
-              name="phoneNumber"
+              name="phone"
               type="string"
-              value={props.phone}
-              updateFields={props.updateFields}
+              value={contactInfo.phone}
+              updateFields={updateFields}
             />
           }
           inputDesc="Change your Phone Number :-"
