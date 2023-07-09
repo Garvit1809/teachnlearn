@@ -106,7 +106,7 @@ const Navbar = () => {
           <img src={TNL_Logo} alt="tnl_logo" />
         </ImageContainer>
         <SearchContainer>
-          <SearchBar />
+          <SearchBar placeholderText="Search for a request, class, topic, subject, person, course, etc." />
         </SearchContainer>
         {localUser && (
           <UserWrapper onClick={() => navigationHandler("/me")}>

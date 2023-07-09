@@ -7,6 +7,7 @@ import {
 
 const Section = styled.div`
   background-color: #0d1c2e;
+  background-color: #094067;
   border-radius: 24px;
   padding: 15vh 2.5rem 20vh 4rem;
   width: 80%;

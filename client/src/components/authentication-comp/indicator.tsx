@@ -18,11 +18,11 @@ const Section = styled.div<indicatorProps>`
   }
 
   div.first {
-    background: ${(p) => (p.index == 0 ? "#332ad5" : "#D5D9EB")};
+    background: ${(p) => (p.index == 0 ? "#094067" : "#D5D9EB")};
   }
 
   div.second {
-    background: ${(p) => (p.index == 1 ? "#332ad5" : "#D5D9EB")};
+    background: ${(p) => (p.index == 1 ? "#094067" : "#D5D9EB")};
   }
 `;
 

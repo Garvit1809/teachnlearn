@@ -228,7 +228,7 @@ const CreateTeachCard = () => {
     } else if (ISODueDate < currentDate) {
       toast.error("Pick another date for class", toastOptions);
       return false;
-    } else if (ISOStartingTime < ISOEndingTime) {
+    } else if (ISOEndingTime < ISOStartingTime) {
       toast.error(
         "Class End time cannot be less than Start time",
         toastOptions

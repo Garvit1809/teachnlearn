@@ -12,9 +12,7 @@ const Section = styled.div`
   align-items: flex-start;
   padding: 22px;
   gap: 22px;
-  background: #674ff1;
-  background: #2a7e79;
-  background: #3da9fc;
+  background: #094067;
   border-radius: 16px;
   cursor: pointer;
   font-family: "Nunito";
@@ -32,7 +30,7 @@ const Tag = styled.div`
     line-height: 22px;
     letter-spacing: 0.02em;
     text-transform: uppercase;
-    color: #094067;
+    color: #ef4565;
   }
 `;
 

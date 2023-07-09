@@ -10,7 +10,7 @@ import { localStorageUser } from "../../utils/globalConstants";
 
 const Section = styled.div`
   /* border: 1px solid pink; */
-  background: #fdf5ec;
+  background: #d8eefe;
   border-radius: 12px;
 
   display: flex;
@@ -27,9 +27,9 @@ const Section = styled.div`
 
 const InfoContainer = styled.div`
   display: grid;
-  grid-template-rows: auto auto auto;
+  /* grid-template-rows: auto auto auto; */
   gap: 35px;
-  width: 60%;
+  width: 65%;
   margin-right: 5vw;
 
   p {
@@ -39,21 +39,25 @@ const InfoContainer = styled.div`
     font-size: 18px;
     line-height: 25px;
     color: #000000;
+    color: #ffffff;
   }
 `;
 
-const Headers = styled.div``;
+const Headers = styled.div`
+  /* margin-bottom: 1rem; */
+`;
 
 const Heading = styled.h2`
   font-weight: 700;
   font-size: 39px;
   line-height: 121.4%;
   color: #000000;
+  /* color: #ffffff; */
 `;
 
 const ImageContainer = styled.div`
-  width: 419.57px;
-  height: 335.33px;
+  width: 319.57px;
+  height: 235.33px;
   /* border: 1px solid red; */
 
   img {
@@ -82,6 +86,7 @@ const Buttons = styled.div`
     line-height: 25px;
 
     background: #332ad5;
+    background: #ef4565;
     color: #ffffff;
     border-radius: 8px;
     border: 0;
@@ -91,7 +96,9 @@ const Buttons = styled.div`
 
   button.request {
     color: #364152;
+    color: #ffffff;
     background: rgba(51, 42, 213, 0.05);
+    background: #094067;
   }
 
   button:first-child {
@@ -132,13 +139,12 @@ const Intro = () => {
     <Section>
       <InfoContainer>
         <Headers>
-          <Heading>Quick and Easy Learning:</Heading>
-          <Heading>Byte-Sized Classes for Everyone</Heading>
+          <Heading>
+            {role == "learn"
+              ? "Learn something from your peers!!"
+              : "Teach something you know!!"}
+          </Heading>
         </Headers>
-        <p>
-          Discover bite-sized classes designed to make learning accessible and
-          fun for everyone, regardless of prior knowledge.
-        </p>
         <Buttons>
           <button
             onClick={() =>
@@ -155,7 +161,7 @@ const Intro = () => {
             onClick={() => navigationHandler(`/create-${role}-request`)}
           >
             <span>Create a {role == "learn" ? "request" : "class"}</span>
-            <Arrow strokeColor="#364152" />
+            <Arrow strokeColor="#ffffff" />
           </button>
         </Buttons>
       </InfoContainer>

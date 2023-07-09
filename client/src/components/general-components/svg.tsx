@@ -383,7 +383,7 @@ export const CircleIcon1 = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <circle cx="198.667" cy="-14.6091" r="516.609" fill="#1E2E3D" />
+      <circle cx="198.667" cy="-14.6091" r="516.609" fill="#2970A4" />
     </svg>
   );
 };
@@ -397,7 +397,7 @@ export const CircleIcon2 = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <circle cx="198.833" cy="19.5" r="688.5" fill="#152534" />
+      <circle cx="198.833" cy="19.5" r="688.5" fill="#165481" />
     </svg>
   );
 };

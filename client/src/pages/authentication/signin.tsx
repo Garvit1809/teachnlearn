@@ -63,6 +63,7 @@ const FormContainer = styled.div`
     span.link {
       cursor: pointer;
       color: #332ad5;
+      color: #094067;
       font-weight: 600;
     }
   }
@@ -74,6 +75,7 @@ const ButtonContainer = styled.div`
 
   button {
     background: #332ad5;
+    background: #094067;
     border-radius: 8px;
     outline: none;
     border: none;

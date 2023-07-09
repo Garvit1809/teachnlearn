@@ -66,7 +66,8 @@ const UserInfoForm = (props: UserInfoFormProps) => {
         />
         <Inputholder
           type="text"
-          label="Course Enrolled"
+          // label="Course Enrolled"
+          label="Exam | Standard | Board | Degree"
           value={props.course}
           name="course"
           updateFields={props.updateFields}
@@ -75,7 +76,7 @@ const UserInfoForm = (props: UserInfoFormProps) => {
         />
         <InputWrapper>
           <MultipleInput
-            label="Interested Subjects (Max 5)"
+            label="Subjects you mostly need help in"
             value={props.interestedSubject}
             name="interestedSubjects"
             elemName="interestedSubject"
@@ -95,7 +96,7 @@ const UserInfoForm = (props: UserInfoFormProps) => {
         </InputWrapper>
         <InputWrapper>
           <MultipleInput
-            label="Strong Subjects"
+            label="Subjects you can help others in"
             value={props.strongSubject}
             elemName="strongSubject"
             name="strongSubjects"

@@ -48,7 +48,7 @@ const SignupForm = (props: SignupFormProps) => {
         />
         <Inputholder
           type="text"
-          label="Username"
+          label="Username (publicly visible)"
           value={props.userName}
           name="userName"
           updateFields={props.updateFields}

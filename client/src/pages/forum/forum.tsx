@@ -13,6 +13,7 @@ import Footer from "../../components/general-components/footer/footer";
 import LoadMore from "../../components/general-components/loadMore";
 import { DATA_LIMIT } from "../../utils/globalConstants";
 import Loader from "../../components/general-components/loader";
+import { Plus } from "../../components/general-components/svg";
 
 const Section = styled.div`
   /* border: 1px solid brown; */
@@ -131,7 +132,10 @@ const Forum = () => {
       <Navbar />
       <Section>
         <HeaderBtn>
-          <PostBtn onClick={postForumNavigator}>Post Forum</PostBtn>
+          <PostBtn onClick={postForumNavigator}>
+            <Plus color="#ffffff" />
+            <span>Post your query</span>
+          </PostBtn>
         </HeaderBtn>
         <TopBar>
           <SearchBar placeholderText="Search n forums..." />

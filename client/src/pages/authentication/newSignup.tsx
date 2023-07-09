@@ -68,6 +68,7 @@ const FormContainer = styled.div`
 
     h5 {
       color: #332ad5;
+      color: #094067;
       font-size: 16px;
       font-weight: 600;
       cursor: pointer;
@@ -85,6 +86,7 @@ const ButtonContainer = styled.div`
 
   button {
     background: #332ad5;
+    background: #094067;
     border-radius: 8px;
     outline: none;
     border: none;
@@ -187,7 +189,6 @@ const NewSignup = () => {
       email === "" ||
       password === "" ||
       confirmPassword === "" ||
-      number === "" ||
       course === ""
     ) {
       toast.error("Fill in all the details", toastOptions);
