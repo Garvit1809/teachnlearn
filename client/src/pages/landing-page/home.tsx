@@ -101,7 +101,7 @@ const Home = () => {
     <>
       <Navbar />
       <Section>
-        <Intro role={userRole} />
+        <Intro />
         {/* <Popular /> */}
         {recommendedClasses && recommendedClasses.length != 0 && (
           <RecommendedClassWrapper

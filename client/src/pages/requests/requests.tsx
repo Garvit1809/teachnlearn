@@ -84,9 +84,9 @@ const Requests = () => {
         params: {
           limit: DATA_LIMIT,
           page: requestPageSet,
-          dueDate: {
-            $gte: curentDate,
-          },
+          // dueDate: {
+          //   $gte: curentDate,
+          // },
         },
         headers: getHeaders(userToken ?? ""),
       })
@@ -117,7 +117,7 @@ const Requests = () => {
     <>
       <Navbar />
       <Section>
-        <Intro role="learn" />
+        <Intro />
         {isLoading ? (
           <Loader />
         ) : learnCards.length != 0 ? (

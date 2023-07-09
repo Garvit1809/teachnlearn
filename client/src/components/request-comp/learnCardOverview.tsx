@@ -69,7 +69,18 @@ const LeftContainer = styled.div`
   row-gap: 1.6rem;
 `;
 
-const CreateTeachCardBtn = styled.div`
+const TeachCardWrapper = styled.div`
+  /* border: 1px solid red; */
+  span.text {
+    color: #ef4565;
+  }
+`;
+
+interface createTeachCardStyleProps {
+  isDisabled: boolean;
+}
+
+const CreateTeachCardBtn = styled.div<createTeachCardStyleProps>`
   /* border: 1px solid red; */
   display: flex;
   /* padding-left: 1.5rem; */
@@ -83,10 +94,12 @@ const CreateTeachCardBtn = styled.div`
     gap: 10px;
     width: fit-content;
     background: #332ad5;
+    background: ${(p) => (p.isDisabled ? "rgba(51, 42, 213, 0.6)" : "#332ad5")};
     border-radius: 8px;
     border: none;
     outline: none;
     cursor: pointer;
+    margin-bottom: 0.5rem;
 
     font-family: "Nunito";
     font-style: normal;
@@ -296,18 +309,26 @@ const LearnCardOverview = () => {
   const { fetchLocalUserData } = UserCookie();
   const [userId, setUserId] = useState<string>();
   const [userToken, setUserToken] = useState<string>("");
+  const [userRole, setUserRole] = useState<string>("");
 
   useEffect(() => {
-    if (learnCard) {
+    fetchLocalUserData().then((data) => {
+      setUserId(data._id);
+      setUserToken(data.token);
+      setUserRole(data.role);
+      console.log(data.role);
+    });
+
+    window.addEventListener("storage", () => {
+      console.log("Change to local storage!");
       fetchLocalUserData().then((data) => {
         setUserId(data._id);
-        console.log(data._id);
-        console.log(learnCard.createdBy._id);
-        console.log(data._id === learnCard.createdBy._id);
         setUserToken(data.token);
+        setUserRole(data.role);
+        console.log(data.role);
       });
-    }
-  }, [learnCard]);
+    });
+  }, []);
 
   const interestedHandler = async () => {
     await axios
@@ -329,6 +350,10 @@ const LearnCardOverview = () => {
           setTotalInterestedStudents(newInterestedStudents.length);
         }
       });
+  };
+
+  const learnCardCreaterCheck = () => {
+    return userId == learnCard?.createdBy._id;
   };
 
   return (
@@ -357,12 +382,25 @@ const LearnCardOverview = () => {
                     })}
                   </TagCont>
                 </LearnCardDetailContainer>
-                <CreateTeachCardBtn>
-                  <button type="button" onClick={teachCardNavigator}>
-                    <span>Create teach Card</span>
-                    <Arrow strokeColor="#FFFFFF" />
-                  </button>
-                </CreateTeachCardBtn>
+                <TeachCardWrapper>
+                  {learnCardCreaterCheck() ? null : (
+                    <CreateTeachCardBtn isDisabled={userRole == "learn"}>
+                      <button
+                        type="button"
+                        onClick={teachCardNavigator}
+                        disabled={userRole == "learn"}
+                      >
+                        <span>Create teach Card</span>
+                        <Arrow strokeColor="#FFFFFF" />
+                      </button>
+                    </CreateTeachCardBtn>
+                  )}
+                  {userRole == "learn" && (
+                    <span className="text">
+                      Cannot create Teach Card in Learn Mode
+                    </span>
+                  )}
+                </TeachCardWrapper>
               </LeftContainer>
               <CardOverview>
                 <ChipContainer>

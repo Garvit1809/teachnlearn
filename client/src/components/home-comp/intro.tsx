@@ -103,7 +103,7 @@ interface introProps {
   role: string;
 }
 
-const Intro = ({ role }: introProps) => {
+const Intro = () => {
   const navigate = useNavigate();
 
   const navigationHandler = (link: string) => {
@@ -111,15 +111,22 @@ const Intro = ({ role }: introProps) => {
     navigate(link);
   };
 
-  // const [role, setRole] = useState();
+  const [role, setRole] = useState();
 
-  // const { fetchLocalUserData } = UserCookie();
+  const { fetchLocalUserData } = UserCookie();
 
-  // useEffect(() => {
-  //   fetchLocalUserData().then((data) => {
-  //     setRole(data.role);
-  //   });
-  // }, []);
+  useEffect(() => {
+    fetchLocalUserData().then((data) => {
+      setRole(data.role);
+    });
+
+    window.addEventListener("storage", () => {
+      console.log("Change to local storage!");
+      fetchLocalUserData().then((data) => {
+        setRole(data.role);
+      });
+    });
+  }, []);
 
   return (
     <Section>
