@@ -29,9 +29,9 @@ const Home = () => {
   const [userToken, setUserToken] = useState<string>("");
   const [userRole, setUserRole] = useState<string>("");
   const [userId, setuserId] = useState<string>("");
-  const [upcomingClasses, setUpcomingClasses] =
-    useState<Array<teachinCardProps>>();
   const [recommendedClasses, setRecommendedClasses] =
+    useState<Array<teachinCardProps>>();
+  const [upcomingClasses, setUpcomingClasses] =
     useState<Array<teachinCardProps>>();
   const [learnCards, setLearnCards] = useState<Array<learnCardProps>>();
 
@@ -40,6 +40,10 @@ const Home = () => {
   const navigate = useNavigate();
 
   const [renderHome, setRenderHome] = useState(false);
+
+  const [recommendedIsLoading, setRecommendedIsLoading] = useState(true);
+  const [upcomingIsLoading, setUpcomingIsLoading] = useState(true);
+  const [requestIsLoading, setRequestIsLoading] = useState(true);
 
   useEffect(() => {
     fetchLocalUserData()
@@ -62,6 +66,7 @@ const Home = () => {
       .then(({ data }) => {
         console.log(data.stats);
         setRecommendedClasses(data.stats);
+        setRecommendedIsLoading(false);
       });
   }
 
@@ -74,6 +79,7 @@ const Home = () => {
         const classes = data.upcomingClasses;
         console.log(classes);
         setUpcomingClasses(classes);
+        setUpcomingIsLoading(false);
       });
   }
 
@@ -86,6 +92,7 @@ const Home = () => {
         console.log(data.stats);
         const learnCardData = data.stats;
         setLearnCards(learnCardData);
+        setRequestIsLoading(false);
       });
   };
 
@@ -108,18 +115,21 @@ const Home = () => {
             heading="Classes recommended for you!"
             cardArr={recommendedClasses}
             userId={userId}
+            loading={recommendedIsLoading}
           />
         )}
         {upcomingClasses && upcomingClasses.length != 0 && (
           <EnrolledClassWrapper
             heading="Upcoming Enrolled Classes!"
             cardArr={upcomingClasses}
+            loading={upcomingIsLoading}
           />
         )}
         {learnCards && learnCards.length != 0 && (
           <RequestCardWrapper
             heading="Rising Requests"
             requestCard={learnCards}
+            loading={requestIsLoading}
           />
         )}
         <YoutubeCarousel />

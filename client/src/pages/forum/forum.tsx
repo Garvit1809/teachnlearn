@@ -65,7 +65,6 @@ const Forum = () => {
   const [forums, setForums] = useState<Array<forumProps>>([]);
   const [userToken, setUserToken] = useState<string>();
   const [forumPageSet, setForumPageSet] = useState<number>(1);
-  const [dataLimit, setDataLimit] = useState(2);
   const [hasMoreData, sethasMoreData] = useState(false);
 
   const [isLoading, setIsLoading] = useState(true);

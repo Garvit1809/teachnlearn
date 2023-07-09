@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Arrow } from "../general-components/svg";
 import { useNavigate } from "react-router-dom";
 import RecommendedClassCard from "./recommendedClassCard";
 import { topNavigator } from "../../utils/helperFunctions";
 import { teachinCardProps } from "../../types/teachingCardType";
+import Loader from "../general-components/loader";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -57,6 +58,7 @@ interface wrapperProps {
   heading: string;
   cardArr: Array<teachinCardProps>;
   userId: string;
+  loading: boolean;
 }
 
 const RecommendedClassWrapper = (props: wrapperProps) => {
@@ -75,17 +77,21 @@ const RecommendedClassWrapper = (props: wrapperProps) => {
           <Arrow strokeColor="#384250" />
         </SeeAll>
       </Header>
-      <CardGrid>
-        {props.cardArr.map((card, index) => {
-          return (
-            <RecommendedClassCard
-              key={index}
-              card={card}
-              userId={props.userId}
-            />
-          );
-        })}
-      </CardGrid>
+      {props.loading ? (
+        <Loader />
+      ) : (
+        <CardGrid>
+          {props.cardArr.map((card, index) => {
+            return (
+              <RecommendedClassCard
+                key={index}
+                card={card}
+                userId={props.userId}
+              />
+            );
+          })}
+        </CardGrid>
+      )}
     </Section>
   );
 };

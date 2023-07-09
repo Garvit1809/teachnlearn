@@ -4,6 +4,7 @@ import { Arrow } from "../general-components/svg";
 import RequestCard from "./requestCard";
 import { useNavigate } from "react-router-dom";
 import { topNavigator } from "../../utils/helperFunctions";
+import Loader from "../general-components/loader";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -55,6 +56,7 @@ const CardGrid = styled.div`
 interface requestWrapperProps {
   requestCard: Array<learnCardProps>;
   heading: string;
+  loading: boolean;
 }
 
 const RequestCardWrapper = (props: requestWrapperProps) => {
@@ -73,11 +75,15 @@ const RequestCardWrapper = (props: requestWrapperProps) => {
           <Arrow strokeColor="#384250" />
         </SeeAll>
       </Header>
-      <CardGrid>
-        {props.requestCard.map((card, index) => {
-          return <RequestCard key={index} {...card} />;
-        })}
-      </CardGrid>
+      {props.loading ? (
+        <Loader />
+      ) : (
+        <CardGrid>
+          {props.requestCard.map((card, index) => {
+            return <RequestCard key={index} {...card} />;
+          })}
+        </CardGrid>
+      )}
     </Section>
   );
 };

@@ -5,6 +5,7 @@ import EnrolledClassCard from "./enrolledClassCard";
 import { useNavigate } from "react-router-dom";
 import { topNavigator } from "../../utils/helperFunctions";
 import { teachinCardProps } from "../../types/teachingCardType";
+import Loader from "../general-components/loader";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -56,6 +57,7 @@ const CardGrid = styled.div`
 interface wrapperProps {
   heading: string;
   cardArr: Array<teachinCardProps>;
+  loading: boolean;
 }
 
 const EnrolledClassWrapper = (props: wrapperProps) => {
@@ -79,17 +81,21 @@ const EnrolledClassWrapper = (props: wrapperProps) => {
           <Arrow strokeColor="#384250" />
         </SeeAll>
       </Header>
-      <CardGrid>
-        {props.cardArr.map((card, index) => {
-          return (
-            <EnrolledClassCard
-              key={index}
-              card={card}
-              isFirstCard={index == 0}
-            />
-          );
-        })}
-      </CardGrid>
+      {props.loading ? (
+        <Loader />
+      ) : (
+        <CardGrid>
+          {props.cardArr.map((card, index) => {
+            return (
+              <EnrolledClassCard
+                key={index}
+                card={card}
+                isFirstCard={index == 0}
+              />
+            );
+          })}
+        </CardGrid>
+      )}
     </Section>
   );
 };
