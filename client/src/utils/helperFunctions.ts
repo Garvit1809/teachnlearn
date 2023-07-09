@@ -45,9 +45,7 @@ export function useOutsideAlerter(ref: any, func: any) {
   useEffect(() => {
     function handleClickOutside(event: any) {
       if (ref.current && !ref.current.contains(event.target)) {
-        // setShowDropdown(true);
         func();
-        // alert('djb')
       }
     }
     document.addEventListener("mousedown", handleClickOutside);

@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TNL_Logo from "../../assets/TNL-logo.png";
 import styled from "styled-components";
 import SearchBar from "./searchBar";
 import UserChip from "./userChip";
 import { UserCookie, userProps } from "../../utils/userCookie";
 import NavbarLinks from "./navbarLinks";
-import { topNavigator } from "../../utils/helperFunctions";
+import { topNavigator, useOutsideAlerter } from "../../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
 import ModeToggle from "../profile-comp/modeToggle";
 import { localStorageUser } from "../../utils/globalConstants";
+import { MyProfileIcon, SignoutIcon } from "./svg";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -54,13 +55,40 @@ const UserWrapper = styled.div`
   height: fit-content;
   padding: 1rem 1.25rem;
   cursor: pointer;
+  position: relative;
+`;
 
-  img {
-    /* margin-right: 0rem; */
-  }
+const UserOptions = styled.div`
+  border: 1px solid red;
+  position: absolute;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #d5d9eb;
+  top: 100%;
+  box-sizing: border-box;
+  padding: 1rem 0;
+  background-color: white;
 
-  span {
-    /* border: 1px solid red; */
+  ul {
+    list-style: none;
+
+    li {
+      /* border: 1px solid red; */
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.5rem 1.125rem;
+      /* margin: 0 1.125rem; */
+      border-radius: 8px;
+      display: flex;
+      /* flex-direction: ; */
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.15s linear;
+
+      &:hover {
+        background-color: #d8eefe;
+      }
+    }
   }
 `;
 
@@ -72,6 +100,7 @@ const ModeWrapper = styled.div`
 
 const Navbar = () => {
   const [localUser, setLocalUser] = useState<userProps>();
+  const [showProfileOptions, setShowProfileOptions] = useState(false);
 
   const { fetchLocalUserData } = UserCookie();
 
@@ -99,6 +128,18 @@ const Navbar = () => {
     console.log(localUser?.role);
   }, [localUser]);
 
+  const signoutHandler = () => {
+    localStorage.clear();
+    navigate("/signin");
+  };
+
+  const closeDropDown = () => {
+    setShowProfileOptions(false);
+  };
+
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef, closeDropDown);
+
   return (
     <>
       <Section>
@@ -109,13 +150,30 @@ const Navbar = () => {
           <SearchBar placeholderText="Search for a request, class, topic, subject, person, course, etc." />
         </SearchContainer>
         {localUser && (
-          <UserWrapper onClick={() => navigationHandler("/me")}>
+          <UserWrapper
+            onClick={() => setShowProfileOptions(!showProfileOptions)}
+            ref={wrapperRef}
+          >
             <UserChip
               name={localUser.userName}
               photo={localUser.photo}
               imgSize="1.75rem"
               textSize="1.25em"
             />
+            {showProfileOptions && (
+              <UserOptions>
+                <ul>
+                  <li onClick={() => navigationHandler("/me")}>
+                    <span>View Profile</span>
+                    <MyProfileIcon />
+                  </li>
+                  <li onClick={signoutHandler}>
+                    <span>Signout</span>
+                    <SignoutIcon />
+                  </li>
+                </ul>
+              </UserOptions>
+            )}
           </UserWrapper>
         )}
       </Section>
