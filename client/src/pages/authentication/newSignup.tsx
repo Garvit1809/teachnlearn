@@ -170,19 +170,8 @@ const NewSignup = () => {
   };
 
   const handleValidation = () => {
-    const {
-      fullName,
-      userName,
-      email,
-      password,
-      confirmPassword,
-      photo,
-      number,
-      course,
-      interestedSubjects,
-      strongSubjects,
-      preferredLanguages,
-    } = userData;
+    const { fullName, userName, email, password, confirmPassword, course } =
+      userData;
     if (
       fullName === "" ||
       userName === "" ||

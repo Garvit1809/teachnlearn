@@ -4,6 +4,7 @@ import { useOutsideAlerter } from "../../../utils/helperFunctions";
 import { HideEyeIcon } from "../svg";
 
 const Section = styled.div`
+  /* border: 1px solid red; */
   position: relative;
   width: 100%;
   box-sizing: border-box;
@@ -16,7 +17,7 @@ const Section = styled.div`
     /* border: 1px solid red; */
     position: absolute;
     right: 10px;
-    top: 50%;
+    top: 30px;
     transform: translateY(-50%);
     display: flex;
     align-items: center;
@@ -108,6 +109,20 @@ const DropdownMenu = styled.div`
   }
 `;
 
+const RequiredText = styled.div`
+/* position: absolute; */
+/* top: 100%; */
+  /* border: 1px solid red; */
+  span{
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 0.8rem;
+    text-transform: capitalize;
+    /* line-height: 0; */
+  }
+  /* margin-top: 0rem; */
+  margin-left: 0.5rem;
+`;
+
 interface inputProps {
   value: string | number;
   type: string;
@@ -116,6 +131,7 @@ interface inputProps {
   updateFields: any;
   hasDropdown?: boolean;
   dropdownData?: string[];
+  isRequired?: boolean;
 }
 
 const Inputholder = (props: inputProps) => {
@@ -187,6 +203,11 @@ const Inputholder = (props: inputProps) => {
         </div>
       )}
       <Label isValid={isValid}>{props.label}</Label>
+      {props.isRequired && (
+        <RequiredText>
+          <span>*required</span>
+        </RequiredText>
+      )}
       {props.hasDropdown
         ? props.value == ""
           ? null

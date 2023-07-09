@@ -45,6 +45,7 @@ const SignupForm = (props: SignupFormProps) => {
           value={props.fullName}
           name="fullName"
           updateFields={props.updateFields}
+          isRequired={true}
         />
         <Inputholder
           type="text"
@@ -52,6 +53,7 @@ const SignupForm = (props: SignupFormProps) => {
           value={props.userName}
           name="userName"
           updateFields={props.updateFields}
+          isRequired={true}
         />
         <Inputholder
           type="email"
@@ -59,6 +61,7 @@ const SignupForm = (props: SignupFormProps) => {
           name="email"
           value={props.email}
           updateFields={props.updateFields}
+          isRequired={true}
         />
         <Inputholder
           type="password"
@@ -66,6 +69,7 @@ const SignupForm = (props: SignupFormProps) => {
           name="password"
           value={props.password}
           updateFields={props.updateFields}
+          isRequired={true}
         />
         <Inputholder
           type="password"
@@ -73,6 +77,7 @@ const SignupForm = (props: SignupFormProps) => {
           name="confirmPassword"
           value={props.confirmPassword}
           updateFields={props.updateFields}
+          isRequired={true}
         />
       </form>
     </Section>

@@ -6,6 +6,10 @@ const Section = styled.div`
   position: relative;
   width: 100%;
   box-sizing: border-box;
+  font-family: "Nunito";
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
 
   input {
     width: 100%;
@@ -73,6 +77,18 @@ const DropdownMenu = styled.div`
     /* border: 1px solid red; */
     padding: 4px 0;
     cursor: pointer;
+  }
+`;
+
+const MaxLimitContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  span {
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 0.8rem;
+    text-transform: capitalize;
   }
 `;
 
@@ -159,6 +175,12 @@ const MultipleInput = (props: inputProps) => {
         disabled={props.arr.length == props.maxLimit}
       />
       <Label isValid={isValid}>{props.label}</Label>
+      {props.maxLimit && (
+        <MaxLimitContainer>
+          <span>*Hit Enter to add</span>
+          <span>Max {props.maxLimit}</span>
+        </MaxLimitContainer>
+      )}
       {props.hasDropdown
         ? props.value == ""
           ? null

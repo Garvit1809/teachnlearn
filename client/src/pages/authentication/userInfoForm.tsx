@@ -66,13 +66,13 @@ const UserInfoForm = (props: UserInfoFormProps) => {
         />
         <Inputholder
           type="text"
-          // label="Course Enrolled"
           label="Exam | Standard | Board | Degree"
           value={props.course}
           name="course"
           updateFields={props.updateFields}
           // hasDropdown={true}
           // dropdownData={}
+          isRequired={true}
         />
         <InputWrapper>
           <MultipleInput
