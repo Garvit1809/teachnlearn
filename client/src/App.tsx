@@ -22,25 +22,11 @@ import { userProps } from "./components/profile-comp/my-profile/myProfile";
 import Blogs from "./pages/blogs/blogs";
 import Groups from "./pages/groups/groups";
 import MyAI from "./pages/ai/myAI";
+import About from "./pages/about/about";
+import Contact from "./pages/contact/contact";
+import Terms from "./pages/terms/terms";
 
 function App() {
-  const { fetchLocalUserData } = UserCookie();
-
-  const [localUser, setLocalUser] = useState<userProps>();
-
-  // const loca = document.location.pathname;
-
-  useEffect(() => {
-    fetchLocalUserData().then((data) => {
-      setLocalUser(data);
-    });
-    // console.log("LOCA :-" + loca);
-  }, []);
-
-  // useEffect(() => {
-  //   console.log(localUser);
-  // }, [localUser]);
-
   return (
     <div className="App">
       <Routes>
@@ -65,6 +51,9 @@ function App() {
         <Route path="/groups" element={<Groups />} />
         <Route path="/myai" element={<MyAI />} />
         <Route path="/me" element={<Profile />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/terms-and-privacy" element={<Terms />} />
       </Routes>
     </div>
   );

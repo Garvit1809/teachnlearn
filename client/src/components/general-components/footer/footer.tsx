@@ -67,38 +67,18 @@ const GetApp = styled.div`
 const companyData = [
   {
     title: "About Us",
-    link: "/",
+    link: "/about",
   },
   {
     title: "Contact",
-    link: "/",
-  },
-  {
-    title: "Support",
-    link: "/",
-  },
-  {
-    title: "Press & News",
-    link: "/",
+    link: "/contact",
   },
 ];
 
 const legalData = [
   {
-    title: "Terms",
-    link: "/",
-  },
-  {
-    title: "Privacy",
-    link: "/",
-  },
-  {
-    title: "Cookies",
-    link: "/",
-  },
-  {
-    title: "Licenses",
-    link: "/",
+    title: "Terms And Privacy",
+    link: "/terms-and-privacy",
   },
 ];
 

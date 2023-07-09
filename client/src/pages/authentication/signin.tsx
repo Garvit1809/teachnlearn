@@ -118,14 +118,13 @@ const Signin = () => {
     navigate(link);
   };
 
- const toastOptions = {
+  const toastOptions = {
     position: toast.POSITION.BOTTOM_RIGHT,
     autoClose: 6000,
     pauseOnHover: true,
     draggable: true,
   };
 
- 
   const handleValidation = () => {
     const { email, password } = loginData;
     if (email === "" || password === "") {

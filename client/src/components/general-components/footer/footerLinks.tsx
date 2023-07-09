@@ -1,6 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { topNavigator } from "../../../utils/helperFunctions";
 
 const Section = styled.div`
   h4 {
@@ -22,7 +23,7 @@ const Section = styled.div`
       font-size: 22px;
       line-height: 30px;
       color: #000000;
-      color: #FFFFFF;
+      color: #ffffff;
       margin-bottom: 0.7rem;
       cursor: pointer;
     }
@@ -40,16 +41,22 @@ interface arrData {
 }
 
 const FooterLinks = (props: footerLinkProps) => {
+  const navigate = useNavigate();
+  const navigationHandler = (link: string) => {
+    topNavigator();
+    navigate(link);
+  };
+
   return (
     <Section>
       <h4>{props.heading}</h4>
       <ul>
         {props.listData.map((item, index) => {
           return (
-            <li key={index}>
-              <Link to={item.link}>
-                <span>{item.title}</span>
-              </Link>
+            <li key={index} onClick={() => navigationHandler(item.link)}>
+              {/* <Link to={item.link}> */}
+              <span>{item.title}</span>
+              {/* </Link> */}
             </li>
           );
         })}
