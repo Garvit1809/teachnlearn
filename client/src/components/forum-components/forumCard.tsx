@@ -141,9 +141,9 @@ const ForumCard = (props: forumCardProps) => {
         <Options></Options>
       </Header>
       <Question>
-        {props.tagline.length > 71 ? (
+        {props.tagline.length > 85 ? (
           <>
-            {props.tagline.slice(0, 70)}
+            {props.tagline.slice(0, 84)}
             &nbsp;
             <span>...</span>
           </>

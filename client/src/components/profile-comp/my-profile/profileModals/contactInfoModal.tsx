@@ -116,6 +116,10 @@ const ContactInfoModal = (props: modalProps) => {
         )
         .then(({ data }) => {
           console.log(data.updatedUser);
+          const user = data.updatedUser;
+          user.token = props.userToken;
+          localStorage.setItem(localStorageUser, JSON.stringify(user));
+          window.dispatchEvent(new Event("storage"));
           window.location.reload();
         })
         .catch((data) => {

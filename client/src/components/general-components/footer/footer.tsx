@@ -3,7 +3,7 @@ import styled from "styled-components";
 import TNLLogo from "../../../assets/TNL-logo.png";
 import { Link } from "react-router-dom";
 import FooterLinks from "./footerLinks";
-import { Facebook, Instagram, LinkedIn, Twitter } from "../svg";
+import { Facebook, Instagram, LinkedIn, Twitter, Youtube } from "../svg";
 
 const Section = styled.div`
   /* border-top: 1px solid #7d89b0; */
@@ -116,8 +116,8 @@ const socialData = [
     link: "https://www.instagram.com/teach.nlearn/",
   },
   {
-    social: <LinkedIn />,
-    link: "/",
+    social: <Youtube />,
+    link: "https://www.youtube.com/@TeachandLearnApp",
   },
 ];
 

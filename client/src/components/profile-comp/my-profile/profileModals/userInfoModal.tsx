@@ -119,7 +119,6 @@ const UserInfoModal = (props: modalProps) => {
           user.token = props.userToken;
           localStorage.setItem(localStorageUser, JSON.stringify(user));
           window.dispatchEvent(new Event("storage"));
-          // props.closeModal();
           window.location.reload();
         })
         .catch((data) => {

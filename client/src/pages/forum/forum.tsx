@@ -83,7 +83,7 @@ const Forum = () => {
     if (arr.length == 0) {
       sethasMoreData(false);
       return;
-    } else if (arr.length % dataLimit != 0) {
+    } else if (arr.length % DATA_LIMIT != 0) {
       sethasMoreData(false);
       return;
     }
@@ -137,17 +137,19 @@ const Forum = () => {
         <TopBar>
           <SearchBar placeholderText="Search n forums..." />
         </TopBar>
-        <ForumGrid>
-          {isLoading ? (
-            <Loader />
-          ) : (
-            forums &&
-            userToken &&
-            forums.map((forum, index) => {
-              return <ForumCard key={index} {...forum} userToken={userToken} />;
-            })
-          )}
-        </ForumGrid>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <ForumGrid>
+            {forums &&
+              userToken &&
+              forums.map((forum, index) => {
+                return (
+                  <ForumCard key={index} {...forum} userToken={userToken} />
+                );
+              })}
+          </ForumGrid>
+        )}
         {forums && hasMoreData && (
           <LoadMore loaderLoading={loaderLoading} onClick={fetchAllForums} />
         )}

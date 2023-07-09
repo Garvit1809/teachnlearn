@@ -14,6 +14,7 @@ const Section = styled.div`
   gap: 22px;
   background: #674ff1;
   background: #2a7e79;
+  background: #3da9fc;
   border-radius: 16px;
   cursor: pointer;
   font-family: "Nunito";
@@ -26,12 +27,12 @@ const Section = styled.div`
 
 const Tag = styled.div`
   h4 {
-    font-weight: 500;
+    font-weight: 800;
     font-size: 16px;
     line-height: 22px;
     letter-spacing: 0.02em;
     text-transform: uppercase;
-    color: #ffffff;
+    color: #094067;
   }
 `;
 

@@ -15,7 +15,7 @@ const Section = styled.div`
   /* padding: 1.75rem 3.5vw 0rem 3.5vw; */
   padding-top: 1.75rem;
   display: grid;
-  grid-template-columns: 1.8fr 6fr 2.2fr;
+  grid-template-columns: 1.8fr 6fr 2fr;
   /* display: flex; */
   box-sizing: border-box;
   column-gap: 2.5rem;
@@ -35,6 +35,7 @@ const ImageContainer = styled.div`
   /* border: 1px solid red; */
   width: 200px;
   height: 80px;
+  cursor: pointer;
   img {
     width: 100%;
     height: 100%;
@@ -43,9 +44,13 @@ const ImageContainer = styled.div`
 `;
 
 const UserWrapper = styled.div`
+  /* border: 1px solid red; */
   border-radius: 4px;
   border: 1px solid #d5d9eb;
-  width: fit-content;
+  /* width: fit-content; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: fit-content;
   padding: 1rem 1.25rem;
   cursor: pointer;
@@ -85,9 +90,9 @@ const Navbar = () => {
 
   const navigate = useNavigate();
 
-  const profileNavigation = () => {
+  const navigationHandler = (link: string) => {
     topNavigator();
-    navigate("/me");
+    navigate(link);
   };
 
   useEffect(() => {
@@ -97,21 +102,16 @@ const Navbar = () => {
   return (
     <>
       <Section>
-        <ImageContainer>
+        <ImageContainer onClick={() => navigationHandler("/")}>
           <img src={TNL_Logo} alt="tnl_logo" />
         </ImageContainer>
         <SearchContainer>
           <SearchBar />
         </SearchContainer>
         {localUser && (
-          <UserWrapper onClick={profileNavigation}>
+          <UserWrapper onClick={() => navigationHandler("/me")}>
             <UserChip
-              // name={localUser.name}
-              name={
-                localUser.name.length > 16
-                  ? localUser.name.split(" ")[0]
-                  : localUser.name
-              }
+              name={localUser.userName}
               photo={localUser.photo}
               imgSize="1.75rem"
               textSize="1.25em"

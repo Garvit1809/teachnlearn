@@ -22,7 +22,6 @@ const CompletedClasses = (props: classElemProps) => {
   const [teachCards, setTeachCards] = useState<Array<teachinCardProps>>([]);
 
   const [completedClassSet, setCompletedClassSet] = useState<number>(1);
-  const [dataLimit, setDataLimit] = useState(2);
   const [hasMoreData, sethasMoreData] = useState(false);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -32,7 +31,7 @@ const CompletedClasses = (props: classElemProps) => {
     if (arr.length == 0) {
       sethasMoreData(false);
       return;
-    } else if (arr.length % dataLimit != 0) {
+    } else if (arr.length % DATA_LIMIT != 0) {
       sethasMoreData(false);
       return;
     }

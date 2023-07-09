@@ -97,7 +97,7 @@ const items = carouselData.map((data, index) => {
 const YoutubeCarousel = () => {
   return (
     <Section>
-      <h3>Browse through our youtube videos</h3>
+      <h3>Watch these videos to know how and why to use Teach and Learn</h3>
       <Carousel responsive={responsive}>{items}</Carousel>;
     </Section>
   );

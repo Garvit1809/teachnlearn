@@ -30,7 +30,7 @@ const Section = styled.div`
 
 const Tag = styled.div`
   h4 {
-    font-weight: 500;
+    font-weight: 800;
     font-size: 16px;
     line-height: 22px;
     letter-spacing: 0.02em;

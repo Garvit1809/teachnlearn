@@ -47,8 +47,8 @@ const Slider = styled.span<ToggleCheckedProps>`
     width: 26px;
     left: 4px;
     bottom: 2px;
-    background-color: white;
     background-color: #674ff1;
+    background-color: #3da9fc;
     transition: 0.4s;
     transform: ${(props) => (props.isChecked ? "translateX(26px)" : "none")};
   }

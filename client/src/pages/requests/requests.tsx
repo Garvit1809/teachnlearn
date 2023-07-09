@@ -84,9 +84,9 @@ const Requests = () => {
         params: {
           limit: DATA_LIMIT,
           page: requestPageSet,
-          // dueDate: {
-          // $gte: curentDate,
-          // },
+          dueDate: {
+            $gte: curentDate,
+          },
         },
         headers: getHeaders(userToken ?? ""),
       })

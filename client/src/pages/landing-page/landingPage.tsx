@@ -18,6 +18,8 @@ import { topNavigator } from "../../utils/helperFunctions";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
+import feynaman from "../../assets/feynman.gif";
+
 const Section = styled.div`
   display: flex;
   flex-direction: column;
@@ -134,11 +136,22 @@ const BlogHeader = styled.div`
   color: #ffffff;
   cursor: pointer;
   box-sizing: border-box;
+  transition: all 0.15s ease;
 
   span.bold {
     color: #ef4565;
     text-transform: uppercase;
     font-weight: 700;
+  }
+
+  &:hover {
+    background: #ef4565;
+    /* background: #90b4ce; */
+    color: #094067;
+    font-weight: 500;
+    span.bold {
+      color: #ffffff;
+    }
   }
 `;
 
@@ -276,25 +289,19 @@ const slideData = [
     img: img1,
   },
   {
-    heading: "Share your problems Share their solutions.",
+    heading: "Share your problems. Share their solutions.",
     description:
       "Participate in open discussions to share your problems, while gaining insights and solutions from others in a collaborative environment.",
     img: img2,
   },
   {
-    heading: "Organize bite sizes class Schedule as you want.",
+    heading: "Organize bite sizes classes. Schedule as you want.",
     description:
       "Flexible scheduling allows you to organize and attend bite-sized classes according to your preferences.",
     img: img3,
   },
   {
-    heading: "Teach and Learn to master any concept",
-    description:
-      "Unlock the power of teaching and learning to achieve mastery in any concept, fostering a dynamic exchange of knowledge and growth.",
-    img: img4,
-  },
-  {
-    heading: "Free but reliable classes, attend as you like.",
+    heading: "Free but reliable classes from students just like you.",
     description:
       "Experience the best of both worlds with free, reliable classes that you can attend at your own pace and convenience.",
     img: img5,
@@ -304,6 +311,12 @@ const slideData = [
     description:
       "Experience the best of both worlds with free, reliable classes that you can attend at your own pace and convenience.",
     img: img6,
+  },
+  {
+    heading: "Teach and Learn",
+    description:
+      "Unlock the power of teaching and learning to achieve mastery in any concept, fostering a dynamic exchange of knowledge and growth.",
+    img: img4,
   },
 ];
 
@@ -376,8 +389,8 @@ const LandingPage = () => {
         </Header>
         <BlogHeader>
           <span>
-            Check out our <span className="bold">blog</span> to learn about
-            Feyman’s Technique and much more
+            Check out our <span className="bold">blog</span> for free guidance
+            on how to improve in your studies.
           </span>
           <Arrow strokeColor="#FFFFFF" />
         </BlogHeader>
@@ -401,20 +414,26 @@ const LandingPage = () => {
         <YoutubeCarousel />
       </YoutubeWrapper>
       <DescContainer>
-        <h2>
-          "The
-          <span> no-brainer </span>
-          choice"
-        </h2>
+        <h2>Richard Feynman</h2>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in velit
-          libero. Maecenas ullamcorper rhoncus tempor. Integer sit amet amet
-          purussem lacinia bibendum. Sed fringilla justo vitae mi tristique
-          malesuada nulla condimentum.
+          Richard Feynman was a Nobel-prize winning US theoretical physicist.
+          Famed for his brilliant mind and mercurial personality, his main work
+          was in quantum physics and particle physics, where he is particularly
+          known for the Feynman diagram, a way of depicting particle processes
+          graphically. But he was a prolific writer and thinker who also
+          pioneered ideas in quantum computing and nanotechnology.
+          <br />
+          <br />
+          We, in Teach and Learn, have made a platform where students from all
+          across the globe and all sections of society can come together,
+          collaborate and elevate each other’s level of knowledge by using the
+          Feynman Technique of learning to teach each other and learn from each
+          other.
         </p>
         <button type="button" onClick={() => navigationHandler("/signup")}>
           Create an account
         </button>
+        {/* <img src={feynaman} alt="" /> */}
       </DescContainer>
       <Footer />
     </>

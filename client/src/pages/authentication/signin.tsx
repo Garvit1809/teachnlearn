@@ -6,7 +6,6 @@ import LoginForm from "../../components/authentication-comp/loginForm";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import axios from "axios";
 import { localStorageUser } from "../../utils/globalConstants";
-import { UserCookie } from "../../utils/userCookie";
 import { isValidEmail, topNavigator } from "../../utils/helperFunctions";
 
 import { ToastContainer, toast } from "react-toastify";

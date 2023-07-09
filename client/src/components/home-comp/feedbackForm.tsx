@@ -5,6 +5,9 @@ import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunctions";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Section = styled.div`
   /* border: 1px solid red; */
   display: flex;
@@ -16,8 +19,8 @@ const Section = styled.div`
 
   h2 {
     color: #000;
-    text-align: center;
-    font-size: 4.5rem;
+    /* text-align: center; */
+    font-size: 4rem;
     line-height: 1;
     font-family: "Nunito";
     font-weight: 600;
@@ -46,6 +49,7 @@ const Section = styled.div`
     gap: 0.625rem;
     border-radius: 2px;
     background: #094067;
+    background: #ef4565;
     color: #fff;
     font-size: 1.125rem;
     font-family: "Nunito";
@@ -66,30 +70,52 @@ const FeedbackForm = (props: feedbackProps) => {
     setFeedback(content);
   }
 
+  const toastOptions = {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 6000,
+    pauseOnHover: true,
+    draggable: true,
+  };
+
+  const handleValidation = () => {
+    if (feedback == "") {
+      toast.error("Feedback cannot be empty", toastOptions);
+      return false;
+    }
+    return true;
+  };
+
   const feedbackHandler = async () => {
     console.log(feedback);
-    await axios
-      .post(
-        `${BASE_URL}${apiVersion}/user/my-feedback`,
-        { feedback },
-        {
-          headers: getHeaders(props.userToken),
-        }
-      )
-      .then(({ data }) => {
-        console.log(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (handleValidation()) {
+      await axios
+        .post(
+          `${BASE_URL}${apiVersion}/user/my-feedback`,
+          { feedback },
+          {
+            headers: getHeaders(props.userToken),
+          }
+        )
+        .then(({ data }) => {
+          console.log(data);
+          toast.success("Feedback successfully submitted!!", toastOptions);
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error(
+            "Feedback couldnt be submiited. Try again!!",
+            toastOptions
+          );
+        });
+    }
   };
 
   return (
     <Section>
-      <h2>Have a feedback</h2>
+      <h2>Please share your feedback</h2>
       <h4>
-        We love to hear back from you and keep improving our product. Your
-        feedback will be very valuable for us.
+        Let us know how we can improve our platform and any additional features
+        you would like to see
       </h4>
       <Textarea
         label="Your Feedback"
