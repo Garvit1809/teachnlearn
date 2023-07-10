@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import TNLLogo from "../../../assets/TNL-logo.png";
+import TNLLogo from "../../../assets/tnl-logo.png";
 import { Link } from "react-router-dom";
 import FooterLinks from "./footerLinks";
-import { Facebook, Instagram, LinkedIn, Twitter, Youtube } from "../svg";
+import { Facebook, Instagram, Twitter, Youtube } from "../svg";
 
 const Section = styled.div`
   /* border-top: 1px solid #7d89b0; */
