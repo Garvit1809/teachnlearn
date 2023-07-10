@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import TNL_Logo from "../../assets/TNL-logo.png";
+import TNL_Logo from "../../assets/tnl-logo.png";
 import styled from "styled-components";
 import SearchBar from "./searchBar";
 import UserChip from "./userChip";
@@ -8,7 +8,6 @@ import NavbarLinks from "./navbarLinks";
 import { topNavigator, useOutsideAlerter } from "../../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
 import ModeToggle from "../profile-comp/modeToggle";
-import { localStorageUser } from "../../utils/globalConstants";
 import { MyProfileIcon, SignoutIcon } from "./svg";
 
 const Section = styled.div`

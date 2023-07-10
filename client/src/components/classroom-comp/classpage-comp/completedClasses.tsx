@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { teachCardProps } from "../../../pages/classroom/classrooms";
 import { classElemProps } from "./allClasses";
 import { BASE_URL, apiVersion } from "../../../utils/apiRoutes";
 import { getHeaders } from "../../../utils/helperFunctions";
