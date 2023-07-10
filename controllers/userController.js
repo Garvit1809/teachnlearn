@@ -1,5 +1,7 @@
 const Feedback = require("../models/feedbackModel");
+const LearningCard = require("../models/learningCardModel");
 const Review = require("../models/reviewModel");
+const TeachingCard = require("../models/teachingCardModel");
 const User = require("../models/userModel");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
@@ -275,5 +277,54 @@ exports.postUserFeedback = catchAsync(async (req, res, next) => {
   res.status(201).json({
     status: "success",
     newFeedback,
+  });
+});
+
+exports.searchInApplication = catchAsync(async (req, res, next) => {
+  const search = req.query.search;
+  const userId = req.user.id;
+  const currentDate = new Date();
+
+  const modifiedSearch = new RegExp(search, "i");
+
+  const users = await User.find({
+    $or: [
+      { name: { $regex: modifiedSearch } },
+      { userName: { $regex: modifiedSearch } },
+      { strongSubjects: { $elemMatch: { $eq: modifiedSearch } } },
+      { preferredLanguages: { $elemMatch: { $eq: modifiedSearch } } },
+    ],
+  })
+    .find({ _id: { $ne: userId } })
+    .select("name userName tagline");
+
+  const learnCards = await LearningCard.find({
+    $or: [
+      { subject: { $regex: modifiedSearch } },
+      { topic: { $regex: modifiedSearch } },
+      { description: { $regex: modifiedSearch } },
+      { tags: { $elemMatch: { $eq: modifiedSearch } } },
+    ],
+    // dueDate: { $gte: currentDate },
+  }).select("topic createdBy");
+
+  const classes = await TeachingCard.find({
+    $or: [
+      { subject: { $regex: modifiedSearch } },
+      { topic: { $regex: modifiedSearch } },
+      { description: { $regex: modifiedSearch } },
+      { tags: { $elemMatch: { $eq: modifiedSearch } } },
+    ],
+    // classStartsAt: { $gte: currentDate },
+  }).select("topic createdBy -reviews");
+
+  res.status(200).json({
+    status: "success",
+    totalUsers: users.length,
+    totalLearnCards: learnCards.length,
+    totalClasses: classes.length,
+    users,
+    learnCards,
+    classes,
   });
 });

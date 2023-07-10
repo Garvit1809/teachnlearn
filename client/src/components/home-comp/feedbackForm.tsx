@@ -5,7 +5,7 @@ import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunctions";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Section = styled.div`
@@ -99,6 +99,7 @@ const FeedbackForm = (props: feedbackProps) => {
         .then(({ data }) => {
           console.log(data);
           toast.success("Feedback successfully submitted!!", toastOptions);
+          setFeedback("");
         })
         .catch((err) => {
           console.log(err);

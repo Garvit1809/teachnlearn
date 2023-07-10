@@ -69,6 +69,7 @@ const SearchBox = styled.div`
 
 interface searchProps {
   placeholderText?: string;
+  updateSearch?: any;
 }
 
 const SearchBar = (props: searchProps) => {
@@ -80,9 +81,11 @@ const SearchBar = (props: searchProps) => {
           <input
             type="text"
             placeholder={props.placeholderText || "Search for anything"}
+            // value={}
+            onChange={(e) => props.updateSearch(e.target.value)}
           />
         </SearchBox>
-        <button>
+        <button type="button">
           <Arrow strokeColor="white" />
         </button>
       </form>

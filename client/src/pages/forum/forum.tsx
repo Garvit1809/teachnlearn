@@ -127,6 +127,38 @@ const Forum = () => {
     navigate("/forums/create-forum");
   };
 
+  const [searchResults, setSearchResults] = useState([]);
+  const [query, setQuery] = useState<string>("");
+
+  const updateSearch = (keyword: string) => {
+    console.log(keyword);
+    // setQuery(keyword);
+    handleSearch(keyword);
+  };
+
+  const handleSearch = async (query: string) => {
+    if (query === "") {
+      setSearchResults([]);
+      return;
+    }
+
+    // api/v1/users?search=
+    // const { data } = await axios.get(`${BASE_URL}${searchUserEnd}${query}`, {
+    // headers: getHeaders(props.user.token ?? '')
+    // })
+
+    // await axios
+    //   .get(`${BASE_URL}${apiVersion}/forum/search?search=${query}`, {
+    //     headers: getHeaders(userToken ?? ""),
+    //   })
+    //   .then(({ data }) => {
+    //     console.log(data);
+    //   });
+
+    // console.log(data);
+    // setSearchResult(data)
+  };
+
   return (
     <>
       <Navbar />
@@ -138,7 +170,10 @@ const Forum = () => {
           </PostBtn>
         </HeaderBtn>
         <TopBar>
-          <SearchBar placeholderText="Search n forums..." />
+          <SearchBar
+            updateSearch={updateSearch}
+            placeholderText="Search n forums..."
+          />
         </TopBar>
         {isLoading ? (
           <Loader />
