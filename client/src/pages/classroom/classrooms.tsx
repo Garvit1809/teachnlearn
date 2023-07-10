@@ -107,7 +107,7 @@ const Classrooms = () => {
     <>
       <Navbar />
       <Section>
-        <Intro role="learn" />
+        <Intro />
         <HorizontalNavigator
           activeLink={activeLink}
           labelArr={labels}

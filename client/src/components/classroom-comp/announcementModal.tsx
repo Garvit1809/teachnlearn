@@ -41,7 +41,7 @@ const Header = styled.div`
 interface announcementModalProps {
   teachCardId: string;
   closeModal: any;
-  classElemType: string;
+  classElemType?: string;
 }
 
 const AnnouncementModal = (props: announcementModalProps) => {
