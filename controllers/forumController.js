@@ -83,7 +83,7 @@ exports.getOneForum = factory.getOne(Forum, {
 });
 
 exports.searchForum = catchAsync(async (req, res, next) => {
-  const search = req.query.search;
+  const { search } = req.body;
   console.log(search);
 
   const modifiedSearch = new RegExp(search, "i");
@@ -91,9 +91,10 @@ exports.searchForum = catchAsync(async (req, res, next) => {
   const forums = await Forum.find({
     $or: [
       { topic: { $regex: modifiedSearch } },
-    //   { tagline: { $regex: modifiedSearch } },
+      { tagline: { $regex: modifiedSearch } },
+      // { "createdBy.name": { $regex: modifiedSearch } },
     ],
-  });
+  }).select("createdBy topic tagline");
 
   res.status(200).json({
     status: "success",

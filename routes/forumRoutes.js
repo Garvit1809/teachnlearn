@@ -19,6 +19,6 @@ router
   .get(forumController.getOneForum)
   .patch(forumController.upvoteForum);
 
-router.get("/search", forumController.searchForum);
+router.post("/search", forumController.searchForum);
 
 module.exports = router;

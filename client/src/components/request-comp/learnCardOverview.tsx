@@ -395,11 +395,13 @@ const LearnCardOverview = () => {
                       </button>
                     </CreateTeachCardBtn>
                   )}
-                  {userRole == "learn" && (
-                    <span className="text">
-                      Cannot create Teach Card in Learn Mode
-                    </span>
-                  )}
+                  {learnCardCreaterCheck()
+                    ? null
+                    : userRole == "learn" && (
+                        <span className="text">
+                          Cannot create Teach Card in Learn Mode
+                        </span>
+                      )}
                 </TeachCardWrapper>
               </LeftContainer>
               <CardOverview>

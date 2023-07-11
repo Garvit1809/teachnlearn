@@ -14,6 +14,7 @@ import LoadMore from "../../components/general-components/loadMore";
 import { DATA_LIMIT } from "../../utils/globalConstants";
 import Loader from "../../components/general-components/loader";
 import { Plus } from "../../components/general-components/svg";
+import ForumSearchDropdown from "../../components/forum-components/forumSearchDropdown";
 
 const Section = styled.div`
   /* border: 1px solid brown; */
@@ -127,36 +128,37 @@ const Forum = () => {
     navigate("/forums/create-forum");
   };
 
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState<Array<forumProps>>([]);
   const [query, setQuery] = useState<string>("");
 
-  const updateSearch = (keyword: string) => {
-    console.log(keyword);
-    // setQuery(keyword);
-    handleSearch(keyword);
-  };
-
   const handleSearch = async (query: string) => {
+    setshowDropDown(true);
     if (query === "") {
       setSearchResults([]);
       return;
     }
 
-    // api/v1/users?search=
-    // const { data } = await axios.get(`${BASE_URL}${searchUserEnd}${query}`, {
-    // headers: getHeaders(props.user.token ?? '')
-    // })
+    await axios
+      .post(
+        `${BASE_URL}${apiVersion}/forum/search`,
+        {
+          search: query,
+        },
+        {
+          headers: getHeaders(userToken || ""),
+        }
+      )
+      .then(({ data }) => {
+        console.log(data.forums);
+        const forums = data.forums;
+        setSearchResults(forums);
+      });
+  };
 
-    // await axios
-    //   .get(`${BASE_URL}${apiVersion}/forum/search?search=${query}`, {
-    //     headers: getHeaders(userToken ?? ""),
-    //   })
-    //   .then(({ data }) => {
-    //     console.log(data);
-    //   });
+  const [showDropDown, setshowDropDown] = useState(true);
 
-    // console.log(data);
-    // setSearchResult(data)
+  const closeSearchBox = () => {
+    setshowDropDown(false);
   };
 
   return (
@@ -171,8 +173,18 @@ const Forum = () => {
         </HeaderBtn>
         <TopBar>
           <SearchBar
-            updateSearch={updateSearch}
+            updateSearch={handleSearch}
             placeholderText="Search n forums..."
+            elem={
+              searchResults.length == 0 ? undefined : showDropDown &&
+                userToken ? (
+                <ForumSearchDropdown
+                  searchResults={searchResults}
+                  closeSearchBox={closeSearchBox}
+                  userToken={userToken}
+                />
+              ) : undefined
+            }
           />
         </TopBar>
         {isLoading ? (

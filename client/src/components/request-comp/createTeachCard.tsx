@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../general-components/navbar";
 import Footer from "../general-components/footer/footer";
-import FooterWrapper from "../general-components/footer/footerWrapper";
 import BackBtn from "./backBtn";
 import FormField from "./formField";
 import Inputholder from "../general-components/input/inputholder";
@@ -175,6 +174,24 @@ const CreateTeachCard = () => {
   }
 
   const dateHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const date = e.target.value;
+    // console.log(typeof e.target.value);
+    // console.log(e.target.value);
+
+    const ISOstring = new Date(date);
+    // console.log(typeof ISOstring);
+    // console.log(ISOstring);
+
+    updateFields({
+      [e.target.name]: date,
+      // startingTime: ISOstring.toString(),
+      // endingTime: ISOstring.toString(),
+    });
+  };
+
+  const timeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+
     updateFields({ [e.target.name]: e.target.value });
   };
 
@@ -241,6 +258,7 @@ const CreateTeachCard = () => {
   const teachCardHandler = async (e: any) => {
     e.preventDefault();
     console.log(teachCard);
+    // console.log(new Date(time));
 
     if (handleValidation()) {
       await axios
@@ -271,10 +289,16 @@ const CreateTeachCard = () => {
           window.location.reload();
         })
         .catch((data) => {
+          setTeachCard(initialData);
           const errors = data.response.data.error.errors;
-          Object.keys(errors).forEach(function (err, index) {
-            toast.error(errors[err].message, toastOptions);
-          });
+          if (errors) {
+            Object.keys(errors).forEach(function (err, index) {
+              toast.error(errors[err].message, toastOptions);
+            });
+          } else {
+            console.log(data);
+            // toast.error('Something went wrong',)
+          }
         });
     }
   };
@@ -315,6 +339,8 @@ const CreateTeachCard = () => {
         });
     }
   };
+
+  // const [time, settime] = useState("");
 
   return (
     <>
@@ -361,7 +387,7 @@ const CreateTeachCard = () => {
                 updateFields={updateFields}
               />
             }
-            inputDesc="Specify Education Level for the lesson"
+            inputDesc="Specify Education Level for the class"
           />
           <FormField
             elem={
@@ -375,7 +401,7 @@ const CreateTeachCard = () => {
                 dropdownData={standard}
               />
             }
-            inputDesc="Specify the Standard for the lesson"
+            inputDesc="Specify the Standard for the class"
           />
           <FormField
             elem={
@@ -401,8 +427,15 @@ const CreateTeachCard = () => {
                 updateFields={updateFields}
               />
             }
-            inputDesc="Language that you prefer"
+            inputDesc="Price for your class"
           />
+          {/* <input
+            type="time"
+            name=""
+            id=""
+            value={time}
+            onChange={(e) => settime(e.target.value)}
+          /> */}
           <FormField
             elem={
               <input
@@ -413,7 +446,7 @@ const CreateTeachCard = () => {
                 onChange={(e) => dateHandler(e)}
               />
             }
-            inputDesc="Specify due date for the lesson"
+            inputDesc="Specify Date for the class"
           />
           <FormField
             elem={
@@ -422,10 +455,10 @@ const CreateTeachCard = () => {
                 name="startingTime"
                 id="date"
                 value={teachCard.startingTime}
-                onChange={(e) => dateHandler(e)}
+                onChange={(e) => timeHandler(e)}
               />
             }
-            inputDesc="Specify starting time for the lesson"
+            inputDesc="Specify starting time for the class"
           />
           <FormField
             elem={
@@ -434,10 +467,10 @@ const CreateTeachCard = () => {
                 name="endingTime"
                 id="date"
                 value={teachCard.endingTime}
-                onChange={(e) => dateHandler(e)}
+                onChange={(e) => timeHandler(e)}
               />
             }
-            inputDesc="Specify end timing for the lesson"
+            inputDesc="Specify end timing for the class"
           />
           <FormField
             elem={<UploadImage updateFields={updateFields} />}
@@ -452,7 +485,7 @@ const CreateTeachCard = () => {
                 value={teachCard.description}
               />
             }
-            inputDesc="Describe briefly what you expect from the teacher"
+            inputDesc="Describe briefly what students should expect from you"
           />
           <FormField
             elem={
