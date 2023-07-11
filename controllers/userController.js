@@ -294,7 +294,7 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
     ],
   })
     .find({ _id: { $ne: userId } })
-    .select("name userName tagline");
+    .select("name userName tagline photo");
 
   const learnCards = await LearningCard.find({
     $or: [

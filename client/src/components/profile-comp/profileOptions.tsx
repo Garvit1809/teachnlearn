@@ -1,14 +1,5 @@
 import React, { ReactElement, useState } from "react";
 import styled from "styled-components";
-import {
-  CoinsIcon,
-  FriendsIcon,
-  MyProfileIcon,
-  RedeemIcon,
-} from "../general-components/svg";
-import MyProfile from "./my-profile/myProfile";
-import PurchaseCoins from "./purchaseCoins";
-import InviteFriends from "./inviteFriends";
 import DeleteProfileModal from "./deleteProfileModal";
 
 const Section = styled.div`
@@ -54,14 +45,6 @@ const MenuOptions = styled.div<menuOptionsProps>`
   font-size: 20px;
   line-height: 30px;
 `;
-
-// const profileOptions = [
-//   {
-//     option: "My profile",
-//     label: "MyProfile",
-//     icon: <MyProfileIcon />,
-//   },
-// ];
 
 interface optionsProps {
   setSelectedLeftScreen: React.Dispatch<React.SetStateAction<string>>;

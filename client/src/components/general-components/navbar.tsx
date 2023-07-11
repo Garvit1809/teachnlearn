@@ -5,10 +5,19 @@ import SearchBar from "./searchBar";
 import UserChip from "./userChip";
 import { UserCookie, userProps } from "../../utils/userCookie";
 import NavbarLinks from "./navbarLinks";
-import { topNavigator, useOutsideAlerter } from "../../utils/helperFunctions";
+import {
+  getHeaders,
+  topNavigator,
+  useOutsideAlerter,
+} from "../../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
 import ModeToggle from "../profile-comp/modeToggle";
 import { MyProfileIcon, SignoutIcon } from "./svg";
+import axios from "axios";
+import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
+import { learnCardProps } from "../../pages/requests/requests";
+import { teachinCardProps } from "../../types/teachingCardType";
+import NavSearchDropdown from "../profile-comp/navbar/navSearchDropdown";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -139,6 +148,49 @@ const Navbar = () => {
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, closeDropDown);
 
+  const [searchedUsers, setSearchedUsers] = useState<Array<userProps>>([]);
+  const [searchedLearnCards, setSearchedLearnCards] = useState<
+    Array<learnCardProps>
+  >([]);
+  const [searchedTeachCards, setSearchedTeachCards] = useState<
+    Array<teachinCardProps>
+  >([]);
+
+  const searchHandler = async (query: string) => {
+    setshowDropDown(true);
+    if (query === "") {
+      setSearchedUsers([]);
+      setSearchedLearnCards([]);
+      setSearchedTeachCards([]);
+      return;
+    }
+
+    await axios
+      .get(`${BASE_URL}${apiVersion}/user/search`, {
+        params: {
+          search: query,
+        },
+        headers: getHeaders(localUser?.token || ""),
+      })
+      .then(({ data }) => {
+        console.log(data);
+        const classes = data.classes;
+        const learnCards = data.learnCards;
+        const users = data.users;
+        setSearchedUsers(users);
+        setSearchedLearnCards(learnCards);
+        setSearchedTeachCards(classes);
+      })
+      .catch((data) => {
+        console.log(data);
+      });
+  };
+
+  const [showDropDown, setshowDropDown] = useState(true);
+
+  const closeSearchBox = () => {
+    setshowDropDown(false);
+  };
   return (
     <>
       <Section>
@@ -146,7 +198,24 @@ const Navbar = () => {
           <img src={TNL_Logo} alt="tnl_logo" />
         </ImageContainer>
         <SearchContainer>
-          <SearchBar placeholderText="Search for a request, class, topic, subject, person, course, etc." />
+          <SearchBar
+            placeholderText="Search for a request, class, topic, subject, person, course, etc."
+            updateSearch={searchHandler}
+            elem={
+              searchedUsers.length == 0 &&
+              searchedLearnCards.length == 0 &&
+              searchedTeachCards.length == 0 ? undefined : localUser &&
+                showDropDown ? (
+                <NavSearchDropdown
+                  searchedUsers={searchedUsers}
+                  searchedLearnCards={searchedLearnCards}
+                  searchedTeachCards={searchedTeachCards}
+                  closeSearchBox={closeSearchBox}
+                  localUserId={localUser._id}
+                />
+              ) : undefined
+            }
+          />
         </SearchContainer>
         {localUser && (
           <UserWrapper
@@ -158,6 +227,8 @@ const Navbar = () => {
               photo={localUser.photo}
               imgSize="1.75rem"
               textSize="1.25em"
+              userId={localUser._id}
+              shouldntNavigate={true}
             />
             {showProfileOptions && (
               <UserOptions>

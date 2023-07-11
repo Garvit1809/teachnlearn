@@ -18,7 +18,7 @@ import { topNavigator } from "../../utils/helperFunctions";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-import feynaman from "../../assets/feynman.gif";
+import feynaman from "../../assets/feynman.png";
 
 const Section = styled.div`
   display: flex;
@@ -295,7 +295,7 @@ const slideData = [
     img: img2,
   },
   {
-    heading: "Organize bite sizes classes. Schedule as you want.",
+    heading: "Organize bite sized classes. Schedule as you want.",
     description:
       "Flexible scheduling allows you to organize and attend bite-sized classes according to your preferences.",
     img: img3,
@@ -433,7 +433,7 @@ const LandingPage = () => {
         <button type="button" onClick={() => navigationHandler("/signup")}>
           Create an account
         </button>
-        {/* <img src={feynaman} alt="" /> */}
+        <img src={feynaman} alt="" />
       </DescContainer>
       <Footer />
     </>

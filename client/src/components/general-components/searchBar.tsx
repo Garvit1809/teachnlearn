@@ -1,17 +1,18 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import styled from "styled-components";
 import { Arrow, SearchIcon } from "./svg";
 
 const Section = styled.div`
   /* border: 1px solid red; */
   width: 100%;
+  position: relative;
   form {
     display: flex;
     width: 100%;
     align-items: center;
     /* justify-content: ; */
 
-    button {
+    /* button {
       display: flex;
       flex-direction: row;
       justify-content: center;
@@ -29,7 +30,7 @@ const Section = styled.div`
       border: 0;
       outline: none;
       cursor: pointer;
-    }
+    } */
   }
 `;
 
@@ -44,7 +45,6 @@ const SearchBox = styled.div`
   height: 52px;
   border: 1px solid #7d89b0;
   border-radius: 8px;
-  margin-right: 1vw;
 
   input {
     width: 100%;
@@ -70,25 +70,27 @@ const SearchBox = styled.div`
 interface searchProps {
   placeholderText?: string;
   updateSearch?: any;
+  // searchResults?: Array<any>;
+  elem?: ReactElement;
 }
 
 const SearchBar = (props: searchProps) => {
   return (
     <Section>
-      <form>
+      <form onSubmit={(e) => e.preventDefault()}>
         <SearchBox>
           <SearchIcon />
           <input
             type="text"
-            placeholder={props.placeholderText || "Search for anything"}
-            // value={}
+            placeholder={props.placeholderText}
             onChange={(e) => props.updateSearch(e.target.value)}
           />
         </SearchBox>
-        <button type="button">
+        {/* <button type="button">
           <Arrow strokeColor="white" />
-        </button>
+        </button> */}
       </form>
+      {props.elem}
     </Section>
   );
 };

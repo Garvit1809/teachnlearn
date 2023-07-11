@@ -51,7 +51,7 @@ interface userchipProps {
   imgSize?: string;
   textSize?: string;
   userId: string;
-  // currentUserId: string;
+  shouldntNavigate?: boolean;
 }
 
 const UserChip = ({
@@ -62,6 +62,7 @@ const UserChip = ({
   imgSize,
   textSize,
   userId,
+  shouldntNavigate,
 }: userchipProps) => {
   const [localUserId, setLocalUserId] = useState<string>("");
 
@@ -90,7 +91,7 @@ const UserChip = ({
 
   return (
     <Section
-      onClick={userNavigationHandler}
+      onClick={shouldntNavigate ? undefined : userNavigationHandler}
       imgBorder={imgBorder}
       textColor={textColor}
       imgSize={imgSize}
