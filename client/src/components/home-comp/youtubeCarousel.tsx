@@ -75,13 +75,16 @@ const carouselData = [
   {
     iframe: (
       <iframe
-        src="https://www.youtube.com/embed/9Rg4NKwCsZw"
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/Dj49m3dC1yk"
         title="YouTube video player"
+        frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowFullScreen
       ></iframe>
     ),
-    text: "The Feynman Technique of Learning Anything",
+    text: "The Feynman Technique of Learning",
   },
 ];
 
