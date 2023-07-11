@@ -365,6 +365,7 @@ const ClassroomCard = (props: classCardProps) => {
             textColor="#ffffff"
             imgSize={props.cssArr?.userChipImgSize}
             textSize={props.cssArr?.userChipTextSize}
+            userId={props.teachCard.createdBy._id}
           />
           <TimeCont>
             {getReadableDate(props.teachCard.date) +

@@ -25,9 +25,7 @@ exports.getOtherUser = catchAsync(async (req, res, next) => {
     return next(new AppError("Please provide a user id.", 404));
   }
 
-  const user = await User.findById(userId).select(
-    "-role -classesEnrolled -coins"
-  );
+  const user = await User.findById(userId).select("-role -coins");
 
   if (!user) {
     return next(new AppError("There is no user with such ID.", 404));

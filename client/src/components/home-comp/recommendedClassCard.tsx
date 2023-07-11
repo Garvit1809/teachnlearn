@@ -175,6 +175,7 @@ const RecommendedClassCard = ({ card, userId }: cardProps) => {
           photo={card.createdBy.photo}
           imgBorder="#FFFFFF"
           textColor="#FFFFFF"
+          userId={card.createdBy._id}
         />
         <DueCont>
           <span>

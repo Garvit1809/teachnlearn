@@ -170,6 +170,7 @@ const LearnCard = (props: learnCardProps) => {
         photo={props.createdBy.photo}
         imgBorder="#FFFFFF"
         textColor="#FFFFFF"
+        userId={props.createdBy._id}
       />
       <Stats>
         <div>

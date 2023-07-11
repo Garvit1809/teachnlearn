@@ -55,20 +55,26 @@ const MenuOptions = styled.div<menuOptionsProps>`
   line-height: 30px;
 `;
 
-const profileOptions = [
-  {
-    option: "My profile",
-    label: "MyProfile",
-    icon: <MyProfileIcon />,
-  },
-];
+// const profileOptions = [
+//   {
+//     option: "My profile",
+//     label: "MyProfile",
+//     icon: <MyProfileIcon />,
+//   },
+// ];
 
 interface optionsProps {
   setSelectedLeftScreen: React.Dispatch<React.SetStateAction<string>>;
+  profileOptions: Array<any>;
+  isOtherUser: boolean;
 }
 
-const ProfileOptions = ({ setSelectedLeftScreen }: optionsProps) => {
-  const [selectedOption, setSelectedOption] = useState("MyProfile");
+const ProfileOptions = ({
+  setSelectedLeftScreen,
+  profileOptions,
+  isOtherUser,
+}: optionsProps) => {
+  const [selectedOption, setSelectedOption] = useState(profileOptions[0].label);
 
   const menuOptionHandler = (label: string) => {
     setSelectedOption(label);
@@ -90,7 +96,7 @@ const ProfileOptions = ({ setSelectedLeftScreen }: optionsProps) => {
           );
         })}
       </Menu>
-      <DeleteProfileModal />
+      {!isOtherUser && <DeleteProfileModal />}
     </Section>
   );
 };

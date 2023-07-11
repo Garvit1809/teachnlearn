@@ -409,6 +409,7 @@ const LearnCardOverview = () => {
                     photo={learnCard.createdBy.photo}
                     imgBorder="white"
                     textColor="black"
+                    userId={learnCard.createdBy._id}
                   />
                   <InterestedCont>
                     <InterestedIcon />

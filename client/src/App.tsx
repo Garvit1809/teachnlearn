@@ -25,6 +25,7 @@ import MyAI from "./pages/ai/myAI";
 import About from "./pages/about/about";
 import Contact from "./pages/contact/contact";
 import Terms from "./pages/terms/terms";
+import UserProfile from "./pages/profile/userProfile";
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
         <Route path="/groups" element={<Groups />} />
         <Route path="/myai" element={<MyAI />} />
         <Route path="/me" element={<Profile />} />
+        <Route path="/user/:userId" element={<UserProfile />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/terms-and-privacy" element={<Terms />} />

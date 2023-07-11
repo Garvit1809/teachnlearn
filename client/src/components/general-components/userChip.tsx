@@ -1,4 +1,8 @@
 import styled from "styled-components";
+import { useState, useEffect } from "react";
+import { UserCookie } from "../../utils/userCookie";
+import { useNavigate } from "react-router-dom";
+import { topNavigator } from "../../utils/helperFunctions";
 
 interface styleProps {
   imgBorder?: string;
@@ -20,15 +24,22 @@ const Section = styled.div<styleProps>`
     border-radius: 50%;
     object-fit: cover;
     margin-right: 0.4rem;
+    cursor: pointer;
   }
 
   span {
+    cursor: pointer;
     font-family: "Nunito";
     font-style: normal;
     font-weight: 500;
     font-size: ${(p) => p.textSize || "20px"};
     line-height: 27px;
     color: ${(p) => p.textColor};
+    /* transition: 0.15s all ease; */
+
+    /* &:hover { */
+    /* text-decoration: underline; */
+    /* } */
   }
 `;
 
@@ -39,6 +50,8 @@ interface userchipProps {
   textColor?: string;
   imgSize?: string;
   textSize?: string;
+  userId: string;
+  // currentUserId: string;
 }
 
 const UserChip = ({
@@ -48,9 +61,36 @@ const UserChip = ({
   textColor,
   imgSize,
   textSize,
+  userId,
 }: userchipProps) => {
+  const [localUserId, setLocalUserId] = useState<string>("");
+
+  const { fetchLocalUserData } = UserCookie();
+
+  useEffect(() => {
+    fetchLocalUserData().then((data) => {
+      setLocalUserId(data._id);
+    });
+  }, []);
+
+  const navigate = useNavigate();
+
+  const userNavigationHandler = () => {
+    topNavigator();
+    if (localUserId == userId) {
+      navigate("/me");
+    } else {
+      navigate(`/user/${userId}`, {
+        state: {
+          userId: userId,
+        },
+      });
+    }
+  };
+
   return (
     <Section
+      onClick={userNavigationHandler}
       imgBorder={imgBorder}
       textColor={textColor}
       imgSize={imgSize}

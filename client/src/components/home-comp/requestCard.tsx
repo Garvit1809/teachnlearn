@@ -118,6 +118,7 @@ const RequestCard = (props: learnCardProps) => {
           photo={props.createdBy.photo}
           imgBorder="#FFFFFF"
           textColor="#FFFFFF"
+          userId={props.createdBy._id}
         />
       </UserWrapper>
       <Stats>

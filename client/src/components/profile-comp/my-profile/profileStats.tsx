@@ -117,7 +117,7 @@ const ProfileStats = (props: profileStatProps) => {
         </div>
         {/* {userTotalRatings ? ( */}
         <div>
-          <h5>Total Rating</h5>
+          <h5>Total Ratings</h5>
           {/* {userTotalRatings ? <h3>{userTotalRatings}</h3> : <h3>0</h3>} */}
           <h3>{userTotalRatings}</h3>
         </div>

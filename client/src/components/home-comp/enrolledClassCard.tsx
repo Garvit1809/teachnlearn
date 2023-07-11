@@ -105,6 +105,7 @@ const EnrolledClassCard = ({ card, isFirstCard }: enrolledClassCardProps) => {
           photo={card.createdBy.photo}
           imgBorder={isFirstCard ? "white" : "black"}
           textColor={isFirstCard ? "white" : "black"}
+          userId={card.createdBy._id}
         />
       </UserWrapper>
     </Section>

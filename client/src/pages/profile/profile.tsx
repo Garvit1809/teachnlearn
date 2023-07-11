@@ -6,8 +6,9 @@ import MyProfile from "../../components/profile-comp/my-profile/myProfile";
 import InviteFriends from "../../components/profile-comp/inviteFriends";
 import PurchaseCoins from "../../components/profile-comp/purchaseCoins";
 import Footer from "../../components/general-components/footer/footer";
+import { MyProfileIcon } from "../../components/general-components/svg";
 
-const Section = styled.div`
+export const ProfileSection = styled.div`
   border: 2px solid #d5d9eb;
   border-radius: 12px;
   padding: 45px;
@@ -17,7 +18,7 @@ const Section = styled.div`
   gap: 30px;
 `;
 
-const ProfileContainer = styled.div`
+export const ProfileContainer = styled.div`
   border-left: 1px solid #d5d9eb;
 `;
 
@@ -38,13 +39,25 @@ const Profile = () => {
 
   const [element, setElement] = useState<ReactElement>(<MyProfile />);
 
+  const profileOptions = [
+    {
+      option: "My profile",
+      label: "MyProfile",
+      icon: <MyProfileIcon />,
+    },
+  ];
+
   return (
     <>
-      <Navbar  />
-      <Section>
-        <ProfileOptions setSelectedLeftScreen={setSelectedLeftScreen} />
+      <Navbar />
+      <ProfileSection>
+        <ProfileOptions
+          profileOptions={profileOptions}
+          setSelectedLeftScreen={setSelectedLeftScreen}
+          isOtherUser={false}
+        />
         <ProfileContainer>{element}</ProfileContainer>
-      </Section>
+      </ProfileSection>
       <Footer />
     </>
   );
