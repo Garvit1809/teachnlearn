@@ -17,11 +17,12 @@ const Section = styled.div`
   align-items: center;
   justify-content: center;
   font-family: "Nunito";
+  padding-right: 2rem;
 `;
 
 const LeftContainer = styled.div`
   /* border: 1px solid red; */
-  width: 50vw;
+  width: 55vw;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -30,7 +31,7 @@ const LeftContainer = styled.div`
 const RightContainer = styled.div`
   /* border: 1px solid red; */
   padding: 5vw 0;
-  width: 50vw;
+  width: 45vw;
   min-height: 100vh;
   box-sizing: border-box;
   display: flex;
@@ -46,7 +47,7 @@ const FormContainer = styled.div`
   align-items: center;
   justify-content: center;
   padding: 58px 0;
-  width: 70%;
+  width: 80%;
 
   border: 2px solid #d5d9eb;
   border-radius: 28px;
