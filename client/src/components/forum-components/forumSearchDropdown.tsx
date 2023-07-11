@@ -40,6 +40,7 @@ const ForumChip = styled.div`
   h3 {
     font-size: 18px;
     font-weight: 500;
+    line-height: 1;
   }
 
   div {
@@ -89,7 +90,11 @@ const ForumSearchDropdown = (props: searchProps) => {
       {props.searchResults.map((forum, index) => {
         return (
           <ForumChip onClick={() => forumNavigator(forum._id)}>
-            <h3>{forum.tagline.slice(0, 50) + "..."}</h3>
+            <h3>
+              {forum.tagline.length > 60
+                ? forum.tagline.slice(0, 60) + "..."
+                : forum.tagline}
+            </h3>
             <div>
               <img src={forum.createdBy.photo} alt="" />
               <h4>{forum.createdBy.name}</h4>

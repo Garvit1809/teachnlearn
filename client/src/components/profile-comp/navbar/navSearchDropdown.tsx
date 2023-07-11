@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
-import { userProps } from "../../../utils/userCookie";
+import { classroom, userProps } from "../../../utils/userCookie";
 import { learnCardProps } from "../../../pages/requests/requests";
 import { teachinCardProps } from "../../../types/teachingCardType";
 import {
@@ -100,12 +100,57 @@ const UserCard = styled.div`
   }
 `;
 
+const CardChip = styled.div`
+  margin-bottom: 1rem;
+  padding: 0.5rem 1.15rem;
+  align-items: center;
+
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background-color: #d8eefe;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  h3 {
+    /* border: 1px solid red; */
+    padding: 0;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
+
+    img {
+      width: 24px;
+      height: 24px;
+      border-radius: 100%;
+      object-fit: cover;
+      /* border: 1px solid black; */
+    }
+
+    h4 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+`;
+
 interface searchprops {
   searchedUsers: Array<userProps>;
   searchedLearnCards: Array<learnCardProps>;
   searchedTeachCards: Array<teachinCardProps>;
   closeSearchBox: any;
   localUserId: string;
+  localUserClassesEnrolled: classroom[];
 }
 
 const NavSearchDropdown = (props: searchprops) => {
@@ -122,6 +167,55 @@ const NavSearchDropdown = (props: searchprops) => {
       navigate(`/user/${userId}`, {
         state: {
           userId: userId,
+        },
+      });
+    }
+  };
+
+  const leanrCardOverviewNavigator = (cardId: string) => {
+    topNavigator();
+    navigate(`/learncard-overview/${cardId}`, {
+      state: { learnCardId: cardId, backLink: "/" },
+    });
+  };
+
+  const checkClassTeacher = (creatorId: string) => {
+    console.log(props.localUserId);
+    console.log(creatorId);
+
+    const isTeacher = props.localUserId == creatorId;
+
+    return isTeacher;
+  };
+
+  const checkEnrolledClass = (classId: string) => {
+    const bool = props.localUserClassesEnrolled.filter((classroom) => {
+      return classroom.class == classId;
+    });
+    return bool.length;
+  };
+
+  const teachCardNavigator = (cardId: string, creatorId: string) => {
+    // console.log(checkEnrolledClass(cardId));
+    if (checkClassTeacher(creatorId)) {
+      navigate(`/classes/class/${cardId}`, {
+        state: {
+          classroomId: cardId,
+          backPageLink: "/",
+        },
+      });
+    } else if (checkEnrolledClass(cardId)) {
+      navigate(`/classes/class/${cardId}`, {
+        state: {
+          classroomId: cardId,
+          backPageLink: "/",
+        },
+      });
+    } else {
+      navigate(`/class-overviw/${cardId}`, {
+        state: {
+          classroomId: cardId,
+          backPageLink: "/",
         },
       });
     }
@@ -151,7 +245,19 @@ const NavSearchDropdown = (props: searchprops) => {
           <h3>Learn Cards</h3>
           <ul>
             {props.searchedLearnCards.map((card, index) => {
-              return <li>{card.topic}</li>;
+              return (
+                <CardChip onClick={() => leanrCardOverviewNavigator(card._id)}>
+                  <h3>
+                    {card.topic.length > 80
+                      ? card.topic.slice(0, 80) + "..."
+                      : card.topic}
+                  </h3>
+                  <div>
+                    <img src={card.createdBy.photo} alt="user-img" />
+                    <h4>{card.createdBy.name}</h4>
+                  </div>
+                </CardChip>
+              );
             })}
           </ul>
         </>
@@ -161,7 +267,23 @@ const NavSearchDropdown = (props: searchprops) => {
           <h3>Teach Cards</h3>
           <ul>
             {props.searchedTeachCards.map((card, index) => {
-              return <li>{card.topic}</li>;
+              return (
+                <CardChip
+                  onClick={() =>
+                    teachCardNavigator(card._id, card.createdBy._id)
+                  }
+                >
+                  <h3>
+                    {card.topic.length > 80
+                      ? card.topic.slice(0, 80) + "..."
+                      : card.topic}
+                  </h3>
+                  <div>
+                    <img src={card.createdBy.photo} alt="user-img" />
+                    <h4>{card.createdBy.name}</h4>
+                  </div>
+                </CardChip>
+              );
             })}
           </ul>
         </>

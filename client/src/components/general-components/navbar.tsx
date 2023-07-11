@@ -212,6 +212,7 @@ const Navbar = () => {
                   searchedTeachCards={searchedTeachCards}
                   closeSearchBox={closeSearchBox}
                   localUserId={localUser._id}
+                  localUserClassesEnrolled={localUser.classesEnrolled}
                 />
               ) : undefined
             }

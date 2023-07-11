@@ -105,14 +105,6 @@ const DateCont = styled.div`
   color: #ffffff;
 `;
 
-// const RequestWrapper = styled.div`
-//   border: 1px solid red;
-//   width: 100%;
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-// `;
-
 const ExpandButton = styled.div`
   /* border: 1px solid red; */
   margin-top: 1rem;

@@ -80,17 +80,18 @@ const ClassroomOverview = () => {
   const [teachCard, setTeachCard] = useState<teachCardProps>();
   const [teachCardId, setTeachCardId] = useState<string>();
   const [userToken, setUserToken] = useState<string>();
+  const [userId, setUserId] = useState<string>("");
   const [userCredit, setUserCredit] = useState<number>();
   const [backLink, setBackLink] = useState<string>("/classes");
   const [learnCardId, setlearnCardId] = useState<string>("");
 
   const location = useLocation();
 
-  const { fetchLocalUserToken, fetchUserCredit } = UserCookie();
+  const { fetchLocalUserData, fetchUserCredit } = UserCookie();
 
   useEffect(() => {
     console.log(location.state);
-    
+
     const cardId = location.state.classroomId;
     console.log(cardId);
     setTeachCardId(cardId);
@@ -107,8 +108,9 @@ const ClassroomOverview = () => {
   }, [location]);
 
   useEffect(() => {
-    fetchLocalUserToken().then((token) => {
-      setUserToken(token);
+    fetchLocalUserData().then((data) => {
+      setUserToken(data.token);
+      setUserId(data._id);
     });
     fetchUserCredit().then((coins) => {
       console.log(coins);
@@ -177,6 +179,7 @@ const ClassroomOverview = () => {
                   photo={teachCard.createdBy.photo}
                   imgBorder="white"
                   textColor="black"
+                  userId={userId}
                 />
                 <PriceCont>
                   <PurchaseCoinIcon color="black" />
