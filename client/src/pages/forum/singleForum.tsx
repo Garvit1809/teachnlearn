@@ -227,6 +227,7 @@ const SingleForum = () => {
                           name={answer.answeredBy.name}
                           photo={answer.answeredBy.photo}
                           imgBorder="black"
+                          userId={userToken}
                         />
                         <div className="time">
                           {moment(answer.createdAt).fromNow()}

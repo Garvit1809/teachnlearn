@@ -40,7 +40,6 @@ const ChipContainer = styled.div`
   }
 `;
 
-
 type overallOverviewProps = classroomProps & {
   userId: string;
   userToken: string;
@@ -103,6 +102,7 @@ const Overview = (props: overallOverviewProps) => {
                 photo={props.createdBy.photo}
                 imgBorder="white"
                 textColor="black"
+                userId={props.userToken}
               />
             </ChipContainer>
             <DetailsContainer

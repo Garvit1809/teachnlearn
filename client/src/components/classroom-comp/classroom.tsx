@@ -138,7 +138,7 @@ const Classroom = (props: classProps) => {
           <Announcements>
             {announcements &&
               announcements.map((announcement, index) => {
-                return <Announcement {...announcement} key={index} />;
+                return <Announcement {...announcement} userToken={props.userToken} key={index} />;
               })}
           </Announcements>
         ) : (
