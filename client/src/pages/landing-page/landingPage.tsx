@@ -231,16 +231,17 @@ const DescContainer = styled.div`
   /* width: 77.5rem; */
   width: 90%;
   margin: 4rem auto 8rem;
-  padding: 3.75rem 0rem;
+  padding: 3.75rem 0rem 3rem;
   flex-direction: column;
   align-items: center;
   gap: 2.5rem;
   border-radius: 10px;
   background: #d8eefe;
+
   h2 {
     color: #2b2c34;
     font-size: 3.625rem;
-    font-family: Nunito;
+    font-family: "Nunito";
     font-weight: 500;
 
     span {
@@ -250,10 +251,10 @@ const DescContainer = styled.div`
   }
 
   p {
-    width: 55%;
+    width: 100%;
     color: #2b2c34;
     text-align: center;
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     font-family: "Nunito";
     line-height: 141.9%;
     font-weight: 500;
@@ -272,6 +273,35 @@ const DescContainer = styled.div`
     font-weight: 700;
     border: none;
     cursor: pointer;
+    margin-top: 2rem;
+  }
+
+  div.main-container {
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0 2rem;
+
+    div.content {
+      /* border: 1px solid red; */
+      width: 70%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 2rem 0 0;
+    }
+
+    img {
+      /* border: 1px solid red; */
+      /* padding-bottom: 5rem; */
+      /* margin-bottom: 1rem; */
+      width: 400px;
+      height: 100%;
+      object-fit: cover;
+      transform: translateY(-10%);
+    }
   }
 `;
 
@@ -415,25 +445,30 @@ const LandingPage = () => {
       </YoutubeWrapper>
       <DescContainer>
         <h2>Richard Feynman</h2>
-        <p>
-          Richard Feynman was a Nobel-prize winning US theoretical physicist.
-          Famed for his brilliant mind and mercurial personality, his main work
-          was in quantum physics and particle physics, where he is particularly
-          known for the Feynman diagram, a way of depicting particle processes
-          graphically. But he was a prolific writer and thinker who also
-          pioneered ideas in quantum computing and nanotechnology.
-          <br />
-          <br />
-          We, in Teach and Learn, have made a platform where students from all
-          across the globe and all sections of society can come together,
-          collaborate and elevate each other’s level of knowledge by using the
-          Feynman Technique of learning to teach each other and learn from each
-          other.
-        </p>
-        <button type="button" onClick={() => navigationHandler("/signup")}>
-          Create an account
-        </button>
-        <img src={feynaman} alt="" />
+        <div className="main-container">
+          <div className="content">
+            <p>
+              Richard Feynman was a Nobel-prize winning US theoretical
+              physicist. Famed for his brilliant mind and mercurial personality,
+              his main work was in quantum physics and particle physics, where
+              he is particularly known for the Feynman diagram, a way of
+              depicting particle processes graphically. But he was a prolific
+              writer and thinker who also pioneered ideas in quantum computing
+              and nanotechnology.
+              <br />
+              <br />
+              We, in Teach and Learn, have made a platform where students from
+              all across the globe and all sections of society can come
+              together, collaborate and elevate each other’s level of knowledge
+              by using the Feynman Technique of learning to teach each other and
+              learn from each other.
+            </p>
+            <button type="button" onClick={() => navigationHandler("/signup")}>
+              Create an account
+            </button>
+          </div>
+          <img src={feynaman} alt="" />
+        </div>
       </DescContainer>
       <Footer />
     </>
