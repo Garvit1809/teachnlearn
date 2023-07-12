@@ -25,7 +25,7 @@ const teachingCardSchema = new mongoose.Schema(
     },
     standard: {
       type: String,
-      required: [true, "Please provide the standard you want to teach of"],
+      // required: [true, "Please provide the standard you want to teach of"],
     },
     isLearningCardReferred: {
       type: Boolean,
@@ -66,6 +66,7 @@ const teachingCardSchema = new mongoose.Schema(
         true,
         "Please provide a whole description for the learning card",
       ],
+      maxlength: [400, "Description cannot be bigger than 400 characters"],
     },
     tags: [
       {
@@ -123,7 +124,7 @@ const teachingCardSchema = new mongoose.Schema(
 teachingCardSchema.pre(/^find/, function (next) {
   this.populate({
     path: "createdBy",
-    select: "name photo",
+    select: "name photo userName",
   }).populate({
     path: "reviews",
     select: "user",

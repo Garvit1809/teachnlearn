@@ -41,6 +41,8 @@ const Section = styled.div`
     font-family: "Nunito";
     font-style: normal;
     margin-bottom: 1.5rem;
+    margin-top: 1rem;
+    text-decoration: underline;
   }
 
   form {
@@ -102,7 +104,6 @@ interface teachCardDetails {
   description: string;
   tag: string;
   tags: string[];
-  price: number;
   startingTime: string;
   endingTime: string;
 }
@@ -118,7 +119,6 @@ const initialData: teachCardDetails = {
   description: "",
   tag: "",
   tags: [],
-  price: 0,
   startingTime: "",
   endingTime: "",
 };
@@ -203,15 +203,12 @@ const CreateTeachCard = () => {
       subject,
       topic,
       programme,
-      standard,
       preferredLanguage,
       date,
       startingTime,
       endingTime,
       description,
       photo,
-      price,
-      tags,
     } = teachCard;
 
     const currentDate = new Date();
@@ -223,7 +220,6 @@ const CreateTeachCard = () => {
       subject === "" ||
       topic === "" ||
       programme === "" ||
-      standard === "" ||
       preferredLanguage === "" ||
       date === "" ||
       startingTime === "" ||
@@ -244,6 +240,9 @@ const CreateTeachCard = () => {
         "Class End time cannot be less than Start time",
         toastOptions
       );
+      return false;
+    } else if (description.length > 400) {
+      toast.error("Description caannot exceed 400 characters!!", toastOptions);
       return false;
     }
     return true;
@@ -268,7 +267,6 @@ const CreateTeachCard = () => {
             tags: teachCard.tags,
             date: teachCard.date,
             cardBanner: teachCard.photo,
-            price: teachCard.price,
             classStartsAt: teachCard.startingTime,
             classEndsAt: teachCard.endingTime,
           },
@@ -311,7 +309,6 @@ const CreateTeachCard = () => {
             tags: teachCard.tags,
             date: teachCard.date,
             cardBanner: teachCard.photo,
-            price: teachCard.price,
             classStartsAt: teachCard.startingTime,
             classEndsAt: teachCard.endingTime,
           },
@@ -332,8 +329,6 @@ const CreateTeachCard = () => {
     }
   };
 
-  // const [time, settime] = useState("");
-
   return (
     <>
       <Navbar />
@@ -342,7 +337,7 @@ const CreateTeachCard = () => {
           link={learnCardId ? `/learncard-overview/${learnCardId}` : "/"}
           learnCardId={learnCardId ? learnCardId : undefined}
         />
-        <h2>Let's get started with your Teach Card</h2>
+        <h2>Create Teach Card</h2>
         <form>
           <FormField
             elem={
@@ -357,7 +352,7 @@ const CreateTeachCard = () => {
                 placeholderText="Physics, English, Botany, Accounts. etc."
               />
             }
-            inputDesc="Pick a Subject"
+            inputDesc="Subject"
           />
           <FormField
             elem={
@@ -366,11 +361,11 @@ const CreateTeachCard = () => {
                 value={teachCard.topic}
                 name="topic"
                 updateFields={updateFields}
-                placeholderText="Pythagoras’ Theorem, World War 2, Balance Sheet, Leibniz Rule, etc."
                 areaHeight="6rem"
+                placeholderText="Pythagoras’ Theorem, World War 2, Balance Sheet, Leibniz Rule, etc."
               />
             }
-            inputDesc="Topic for the card"
+            inputDesc="Topic"
           />
           <FormField
             elem={
@@ -395,10 +390,10 @@ const CreateTeachCard = () => {
                 updateFields={updateFields}
                 hasDropdown={true}
                 dropdownData={standard}
-                placeholderText="Class/Year"
+                placeholderText="10th class/2nd year etc (optional)"
               />
             }
-            inputDesc="Standard for the class"
+            inputDesc="Standard/Year"
           />
           <FormField
             elem={
@@ -410,22 +405,10 @@ const CreateTeachCard = () => {
                 updateFields={updateFields}
                 hasDropdown={true}
                 dropdownData={languages}
-                placeholderText="Hindi, English etc"
+                placeholderText="Hindi, English, Tamil, Marathi, French etc"
               />
             }
-            inputDesc="Language that you prefer"
-          />
-          <FormField
-            elem={
-              <Inputholder
-                type="number"
-                label="Price"
-                value={teachCard.price}
-                name="price"
-                updateFields={updateFields}
-              />
-            }
-            inputDesc="Price for your class"
+            inputDesc="Preferred Language"
           />
           <FormField
             elem={
@@ -437,7 +420,7 @@ const CreateTeachCard = () => {
                 onChange={(e) => dateHandler(e)}
               />
             }
-            inputDesc="Specify Date for the class"
+            inputDesc="Date of the class"
           />
           <FormField
             elem={
@@ -449,7 +432,7 @@ const CreateTeachCard = () => {
                 onChange={(e) => timeHandler(e)}
               />
             }
-            inputDesc="Specify starting time for the class"
+            inputDesc="Starting time"
           />
           <FormField
             elem={
@@ -461,12 +444,13 @@ const CreateTeachCard = () => {
                 onChange={(e) => timeHandler(e)}
               />
             }
-            inputDesc="Specify end timing for the class"
+            inputDesc="Ending Time"
           />
-          <FormField
+          {/* auto generate image from subject */}
+          {/* <FormField
             elem={<UploadImage updateFields={updateFields} />}
-            inputDesc="Upload a cover image for your class"
-          />
+            inputDesc="Cover image for your class"
+          /> */}
           <FormField
             elem={
               <Textarea
@@ -474,16 +458,16 @@ const CreateTeachCard = () => {
                 name="description"
                 updateFields={updateFields}
                 value={teachCard.description}
-                placeholderText="Description"
+                placeholderText="Can not exceed 400 characters"
               />
             }
-            inputDesc="Describe briefly what students should expect from you"
+            inputDesc="Description of the topic covered"
           />
           <FormField
             elem={
               <InputWrapper>
                 <MultipleInput
-                  label="Tags"
+                  label="#Physics, #WebDevelopment, #BusinessManagement (optional)"
                   elemName="tag"
                   value={teachCard.tag}
                   name="tags"
@@ -499,7 +483,7 @@ const CreateTeachCard = () => {
                 ) : null}
               </InputWrapper>
             }
-            inputDesc="You can add tags in your teach card"
+            inputDesc="Tags"
           />
         </form>
         <FormButtonCont>

@@ -10,16 +10,26 @@ const Section = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 22px;
+  padding: 24px;
   gap: 22px;
   background: #094067;
   border-radius: 16px;
+  box-sizing: border-box;
   cursor: pointer;
   font-family: "Nunito";
   transition: all 0.15s linear;
 
   &:hover {
     transform: translateY(-10px);
+  }
+
+  @media only screen and (max-width: 880px) {
+    width: 42.5vw;
+  }
+
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+    gap: 20px;
   }
 `;
 
@@ -32,9 +42,19 @@ const Tag = styled.div`
     text-transform: uppercase;
     color: #ef4565;
   }
+
+  /* @media only screen and (max-width: 600px) {
+    h4 {
+      font-size: 14px;
+    }
+  } */
 `;
 
 const Topic = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  word-wrap: break-word;
+  width: 100%;
   font-weight: 600;
   font-size: 22px;
   line-height: 26px;
@@ -45,6 +65,18 @@ const Topic = styled.div`
   font-weight: 600;
   font-size: 24px;
   line-height: 33px;
+  span {
+    /* border: 1px solid red; */
+    width: 100%;
+    overflow-wrap: break-word;
+  }
+
+  /* @media only screen and (max-width: 600px) {
+    span {
+      font-size: 22px;
+      line-height: 26px;
+    }
+  } */
 `;
 
 const Stats = styled.div`

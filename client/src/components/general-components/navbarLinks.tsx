@@ -11,6 +11,14 @@ const Menu = styled.div`
   align-items: flex-start;
   border-radius: 0.5rem;
   background: #d8eefe;
+
+  @media only screen and (max-width: 1000px) {
+    /* body { */
+    /* background-color: lightblue; */
+    /* }
+  d */
+    display: none;
+  }
 `;
 
 interface menuItemProps {

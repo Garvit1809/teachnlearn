@@ -38,8 +38,9 @@ const Section = styled.div`
   h2 {
     font-family: "Nunito";
     font-style: normal;
-    margin-bottom: 1.5rem;
-    /* margin-top: 2rem; */
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    text-decoration: underline;
   }
 
   form {
@@ -212,11 +213,9 @@ const CreateLearnCard = () => {
       subject,
       topic,
       programme,
-      standard,
       preferredLanguage,
       dueDate,
       description,
-      tags,
     } = learnCard;
 
     const currentDate = new Date();
@@ -226,7 +225,6 @@ const CreateLearnCard = () => {
       subject === "" ||
       topic === "" ||
       programme === "" ||
-      standard === "" ||
       preferredLanguage === "" ||
       dueDate === "" ||
       description === ""
@@ -236,8 +234,11 @@ const CreateLearnCard = () => {
     } else if (topic.length < 35) {
       toast.error("Topic must be greater than 35 characters", toastOptions);
       return false;
-    } else if (ISODueDate < currentDate) {
+    } else if (ISODueDate > currentDate) {
       toast.error("Pick another due date", toastOptions);
+      return false;
+    } else if (description.length > 400) {
+      toast.error("Description caannot exceed 400 characters!!", toastOptions);
       return false;
     }
     return true;
@@ -282,7 +283,7 @@ const CreateLearnCard = () => {
       <Navbar />
       <Section>
         <BackBtn link="/" />
-        <h2>Let's get started with your Learn Card</h2>
+        <h2>Create Learn Card</h2>
         <form>
           <FormField
             elem={
@@ -310,7 +311,7 @@ const CreateLearnCard = () => {
                 placeholderText="Pythagoras’ Theorem, World War 2, Balance Sheet, Leibniz Rule, etc."
               />
             }
-            inputDesc="Topic for the card"
+            inputDesc="Topic"
           />
           <FormField
             elem={
@@ -336,10 +337,10 @@ const CreateLearnCard = () => {
                 updateFields={updateFields}
                 hasDropdown={true}
                 dropdownData={standard}
-                placeholderText="Class/Year"
+                placeholderText="10th class/2nd year etc (optional)"
               />
             }
-            inputDesc="Standard for the lesson"
+            inputDesc="Standard/Year"
           />
           <FormField
             elem={
@@ -351,10 +352,10 @@ const CreateLearnCard = () => {
                 updateFields={updateFields}
                 hasDropdown={true}
                 dropdownData={languages}
-                placeholderText="Hindi, English etc"
+                placeholderText="Hindi, English, Tamil, Marathi, French etc"
               />
             }
-            inputDesc="Language that you prefer"
+            inputDesc="Preferred Language"
           />
           <FormField
             elem={
@@ -365,7 +366,7 @@ const CreateLearnCard = () => {
                 onChange={(e) => dateHandler(e.target.value)}
               />
             }
-            inputDesc="Due date for the lesson"
+            inputDesc="Due date"
           />
           <FormField
             elem={
@@ -374,16 +375,16 @@ const CreateLearnCard = () => {
                 name="description"
                 updateFields={updateFields}
                 value={learnCard.description}
-                placeholderText="Description"
+                placeholderText="Can not exceed 400 characters"
               />
             }
-            inputDesc="Describe briefly what you expect from the teacher"
+            inputDesc="Description of the query"
           />
           <FormField
             elem={
               <InputWrapper>
                 <MultipleInput
-                  label="Tags"
+                  label="#Physics, #WebDevelopment, #BusinessManagement (optional)"
                   elemName="tag"
                   value={learnCard.tag}
                   name="tags"
@@ -399,7 +400,7 @@ const CreateLearnCard = () => {
                 ) : null}
               </InputWrapper>
             }
-            inputDesc="Add tags in your learn card"
+            inputDesc="Tags"
           />
         </form>
         <FormButtonCont>

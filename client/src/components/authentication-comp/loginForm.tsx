@@ -43,6 +43,7 @@ const LoginForm = (props: UserLoginFormProps) => {
           value={props.email}
           name="email"
           updateFields={props.updateFields}
+          placeholderText="Email"
         />
         <Inputholder
           type="password"
@@ -50,6 +51,7 @@ const LoginForm = (props: UserLoginFormProps) => {
           value={props.password}
           name="password"
           updateFields={props.updateFields}
+          placeholderText="Password"
         />
       </form>
     </Section>

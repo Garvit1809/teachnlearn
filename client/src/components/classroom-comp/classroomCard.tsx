@@ -187,6 +187,7 @@ const UserWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  /* flex-wrap: wrap; */
 `;
 
 const TimeCont = styled.span`
@@ -359,7 +360,7 @@ const ClassroomCard = (props: classCardProps) => {
         </Title>
         <UserWrapper>
           <UserChip
-            name={props.teachCard.createdBy.name}
+            name={props.teachCard.createdBy.userName}
             photo={props.teachCard.createdBy.photo}
             imgBorder="#ffffff"
             textColor="#ffffff"

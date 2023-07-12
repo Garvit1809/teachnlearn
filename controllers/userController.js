@@ -287,6 +287,7 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
 
   const users = await User.find({
     $or: [
+      { _id: search },
       { name: { $regex: modifiedSearch } },
       { userName: { $regex: modifiedSearch } },
       { strongSubjects: { $elemMatch: { $eq: modifiedSearch } } },
@@ -298,6 +299,7 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
 
   const learnCards = await LearningCard.find({
     $or: [
+      { _id: search },
       { subject: { $regex: modifiedSearch } },
       { topic: { $regex: modifiedSearch } },
       { description: { $regex: modifiedSearch } },
@@ -308,6 +310,7 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
 
   const classes = await TeachingCard.find({
     $or: [
+      { _id: search },
       { subject: { $regex: modifiedSearch } },
       { topic: { $regex: modifiedSearch } },
       { description: { $regex: modifiedSearch } },

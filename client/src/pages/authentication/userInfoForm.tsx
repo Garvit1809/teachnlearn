@@ -63,16 +63,18 @@ const UserInfoForm = (props: UserInfoFormProps) => {
           value={props.number}
           name="number"
           updateFields={props.updateFields}
+          placeholderText="Phone Number"
         />
         <Inputholder
           type="text"
-          label="Exam | Standard | Board | Degree"
+          label="Exam/Standard/Board/Degree"
           value={props.course}
           name="course"
           updateFields={props.updateFields}
           // hasDropdown={true}
           // dropdownData={}
           isRequired={true}
+          placeholderText="Exam/Standard/Board/Degree"
         />
         <InputWrapper>
           <MultipleInput

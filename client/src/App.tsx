@@ -26,6 +26,7 @@ import About from "./pages/about/about";
 import Contact from "./pages/contact/contact";
 import Terms from "./pages/terms/terms";
 import UserProfile from "./pages/profile/userProfile";
+import FreeBlogs from "./pages/blogs/freeBlogs";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
         <Route path="/create-learn-request" element={<CreateLearnCard />} />
         <Route path="/create-teach-request" element={<CreateTeachCard />} />
         <Route path="/blogs" element={<Blogs />} />
+        <Route path="/teachNlearn-blogs" element={<FreeBlogs />} />
         <Route path="/groups" element={<Groups />} />
         <Route path="/myai" element={<MyAI />} />
         <Route path="/me" element={<Profile />} />

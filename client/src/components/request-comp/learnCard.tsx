@@ -158,7 +158,7 @@ const LearnCard = (props: learnCardProps) => {
         </span>
       </Topic>
       <UserChip
-        name={props.createdBy.name}
+        name={props.createdBy.userName}
         photo={props.createdBy.photo}
         imgBorder="#FFFFFF"
         textColor="#FFFFFF"

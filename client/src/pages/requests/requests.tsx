@@ -34,6 +34,7 @@ export interface learnCardProps {
     name: string;
     photo: string;
     _id: string;
+    userName: string;
   };
   subject: string;
   topic: string;

@@ -29,11 +29,13 @@ const Home = () => {
   const [userToken, setUserToken] = useState<string>("");
   const [userRole, setUserRole] = useState<string>("");
   const [userId, setuserId] = useState<string>("");
-  const [recommendedClasses, setRecommendedClasses] =
-    useState<Array<teachinCardProps>>();
-  const [upcomingClasses, setUpcomingClasses] =
-    useState<Array<teachinCardProps>>();
-  const [learnCards, setLearnCards] = useState<Array<learnCardProps>>();
+  const [recommendedClasses, setRecommendedClasses] = useState<
+    Array<teachinCardProps>
+  >([]);
+  const [upcomingClasses, setUpcomingClasses] = useState<
+    Array<teachinCardProps>
+  >([]);
+  const [learnCards, setLearnCards] = useState<Array<learnCardProps>>([]);
 
   const { fetchLocalUserData } = UserCookie();
 
@@ -110,14 +112,12 @@ const Home = () => {
       <Section>
         <Intro />
         {/* <Popular /> */}
-        {recommendedClasses && recommendedClasses.length != 0 && (
-          <RecommendedClassWrapper
-            heading="Classes recommended for you!"
-            cardArr={recommendedClasses}
-            userId={userId}
-            loading={recommendedIsLoading}
-          />
-        )}
+        <RecommendedClassWrapper
+          heading="Classes recommended for you!"
+          cardArr={recommendedClasses}
+          userId={userId}
+          loading={recommendedIsLoading}
+        />
         {upcomingClasses && upcomingClasses.length != 0 && (
           <EnrolledClassWrapper
             heading="Upcoming Enrolled Classes!"
@@ -125,13 +125,11 @@ const Home = () => {
             loading={upcomingIsLoading}
           />
         )}
-        {learnCards && learnCards.length != 0 && (
-          <RequestCardWrapper
-            heading="Rising Requests"
-            requestCard={learnCards}
-            loading={requestIsLoading}
-          />
-        )}
+        <RequestCardWrapper
+          heading="Rising Requests"
+          requestCard={learnCards}
+          loading={requestIsLoading}
+        />
         <YoutubeCarousel />
         <FeedbackForm userToken={userToken} />
       </Section>

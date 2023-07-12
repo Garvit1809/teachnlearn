@@ -359,7 +359,7 @@ exports.getUpcomingClasses = catchAsync(async (req, res, next) => {
 
   const features = new APIFeatures(
     TeachingCard.find({
-      // classEndsAt: { $gte: currentDate },
+      classEndsAt: { $gte: currentDate },
       $or: [
         {
           studentsEnrolled: { $in: [userId] },

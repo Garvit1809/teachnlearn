@@ -21,6 +21,12 @@ const Header = styled.div`
   align-items: center;
   justify-content: space-between;
   font-family: "Nunito";
+
+  @media only screen and (max-width: 600px) {
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 1rem;
+  }
 `;
 
 const Heading = styled.h3`
@@ -28,9 +34,21 @@ const Heading = styled.h3`
   font-size: 32px;
   line-height: 44px;
   color: #000000;
+  /* border: 1px solid red; */
+  width: 70%;
+
+  @media only screen and (max-width: 1000px) {
+    font-size: 26px;
+    line-height: 32px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 const SeeAll = styled.div`
+  /* border: 1px solid red; */
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -45,6 +63,20 @@ const SeeAll = styled.div`
     margin: 0;
     padding: 0;
   }
+
+  @media only screen and (max-width: 600px) {
+    align-self: flex-end;
+    gap: 10px;
+    span {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    svg {
+      width: 1rem;
+      /* height: 1rem; */
+    }
+  }
 `;
 
 const CardGrid = styled.div`
@@ -52,6 +84,20 @@ const CardGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 20px;
+
+  @media only screen and (max-width: 1170px) {
+    /* grid-template-columns: 1fr 1fr; */
+    /* gap: 1rem; */
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media only screen and (max-width: 1000px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media only screen and (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 interface wrapperProps {

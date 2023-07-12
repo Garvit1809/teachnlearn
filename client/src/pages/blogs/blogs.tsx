@@ -6,7 +6,7 @@ const Blogs = () => {
   return (
     <>
       <Navbar />
-      <ComingSoon />
+      <ComingSoon text="Under development... Coming Soon." />
       <Footer />
     </>
   );

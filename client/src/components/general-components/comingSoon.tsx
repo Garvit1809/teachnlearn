@@ -18,10 +18,14 @@ const CommingSoonContainer = styled.div`
   }
 `;
 
-const ComingSoon = () => {
+interface comingProps {
+  text: string
+}
+
+const ComingSoon = (props: comingProps) => {
   return (
     <CommingSoonContainer>
-      <h3>Coming Soon</h3>
+      <h3>{props.text}</h3>
     </CommingSoonContainer>
   );
 };

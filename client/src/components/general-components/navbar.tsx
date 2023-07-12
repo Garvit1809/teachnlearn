@@ -31,6 +31,10 @@ const Section = styled.div`
   align-items: center;
   font-family: "Nunito";
   margin: 0 6.3vw 2.5rem 6.3vw;
+
+  @media only screen and (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 const SearchContainer = styled.div`
@@ -104,6 +108,14 @@ const ModeWrapper = styled.div`
   /* border: 1px solid red; */
   width: 60%;
   margin: 0 auto 2.5rem;
+
+  @media only screen and (max-width: 700px) {
+    width: 80%;
+  }
+
+  @media only screen and (max-width: 500px) {
+    width: 95%;
+  }
 `;
 
 const Navbar = () => {
@@ -199,7 +211,7 @@ const Navbar = () => {
         </ImageContainer>
         <SearchContainer>
           <SearchBar
-            placeholderText="Search for a request, class, topic, subject, person, course, etc."
+            placeholderText="Search for a request, class, card id, topic, subject, person, course etc."
             updateSearch={searchHandler}
             elem={
               searchedUsers.length == 0 &&

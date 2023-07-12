@@ -26,6 +26,10 @@ const Section = styled.div`
   &:hover {
     transform: translateY(-10px);
   }
+
+  @media only screen and (max-width: 800px) {
+    gap: 18px;
+  }
 `;
 
 const Tag = styled.div`
@@ -37,12 +41,17 @@ const Tag = styled.div`
     text-transform: uppercase;
     color: #ef4565;
   }
+
+  @media only screen and (max-width: 800px) {
+    h4 {
+      font-size: 14px;
+    }
+  }
 `;
 
 const Topic = styled.div`
   font-weight: 600;
   font-size: 22px;
-  line-height: 26px;
   color: #ffffff;
 
   font-family: "Nunito";
@@ -50,6 +59,16 @@ const Topic = styled.div`
   font-weight: 600;
   font-size: 24px;
   line-height: 33px;
+
+  @media only screen and (max-width: 800px) {
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    font-size: 22px;
+    line-height: 26px;
+  }
 `;
 
 const Stats = styled.div`
@@ -79,6 +98,27 @@ export const UserWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media only screen and (max-width: 800px) {
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 22px;
+
+    span {
+      font-size: 18px;
+    }
+
+    img {
+      width: 26px;
+      height: 26px;
+    }
+  }
+  @media only screen and (max-width: 600px) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
 `;
 
 export const DueCont = styled.div`
@@ -88,6 +128,12 @@ export const DueCont = styled.div`
   font-size: 16px;
   line-height: 19px;
   color: #ffffff;
+
+  @media only screen and (max-width: 800px) {
+    span {
+      font-size: 16px;
+    }
+  }
 `;
 
 const Coins = styled.div`
@@ -105,6 +151,17 @@ const Coins = styled.div`
     font-weight: 600;
     font-size: 18px;
     color: #000000;
+  }
+
+  @media only screen and (max-width: 800px) {
+    span {
+      font-size: 16px;
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
   }
 `;
 

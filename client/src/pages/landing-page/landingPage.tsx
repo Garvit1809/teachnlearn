@@ -417,7 +417,7 @@ const LandingPage = () => {
             </AuthButton>
           </AuthButtons>
         </Header>
-        <BlogHeader>
+        <BlogHeader onClick={() => navigationHandler("/teachNlearn-blogs")}>
           <span>
             Check out our <span className="bold">blog</span> for free guidance
             on how to improve in your studies.
