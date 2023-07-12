@@ -1,18 +1,25 @@
 import React from "react";
 import styled from "styled-components";
-import TNLLogo from "../../../assets/TNL-logo.png";
+import TNLLogo from "../../../assets/tnl-logo.png";
 import { Link } from "react-router-dom";
 import FooterLinks from "./footerLinks";
-import { Facebook, Instagram, LinkedIn, Twitter, Youtube } from "../svg";
+import { Facebook, Instagram, Twitter, Youtube } from "../svg";
 
 const Section = styled.div`
   /* border-top: 1px solid #7d89b0; */
   padding: 40px 0px 20px;
+  width: 100%;
   font-family: "Nunito";
   font-style: normal;
   margin-top: 4rem;
   padding: 3.75rem 6.25rem 1.5rem;
   background-color: #094067;
+  box-sizing: border-box;
+
+  @media only screen and (max-width: 1100px) {
+    /* background-color: lightblue; */
+    padding: 3.75rem 5.25rem 1.5rem;
+  }
 `;
 
 const Links = styled.div`
@@ -20,11 +27,21 @@ const Links = styled.div`
   grid-template-columns: 2.2fr 1.2fr 1.2fr 1fr;
   border-bottom: 1px solid #d0d5dd;
   padding-bottom: 2.5rem;
+
+  @media only screen and (max-width: 1000px) {
+    /* background-color: lightblue; */
+    grid-template-columns: 1.8fr 1.1fr 1.2fr 1fr;
+  }
 `;
 
 const LogoContainer = styled.div`
+  /* border: 1px solid red; */
   img {
     width: 200px;
+
+    @media only screen and (max-width: 1000px) {
+      width: 180px;
+    }
   }
 `;
 

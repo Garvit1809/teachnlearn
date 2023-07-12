@@ -5,7 +5,8 @@ import styled from "styled-components";
 
 const Section = styled.div`
   /* border: 1px solid red; */
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
+
   h3 {
     color: #2b2c34;
     font-size: 2.625rem;
@@ -13,6 +14,16 @@ const Section = styled.div`
     font-weight: 600;
     letter-spacing: -0.105rem;
     margin-bottom: 2rem;
+
+    @media only screen and (max-width: 880px) {
+      font-size: 2rem;
+      margin-bottom: 1.8rem;
+    }
+
+    @media only screen and (max-width: 600px) {
+      font-size: 1.8rem;
+      margin-bottom: 1.6rem;
+    }
   }
 `;
 
@@ -32,6 +43,13 @@ const YoutubeVideoContainer = styled.div`
     border: none;
     border-radius: 20px 20px 0px 0px;
   }
+
+  @media only screen and (max-width: 600px) {
+    /* max-width: 30rem; */
+    max-width: 50rem;
+    width: 100%;
+    margin-right: 0;
+  }
 `;
 
 const FrameDetails = styled.div`
@@ -48,26 +66,30 @@ const FrameDetails = styled.div`
   background: #094067;
   color: #fff;
   font-size: 1.75rem;
-  font-family: Nunito;
+  font-family: "Nunito";
   font-weight: 600;
   letter-spacing: -0.07rem;
+
+  @media only screen and (max-width: 880px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
     items: 3,
-    slidesToSlide: 1, // optional, default to 1.
+    slidesToSlide: 1,
   },
   tablet: {
-    breakpoint: { max: 1024, min: 464 },
+    breakpoint: { max: 1024, min: 600 },
     items: 2,
-    slidesToSlide: 2, // optional, default to 1.
+    slidesToSlide: 2,
   },
   mobile: {
-    breakpoint: { max: 464, min: 0 },
+    breakpoint: { max: 600, min: 0 },
     items: 1,
-    slidesToSlide: 1, // optional, default to 1.
+    slidesToSlide: 1,
   },
 };
 
@@ -75,13 +97,72 @@ const carouselData = [
   {
     iframe: (
       <iframe
-        src="https://www.youtube.com/embed/9Rg4NKwCsZw"
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/Dj49m3dC1yk"
         title="YouTube video player"
+        frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowFullScreen
       ></iframe>
     ),
-    text: "The Feynman Technique of Learning Anything",
+    text: "The Feynman Technique of Learning",
+  },
+  {
+    iframe: (
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/Dj49m3dC1yk"
+        title="YouTube video player"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+      ></iframe>
+    ),
+    text: "The Feynman Technique of Learning",
+  },
+  {
+    iframe: (
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/Dj49m3dC1yk"
+        title="YouTube video player"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+      ></iframe>
+    ),
+    text: "The Feynman Technique of Learning",
+  },
+  {
+    iframe: (
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/Dj49m3dC1yk"
+        title="YouTube video player"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+      ></iframe>
+    ),
+    text: "The Feynman Technique of Learning",
+  },
+  {
+    iframe: (
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/Dj49m3dC1yk"
+        title="YouTube video player"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+      ></iframe>
+    ),
+    text: "The Feynman Technique of Learning",
   },
 ];
 

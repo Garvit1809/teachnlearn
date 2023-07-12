@@ -26,7 +26,7 @@ const learningCardSchema = new mongoose.Schema({
   },
   standard: {
     type: String,
-    required: [true, "Please provide the standard you want to be taught of"],
+    // required: [true, "Please provide the standard you want to be taught of"],
   },
   preferredLanguage: {
     type: String,
@@ -38,13 +38,8 @@ const learningCardSchema = new mongoose.Schema({
       true,
       "Please provide a whole description for the learning card",
     ],
+    maxlength: [400, "Description cannot be bigger than 400 characters"],
   },
-  expectations: [
-    {
-      type: String,
-      required: [true, "Please provide what you expect from the tutor"],
-    },
-  ],
   tags: [
     {
       type: String,
@@ -66,7 +61,7 @@ const learningCardSchema = new mongoose.Schema({
 learningCardSchema.pre(/^find/, function (next) {
   this.populate({
     path: "createdBy",
-    select: "name photo",
+    select: "name photo userName",
   });
   next();
 });

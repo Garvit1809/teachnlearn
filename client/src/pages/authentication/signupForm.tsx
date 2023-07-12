@@ -46,6 +46,7 @@ const SignupForm = (props: SignupFormProps) => {
           name="fullName"
           updateFields={props.updateFields}
           isRequired={true}
+          placeholderText="Full Name"
         />
         <Inputholder
           type="text"
@@ -54,6 +55,7 @@ const SignupForm = (props: SignupFormProps) => {
           name="userName"
           updateFields={props.updateFields}
           isRequired={true}
+          placeholderText="Username (publicly visible)"
         />
         <Inputholder
           type="email"
@@ -62,6 +64,7 @@ const SignupForm = (props: SignupFormProps) => {
           value={props.email}
           updateFields={props.updateFields}
           isRequired={true}
+          placeholderText="Email"
         />
         <Inputholder
           type="password"
@@ -70,6 +73,7 @@ const SignupForm = (props: SignupFormProps) => {
           value={props.password}
           updateFields={props.updateFields}
           isRequired={true}
+          placeholderText="Password"
         />
         <Inputholder
           type="password"
@@ -78,6 +82,7 @@ const SignupForm = (props: SignupFormProps) => {
           value={props.confirmPassword}
           updateFields={props.updateFields}
           isRequired={true}
+          placeholderText="Confirm Password"
         />
       </form>
     </Section>

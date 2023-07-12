@@ -7,7 +7,7 @@ const MyAI = () => {
   return (
     <>
       <Navbar />
-      <ComingSoon />
+      <ComingSoon text="Under development... Coming Soon." />
       <Footer />
     </>
   );

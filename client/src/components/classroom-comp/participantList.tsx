@@ -1,9 +1,12 @@
 import styled from "styled-components";
+import { topNavigator } from "../../utils/helperFunctions";
+import { useNavigate } from "react-router-dom";
 
 interface participantListProps {
   heading: string;
   listArr?: Array<listObj>;
   teacherObj?: listObj;
+  localUserId: string;
 }
 
 interface listObj {
@@ -78,6 +81,20 @@ const UserContainer = styled.div`
 const ParticipantList = (props: participantListProps) => {
   console.log(Array.isArray(props.listArr));
 
+  const navigate = useNavigate();
+  const userNavigationHandler = (userId?: string) => {
+    topNavigator();
+    if (props.localUserId == userId) {
+      navigate("/me");
+    } else {
+      navigate(`/user/${userId}`, {
+        state: {
+          userId: userId,
+        },
+      });
+    }
+  };
+
   return (
     <Section>
       <h3>{props.heading}</h3>
@@ -85,7 +102,10 @@ const ParticipantList = (props: participantListProps) => {
         {Array.isArray(props.listArr) ? (
           props.listArr.map((user, index) => {
             return (
-              <UserContainer key={index}>
+              <UserContainer
+                key={index}
+                onClick={() => userNavigationHandler(user._id)}
+              >
                 <img src={user.photo} alt="user-img" />
                 <div>
                   <h4>{user.name}</h4>
@@ -95,7 +115,9 @@ const ParticipantList = (props: participantListProps) => {
             );
           })
         ) : (
-          <UserContainer>
+          <UserContainer
+            onClick={() => userNavigationHandler(props.teacherObj?._id)}
+          >
             <img src={props.teacherObj?.photo} alt="" />
             <div>
               <h4>{props.teacherObj?.name}</h4>

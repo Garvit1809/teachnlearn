@@ -42,8 +42,7 @@ const Section = styled.div`
 
   button {
     display: flex;
-    width: 22.75rem;
-    padding: 1.375rem 2.125rem;
+    padding: 1.375rem 4.125rem;
     justify-content: center;
     align-items: flex-end;
     gap: 0.625rem;
@@ -56,6 +55,29 @@ const Section = styled.div`
     font-weight: 700;
     border: none;
     cursor: pointer;
+  }
+
+  @media only screen and (max-width: 880px) {
+    padding: 0 10vw;
+    h2 {
+      font-size: 3rem;
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    padding: 0 9vw;
+    gap: 1.35rem;
+    h2 {
+      font-size: 2.6rem;
+    }
+    h4 {
+      font-size: 1.1rem;
+    }
+    button {
+      /* align-items: center; */
+      align-self: center;
+      padding: 1.375rem 2.125rem;
+    }
   }
 `;
 
@@ -124,6 +146,7 @@ const FeedbackForm = (props: feedbackProps) => {
         value={feedback}
         areaHeight="15rem"
         updateSingleField={updateFields}
+        placeholderText="Your Feedback"
       />
       <button onClick={feedbackHandler}>Submit Feedback</button>
     </Section>

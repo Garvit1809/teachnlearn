@@ -12,12 +12,18 @@ export interface userProps {
   role: string;
   enrolledProgramme: string;
   phoneNumber: string;
-  classesEnrolled: string[];
+  classesEnrolled: classroom[];
   classesTaken: string[];
   interestedSubjects: string[];
   strongSubjects: string[];
   preferredLanguages: string[];
   token: string;
+}
+
+export interface classroom {
+  class: string;
+  endsAt: string;
+  isReviewed: boolean;
 }
 
 export function UserCookie() {

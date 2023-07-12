@@ -34,6 +34,7 @@ export interface learnCardProps {
     name: string;
     photo: string;
     _id: string;
+    userName: string;
   };
   subject: string;
   topic: string;
@@ -43,7 +44,6 @@ export interface learnCardProps {
   interestedStudents: string[];
   preferredLanguage: string;
   description: string;
-  expectations: string[];
   tags: string[];
 }
 

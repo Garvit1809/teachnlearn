@@ -10,18 +10,21 @@ const Section = styled.div`
   padding: 16px 22px;
   gap: 10px;
   background: #d1fadf;
+  background: #094067;
   border-radius: 30px;
 
   font-weight: 600;
   font-size: 17px;
   line-height: 27px;
   color: #054f31;
+  color: white;
   margin-bottom: 1.5rem;
-
+  
   div {
     width: 4px;
     height: 4px;
     background-color: #054f31;
+    background-color: white;
     border-radius: 50%;
     /* border: 1px solid red; */
   }

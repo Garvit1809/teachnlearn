@@ -2,7 +2,7 @@ import React from "react";
 import ClassBanner from "./classBanner";
 import UserChip from "../general-components/userChip";
 import styled from "styled-components";
-import { Plus } from "../general-components/svg";
+import { Copy, Plus } from "../general-components/svg";
 import DetailsContainer from "./detailsContainer";
 import TimeCapsule from "./timeCapsule";
 import JoinCall from "./joinCall";
@@ -25,7 +25,11 @@ const CallDetailContainer = styled.div`
 const ClassOverview = styled.div``;
 
 const ChipContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 1.2rem;
+  cursor: pointer;
   img {
     width: 40px;
     height: 40px;
@@ -38,8 +42,22 @@ const ChipContainer = styled.div`
     line-height: 35px;
     color: #000000;
   }
+  span.id {
+    font-size: 16px;
+  }
 `;
 
+const ClassIDCont = styled.div`
+  /* border: 1px solid red; */
+  background-color: #b3b8db;
+  /* width: 12rem; */
+  /* word-break: break-all; */
+  display: flex;
+  align-items: center;
+  padding: 14px 18px;
+  gap: 10px;
+  border-radius: 30px;
+`;
 
 type overallOverviewProps = classroomProps & {
   userId: string;
@@ -99,16 +117,18 @@ const Overview = (props: overallOverviewProps) => {
           <ClassOverview>
             <ChipContainer>
               <UserChip
-                name={props.createdBy.name}
+                name={props.createdBy.userName}
                 photo={props.createdBy.photo}
                 imgBorder="white"
                 textColor="black"
+                userId={props.createdBy._id}
               />
+              <ClassIDCont>
+                <Copy color="" />
+                <span className="id">{props._id}</span>
+              </ClassIDCont>
             </ChipContainer>
-            <DetailsContainer
-              desciption={props.description}
-              expectations={props.expectations}
-            />
+            <DetailsContainer desciption={props.description} />
           </ClassOverview>
         </OverviewContainer>
       </>

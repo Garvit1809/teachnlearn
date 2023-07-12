@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunctions";
@@ -9,16 +9,28 @@ import "react-toastify/dist/ReactToastify.css";
 import { UserCookie } from "../../utils/userCookie";
 
 const Section = styled.div`
+  /* border: 1px solid red; */
   display: flex;
   flex-direction: row;
   /* justify-content: space-between; */
   align-items: center;
   justify-content: center;
   padding: 20px 28px;
-  gap: 22px;
   background: #094067;
   border-radius: 61px;
+  gap: 22px;
   color: white;
+
+  @media only screen and (max-width: 1000px) {
+    /* padding: 20px 22px; */
+    /* font-size: 16px; */
+  }
+
+  @media only screen and (max-width: 600px) {
+    /* grid-template-columns: 1fr; */
+    /* gap: 16px; */
+    /* font-size: 14px; */
+  }
 `;
 
 interface ToggleCheckedProps {
@@ -28,6 +40,7 @@ interface ToggleCheckedProps {
 const Slider = styled.span<ToggleCheckedProps>`
   position: absolute;
   cursor: pointer;
+  /* border: 1px solid red; */
 
   top: 0;
   right: 0;
@@ -55,6 +68,7 @@ const Slider = styled.span<ToggleCheckedProps>`
 `;
 
 const ToggleBtn = styled.label`
+  /* border: 1px solid red; */
   position: relative;
   display: inline-block;
   width: 60px;
@@ -67,6 +81,11 @@ const ToggleBtn = styled.label`
     width: 0;
     height: 0;
   }
+
+  @media only screen and (max-width: 400px) {
+    /* width: 54px; */
+    /* height: 26px; */
+  }
 `;
 
 const LearnText = styled.span<ToggleCheckedProps>`
@@ -75,6 +94,14 @@ const LearnText = styled.span<ToggleCheckedProps>`
   font-weight: 600;
   font-size: 18px;
   line-height: 25px;
+
+  @media only screen and (max-width: 800px) {
+    font-size: 16px;
+  }
+
+  @media only screen and (max-width: 400px) {
+    /* font-size: 14px; */
+  }
 `;
 
 const TeachText = styled.span<ToggleCheckedProps>`
@@ -83,6 +110,13 @@ const TeachText = styled.span<ToggleCheckedProps>`
   font-weight: 600;
   font-size: 18px;
   line-height: 25px;
+
+  @media only screen and (max-width: 800px) {
+    font-size: 16px;
+  }
+  @media only screen and (max-width: 400px) {
+    /* font-size: 14px; */
+  }
 `;
 
 interface toggleProps {

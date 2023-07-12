@@ -4,16 +4,24 @@ import {
   CircleIcon2,
   DoubleQuoteIcon,
 } from "../general-components/svg";
+import charts from "../../assets/charts.png";
 
 const Section = styled.div`
   background-color: #0d1c2e;
   background-color: #094067;
   border-radius: 24px;
   padding: 15vh 2.5rem 20vh 4rem;
-  width: 80%;
+  /* padding: 10vh 2.5rem 10vh 4rem; */
+  /* width: 80%; */
   position: relative;
   overflow: hidden;
   z-index: -3;
+
+  img {
+    width: 300px;
+    height: 300px;
+    object-fit: contain;
+  }
 `;
 
 const UpperCircle = styled.div`
@@ -106,6 +114,7 @@ const DescriptionBox = (props: descriptionProps) => {
       </LowerCircle>
       <Description>
         <h4>{props.heading}</h4>
+        {/* <img src={charts} alt="" /> */}
         <DoubleQuoteIcon />
         <p>If you want to master something, teach it.</p>
         <div>

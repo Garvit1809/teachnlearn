@@ -1,14 +1,5 @@
 import React, { ReactElement, useState } from "react";
 import styled from "styled-components";
-import {
-  CoinsIcon,
-  FriendsIcon,
-  MyProfileIcon,
-  RedeemIcon,
-} from "../general-components/svg";
-import MyProfile from "./my-profile/myProfile";
-import PurchaseCoins from "./purchaseCoins";
-import InviteFriends from "./inviteFriends";
 import DeleteProfileModal from "./deleteProfileModal";
 
 const Section = styled.div`
@@ -55,20 +46,18 @@ const MenuOptions = styled.div<menuOptionsProps>`
   line-height: 30px;
 `;
 
-const profileOptions = [
-  {
-    option: "My profile",
-    label: "MyProfile",
-    icon: <MyProfileIcon />,
-  },
-];
-
 interface optionsProps {
   setSelectedLeftScreen: React.Dispatch<React.SetStateAction<string>>;
+  profileOptions: Array<any>;
+  isOtherUser: boolean;
 }
 
-const ProfileOptions = ({ setSelectedLeftScreen }: optionsProps) => {
-  const [selectedOption, setSelectedOption] = useState("MyProfile");
+const ProfileOptions = ({
+  setSelectedLeftScreen,
+  profileOptions,
+  isOtherUser,
+}: optionsProps) => {
+  const [selectedOption, setSelectedOption] = useState(profileOptions[0].label);
 
   const menuOptionHandler = (label: string) => {
     setSelectedOption(label);
@@ -90,7 +79,7 @@ const ProfileOptions = ({ setSelectedLeftScreen }: optionsProps) => {
           );
         })}
       </Menu>
-      <DeleteProfileModal />
+      {!isOtherUser && <DeleteProfileModal />}
     </Section>
   );
 };

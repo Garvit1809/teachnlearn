@@ -25,9 +25,7 @@ exports.getOtherUser = catchAsync(async (req, res, next) => {
     return next(new AppError("Please provide a user id.", 404));
   }
 
-  const user = await User.findById(userId).select(
-    "-role -classesEnrolled -coins"
-  );
+  const user = await User.findById(userId).select("-role -coins");
 
   if (!user) {
     return next(new AppError("There is no user with such ID.", 404));
@@ -289,6 +287,7 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
 
   const users = await User.find({
     $or: [
+      { _id: search },
       { name: { $regex: modifiedSearch } },
       { userName: { $regex: modifiedSearch } },
       { strongSubjects: { $elemMatch: { $eq: modifiedSearch } } },
@@ -296,10 +295,11 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
     ],
   })
     .find({ _id: { $ne: userId } })
-    .select("name userName tagline");
+    .select("name userName tagline photo");
 
   const learnCards = await LearningCard.find({
     $or: [
+      { _id: search },
       { subject: { $regex: modifiedSearch } },
       { topic: { $regex: modifiedSearch } },
       { description: { $regex: modifiedSearch } },
@@ -310,6 +310,7 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
 
   const classes = await TeachingCard.find({
     $or: [
+      { _id: search },
       { subject: { $regex: modifiedSearch } },
       { topic: { $regex: modifiedSearch } },
       { description: { $regex: modifiedSearch } },

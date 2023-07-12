@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../general-components/navbar";
 import Footer from "../general-components/footer/footer";
-import FooterWrapper from "../general-components/footer/footerWrapper";
 import BackBtn from "./backBtn";
 import FormField from "./formField";
 import Inputholder from "../general-components/input/inputholder";
@@ -42,6 +41,8 @@ const Section = styled.div`
     font-family: "Nunito";
     font-style: normal;
     margin-bottom: 1.5rem;
+    margin-top: 1rem;
+    text-decoration: underline;
   }
 
   form {
@@ -101,11 +102,8 @@ interface teachCardDetails {
   photo: string;
   date: string;
   description: string;
-  expectation: string;
-  expectations: string[];
   tag: string;
   tags: string[];
-  price: number;
   startingTime: string;
   endingTime: string;
 }
@@ -119,11 +117,8 @@ const initialData: teachCardDetails = {
   photo: "",
   date: "",
   description: "",
-  expectation: "",
-  expectations: [],
   tag: "",
   tags: [],
-  price: 0,
   startingTime: "",
   endingTime: "",
 };
@@ -175,6 +170,24 @@ const CreateTeachCard = () => {
   }
 
   const dateHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const date = e.target.value;
+    // console.log(typeof e.target.value);
+    // console.log(e.target.value);
+
+    const ISOstring = new Date(date);
+    // console.log(typeof ISOstring);
+    // console.log(ISOstring);
+
+    updateFields({
+      [e.target.name]: date,
+      // startingTime: ISOstring.toString(),
+      // endingTime: ISOstring.toString(),
+    });
+  };
+
+  const timeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+
     updateFields({ [e.target.name]: e.target.value });
   };
 
@@ -190,16 +203,12 @@ const CreateTeachCard = () => {
       subject,
       topic,
       programme,
-      standard,
       preferredLanguage,
       date,
       startingTime,
       endingTime,
       description,
-      expectations,
       photo,
-      price,
-      tags,
     } = teachCard;
 
     const currentDate = new Date();
@@ -211,14 +220,12 @@ const CreateTeachCard = () => {
       subject === "" ||
       topic === "" ||
       programme === "" ||
-      standard === "" ||
       preferredLanguage === "" ||
       date === "" ||
       startingTime === "" ||
       endingTime === "" ||
       description === "" ||
-      photo === "" ||
-      expectations.length == 0
+      photo === ""
     ) {
       toast.error("Fill in all the details", toastOptions);
       return false;
@@ -234,6 +241,9 @@ const CreateTeachCard = () => {
         toastOptions
       );
       return false;
+    } else if (description.length > 400) {
+      toast.error("Description caannot exceed 400 characters!!", toastOptions);
+      return false;
     }
     return true;
   };
@@ -241,6 +251,7 @@ const CreateTeachCard = () => {
   const teachCardHandler = async (e: any) => {
     e.preventDefault();
     console.log(teachCard);
+    // console.log(new Date(time));
 
     if (handleValidation()) {
       await axios
@@ -253,11 +264,9 @@ const CreateTeachCard = () => {
             standard: teachCard.standard,
             preferredLanguage: teachCard.preferredLanguage,
             description: teachCard.description,
-            expectations: teachCard.expectations,
             tags: teachCard.tags,
             date: teachCard.date,
             cardBanner: teachCard.photo,
-            price: teachCard.price,
             classStartsAt: teachCard.startingTime,
             classEndsAt: teachCard.endingTime,
           },
@@ -271,10 +280,16 @@ const CreateTeachCard = () => {
           window.location.reload();
         })
         .catch((data) => {
+          setTeachCard(initialData);
           const errors = data.response.data.error.errors;
-          Object.keys(errors).forEach(function (err, index) {
-            toast.error(errors[err].message, toastOptions);
-          });
+          if (errors) {
+            Object.keys(errors).forEach(function (err, index) {
+              toast.error(errors[err].message, toastOptions);
+            });
+          } else {
+            console.log(data);
+            // toast.error('Something went wrong',)
+          }
         });
     }
   };
@@ -291,11 +306,9 @@ const CreateTeachCard = () => {
             standard: teachCard.standard,
             preferredLanguage: teachCard.preferredLanguage,
             description: teachCard.description,
-            expectations: teachCard.expectations,
             tags: teachCard.tags,
             date: teachCard.date,
             cardBanner: teachCard.photo,
-            price: teachCard.price,
             classStartsAt: teachCard.startingTime,
             classEndsAt: teachCard.endingTime,
           },
@@ -324,7 +337,7 @@ const CreateTeachCard = () => {
           link={learnCardId ? `/learncard-overview/${learnCardId}` : "/"}
           learnCardId={learnCardId ? learnCardId : undefined}
         />
-        <h2>Let's get started with your Teach Card</h2>
+        <h2>Create Teach Card</h2>
         <form>
           <FormField
             elem={
@@ -336,9 +349,10 @@ const CreateTeachCard = () => {
                 updateFields={updateFields}
                 hasDropdown={true}
                 dropdownData={subjects}
+                placeholderText="Physics, English, Botany, Accounts. etc."
               />
             }
-            inputDesc="Pick a Subject"
+            inputDesc="Subject"
           />
           <FormField
             elem={
@@ -347,21 +361,24 @@ const CreateTeachCard = () => {
                 value={teachCard.topic}
                 name="topic"
                 updateFields={updateFields}
+                areaHeight="6rem"
+                placeholderText="Pythagoras’ Theorem, World War 2, Balance Sheet, Leibniz Rule, etc."
               />
             }
-            inputDesc="Specify the topic for the card"
+            inputDesc="Topic"
           />
           <FormField
             elem={
               <Inputholder
                 type="text"
-                label="Education Level"
+                label="Course/Exam/Board/Programme"
                 value={teachCard.programme}
                 name="programme"
                 updateFields={updateFields}
+                placeholderText="I.C.S.E, B.Tech, NEET, UPSC, etc."
               />
             }
-            inputDesc="Specify Education Level for the lesson"
+            inputDesc="Course/Exam/Board/Programme"
           />
           <FormField
             elem={
@@ -373,9 +390,10 @@ const CreateTeachCard = () => {
                 updateFields={updateFields}
                 hasDropdown={true}
                 dropdownData={standard}
+                placeholderText="10th class/2nd year etc (optional)"
               />
             }
-            inputDesc="Specify the Standard for the lesson"
+            inputDesc="Standard/Year"
           />
           <FormField
             elem={
@@ -387,21 +405,10 @@ const CreateTeachCard = () => {
                 updateFields={updateFields}
                 hasDropdown={true}
                 dropdownData={languages}
+                placeholderText="Hindi, English, Tamil, Marathi, French etc"
               />
             }
-            inputDesc="Language that you prefer"
-          />
-          <FormField
-            elem={
-              <Inputholder
-                type="number"
-                label="Price"
-                value={teachCard.price}
-                name="price"
-                updateFields={updateFields}
-              />
-            }
-            inputDesc="Language that you prefer"
+            inputDesc="Preferred Language"
           />
           <FormField
             elem={
@@ -413,7 +420,7 @@ const CreateTeachCard = () => {
                 onChange={(e) => dateHandler(e)}
               />
             }
-            inputDesc="Specify due date for the lesson"
+            inputDesc="Date of the class"
           />
           <FormField
             elem={
@@ -422,10 +429,10 @@ const CreateTeachCard = () => {
                 name="startingTime"
                 id="date"
                 value={teachCard.startingTime}
-                onChange={(e) => dateHandler(e)}
+                onChange={(e) => timeHandler(e)}
               />
             }
-            inputDesc="Specify starting time for the lesson"
+            inputDesc="Starting time"
           />
           <FormField
             elem={
@@ -434,15 +441,16 @@ const CreateTeachCard = () => {
                 name="endingTime"
                 id="date"
                 value={teachCard.endingTime}
-                onChange={(e) => dateHandler(e)}
+                onChange={(e) => timeHandler(e)}
               />
             }
-            inputDesc="Specify end timing for the lesson"
+            inputDesc="Ending Time"
           />
-          <FormField
+          {/* auto generate image from subject */}
+          {/* <FormField
             elem={<UploadImage updateFields={updateFields} />}
-            inputDesc="Upload a cover image for your class"
-          />
+            inputDesc="Cover image for your class"
+          /> */}
           <FormField
             elem={
               <Textarea
@@ -450,25 +458,16 @@ const CreateTeachCard = () => {
                 name="description"
                 updateFields={updateFields}
                 value={teachCard.description}
+                placeholderText="Can not exceed 400 characters"
               />
             }
-            inputDesc="Describe briefly what you expect from the teacher"
-          />
-          <FormField
-            elem={
-              <ExpectationWrapper
-                expectation={teachCard.expectation}
-                expectations={teachCard.expectations}
-                updateFields={updateFields}
-              />
-            }
-            inputDesc="Your expectations after completing the class"
+            inputDesc="Description of the topic covered"
           />
           <FormField
             elem={
               <InputWrapper>
                 <MultipleInput
-                  label="Add Tag"
+                  label="#Physics, #WebDevelopment, #BusinessManagement (optional)"
                   elemName="tag"
                   value={teachCard.tag}
                   name="tags"
@@ -484,7 +483,7 @@ const CreateTeachCard = () => {
                 ) : null}
               </InputWrapper>
             }
-            inputDesc="You can add tags in your learn card"
+            inputDesc="Tags"
           />
         </form>
         <FormButtonCont>

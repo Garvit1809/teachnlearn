@@ -144,6 +144,7 @@ const SingleClassroom = () => {
             createdBy={classroom.createdBy}
             studentsEnrolled={classroom.studentsEnrolled}
             topic={classroom.topic}
+            localUserId={userId}
           />
         );
       }

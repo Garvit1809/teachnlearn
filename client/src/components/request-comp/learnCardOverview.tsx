@@ -299,7 +299,6 @@ const LearnCardOverview = () => {
           programme: learnCard.programme,
           standard: learnCard.standard,
           description: learnCard.description,
-          expectations: learnCard.expectations,
           tags: learnCard.tags,
         },
       });
@@ -395,11 +394,13 @@ const LearnCardOverview = () => {
                       </button>
                     </CreateTeachCardBtn>
                   )}
-                  {userRole == "learn" && (
-                    <span className="text">
-                      Cannot create Teach Card in Learn Mode
-                    </span>
-                  )}
+                  {learnCardCreaterCheck()
+                    ? null
+                    : userRole == "learn" && (
+                        <span className="text">
+                          Cannot create Teach Card in Learn Mode
+                        </span>
+                      )}
                 </TeachCardWrapper>
               </LeftContainer>
               <CardOverview>
@@ -409,6 +410,7 @@ const LearnCardOverview = () => {
                     photo={learnCard.createdBy.photo}
                     imgBorder="white"
                     textColor="black"
+                    userId={learnCard.createdBy._id}
                   />
                   <InterestedCont>
                     <InterestedIcon />
@@ -418,7 +420,6 @@ const LearnCardOverview = () => {
                 </ChipContainer>
                 <DetailsContainer
                   desciption={learnCard.description}
-                  expectations={learnCard.expectations}
                 />
                 {userId &&
                   (userId === learnCard.createdBy._id ? null : (

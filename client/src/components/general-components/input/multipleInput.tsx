@@ -36,7 +36,7 @@ const Label = styled.span<labelProps>`
   transform: translateY(19px);
   pointer-events: none;
   font-size: 16px;
-  text-transform: ${(p) => (p.isValid ? "none" : "uppercase")};
+  /* text-transform: ${(p) => (p.isValid ? "none" : "uppercase")}; */
   transition: 0.25s;
   line-height: 1;
   transform: ${(props) =>

@@ -120,7 +120,7 @@ interface answerProps {
   _id: string;
   answer: string;
   answeredBy: {
-    id: string;
+    _id: string;
     name: string;
     photo: string;
     // userName: string;
@@ -227,6 +227,7 @@ const SingleForum = () => {
                           name={answer.answeredBy.name}
                           photo={answer.answeredBy.photo}
                           imgBorder="black"
+                          userId={answer.answeredBy._id}
                         />
                         <div className="time">
                           {moment(answer.createdAt).fromNow()}

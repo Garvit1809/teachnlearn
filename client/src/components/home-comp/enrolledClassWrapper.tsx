@@ -52,6 +52,20 @@ const CardGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 20px;
+
+  @media only screen and (max-width: 1170px) {
+    /* grid-template-columns: 1fr 1fr; */
+    /* gap: 1rem; */
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media only screen and (max-width: 1000px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media only screen and (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 interface wrapperProps {

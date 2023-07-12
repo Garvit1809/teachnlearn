@@ -17,7 +17,7 @@ import { localStorageUser } from "../../../utils/globalConstants";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Section = styled.div`
+export const UserProfileSection = styled.div`
   /* border: 1px solid red; */
   margin-left: 1rem;
   display: flex;
@@ -54,7 +54,7 @@ const UserContainer = styled.div`
   border-radius: 32px;
 `;
 
-const UserDetails = styled.div`
+export const UserDetails = styled.div`
   /* border: 2px solid red; */
   width: 100%;
 
@@ -179,7 +179,7 @@ const MyProfile = () => {
   }
 
   return localUser._id.length != 0 ? (
-    <Section>
+    <UserProfileSection>
       <Header>
         <Heading>My profile</Heading>
         <ModeToggle userToken={localUser.token} role={localUser.role} />
@@ -239,7 +239,7 @@ const MyProfile = () => {
         userToken={userToken}
       />
       <ToastContainer theme="dark" />
-    </Section>
+    </UserProfileSection>
   ) : (
     <h3>Loading</h3>
   );

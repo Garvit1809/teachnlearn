@@ -105,14 +105,6 @@ const DateCont = styled.div`
   color: #ffffff;
 `;
 
-// const RequestWrapper = styled.div`
-//   border: 1px solid red;
-//   width: 100%;
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-// `;
-
 const ExpandButton = styled.div`
   /* border: 1px solid red; */
   margin-top: 1rem;
@@ -166,10 +158,11 @@ const LearnCard = (props: learnCardProps) => {
         </span>
       </Topic>
       <UserChip
-        name={props.createdBy.name}
+        name={props.createdBy.userName}
         photo={props.createdBy.photo}
         imgBorder="#FFFFFF"
         textColor="#FFFFFF"
+        userId={props.createdBy._id}
       />
       <Stats>
         <div>

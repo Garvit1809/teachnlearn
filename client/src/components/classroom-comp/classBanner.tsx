@@ -20,15 +20,18 @@ const ImageContainer = styled.div`
 const Title = styled.div`
   /* border: 1px solid white; */
 
+  /* background-color: grey; */
   position: absolute;
   bottom: 2rem;
   left: 1.5rem;
   z-index: 1;
-  color: white;
+  /* color: white; */
   font-weight: 700;
   font-size: 26px;
   line-height: 35px;
   width: 50%;
+  text-shadow: 3px 4px 7px rgba(0, 0, 0, 0.6);
+  /* mix-blend-mode: darken; */
 `;
 
 interface bannerProps {

@@ -38,8 +38,9 @@ const Section = styled.div`
   h2 {
     font-family: "Nunito";
     font-style: normal;
-    margin-bottom: 1.5rem;
-    /* margin-top: 2rem; */
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    text-decoration: underline;
   }
 
   form {
@@ -161,7 +162,6 @@ interface learnCardDetails {
   preferredLanguage: string;
   description: string;
   expectation: string;
-  expectations: string[];
   tag: string;
   tags: string[];
   dueDate: string;
@@ -175,7 +175,6 @@ const initialData: learnCardDetails = {
   preferredLanguage: "",
   description: "",
   expectation: "",
-  expectations: [],
   tag: "",
   tags: [],
   dueDate: "",
@@ -202,21 +201,6 @@ const CreateLearnCard = () => {
     updateFields({ dueDate: date });
   };
 
-  const expectationHandler = () => {
-    const expectation = learnCard.expectation;
-    const newArr = learnCard.expectations;
-    newArr.push(expectation);
-    updateFields({ expectations: newArr, expectation: "" });
-  };
-
-  const removeExpecHandler = (expec: string) => {
-    const newArr = learnCard.expectations;
-    const filteredArr = newArr.filter((elem, index) => {
-      return elem != expec;
-    });
-    updateFields({ expectations: filteredArr });
-  };
-
   const toastOptions = {
     position: toast.POSITION.BOTTOM_RIGHT,
     autoClose: 6000,
@@ -229,12 +213,9 @@ const CreateLearnCard = () => {
       subject,
       topic,
       programme,
-      standard,
       preferredLanguage,
       dueDate,
       description,
-      expectations,
-      tags,
     } = learnCard;
 
     const currentDate = new Date();
@@ -244,19 +225,20 @@ const CreateLearnCard = () => {
       subject === "" ||
       topic === "" ||
       programme === "" ||
-      standard === "" ||
       preferredLanguage === "" ||
       dueDate === "" ||
-      description === "" ||
-      expectations.length == 0
+      description === ""
     ) {
       toast.error("Fill in all the details", toastOptions);
       return false;
     } else if (topic.length < 35) {
       toast.error("Topic must be greater than 35 characters", toastOptions);
       return false;
-    } else if (ISODueDate < currentDate) {
+    } else if (ISODueDate > currentDate) {
       toast.error("Pick another due date", toastOptions);
+      return false;
+    } else if (description.length > 400) {
+      toast.error("Description caannot exceed 400 characters!!", toastOptions);
       return false;
     }
     return true;
@@ -276,7 +258,6 @@ const CreateLearnCard = () => {
             standard: learnCard.standard,
             preferredLanguage: learnCard.preferredLanguage,
             description: learnCard.description,
-            expectations: learnCard.expectations,
             tags: learnCard.tags,
             dueDate: learnCard.dueDate,
           },
@@ -302,7 +283,7 @@ const CreateLearnCard = () => {
       <Navbar />
       <Section>
         <BackBtn link="/" />
-        <h2>Let's get started with your Learn Card</h2>
+        <h2>Create Learn Card</h2>
         <form>
           <FormField
             elem={
@@ -314,35 +295,37 @@ const CreateLearnCard = () => {
                 updateFields={updateFields}
                 hasDropdown={true}
                 dropdownData={subjects}
+                placeholderText="Physics, English, Botany, Accounts. etc."
               />
             }
-            inputDesc="Pick a Subject"
+            inputDesc="Subject"
           />
           <FormField
             elem={
-              <Inputholder
-                type="text"
+              <Textarea
                 label="Topic"
-                value={learnCard.topic}
                 name="topic"
+                value={learnCard.topic}
                 updateFields={updateFields}
-                hasDropdown={false}
+                areaHeight="6rem"
+                placeholderText="Pythagoras’ Theorem, World War 2, Balance Sheet, Leibniz Rule, etc."
               />
             }
-            inputDesc="Specify the topic for the card"
+            inputDesc="Topic"
           />
           <FormField
             elem={
               <Inputholder
                 type="text"
-                label="Programme"
+                label="Course/Exam/Board/Programme"
                 value={learnCard.programme}
                 name="programme"
                 updateFields={updateFields}
                 hasDropdown={false}
+                placeholderText="I.C.S.E, B.Tech, NEET, UPSC, etc."
               />
             }
-            inputDesc="Specify Education Level for the lesson"
+            inputDesc="Course/Exam/Board/Programme"
           />
           <FormField
             elem={
@@ -354,9 +337,10 @@ const CreateLearnCard = () => {
                 updateFields={updateFields}
                 hasDropdown={true}
                 dropdownData={standard}
+                placeholderText="10th class/2nd year etc (optional)"
               />
             }
-            inputDesc="Specify the Standard for the lesson"
+            inputDesc="Standard/Year"
           />
           <FormField
             elem={
@@ -368,9 +352,10 @@ const CreateLearnCard = () => {
                 updateFields={updateFields}
                 hasDropdown={true}
                 dropdownData={languages}
+                placeholderText="Hindi, English, Tamil, Marathi, French etc"
               />
             }
-            inputDesc="Language that you prefer"
+            inputDesc="Preferred Language"
           />
           <FormField
             elem={
@@ -381,7 +366,7 @@ const CreateLearnCard = () => {
                 onChange={(e) => dateHandler(e.target.value)}
               />
             }
-            inputDesc="Specify due date for the lesson"
+            inputDesc="Due date"
           />
           <FormField
             elem={
@@ -390,45 +375,16 @@ const CreateLearnCard = () => {
                 name="description"
                 updateFields={updateFields}
                 value={learnCard.description}
+                placeholderText="Can not exceed 400 characters"
               />
             }
-            inputDesc="Describe briefly what you expect from the teacher"
-          />
-          <FormField
-            elem={
-              <ExpectationWrapper>
-                <Textarea
-                  label="Expectations"
-                  name="expectation"
-                  updateFields={updateFields}
-                  value={learnCard.expectation}
-                />
-                <AddExpecBtn>
-                  <button type="button" onClick={expectationHandler}>
-                    Add Expectation
-                  </button>
-                </AddExpecBtn>
-                <ExpectationsContainer>
-                  {learnCard.expectations.map((expec, index) => {
-                    return (
-                      <Expectation>
-                        <li key={index}>{expec}</li>
-                        <span onClick={() => removeExpecHandler(expec)}>
-                          Remove
-                        </span>
-                      </Expectation>
-                    );
-                  })}
-                </ExpectationsContainer>
-              </ExpectationWrapper>
-            }
-            inputDesc="Your expectations after completing the class"
+            inputDesc="Description of the query"
           />
           <FormField
             elem={
               <InputWrapper>
                 <MultipleInput
-                  label="Tags"
+                  label="#Physics, #WebDevelopment, #BusinessManagement (optional)"
                   elemName="tag"
                   value={learnCard.tag}
                   name="tags"
@@ -444,7 +400,7 @@ const CreateLearnCard = () => {
                 ) : null}
               </InputWrapper>
             }
-            inputDesc="You can add tags in your learn card"
+            inputDesc="Tags"
           />
         </form>
         <FormButtonCont>

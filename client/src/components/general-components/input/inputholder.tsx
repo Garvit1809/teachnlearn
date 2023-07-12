@@ -56,7 +56,7 @@ const Label = styled.span<labelProps>`
   transform: translateY(19px);
   pointer-events: none;
   font-size: 16px;
-  text-transform: ${(p) => (p.isValid ? "none" : "uppercase")};
+  /* text-transform: ${(p) => (p.isValid ? "none" : "uppercase")}; */
   transition: 0.25s;
   line-height: 1;
   transform: ${(props) =>
@@ -110,10 +110,10 @@ const DropdownMenu = styled.div`
 `;
 
 const RequiredText = styled.div`
-/* position: absolute; */
-/* top: 100%; */
+  /* position: absolute; */
+  /* top: 100%; */
   /* border: 1px solid red; */
-  span{
+  span {
     color: rgba(0, 0, 0, 0.7);
     font-size: 0.8rem;
     text-transform: capitalize;
@@ -132,12 +132,14 @@ interface inputProps {
   hasDropdown?: boolean;
   dropdownData?: string[];
   isRequired?: boolean;
+  placeholderText?: string;
 }
 
 const Inputholder = (props: inputProps) => {
   const [inputType, setInputType] = useState(props.type);
   const [isValid, setisValid] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showPlaceholder, setshowPlaceholder] = useState(true);
 
   useEffect(() => {
     if (typeof props.value == "string") {
@@ -159,7 +161,9 @@ const Inputholder = (props: inputProps) => {
 
     if (value?.trim().length > 0) {
       setisValid(true);
+      setshowPlaceholder(false);
     } else {
+      // setshowPlaceholder(true);
       setisValid(false);
     }
   };
@@ -173,8 +177,26 @@ const Inputholder = (props: inputProps) => {
     setShowDropdown(false);
   };
 
+  const removeInputFocus = () => {
+    console.log("CHECK");
+
+    if (inputRef.current) {
+      const value = inputRef.current.value;
+      console.log(value);
+
+      if (value.trim().length > 0) {
+        setshowPlaceholder(false);
+      } else {
+        setshowPlaceholder(true);
+      }
+    }
+  };
+
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, closeDropDown);
+
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  useOutsideAlerter(inputRef, removeInputFocus);
 
   const hideUnhideHandler = () => {
     if (inputType == "password") {
@@ -191,6 +213,8 @@ const Inputholder = (props: inputProps) => {
         required
         value={props.value}
         name={props.name}
+        ref={inputRef}
+        onFocus={() => setshowPlaceholder(false)}
         onChange={(e) => inputhandler(e)}
       />
       {props.type == "password" && (
@@ -202,7 +226,9 @@ const Inputholder = (props: inputProps) => {
           )}
         </div>
       )}
-      <Label isValid={isValid}>{props.label}</Label>
+      <Label isValid={isValid}>
+        {showPlaceholder ? props.placeholderText : props.label}
+      </Label>
       {props.isRequired && (
         <RequiredText>
           <span>*required</span>
