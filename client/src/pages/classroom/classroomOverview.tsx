@@ -186,10 +186,7 @@ const ClassroomOverview = () => {
                   <h3>{teachCard.price}</h3>
                 </PriceCont>
               </ChipContainer>
-              <DetailsContainer
-                desciption={teachCard.description}
-                expectations={teachCard.expectations}
-              />
+              <DetailsContainer desciption={teachCard.description} />
             </ClassOverview>
           </OverviewContainer>
         </Section>
