@@ -100,8 +100,6 @@ interface teachCardDetails {
   photo: string;
   date: string;
   description: string;
-  expectation: string;
-  expectations: string[];
   tag: string;
   tags: string[];
   price: number;
@@ -118,8 +116,6 @@ const initialData: teachCardDetails = {
   photo: "",
   date: "",
   description: "",
-  expectation: "",
-  expectations: [],
   tag: "",
   tags: [],
   price: 0,
@@ -213,7 +209,6 @@ const CreateTeachCard = () => {
       startingTime,
       endingTime,
       description,
-      expectations,
       photo,
       price,
       tags,
@@ -234,8 +229,7 @@ const CreateTeachCard = () => {
       startingTime === "" ||
       endingTime === "" ||
       description === "" ||
-      photo === "" ||
-      expectations.length == 0
+      photo === ""
     ) {
       toast.error("Fill in all the details", toastOptions);
       return false;
@@ -271,7 +265,6 @@ const CreateTeachCard = () => {
             standard: teachCard.standard,
             preferredLanguage: teachCard.preferredLanguage,
             description: teachCard.description,
-            expectations: teachCard.expectations,
             tags: teachCard.tags,
             date: teachCard.date,
             cardBanner: teachCard.photo,
@@ -315,7 +308,6 @@ const CreateTeachCard = () => {
             standard: teachCard.standard,
             preferredLanguage: teachCard.preferredLanguage,
             description: teachCard.description,
-            expectations: teachCard.expectations,
             tags: teachCard.tags,
             date: teachCard.date,
             cardBanner: teachCard.photo,
@@ -362,6 +354,7 @@ const CreateTeachCard = () => {
                 updateFields={updateFields}
                 hasDropdown={true}
                 dropdownData={subjects}
+                placeholderText="Physics, English, Botany, Accounts. etc."
               />
             }
             inputDesc="Pick a Subject"
@@ -373,21 +366,24 @@ const CreateTeachCard = () => {
                 value={teachCard.topic}
                 name="topic"
                 updateFields={updateFields}
+                placeholderText="Pythagoras’ Theorem, World War 2, Balance Sheet, Leibniz Rule, etc."
+                areaHeight="6rem"
               />
             }
-            inputDesc="Specify the topic for the card"
+            inputDesc="Topic for the card"
           />
           <FormField
             elem={
               <Inputholder
                 type="text"
-                label="Education Level"
+                label="Course/Exam/Board/Programme"
                 value={teachCard.programme}
                 name="programme"
                 updateFields={updateFields}
+                placeholderText="I.C.S.E, B.Tech, NEET, UPSC, etc."
               />
             }
-            inputDesc="Specify Education Level for the class"
+            inputDesc="Course/Exam/Board/Programme"
           />
           <FormField
             elem={
@@ -399,9 +395,10 @@ const CreateTeachCard = () => {
                 updateFields={updateFields}
                 hasDropdown={true}
                 dropdownData={standard}
+                placeholderText="Class/Year"
               />
             }
-            inputDesc="Specify the Standard for the class"
+            inputDesc="Standard for the class"
           />
           <FormField
             elem={
@@ -413,6 +410,7 @@ const CreateTeachCard = () => {
                 updateFields={updateFields}
                 hasDropdown={true}
                 dropdownData={languages}
+                placeholderText="Hindi, English etc"
               />
             }
             inputDesc="Language that you prefer"
@@ -429,13 +427,6 @@ const CreateTeachCard = () => {
             }
             inputDesc="Price for your class"
           />
-          {/* <input
-            type="time"
-            name=""
-            id=""
-            value={time}
-            onChange={(e) => settime(e.target.value)}
-          /> */}
           <FormField
             elem={
               <input
@@ -483,25 +474,16 @@ const CreateTeachCard = () => {
                 name="description"
                 updateFields={updateFields}
                 value={teachCard.description}
+                placeholderText="Description"
               />
             }
             inputDesc="Describe briefly what students should expect from you"
           />
           <FormField
             elem={
-              <ExpectationWrapper
-                expectation={teachCard.expectation}
-                expectations={teachCard.expectations}
-                updateFields={updateFields}
-              />
-            }
-            inputDesc="Your expectations after completing the class"
-          />
-          <FormField
-            elem={
               <InputWrapper>
                 <MultipleInput
-                  label="Add Tag"
+                  label="Tags"
                   elemName="tag"
                   value={teachCard.tag}
                   name="tags"
@@ -517,7 +499,7 @@ const CreateTeachCard = () => {
                 ) : null}
               </InputWrapper>
             }
-            inputDesc="You can add tags in your learn card"
+            inputDesc="You can add tags in your teach card"
           />
         </form>
         <FormButtonCont>

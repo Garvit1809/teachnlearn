@@ -43,7 +43,6 @@ export interface learnCardProps {
   interestedStudents: string[];
   preferredLanguage: string;
   description: string;
-  expectations: string[];
   tags: string[];
 }
 

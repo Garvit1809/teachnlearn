@@ -102,12 +102,11 @@ const Overview = (props: overallOverviewProps) => {
                 photo={props.createdBy.photo}
                 imgBorder="white"
                 textColor="black"
-                userId={props.userToken}
+                userId={props.createdBy._id}
               />
             </ChipContainer>
             <DetailsContainer
               desciption={props.description}
-              expectations={props.expectations}
             />
           </ClassOverview>
         </OverviewContainer>

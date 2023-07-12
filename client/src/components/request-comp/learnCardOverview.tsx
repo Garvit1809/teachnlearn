@@ -299,7 +299,6 @@ const LearnCardOverview = () => {
           programme: learnCard.programme,
           standard: learnCard.standard,
           description: learnCard.description,
-          expectations: learnCard.expectations,
           tags: learnCard.tags,
         },
       });
@@ -421,7 +420,6 @@ const LearnCardOverview = () => {
                 </ChipContainer>
                 <DetailsContainer
                   desciption={learnCard.description}
-                  expectations={learnCard.expectations}
                 />
                 {userId &&
                   (userId === learnCard.createdBy._id ? null : (

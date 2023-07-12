@@ -161,7 +161,6 @@ interface learnCardDetails {
   preferredLanguage: string;
   description: string;
   expectation: string;
-  expectations: string[];
   tag: string;
   tags: string[];
   dueDate: string;
@@ -175,7 +174,6 @@ const initialData: learnCardDetails = {
   preferredLanguage: "",
   description: "",
   expectation: "",
-  expectations: [],
   tag: "",
   tags: [],
   dueDate: "",
@@ -202,21 +200,6 @@ const CreateLearnCard = () => {
     updateFields({ dueDate: date });
   };
 
-  const expectationHandler = () => {
-    const expectation = learnCard.expectation;
-    const newArr = learnCard.expectations;
-    newArr.push(expectation);
-    updateFields({ expectations: newArr, expectation: "" });
-  };
-
-  const removeExpecHandler = (expec: string) => {
-    const newArr = learnCard.expectations;
-    const filteredArr = newArr.filter((elem, index) => {
-      return elem != expec;
-    });
-    updateFields({ expectations: filteredArr });
-  };
-
   const toastOptions = {
     position: toast.POSITION.BOTTOM_RIGHT,
     autoClose: 6000,
@@ -233,7 +216,6 @@ const CreateLearnCard = () => {
       preferredLanguage,
       dueDate,
       description,
-      expectations,
       tags,
     } = learnCard;
 
@@ -247,8 +229,7 @@ const CreateLearnCard = () => {
       standard === "" ||
       preferredLanguage === "" ||
       dueDate === "" ||
-      description === "" ||
-      expectations.length == 0
+      description === ""
     ) {
       toast.error("Fill in all the details", toastOptions);
       return false;
@@ -276,7 +257,6 @@ const CreateLearnCard = () => {
             standard: learnCard.standard,
             preferredLanguage: learnCard.preferredLanguage,
             description: learnCard.description,
-            expectations: learnCard.expectations,
             tags: learnCard.tags,
             dueDate: learnCard.dueDate,
           },
@@ -314,35 +294,37 @@ const CreateLearnCard = () => {
                 updateFields={updateFields}
                 hasDropdown={true}
                 dropdownData={subjects}
+                placeholderText="Physics, English, Botany, Accounts. etc."
               />
             }
-            inputDesc="Pick a Subject"
+            inputDesc="Subject"
           />
           <FormField
             elem={
-              <Inputholder
-                type="text"
+              <Textarea
                 label="Topic"
-                value={learnCard.topic}
                 name="topic"
+                value={learnCard.topic}
                 updateFields={updateFields}
-                hasDropdown={false}
+                areaHeight="6rem"
+                placeholderText="Pythagoras’ Theorem, World War 2, Balance Sheet, Leibniz Rule, etc."
               />
             }
-            inputDesc="Specify the topic for the card"
+            inputDesc="Topic for the card"
           />
           <FormField
             elem={
               <Inputholder
                 type="text"
-                label="Programme"
+                label="Course/Exam/Board/Programme"
                 value={learnCard.programme}
                 name="programme"
                 updateFields={updateFields}
                 hasDropdown={false}
+                placeholderText="I.C.S.E, B.Tech, NEET, UPSC, etc."
               />
             }
-            inputDesc="Specify Education Level for the lesson"
+            inputDesc="Course/Exam/Board/Programme"
           />
           <FormField
             elem={
@@ -354,9 +336,10 @@ const CreateLearnCard = () => {
                 updateFields={updateFields}
                 hasDropdown={true}
                 dropdownData={standard}
+                placeholderText="Class/Year"
               />
             }
-            inputDesc="Specify the Standard for the lesson"
+            inputDesc="Standard for the lesson"
           />
           <FormField
             elem={
@@ -368,6 +351,7 @@ const CreateLearnCard = () => {
                 updateFields={updateFields}
                 hasDropdown={true}
                 dropdownData={languages}
+                placeholderText="Hindi, English etc"
               />
             }
             inputDesc="Language that you prefer"
@@ -381,7 +365,7 @@ const CreateLearnCard = () => {
                 onChange={(e) => dateHandler(e.target.value)}
               />
             }
-            inputDesc="Specify due date for the lesson"
+            inputDesc="Due date for the lesson"
           />
           <FormField
             elem={
@@ -390,39 +374,10 @@ const CreateLearnCard = () => {
                 name="description"
                 updateFields={updateFields}
                 value={learnCard.description}
+                placeholderText="Description"
               />
             }
             inputDesc="Describe briefly what you expect from the teacher"
-          />
-          <FormField
-            elem={
-              <ExpectationWrapper>
-                <Textarea
-                  label="Expectations"
-                  name="expectation"
-                  updateFields={updateFields}
-                  value={learnCard.expectation}
-                />
-                <AddExpecBtn>
-                  <button type="button" onClick={expectationHandler}>
-                    Add Expectation
-                  </button>
-                </AddExpecBtn>
-                <ExpectationsContainer>
-                  {learnCard.expectations.map((expec, index) => {
-                    return (
-                      <Expectation>
-                        <li key={index}>{expec}</li>
-                        <span onClick={() => removeExpecHandler(expec)}>
-                          Remove
-                        </span>
-                      </Expectation>
-                    );
-                  })}
-                </ExpectationsContainer>
-              </ExpectationWrapper>
-            }
-            inputDesc="Your expectations after completing the class"
           />
           <FormField
             elem={
@@ -444,7 +399,7 @@ const CreateLearnCard = () => {
                 ) : null}
               </InputWrapper>
             }
-            inputDesc="You can add tags in your learn card"
+            inputDesc="Add tags in your learn card"
           />
         </form>
         <FormButtonCont>

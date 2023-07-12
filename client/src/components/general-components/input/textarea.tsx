@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { useOutsideAlerter } from "../../../utils/helperFunctions";
 
 interface heightProps {
   areaHeight?: string;
@@ -38,7 +39,7 @@ const Label = styled.span<labelProps>`
   transform: translateY(19px);
   pointer-events: none;
   font-size: 16px;
-  text-transform: ${(p) => (p.isValid ? "none" : "uppercase")};
+  /* text-transform: ${(p) => (p.isValid ? "none" : "uppercase")}; */
   transition: 0.25s;
   line-height: 1;
   transform: ${(props) =>
@@ -65,10 +66,12 @@ interface inputProps {
   updateFields?: any;
   updateSingleField?: any;
   areaHeight?: string;
+  placeholderText?: string;
 }
 
 const Textarea = (props: inputProps) => {
   const [isValid, setisValid] = useState(false);
+  const [showPlaceholder, setshowPlaceholder] = useState(true);
 
   useEffect(() => {
     if (props.value?.trim().length > 0) {
@@ -78,9 +81,9 @@ const Textarea = (props: inputProps) => {
 
   const inputhandler = (e: any) => {
     if (props.updateSingleField) {
-      props.updateSingleField(e.target.value);
+      props.updateSingleField(e.target.value.trim());
     } else {
-      props.updateFields({ [e.target.name]: e.target.value });
+      props.updateFields({ [e.target.name]: e.target.value.trim() });
     }
 
     const value = e.target.value;
@@ -92,15 +95,37 @@ const Textarea = (props: inputProps) => {
     }
   };
 
+  const removeInputFocus = () => {
+    console.log("CHECK");
+
+    if (inputRef.current) {
+      const value = inputRef.current.value;
+      console.log(value);
+
+      if (value.trim().length > 0) {
+        setshowPlaceholder(false);
+      } else {
+        setshowPlaceholder(true);
+      }
+    }
+  };
+
+  const inputRef = useRef<HTMLTextAreaElement | null>(null);
+  useOutsideAlerter(inputRef, removeInputFocus);
+
   return (
     <Section areaHeight={props.areaHeight ? props.areaHeight : undefined}>
       <textarea
         required
         value={props.value}
         name={props.name}
+        ref={inputRef}
+        onFocus={() => setshowPlaceholder(false)}
         onChange={(e) => inputhandler(e)}
       />
-      <Label isValid={isValid}>{props.label}</Label>
+      <Label isValid={isValid}>
+        {showPlaceholder ? props.placeholderText : props.label}
+      </Label>
     </Section>
   );
 };

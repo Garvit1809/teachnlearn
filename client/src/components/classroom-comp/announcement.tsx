@@ -38,11 +38,7 @@ const Section = styled.div`
   }
 `;
 
-type announcement = announcementProps & {
-  userToken: string
-}
-
-const Announcement = (props: announcement) => {
+const Announcement = (props: announcementProps) => {
   return (
     <Section>
       <header>
@@ -51,7 +47,7 @@ const Announcement = (props: announcement) => {
           photo={props.sender.photo}
           textSize="20px"
           imgSize="32px"
-          userId={props.userToken}
+          userId={props.sender._id}
         />
         <h4>
           {getReadableDate(props.createdAt) +

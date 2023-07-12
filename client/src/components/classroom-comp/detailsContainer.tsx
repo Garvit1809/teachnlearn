@@ -32,27 +32,12 @@ const Section = styled.div`
 
 interface detailProps {
   desciption: string;
-  expectations: string[];
 }
 
 const DetailsContainer = (props: detailProps) => {
   return (
     <Section>
-      <p>
-        {props.desciption}
-      </p>
-      <h3>After this Class, students would be able to :-</h3>
-      <ul>
-        {
-          props.expectations.map((expectation,index) => {
-            return (
-              <li key={index} >
-                {expectation}
-              </li>
-            )
-          })
-        }
-      </ul>
+      <p>{props.desciption}</p>
     </Section>
   );
 };
