@@ -6,10 +6,10 @@ import { Copy, Plus } from "../general-components/svg";
 import DetailsContainer from "./detailsContainer";
 import TimeCapsule from "./timeCapsule";
 import JoinCall from "./joinCall";
-import { teachCardProps } from "../../pages/classroom/classrooms";
 import AddLink from "./addLink";
 import ReviewClass from "./reviewClass";
 import { classroomProps } from "../../types/classroomType";
+import { ToastContainer, toast } from "react-toastify";
 
 const OverviewContainer = styled.div`
   /* border: 1px solid red; */
@@ -83,6 +83,18 @@ const Overview = (props: overallOverviewProps) => {
     return isReviewed.length == 1;
   };
 
+  const toastOptions = {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 6000,
+    pauseOnHover: true,
+    draggable: true,
+  };
+
+  const classIdHandler = () => {
+    navigator.clipboard.writeText(props._id);
+    toast.success("ID copied to clipboard", toastOptions);
+  };
+
   return (
     props && (
       <>
@@ -123,14 +135,15 @@ const Overview = (props: overallOverviewProps) => {
                 textColor="black"
                 userId={props.createdBy._id}
               />
-              <ClassIDCont>
-                <Copy color="" />
+              <ClassIDCont onClick={classIdHandler}>
+                <Copy />
                 <span className="id">{props._id}</span>
               </ClassIDCont>
             </ChipContainer>
             <DetailsContainer desciption={props.description} />
           </ClassOverview>
         </OverviewContainer>
+        <ToastContainer theme="dark" />
       </>
     )
   );

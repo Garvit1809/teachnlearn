@@ -54,8 +54,9 @@ export interface announcementProps {
   createdAt: string;
   sender: {
     _id: string;
-    name: string;
+    // name: string;
     photo: string;
+    userName: string;
   };
   _id: string;
 }

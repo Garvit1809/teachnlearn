@@ -8,6 +8,7 @@ import { BASE_URL, apiVersion } from "../../../../utils/apiRoutes";
 import { getHeaders, isValidEmail } from "../../../../utils/helperFunctions";
 import { localStorageUser } from "../../../../utils/globalConstants";
 import { toast } from "react-toastify";
+import Loader from "../../../general-components/loader";
 
 const Section = styled.div`
   width: 50vw;
@@ -79,6 +80,7 @@ const ContactInfoModal = (props: modalProps) => {
     email: props.email,
     phone: props.phone,
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const toastOptions = {
     position: toast.POSITION.BOTTOM_RIGHT,
@@ -102,6 +104,7 @@ const ContactInfoModal = (props: modalProps) => {
 
   const updateContactUserHandler = async () => {
     if (handleValidation()) {
+      setIsLoading(true);
       await axios
         .patch(
           `${BASE_URL}${apiVersion}/user/mycontactInfo`,
@@ -115,6 +118,7 @@ const ContactInfoModal = (props: modalProps) => {
           }
         )
         .then(({ data }) => {
+          setIsLoading(false);
           console.log(data.updatedUser);
           const user = data.updatedUser;
           user.token = props.userToken;
@@ -124,6 +128,7 @@ const ContactInfoModal = (props: modalProps) => {
         })
         .catch((data) => {
           console.log(data);
+          setIsLoading(false);
           if (data.response.data.message) {
             toast.error(data.response.data.message, toastOptions);
           } else {
@@ -184,7 +189,11 @@ const ContactInfoModal = (props: modalProps) => {
       </form>
       <SubmitButton>
         <button type="submit" onClick={updateContactUserHandler}>
-          Edit User Info
+          {isLoading ? (
+            <Loader loaderHeight="1.6rem" color="white" />
+          ) : (
+            "Edit User Info"
+          )}
         </button>
       </SubmitButton>
     </Section>
