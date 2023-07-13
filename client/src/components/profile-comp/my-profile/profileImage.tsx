@@ -9,6 +9,8 @@ import axios from "axios";
 import { BASE_URL, apiVersion } from "../../../utils/apiRoutes";
 import { getHeaders } from "../../../utils/helperFunctions";
 import { localStorageUser } from "../../../utils/globalConstants";
+import { toast } from "react-toastify";
+import Loader from "../../general-components/loader";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -128,8 +130,8 @@ const customStyles = {
 
 const ProfileImage = (props: modalProps) => {
   const [prevImage, setPrevImage] = useState(props.photo);
-
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   function openModal() {
     setIsOpen(true);
@@ -144,7 +146,15 @@ const ProfileImage = (props: modalProps) => {
     closeModal();
   };
 
+  const toastOptions = {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 6000,
+    pauseOnHover: true,
+    draggable: true,
+  };
+
   const updateUserImageHandler = async () => {
+    setIsLoading(true);
     await axios
       .patch(
         `${BASE_URL}${apiVersion}/user/myPhoto`,
@@ -157,10 +167,15 @@ const ProfileImage = (props: modalProps) => {
       )
       .then(({ data }) => {
         console.log(data.updatedUser);
+        setIsLoading(false);
         const user = data.updatedUser;
         user.token = props.userToken;
         localStorage.setItem(localStorageUser, JSON.stringify(user));
         closeModal();
+      })
+      .catch((data) => {
+        setIsLoading(false);
+        toast.error("Some error occured, couldnt update", toastOptions);
       });
   };
 
@@ -184,7 +199,13 @@ const ProfileImage = (props: modalProps) => {
           </ImagePreview>
           <FieldWrapper>
             <FormField
-              elem={<UploadImage updateFields={props.updateFields} photoName="" photoOnCross={prevImage} />}
+              elem={
+                <UploadImage
+                  updateFields={props.updateFields}
+                  photoName=""
+                  photoOnCross={prevImage}
+                />
+              }
               inputDesc="Change profile image"
             />
           </FieldWrapper>
@@ -193,7 +214,11 @@ const ProfileImage = (props: modalProps) => {
               Go back
             </button>
             <button type="submit" onClick={updateUserImageHandler}>
-              Edit Academic Info
+              {isLoading ? (
+                <Loader loaderHeight="1.6rem" color="white" />
+              ) : (
+                "Edit Profile Image"
+              )}
             </button>
           </SubmitButton>
         </Section>

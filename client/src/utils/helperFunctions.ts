@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { months } from "./globalConstants";
 import { useEffect } from "react";
+import axios from "axios";
 
 export const getHeaders = (token: string) => {
   return {
@@ -57,4 +58,23 @@ export function useOutsideAlerter(ref: any, func: any) {
 
 export function isValidEmail(email: string) {
   return /\S+@\S+\.\S+/.test(email);
+}
+
+export async function autoGenerateImage(topic: string) {
+  // console.log(process.env.REACT_APP_UNSPASH_ACCESS_KEY);
+
+  const res = await axios.get(
+    `https://api.unsplash.com/search/photos?page=1&query=${topic}&client_id=s26KY0b_ODGcUA1jZP4aqy-NPGIYX5qa-z8ZwJg49VU`
+  );
+  const randomImg = Math.floor(Math.random() * 10);
+  let img = res.data.results[randomImg].urls.full;
+  if (!img) {
+    for (let index = 0; index < res.data.results.length; index++) {
+      if (res.data.results[randomImg].urls.full) {
+        img = res.data.results[randomImg].urls.full;
+        break;
+      }
+    }
+  }
+  return img;
 }

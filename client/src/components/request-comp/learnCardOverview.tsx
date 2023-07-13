@@ -8,7 +8,7 @@ import { learnCardProps } from "../../pages/requests/requests";
 import TimeCapsule from "../classroom-comp/timeCapsule";
 import UserChip from "../general-components/userChip";
 import DetailsContainer from "../classroom-comp/detailsContainer";
-import { Arrow, InterestedIcon } from "../general-components/svg";
+import { Arrow, Copy, InterestedIcon } from "../general-components/svg";
 import ClassroomCard from "../classroom-comp/classroomCard";
 import { cardSizes } from "../classroom-comp/classroomGrid";
 import BackBtn from "./backBtn";
@@ -17,6 +17,8 @@ import { getHeaders, topNavigator } from "../../utils/helperFunctions";
 import { teachinCardProps } from "../../types/teachingCardType";
 import Footer from "../general-components/footer/footer";
 import Loader from "../general-components/loader";
+import { ClassIDCont } from "../classroom-comp/overview";
+import { toast } from "react-toastify";
 
 const Section = styled.div`
   /* border: 1px solid brown; */
@@ -120,6 +122,7 @@ const LearnCardDetailContainer = styled.div`
   border-radius: 12px;
   height: fit-content;
   border: 1px solid #d5d9eb;
+  row-gap: 1.5rem;
 `;
 
 const CardOverview = styled.div`
@@ -206,9 +209,15 @@ const TagCont = styled.div`
   gap: 10px 12px;
   flex-wrap: wrap;
 
+  div.lang {
+    color: #ef4565;
+    padding: 6px 12px;
+    font-weight: 700;
+  }
+
   div {
     border: 1px solid grey;
-    padding: 4px;
+    padding: 6px 12px;
     border-radius: 6px;
   }
 `;
@@ -230,6 +239,14 @@ const TeachCardGrid = styled.div`
   column-gap: 2rem;
   row-gap: 4rem;
   /* border: 1px solid red; */
+`;
+
+const IDWrapper = styled.div`
+  /* border: 1px solid red; */
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+  /* align-items: flex-end; */
 `;
 
 const LearnCardOverview = () => {
@@ -355,6 +372,20 @@ const LearnCardOverview = () => {
     return userId == learnCard?.createdBy._id;
   };
 
+  const toastOptions = {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 6000,
+    pauseOnHover: true,
+    draggable: true,
+  };
+
+  const classIdHandler = () => {
+    if (learnCard) {
+      navigator.clipboard.writeText(learnCard._id);
+      toast.success("ID copied to clipboard", toastOptions);
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -372,7 +403,10 @@ const LearnCardOverview = () => {
                 <LearnCardDetailContainer>
                   <TimeCapsule date={learnCard.dueDate} />
                   <TagCont>
-                    {learnCard.tags.map((tag, index) => {
+                    <div className="lang">
+                      <span>{learnCard.preferredLanguage}</span>
+                    </div>
+                    {learnCard?.tags.map((tag, index) => {
                       return (
                         <div key={index}>
                           <span>{tag}</span>
@@ -418,9 +452,7 @@ const LearnCardOverview = () => {
                     <h3>{totalInterestedStudents} Interested</h3>
                   </InterestedCont>
                 </ChipContainer>
-                <DetailsContainer
-                  desciption={learnCard.description}
-                />
+                <DetailsContainer desciption={learnCard.description} />
                 {userId &&
                   (userId === learnCard.createdBy._id ? null : (
                     <BottonContainer
@@ -431,6 +463,12 @@ const LearnCardOverview = () => {
                       <button onClick={interestedHandler}>Interested</button>
                     </BottonContainer>
                   ))}
+                <IDWrapper>
+                  <ClassIDCont onClick={classIdHandler}>
+                    <Copy />
+                    <span className="id">{learnCard._id}</span>
+                  </ClassIDCont>
+                </IDWrapper>
               </CardOverview>
             </OverviewContainer>
             {teachCards?.length != 0 ? (

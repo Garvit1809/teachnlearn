@@ -27,7 +27,7 @@ const announcementSchema = mongoose.Schema(
 announcementSchema.pre(/^find/, function (next) {
   this.populate({
     path: "sender",
-    select: "name photo",
+    select: "photo userName",
   });
   next();
 });

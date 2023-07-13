@@ -18,6 +18,7 @@ router.patch("/myInfo", userController.updateUserInfo);
 router.patch("/mycontactInfo", userController.updateUserContactInfo);
 router.patch("/myPhoto", userController.updateUserPhoto);
 router.patch("/myacademicInfo", userController.updateUserAcademicInfo);
+router.get("/mybalance", userController.getUserBalance);
 router.get("/search", userController.searchInApplication);
 router.get("/:userId", userController.getOtherUser);
 router.get("/:userId/myratings", userController.getUserRatings);

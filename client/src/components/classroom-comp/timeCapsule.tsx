@@ -18,7 +18,7 @@ const Section = styled.div`
   line-height: 27px;
   color: #054f31;
   color: white;
-  margin-bottom: 1.5rem;
+  /* margin-bottom: 1.5rem; */
   
   div {
     width: 4px;
@@ -54,7 +54,7 @@ const TimeCapsule = (props: capsuleProps) => {
           <span>{startingTime + " - " + endingTime}</span>
         </>
       ) : (
-        <span>Due By:- {getReadableDate(props.date)}</span>
+        <span>Due By :- {getReadableDate(props.date)}</span>
       )}
     </Section>
   );

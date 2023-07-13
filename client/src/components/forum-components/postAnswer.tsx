@@ -10,8 +10,9 @@ import { Arrow } from "../general-components/svg";
 import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunctions";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "../general-components/loader";
 
 const Section = styled.div`
   width: 50vw;
@@ -35,6 +36,7 @@ interface forumanswerProps {
 
 const PostAnswer = (props: forumanswerProps) => {
   const [userToken, setUserToken] = useState<string>();
+  const [isLoading, setIsLoading] = useState(false);
   const { fetchLocalUserToken } = UserCookie();
 
   useEffect(() => {
@@ -62,7 +64,7 @@ const PostAnswer = (props: forumanswerProps) => {
 
   const toastOptions = {
     position: toast.POSITION.BOTTOM_RIGHT,
-    autoClose: 6000,
+    autoClose: 4000,
     pauseOnHover: true,
     draggable: true,
   };
@@ -77,6 +79,7 @@ const PostAnswer = (props: forumanswerProps) => {
 
   const answerhandler = async () => {
     if (handleValidation()) {
+      setIsLoading(true);
       await axios
         .post(
           `${BASE_URL}${apiVersion}/forum/${props.forumId}/answers`,
@@ -89,10 +92,12 @@ const PostAnswer = (props: forumanswerProps) => {
         )
         .then(() => {
           setAnswer("");
+          setIsLoading(false);
           toast.success("Answer posted on Forum :)", toastOptions);
           window.location.reload();
         })
         .catch((data) => {
+          setIsLoading(false);
           toast.error(data.response.data.message, toastOptions);
         });
     }
@@ -114,13 +119,20 @@ const PostAnswer = (props: forumanswerProps) => {
             label="Forum Answer"
             name="answer"
             value={answer}
-            areaHeight="10rem"
+            areaHeight="15rem"
             updateSingleField={updateFields}
+            placeholderText="Answer to the query..."
           />
           <SubmitButton>
             <button onClick={answerhandler}>
-              <span>Submit Answer</span>
-              <Arrow strokeColor="#FFFFFF" />
+              {isLoading ? (
+                <Loader loaderHeight="1.6rem" color="white" />
+              ) : (
+                <>
+                  <span>Submit Answer</span>
+                  <Arrow strokeColor="#FFFFFF" />
+                </>
+              )}
             </button>
           </SubmitButton>
         </Section>

@@ -16,7 +16,7 @@ const Section = styled.div<heightProps>`
     width: 100%;
     box-sizing: border-box;
     height: ${(p) => (p.areaHeight ? p.areaHeight : "10rem")};
-    padding: 15px 0px 15px 10px;
+    padding: 15px 5px 15px 10px;
     border: 1.5px solid #d5d9eb;
     border-radius: 8px;
     color: #000000;
@@ -81,9 +81,9 @@ const Textarea = (props: inputProps) => {
 
   const inputhandler = (e: any) => {
     if (props.updateSingleField) {
-      props.updateSingleField(e.target.value.trim());
+      props.updateSingleField(e.target.value);
     } else {
-      props.updateFields({ [e.target.name]: e.target.value.trim() });
+      props.updateFields({ [e.target.name]: e.target.value });
     }
 
     const value = e.target.value;

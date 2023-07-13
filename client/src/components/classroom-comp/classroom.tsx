@@ -35,6 +35,7 @@ const NoAnnouncement = styled.h2`
   margin-top: 1rem;
   font-size: 2rem;
   font-weight: 600;
+  padding-left: 1rem;
 `;
 
 interface classProps {
@@ -54,8 +55,9 @@ export interface announcementProps {
   createdAt: string;
   sender: {
     _id: string;
-    name: string;
+    // name: string;
     photo: string;
+    userName: string;
   };
   _id: string;
 }

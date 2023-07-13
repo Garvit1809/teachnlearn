@@ -329,3 +329,18 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
     classes,
   });
 });
+
+exports.getUserBalance = catchAsync(async (req, res, next) => {
+  const userId = req.user.id;
+
+  const user = await User.findById(userId).select("coins forumCoins");
+
+  if (!user) {
+    next(new AppError("No such user exists wotrh this id"));
+  }
+
+  res.status(200).json({
+    status: "success",
+    user,
+  });
+});
