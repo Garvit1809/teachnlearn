@@ -13,9 +13,14 @@ import TimeCapsule from "../../components/classroom-comp/timeCapsule";
 import UserChip from "../../components/general-components/userChip";
 import DetailsContainer from "../../components/classroom-comp/detailsContainer";
 import EnrollBtn from "../../components/classroom-comp/enrollBtn";
-import { PurchaseCoinIcon } from "../../components/general-components/svg";
+import {
+  Copy,
+  PurchaseCoinIcon,
+} from "../../components/general-components/svg";
 import BackBtn from "../../components/request-comp/backBtn";
 import Footer from "../../components/general-components/footer/footer";
+import { ClassIDCont } from "../../components/classroom-comp/overview";
+import { toast } from "react-toastify";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -40,6 +45,9 @@ const OverviewContainer = styled.div`
 
 const CallDetailContainer = styled.div`
   /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.5rem;
 `;
 
 const ClassOverview = styled.div``;
@@ -62,17 +70,41 @@ const ChipContainer = styled.div`
     line-height: 35px;
     color: #000000;
   }
+  span.id {
+    font-size: 16px;
+  }
 `;
 
-const PriceCont = styled.div`
-  margin-right: 1.5rem;
+// const PriceCont = styled.div`
+//   margin-right: 1.5rem;
+//   display: flex;
+//   align-items: center;
+//   gap: 5px;
+
+//   svg {
+//     width: 20px;
+//     height: 26px;
+//   }
+// `;
+
+const TagCont = styled.div`
+  /* border: 1px solid red; */
+  width: 100%;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 10px 12px;
+  flex-wrap: wrap;
 
-  svg {
-    width: 20px;
-    height: 26px;
+  div.lang {
+    color: #ef4565;
+    padding: 6px 12px;
+    font-weight: 700;
+  }
+
+  div {
+    border: 1px solid grey;
+    padding: 6px 12px;
+    border-radius: 6px;
   }
 `;
 
@@ -145,6 +177,20 @@ const ClassroomOverview = () => {
     // return false
   };
 
+  const toastOptions = {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 6000,
+    pauseOnHover: true,
+    draggable: true,
+  };
+
+  const classIdHandler = () => {
+    if (teachCard) {
+      navigator.clipboard.writeText(teachCard._id);
+      toast.success("ID copied to clipboard", toastOptions);
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -171,6 +217,18 @@ const ClassroomOverview = () => {
                   userToken={userToken}
                 />
               )}
+              <TagCont>
+                <div className="lang">
+                  <span>{teachCard.preferredLanguage}</span>
+                </div>
+                {teachCard?.tags.map((tag, index) => {
+                  return (
+                    <div key={index}>
+                      <span>{tag}</span>
+                    </div>
+                  );
+                })}
+              </TagCont>
             </CallDetailContainer>
             <ClassOverview>
               <ChipContainer>
@@ -181,10 +239,10 @@ const ClassroomOverview = () => {
                   textColor="black"
                   userId={userId}
                 />
-                <PriceCont>
-                  <PurchaseCoinIcon color="black" />
-                  <h3>{teachCard.price}</h3>
-                </PriceCont>
+                <ClassIDCont onClick={classIdHandler}>
+                  <Copy />
+                  <span className="id">{teachCard._id}</span>
+                </ClassIDCont>
               </ChipContainer>
               <DetailsContainer desciption={teachCard.description} />
             </ClassOverview>

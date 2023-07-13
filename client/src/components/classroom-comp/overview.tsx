@@ -19,7 +19,11 @@ const OverviewContainer = styled.div`
 `;
 
 const CallDetailContainer = styled.div`
-  /* border: 1px solid red; */
+  /* border: 1px solid red;
+  border: 1px solid #d5d9eb; */
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.5rem;
 `;
 
 const ClassOverview = styled.div``;
@@ -47,16 +51,36 @@ const ChipContainer = styled.div`
   }
 `;
 
-const ClassIDCont = styled.div`
-  /* border: 1px solid red; */
+export const ClassIDCont = styled.div`
   background-color: #b3b8db;
-  /* width: 12rem; */
-  /* word-break: break-all; */
   display: flex;
   align-items: center;
   padding: 14px 18px;
+  width: fit-content;
   gap: 10px;
+  cursor: pointer;
   border-radius: 30px;
+`;
+
+const TagCont = styled.div`
+  /* border: 1px solid red; */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px 12px;
+  flex-wrap: wrap;
+
+  div.lang {
+    color: #ef4565;
+    padding: 6px 12px;
+    font-weight: 700;
+  }
+
+  div {
+    border: 1px solid grey;
+    padding: 6px 12px;
+    border-radius: 6px;
+  }
 `;
 
 type overallOverviewProps = classroomProps & {
@@ -125,6 +149,18 @@ const Overview = (props: overallOverviewProps) => {
                 teacherID={props.createdBy._id}
               />
             ) : null}
+            <TagCont>
+              <div className="lang">
+                <span>{props.preferredLanguage}</span>
+              </div>
+              {props?.tags.map((tag, index) => {
+                return (
+                  <div key={index}>
+                    <span>{tag}</span>
+                  </div>
+                );
+              })}
+            </TagCont>
           </CallDetailContainer>
           <ClassOverview>
             <ChipContainer>
