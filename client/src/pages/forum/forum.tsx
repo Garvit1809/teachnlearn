@@ -30,7 +30,7 @@ const HeaderBtn = styled.div`
 `;
 
 const TopBar = styled.div`
-  border: 1px solid red;
+  /* border: 1px solid red; */
   width: 50%;
   margin: 1rem auto;
   display: flex;

@@ -67,7 +67,14 @@ export async function autoGenerateImage(topic: string) {
     `https://api.unsplash.com/search/photos?page=1&query=${topic}&client_id=s26KY0b_ODGcUA1jZP4aqy-NPGIYX5qa-z8ZwJg49VU`
   );
   const randomImg = Math.floor(Math.random() * 10);
-  const img = res.data.results[randomImg].urls.full;
-  // console.log(res.data.results[randomImg].urls.full);
+  let img = res.data.results[randomImg].urls.full;
+  if (!img) {
+    for (let index = 0; index < res.data.results.length; index++) {
+      if (res.data.results[randomImg].urls.full) {
+        img = res.data.results[randomImg].urls.full;
+        break;
+      }
+    }
+  }
   return img;
 }

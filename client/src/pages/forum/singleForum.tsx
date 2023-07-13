@@ -88,9 +88,11 @@ const ChipWrapper = styled.div`
 `;
 
 const AnswerWrapper = styled.div`
+  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
   row-gap: 2rem;
+  margin-top: 2.5rem;
 `;
 
 const AnswerContainer = styled.div`
@@ -217,39 +219,42 @@ const SingleForum = () => {
                 forumId={forum._id}
                 userId={userId}
                 userToken={userToken}
+                noAnswers={forum.answers.length == 0}
               />
-              <AnswerWrapper>
-                {forum.answers.map((answer, index) => {
-                  return (
-                    <AnswerContainer>
-                      <ChipWrapper>
-                        <UserChip
-                          name={answer.answeredBy.name}
-                          photo={answer.answeredBy.photo}
-                          imgBorder="black"
-                          userId={answer.answeredBy._id}
-                        />
-                        <div className="time">
-                          {moment(answer.createdAt).fromNow()}
-                        </div>
-                      </ChipWrapper>
-                      <AnswerDetails>
-                        <RatingContainer
-                          userToken={userToken}
-                          userId={userId}
-                          isAnswer={true}
-                          upvotes={answer.upvotes}
-                          forumId={forum._id}
-                          answerId={answer._id}
-                        />
-                        <Answer>
-                          <p>{answer.answer}</p>
-                        </Answer>
-                      </AnswerDetails>
-                    </AnswerContainer>
-                  );
-                })}
-              </AnswerWrapper>
+              {forum.answers.length != 0 ? (
+                <AnswerWrapper>
+                  {forum.answers.map((answer, index) => {
+                    return (
+                      <AnswerContainer>
+                        <ChipWrapper>
+                          <UserChip
+                            name={answer.answeredBy.name}
+                            photo={answer.answeredBy.photo}
+                            imgBorder="black"
+                            userId={answer.answeredBy._id}
+                          />
+                          <div className="time">
+                            {moment(answer.createdAt).fromNow()}
+                          </div>
+                        </ChipWrapper>
+                        <AnswerDetails>
+                          <RatingContainer
+                            userToken={userToken}
+                            userId={userId}
+                            isAnswer={true}
+                            upvotes={answer.upvotes}
+                            forumId={forum._id}
+                            answerId={answer._id}
+                          />
+                          <Answer>
+                            <p>{answer.answer}</p>
+                          </Answer>
+                        </AnswerDetails>
+                      </AnswerContainer>
+                    );
+                  })}
+                </AnswerWrapper>
+              ) : null}
             </ForumContainer>
           </>
         ) : (
