@@ -333,6 +333,31 @@ exports.interestedInTeachCard = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.updateClassLink = catchAsync(async (req, res, next) => {
+  const { callLink } = req.body;
+  const teachCardId = req.params.teachingCardId;
+
+  const updatedClassroom = await TeachingCard.findByIdAndUpdate(
+    teachCardId,
+    {
+      callLink,
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  if (!updatedClassroom) {
+    return next(new AppError("Couldnt update the classrrom!!"));
+  }
+
+  res.status(200).json({
+    status: "success",
+    updatedClassroom,
+  });
+});
+
 exports.getUserEnrolledClasses = catchAsync(async (req, res, next) => {
   const userId = req.user.id;
 
@@ -408,41 +433,16 @@ exports.getCompletedClasses = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updateClassLink = catchAsync(async (req, res, next) => {
-  const { callLink } = req.body;
-  const teachCardId = req.params.teachingCardId;
-
-  const updatedClassroom = await TeachingCard.findByIdAndUpdate(
-    teachCardId,
-    {
-      callLink,
-    },
-    {
-      new: true,
-      runValidators: true,
-    }
-  );
-
-  if (!updatedClassroom) {
-    return next(new AppError("Couldnt update the classrrom!!"));
-  }
-
-  res.status(200).json({
-    status: "success",
-    updatedClassroom,
-  });
-});
-
 exports.topTeachCards = catchAsync(async (req, res, next) => {
   const currentDate = new Date();
   const stats = await TeachingCard.aggregate([
-    // {
-    //   $match: {
-    //     dueDate: {
-    //       $gte: currentDate,
-    //     },
-    //   },
-    // },
+    {
+      $match: {
+        classStartsAt: {
+          $gte: currentDate,
+        },
+      },
+    },
     {
       $project: {
         createdBy: 1,
@@ -466,7 +466,7 @@ exports.topTeachCards = catchAsync(async (req, res, next) => {
 
   await TeachingCard.populate(stats, {
     path: "createdBy",
-    select: "name photo",
+    select: "userName photo",
   });
 
   res.status(200).json({

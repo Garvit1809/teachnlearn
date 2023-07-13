@@ -186,13 +186,13 @@ exports.interestedInLearnCard = catchAsync(async (req, res, next) => {
 exports.topLearnCards = catchAsync(async (req, res, next) => {
   const currentDate = new Date();
   const stats = await LearningCard.aggregate([
-    // {
-    //   $match: {
-    //     dueDate: {
-    //       $gte: currentDate,
-    //     },
-    //   },
-    // },
+    {
+      $match: {
+        dueDate: {
+          $gte: currentDate,
+        },
+      },
+    },
     {
       $project: {
         createdBy: 1,
@@ -214,7 +214,7 @@ exports.topLearnCards = catchAsync(async (req, res, next) => {
 
   await LearningCard.populate(stats, {
     path: "createdBy",
-    select: "name photo",
+    select: "name photo userName",
   });
 
   res.status(200).json({

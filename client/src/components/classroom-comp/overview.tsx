@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ClassBanner from "./classBanner";
 import UserChip from "../general-components/userChip";
 import styled from "styled-components";
-import { Copy, Plus } from "../general-components/svg";
+import { Copy, FilledIcon, Plus } from "../general-components/svg";
 import DetailsContainer from "./detailsContainer";
 import TimeCapsule from "./timeCapsule";
 import JoinCall from "./joinCall";
@@ -10,6 +10,11 @@ import AddLink from "./addLink";
 import ReviewClass from "./reviewClass";
 import { classroomProps } from "../../types/classroomType";
 import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
+import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
+import { getHeaders } from "../../utils/helperFunctions";
+import { classReview } from "../../types/classReviewProps";
+import moment from "moment";
 
 const OverviewContainer = styled.div`
   /* border: 1px solid red; */
@@ -83,6 +88,93 @@ const TagCont = styled.div`
   }
 `;
 
+const ReviewContainr = styled.div`
+  /* border: 1px solid red; */
+
+  h2 {
+    color: #000;
+    font-family: "Nunito";
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-bottom: 2rem;
+    text-decoration: underline;
+  }
+`;
+
+const ReviewGrid = styled.div`
+  /* border: 1px solid red; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2rem;
+  row-gap: 1.5rem;
+`;
+
+const ReviewCard = styled.div`
+  border: 1px solid #d5d9eb;
+  /* background-color: #094067; */
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  padding: 32px 24px;
+  box-sizing: border-box;
+  border-radius: 12px;
+
+  div.head {
+    /* border: 1px solid red; */
+    display: grid;
+    grid-template-columns: max-content auto max-content;
+
+    div.user {
+      display: flex;
+      flex-direction: column;
+      h4 {
+        margin-left: 4px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 2px;
+      }
+    }
+
+    div.rating {
+      /* border: 1px solid red; */
+      display: flex;
+    }
+
+    div.time {
+      color: #98a2b3;
+      font-size: 0.9rem;
+    }
+  }
+
+  img {
+    /* border: 1px solid red; */
+    width: 46px;
+    height: 46px;
+    object-fit: cover;
+    border-radius: 100%;
+    margin-right: 6px;
+    border: 1px solid black;
+  }
+`;
+
+interface svgColorProps {
+  colored: boolean;
+}
+
+const IconWrapper = styled.div<svgColorProps>`
+  /* border: 1px solid red; */
+  padding: 0;
+  margin-right: 0.4rem;
+  svg {
+    cursor: pointer;
+    width: 24px;
+    height: 20px;
+    fill: ${(p) => (p.colored ? "#ffc557" : "rgba(125, 137, 176, 0.2);")};
+  }
+`;
+
 type overallOverviewProps = classroomProps & {
   userId: string;
   userToken: string;
@@ -118,6 +210,25 @@ const Overview = (props: overallOverviewProps) => {
     navigator.clipboard.writeText(props._id);
     toast.success("ID copied to clipboard", toastOptions);
   };
+
+  const [reviews, setReviews] = useState<Array<classReview>>();
+
+  const fetchClassReviews = async () => {
+    await axios
+      .get(`${BASE_URL}${apiVersion}/teach/${props._id}/reviews`, {
+        headers: getHeaders(props.userToken),
+      })
+      .then(({ data }) => {
+        console.log(data);
+        setReviews(data.reviews);
+      });
+  };
+
+  useEffect(() => {
+    if (props.userToken && checkIsCompleted()) {
+      fetchClassReviews();
+    }
+  }, [props.userToken]);
 
   return (
     props && (
@@ -179,6 +290,43 @@ const Overview = (props: overallOverviewProps) => {
             <DetailsContainer desciption={props.description} />
           </ClassOverview>
         </OverviewContainer>
+        <ReviewContainr>
+          <h2>Reviews :-</h2>
+          <ReviewGrid>
+            {reviews &&
+              reviews.map((review, index) => {
+                return (
+                  <ReviewCard>
+                    <div className="head">
+                      <img src={review.user.photo} alt="reviewer-img" />
+                      <div className="user">
+                        <h4>{review.user.name}</h4>
+                        <div className="rating">
+                          {Array(5)
+                            .fill(0)
+                            .map((_, i) => i + 1)
+                            .map((idx) => (
+                              <IconWrapper
+                                key={idx}
+                                colored={idx <= review.rating}
+                              >
+                                <FilledIcon />
+                              </IconWrapper>
+                            ))}
+                        </div>
+                      </div>
+                      <div className="time">
+                        {moment(review.createdAt).fromNow()}
+                      </div>
+                    </div>
+                    <div className="review">
+                      <p>{review.review}</p>
+                    </div>
+                  </ReviewCard>
+                );
+              })}
+          </ReviewGrid>
+        </ReviewContainr>
         <ToastContainer theme="dark" />
       </>
     )
