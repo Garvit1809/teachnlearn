@@ -82,9 +82,7 @@ exports.createTeachCard = catchAsync(async (req, res, next) => {
     classStartsAt,
     classEndsAt,
     description,
-    expectations,
     tags,
-    price,
   } = req.body;
 
   if (
@@ -92,15 +90,12 @@ exports.createTeachCard = catchAsync(async (req, res, next) => {
     !topic &&
     !programme &&
     !standard &&
+    !date &&
     !preferredLanguage &&
     !cardBanner &&
-    !date &&
     !classStartsAt &&
     !classEndsAt &&
-    !description &&
-    !expectations &&
-    !tags &&
-    !price
+    !description
   ) {
     return next(
       new AppError(
@@ -122,9 +117,7 @@ exports.createTeachCard = catchAsync(async (req, res, next) => {
     classStartsAt,
     classEndsAt,
     description,
-    expectations,
     tags,
-    price,
   });
 
   if (!newTeachCard) {
@@ -216,7 +209,7 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
   }
 
   // user credit check
-  if (userCoins < classPrice) {
+  if (userCoins < 10) {
     return next(
       new AppError("User doent have enough coins for attending this class!!")
     );
@@ -243,7 +236,7 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
 
   const newTransaction = await TransactionHistory.create({
     paidBy: userId,
-    amount: classPrice,
+    amount: 10,
     transferredTo: teachCard.createdBy._id,
     cardEnrolled: teachCard.id,
   });
@@ -255,7 +248,7 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
   const updatedUser = await User.findByIdAndUpdate(
     userId,
     {
-      coins: userCoins - classPrice,
+      coins: userCoins - 10,
       $push: {
         classesEnrolled: {
           class: teachCard.id,
@@ -280,7 +273,7 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
   }
 
   const updatedTeacher = await User.findByIdAndUpdate(teacher, {
-    $inc: { coins: classPrice },
+    $inc: { coins: 10 },
     $push: {
       transactionHistory: newTransaction.id,
     },

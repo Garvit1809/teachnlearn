@@ -21,6 +21,8 @@ import Footer from "../general-components/footer/footer";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "../general-components/loader";
+import { useNavigate } from "react-router-dom";
 
 const Section = styled.div`
   border: 1px solid red;
@@ -183,7 +185,12 @@ const initialData: learnCardDetails = {
 const CreateLearnCard = () => {
   const [learnCard, setLearnCard] = useState<learnCardDetails>(initialData);
   const [token, setToken] = useState("");
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const { fetchLocalUserToken } = UserCookie();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchLocalUserToken().then((token) => {
@@ -234,7 +241,7 @@ const CreateLearnCard = () => {
     } else if (topic.length < 35) {
       toast.error("Topic must be greater than 35 characters", toastOptions);
       return false;
-    } else if (ISODueDate > currentDate) {
+    } else if (ISODueDate < currentDate) {
       toast.error("Pick another due date", toastOptions);
       return false;
     } else if (description.length > 400) {
@@ -248,6 +255,7 @@ const CreateLearnCard = () => {
     e.preventDefault();
     console.log(learnCard);
     if (handleValidation()) {
+      setIsLoading(true);
       await axios
         .post(
           `${BASE_URL}${apiVersion}/learn`,
@@ -268,8 +276,11 @@ const CreateLearnCard = () => {
         .then(({ data }) => {
           console.log(data);
           setLearnCard(initialData);
+          setIsLoading(false);
+          navigate("/requests");
         })
         .catch((data) => {
+          setIsLoading(false);
           const errors = data.response.data.error.errors;
           Object.keys(errors).forEach(function (err, index) {
             toast.error(errors[err].message, toastOptions);
@@ -384,12 +395,13 @@ const CreateLearnCard = () => {
             elem={
               <InputWrapper>
                 <MultipleInput
-                  label="#Physics, #WebDevelopment, #BusinessManagement (optional)"
+                  label="#Physics, #BusinessManagement (optional)"
                   elemName="tag"
                   value={learnCard.tag}
                   name="tags"
                   arr={learnCard.tags}
                   updateFields={updateFields}
+                  maxLimit={5}
                 />
                 {learnCard.tags.length != 0 ? (
                   <ArrChip
@@ -405,7 +417,11 @@ const CreateLearnCard = () => {
         </form>
         <FormButtonCont>
           <button type="submit" onClick={learnCardHandler}>
-            Create Learn Card
+            {isLoading ? (
+              <Loader loaderHeight="1.6rem" color="white" />
+            ) : (
+              "Create Learn Card"
+            )}
           </button>
         </FormButtonCont>
       </Section>

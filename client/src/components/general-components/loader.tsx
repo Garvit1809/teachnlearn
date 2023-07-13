@@ -13,6 +13,7 @@ const Section = styled.div`
 interface loaderProps {
   loaderHeight?: string;
   loaderWidth?: string;
+  color ?: string;
 }
 
 const Loader = (props: loaderProps) => {
@@ -21,7 +22,7 @@ const Loader = (props: loaderProps) => {
       <TailSpin
         height={props.loaderHeight ? props.loaderHeight : "60"}
         width={props.loaderWidth ? props.loaderWidth : "60"}
-        color="#094067"
+        color={props.color ? props.color : "#094067"}
         ariaLabel="tail-spin-loading"
         radius="1"
         visible={true}

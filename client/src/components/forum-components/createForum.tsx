@@ -12,6 +12,7 @@ import { getHeaders } from "../../utils/helperFunctions";
 import Footer from "../general-components/footer/footer";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "../general-components/loader";
 
 const Section = styled.div`
   border: 1px solid #d5d9eb;
@@ -79,6 +80,7 @@ const initialForumData: createForumProps = {
 
 const CreateForum = () => {
   const [forum, setForum] = useState<createForumProps>(initialForumData);
+  const [isLoading, setIsLoading] = useState(false);
 
   function updateFields(fields: Partial<createForumProps>) {
     setForum((prev) => {
@@ -119,6 +121,7 @@ const CreateForum = () => {
     console.log(forum);
     const { topic, tagline, question } = forum;
     if (handleValidation()) {
+      setIsLoading(true);
       await axios
         .post(
           `${BASE_URL}${apiVersion}/forum`,
@@ -132,14 +135,20 @@ const CreateForum = () => {
           }
         )
         .then(() => {
+          setIsLoading(false);
           setForum(initialForumData);
           toast.success("Forum successfully created", toastOptions);
         })
         .catch((data) => {
-          const errors = data.response.data.error.errors;
-          Object.keys(errors).forEach(function (err, index) {
-            toast.error(errors[err].message, toastOptions);
-          });
+          setIsLoading(false);
+          if (data.response.data.error.errors) {
+            const errors = data.response.data.error.errors;
+            Object.keys(errors).forEach(function (err, index) {
+              toast.error(errors[err].message, toastOptions);
+            });
+          } else {
+            toast.error("Something went wrong!! Try again.", toastOptions);
+          }
         });
     }
   };
@@ -180,16 +189,20 @@ const CreateForum = () => {
                 label="Question"
                 name="question"
                 value={forum.question}
-                areaHeight="10rem"
+                areaHeight="15rem"
                 updateFields={updateFields}
               />
             }
-            inputDesc="Pick a tagline for your forum"
+            inputDesc="Question for the forum"
           />
         </form>
         <FormButtonCont>
           <button type="submit" onClick={createForumHandler}>
-            Create Forum
+            {isLoading ? (
+              <Loader loaderHeight="1.6rem" color="white" />
+            ) : (
+              "Create Forum"
+            )}
           </button>
         </FormButtonCont>
       </Section>

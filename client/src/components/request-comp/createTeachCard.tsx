@@ -6,15 +6,13 @@ import BackBtn from "./backBtn";
 import FormField from "./formField";
 import Inputholder from "../general-components/input/inputholder";
 import Textarea from "../general-components/input/textarea";
-import UploadImage from "../general-components/input/uploadImage";
 import { InputWrapper } from "../../pages/authentication/userInfoForm";
 import MultipleInput from "../general-components/input/multipleInput";
 import ArrChip from "../authentication-comp/arrChip";
-import ExpectationWrapper from "./expectationWrapper";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import axios from "axios";
 import { UserCookie } from "../../utils/userCookie";
-import { getHeaders } from "../../utils/helperFunctions";
+import { autoGenerateImage, getHeaders } from "../../utils/helperFunctions";
 import { useLocation } from "react-router-dom";
 
 import { languages } from "../../data/LANGUAGE_LIST.json";
@@ -23,6 +21,7 @@ import { standard } from "../../data/STANDARD_LIST.json";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "../general-components/loader";
 
 const Section = styled.div`
   border: 1px solid red;
@@ -129,10 +128,12 @@ const CreateTeachCard = () => {
   const [isLearnCardReferred, setIsLearnCardReferred] =
     useState<boolean>(false);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const location = useLocation();
 
   useEffect(() => {
-    console.log(location.state);
+    // console.log(location.state);
 
     const navProps = location.state;
 
@@ -145,7 +146,6 @@ const CreateTeachCard = () => {
           programme: navProps.programme,
           standard: navProps.standard,
           description: navProps.description,
-          expectations: navProps.expectations,
           tags: navProps.tags,
         };
       });
@@ -208,7 +208,6 @@ const CreateTeachCard = () => {
       startingTime,
       endingTime,
       description,
-      photo,
     } = teachCard;
 
     const currentDate = new Date();
@@ -224,8 +223,7 @@ const CreateTeachCard = () => {
       date === "" ||
       startingTime === "" ||
       endingTime === "" ||
-      description === "" ||
-      photo === ""
+      description === ""
     ) {
       toast.error("Fill in all the details", toastOptions);
       return false;
@@ -251,9 +249,17 @@ const CreateTeachCard = () => {
   const teachCardHandler = async (e: any) => {
     e.preventDefault();
     console.log(teachCard);
-    // console.log(new Date(time));
-
+    const img = await autoGenerateImage(teachCard.subject);
+    console.log(img);
     if (handleValidation()) {
+      if (!img) {
+        toast.error(
+          "A card banner couldnt be generated!! Try again.",
+          toastOptions
+        );
+        return;
+      }
+      setIsLoading(true);
       await axios
         .post(
           `${BASE_URL}${apiVersion}/teach`,
@@ -262,13 +268,13 @@ const CreateTeachCard = () => {
             topic: teachCard.topic,
             programme: teachCard.programme,
             standard: teachCard.standard,
-            preferredLanguage: teachCard.preferredLanguage,
-            description: teachCard.description,
-            tags: teachCard.tags,
             date: teachCard.date,
-            cardBanner: teachCard.photo,
+            preferredLanguage: teachCard.preferredLanguage,
+            cardBanner: img,
             classStartsAt: teachCard.startingTime,
             classEndsAt: teachCard.endingTime,
+            description: teachCard.description,
+            tags: teachCard.tags,
           },
           {
             headers: getHeaders(token ?? ""),
@@ -277,25 +283,29 @@ const CreateTeachCard = () => {
         .then(({ data }) => {
           console.log(data);
           setTeachCard(initialData);
-          window.location.reload();
+          setIsLoading(false);
+          toast.error("Teach Card Successfully created!!", toastOptions);
         })
         .catch((data) => {
-          setTeachCard(initialData);
-          const errors = data.response.data.error.errors;
-          if (errors) {
+          // setTeachCard(initialData);
+          setIsLoading(false);
+          console.log(data);
+          if (data.response.data.error.errors) {
+            const errors = data.response.data.error.errors;
             Object.keys(errors).forEach(function (err, index) {
               toast.error(errors[err].message, toastOptions);
             });
           } else {
-            console.log(data);
-            // toast.error('Something went wrong',)
+            toast.error("Something went wrong", toastOptions);
           }
         });
     }
   };
 
   const teachCardOnLeanrCardHandler = async (e: any) => {
+    const img = autoGenerateImage(teachCard.subject);
     if (handleValidation()) {
+      setIsLoading(true);
       await axios
         .post(
           `${BASE_URL}${apiVersion}/learn/${learnCardId}/teach`,
@@ -304,13 +314,13 @@ const CreateTeachCard = () => {
             topic: teachCard.topic,
             programme: teachCard.programme,
             standard: teachCard.standard,
-            preferredLanguage: teachCard.preferredLanguage,
-            description: teachCard.description,
-            tags: teachCard.tags,
             date: teachCard.date,
-            cardBanner: teachCard.photo,
+            preferredLanguage: teachCard.preferredLanguage,
+            cardBanner: img,
             classStartsAt: teachCard.startingTime,
             classEndsAt: teachCard.endingTime,
+            description: teachCard.description,
+            tags: teachCard.tags,
           },
           {
             headers: getHeaders(token ?? ""),
@@ -319,8 +329,10 @@ const CreateTeachCard = () => {
         .then(({ data }) => {
           console.log(data);
           setTeachCard(initialData);
+          setIsLoading(false);
         })
         .catch((data) => {
+          setIsLoading(false);
           const errors = data.response.data.error.errors;
           Object.keys(errors).forEach(function (err, index) {
             toast.error(errors[err].message, toastOptions);
@@ -447,10 +459,6 @@ const CreateTeachCard = () => {
             inputDesc="Ending Time"
           />
           {/* auto generate image from subject */}
-          {/* <FormField
-            elem={<UploadImage updateFields={updateFields} />}
-            inputDesc="Cover image for your class"
-          /> */}
           <FormField
             elem={
               <Textarea
@@ -467,7 +475,7 @@ const CreateTeachCard = () => {
             elem={
               <InputWrapper>
                 <MultipleInput
-                  label="#Physics, #WebDevelopment, #BusinessManagement (optional)"
+                  label="#Physics, #BusinessManagement (optional)"
                   elemName="tag"
                   value={teachCard.tag}
                   name="tags"
@@ -495,7 +503,11 @@ const CreateTeachCard = () => {
                 : teachCardHandler
             }
           >
-            Create Teach Card
+            {isLoading ? (
+              <Loader loaderHeight="1.6rem" color="white" />
+            ) : (
+              "Create Teach Card"
+            )}
           </button>
         </FormButtonCont>
       </Section>
