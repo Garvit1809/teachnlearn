@@ -18,6 +18,7 @@ export const LinkContainer = styled.div`
   gap: 10px;
   width: fit-content;
   background: #054f31;
+  background: #ef4565;
   border-radius: 30px;
 
   font-weight: 500;

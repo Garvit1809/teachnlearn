@@ -8,10 +8,10 @@ import ArrChip from "../../../authentication-comp/arrChip";
 import { BASE_URL, apiVersion } from "../../../../utils/apiRoutes";
 import { getHeaders } from "../../../../utils/helperFunctions";
 import axios from "axios";
-import { localStorageUser } from "../../../../utils/globalConstants";
 import { toast } from "react-toastify";
 import { subjects } from "../../../../data/SUBJECT_LIST.json";
 import { languages } from "../../../../data/LANGUAGE_LIST.json";
+import Loader from "../../../general-components/loader";
 
 const Section = styled.div`
   width: 50vw;
@@ -105,6 +105,7 @@ const AcademicInfoModal = (props: modalProps) => {
     interestedSubject: props.interestedSubject,
     language: props.language,
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const toastOptions = {
     position: toast.POSITION.BOTTOM_RIGHT,
@@ -136,8 +137,9 @@ const AcademicInfoModal = (props: modalProps) => {
   };
 
   const updateUserAcademicInfoHandler = async () => {
+    // console.log(academicInfo);
     if (handleValidation()) {
-      console.log(academicInfo);
+      setIsLoading(true);
       await axios
         .patch(
           `${BASE_URL}${apiVersion}/user/myacademicInfo`,
@@ -153,10 +155,12 @@ const AcademicInfoModal = (props: modalProps) => {
         )
         .then(({ data }) => {
           console.log(data.updatedUser);
+          setIsLoading(false);
           window.location.reload();
         })
         .catch((data) => {
           console.log(data);
+          setIsLoading(false);
           toast.error("Some error occured", toastOptions);
         });
     }
@@ -258,7 +262,11 @@ const AcademicInfoModal = (props: modalProps) => {
       </form>
       <SubmitButton>
         <button type="submit" onClick={updateUserAcademicInfoHandler}>
-          Edit Academic Info
+          {isLoading ? (
+            <Loader loaderHeight="1.6rem" color="white" />
+          ) : (
+            "Edit Academic Info"
+          )}
         </button>
       </SubmitButton>
     </Section>

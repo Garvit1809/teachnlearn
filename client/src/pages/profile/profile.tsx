@@ -3,10 +3,12 @@ import Navbar from "../../components/general-components/navbar";
 import ProfileOptions from "../../components/profile-comp/profileOptions";
 import styled from "styled-components";
 import MyProfile from "../../components/profile-comp/my-profile/myProfile";
-import InviteFriends from "../../components/profile-comp/inviteFriends";
-import PurchaseCoins from "../../components/profile-comp/purchaseCoins";
 import Footer from "../../components/general-components/footer/footer";
-import { MyProfileIcon } from "../../components/general-components/svg";
+import {
+  CoinsIcon,
+  MyProfileIcon,
+} from "../../components/general-components/svg";
+import UserBalance from "../../components/profile-comp/my-profile/userBalance";
 
 export const ProfileSection = styled.div`
   border: 2px solid #d5d9eb;
@@ -29,9 +31,9 @@ const Profile = () => {
     console.log(selectedLeftScreen);
     if (selectedLeftScreen == "MyProfile") {
       setElement(<MyProfile />);
+    } else if (selectedLeftScreen == "Balance") {
+      setElement(<UserBalance />);
     }
-    // else if (selectedLeftScreen == "PurchaseCoins") {
-    //   setElement(<PurchaseCoins />);
     // } else if (selectedLeftScreen == "InviteFriends") {
     //   setElement(<InviteFriends />);
     // }
@@ -44,6 +46,11 @@ const Profile = () => {
       option: "My profile",
       label: "MyProfile",
       icon: <MyProfileIcon />,
+    },
+    {
+      option: "Balance",
+      label: "Balance",
+      icon: <CoinsIcon />,
     },
   ];
 

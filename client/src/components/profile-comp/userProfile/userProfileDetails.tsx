@@ -47,9 +47,6 @@ const ImageContainer = styled.div`
 `;
 
 const UserProfileDetails = () => {
-  console.log("wfjn");
-  // console.log(props/.userToken);
-
   const [userId, setUserId] = useState<string>();
 
   const [userToken, setUserToken] = useState<string>("");
@@ -104,7 +101,10 @@ const UserProfileDetails = () => {
               <img src={userDetails.photo} alt="user-img" />
             </ImageContainer>
             <UserDetails>
-              <h4>{userDetails.name}</h4>
+              <div className="user-name">
+                <h4>{userDetails.name}</h4>
+                <h5>@{userDetails.userName}</h5>
+              </div>
               <p>{userDetails.tagline}</p>
             </UserDetails>
           </UserContainer>
@@ -113,10 +113,6 @@ const UserProfileDetails = () => {
             taught={userDetails.classesTaken.length}
             userId={userDetails._id}
             userToken={userToken}
-          />
-          <ContactContainer
-            email={userDetails.email}
-            username={userDetails.userName}
           />
           <AcademicContainer
             course={userDetails.enrolledProgramme}

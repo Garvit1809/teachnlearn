@@ -36,7 +36,8 @@ const Tag = styled.div`
   h4 {
     font-weight: 800;
     font-size: 16px;
-    line-height: 22px;
+    /* line-height: 22px; */
+    /* line-height: 1; */
     letter-spacing: 0.02em;
     text-transform: uppercase;
     color: #ef4565;
@@ -221,19 +222,29 @@ const RecommendedClassCard = ({ card, userId }: cardProps) => {
       </Tag>
       <Topic>
         <span>
-          {card.topic.length > 50
-            ? card.topic.slice(0, 50) + " ..."
+          {card.topic.length > 47
+            ? card.topic.slice(0, 46) + " ..."
             : card.topic}
         </span>
       </Topic>
       <UserWrapper>
         <UserChip
-          name={card.createdBy.name}
+          name={card.createdBy.userName}
           photo={card.createdBy.photo}
           imgBorder="#FFFFFF"
           textColor="#FFFFFF"
           userId={card.createdBy._id}
         />
+      </UserWrapper>
+      <Stats>
+        <div>
+          <InterestedIcon />
+          <span>{card.studentsEnrolled.length} Enrolled</span>
+        </div>
+        {/* <Coins>
+          <PurchaseCoinIcon color="white" />
+          <span>{card.price} Coins</span>
+        </Coins> */}
         <DueCont>
           <span>
             {getReadableDate(card.date) +
@@ -243,16 +254,6 @@ const RecommendedClassCard = ({ card, userId }: cardProps) => {
               getReadableTime(card.classEndsAt)}
           </span>
         </DueCont>
-      </UserWrapper>
-      <Stats>
-        <div>
-          <InterestedIcon />
-          <span>{card.studentsEnrolled.length} Enrolled</span>
-        </div>
-        <Coins>
-          <PurchaseCoinIcon color="white" />
-          <span>{card.price} Coins</span>
-        </Coins>
       </Stats>
     </Section>
   );

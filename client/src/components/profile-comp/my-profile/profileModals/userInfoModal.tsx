@@ -10,6 +10,7 @@ import { getHeaders } from "../../../../utils/helperFunctions";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { localStorageUser } from "../../../../utils/globalConstants";
+import Loader from "../../../general-components/loader";
 
 const Section = styled.div`
   width: 50vw;
@@ -81,6 +82,8 @@ const UserInfoModal = (props: modalProps) => {
     tagline: props.tagline,
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const toastOptions = {
     position: toast.POSITION.BOTTOM_RIGHT,
     autoClose: 6000,
@@ -102,6 +105,7 @@ const UserInfoModal = (props: modalProps) => {
 
   const updateUserInfoHandler = async () => {
     if (handleValidation()) {
+      setIsLoading(true);
       await axios
         .patch(
           `${BASE_URL}${apiVersion}/user/myInfo`,
@@ -114,6 +118,7 @@ const UserInfoModal = (props: modalProps) => {
           }
         )
         .then(({ data }) => {
+          setIsLoading(false);
           console.log(data.updatedUser);
           const user = data.updatedUser;
           user.token = props.userToken;
@@ -123,6 +128,7 @@ const UserInfoModal = (props: modalProps) => {
         })
         .catch((data) => {
           // console.log(data);
+          setIsLoading(false);
           toast.error("Some error occured, couldnt update", toastOptions);
         });
     }
@@ -167,7 +173,11 @@ const UserInfoModal = (props: modalProps) => {
       </form>
       <SubmitButton>
         <button type="submit" onClick={updateUserInfoHandler}>
-          Edit User Info
+          {isLoading ? (
+            <Loader loaderHeight="1.6rem" color="white" />
+          ) : (
+            "Edit User Info"
+          )}
         </button>
       </SubmitButton>
       {/* <ToastContainer theme="dark" /> */}

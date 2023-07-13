@@ -43,7 +43,7 @@ const Announcement = (props: announcementProps) => {
     <Section>
       <header>
         <UserChip
-          name={props.sender.name}
+          name={props.sender.userName}
           photo={props.sender.photo}
           textSize="20px"
           imgSize="32px"

@@ -25,7 +25,6 @@ const teachingCardSchema = new mongoose.Schema(
     },
     standard: {
       type: String,
-      // required: [true, "Please provide the standard you want to teach of"],
     },
     isLearningCardReferred: {
       type: Boolean,
@@ -74,10 +73,10 @@ const teachingCardSchema = new mongoose.Schema(
         required: [true, "Please add tags in the Teach Card!!"],
       },
     ],
-    price: {
-      type: Number,
-      required: [true, "Please specify the price of this class"],
-    },
+    // price: {
+    //   type: Number,
+    //   required: [true, "Please specify the price of this class"],
+    // },
     interestedStudents: [
       {
         type: mongoose.Schema.ObjectId,

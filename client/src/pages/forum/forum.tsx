@@ -44,7 +44,7 @@ const ForumGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem 2.5rem;
-  margin: 2rem 15vw 4rem;
+  margin: 4rem 15vw;
 `;
 
 export interface forumProps {
@@ -129,7 +129,6 @@ const Forum = () => {
   };
 
   const [searchResults, setSearchResults] = useState<Array<forumProps>>([]);
-  const [query, setQuery] = useState<string>("");
 
   const handleSearch = async (query: string) => {
     setshowDropDown(true);

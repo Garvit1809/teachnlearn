@@ -16,6 +16,7 @@ import ProfileImage from "./profileImage";
 import { localStorageUser } from "../../../utils/globalConstants";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "../../general-components/loader";
 
 export const UserProfileSection = styled.div`
   /* border: 1px solid red; */
@@ -77,6 +78,18 @@ export const UserDetails = styled.div`
     line-height: 25px;
     letter-spacing: 0.02em;
     color: #697586;
+  }
+
+  div.user-name {
+    /* border: 1px solid red; */
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+
+    h5 {
+      color: #4b5565;
+      font-size: 16px;
+    }
   }
 `;
 
@@ -241,7 +254,7 @@ const MyProfile = () => {
       <ToastContainer theme="dark" />
     </UserProfileSection>
   ) : (
-    <h3>Loading</h3>
+    <Loader />
   );
 };
 

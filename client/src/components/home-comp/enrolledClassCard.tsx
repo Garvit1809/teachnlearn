@@ -56,7 +56,7 @@ const TimeContainer = styled.div<styleProps>`
 `;
 
 const Topic = styled.div<styleProps>`
-  font-weight: 700;
+  font-weight: 600;
   font-size: 22px;
   line-height: 26px;
   /* color: #000000; */
@@ -81,7 +81,7 @@ const EnrolledClassCard = ({ card, isFirstCard }: enrolledClassCardProps) => {
       },
     });
   };
-
+  
   return (
     <Section isFirstCard={isFirstCard} onClick={classNavigator}>
       <TimeContainer isFirstCard={isFirstCard}>
@@ -101,7 +101,7 @@ const EnrolledClassCard = ({ card, isFirstCard }: enrolledClassCardProps) => {
       </Topic>
       <UserWrapper>
         <UserChip
-          name={card.createdBy.name}
+          name={card.createdBy.userName}
           photo={card.createdBy.photo}
           imgBorder={isFirstCard ? "white" : "black"}
           textColor={isFirstCard ? "white" : "black"}

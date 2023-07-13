@@ -2,15 +2,18 @@ import React from "react";
 import styled from "styled-components";
 import RatingContainer from "./ratingContainer";
 
-const Section = styled.div`
+interface styleProps {
+  noAnswers: boolean;
+}
+
+const Section = styled.div<styleProps>`
   /* border: 2px solid red; */
   display: grid;
   grid-template-columns: 0.6fr 9fr 0.5fr;
   row-gap: 1rem;
-  border-bottom: 1px solid #cdd5df;
+  border-bottom: ${(p) => (p.noAnswers ? "none" : "1px solid #cdd5df")};
   padding-bottom: 2.5rem;
   margin-top: 2rem;
-  margin-bottom: 2.5rem;
   width: 100%;
 `;
 
@@ -65,11 +68,12 @@ interface questionProps {
     name: string;
     photo: string;
   };
+  noAnswers: boolean;
 }
 
 const QuestionContainer = (props: questionProps) => {
   return (
-    <Section>
+    <Section noAnswers={props.noAnswers}>
       <RatingContainer
         upvotes={props.upvotes}
         userId={props.userId}
