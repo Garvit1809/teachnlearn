@@ -18,6 +18,21 @@ const Section = styled.div`
   justify-content: center;
   font-family: "Nunito";
   padding-right: 2rem;
+
+  @media only screen and (max-width: 1000px) {
+    /* font-size: 26px; */
+    /* line-height: 32px; */
+  }
+
+  @media only screen and (max-width: 600px) {
+    /* width: 100%; */
+  }
+
+  @media only screen and (max-width: 870px) {
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 0;
+  }
 `;
 
 const LeftContainer = styled.div`
@@ -26,6 +41,10 @@ const LeftContainer = styled.div`
   min-height: 100vh;
   display: flex;
   align-items: center;
+  @media only screen and (max-width: 870px) {
+    min-height: 0;
+    width: 100vw;
+  }
 `;
 
 const RightContainer = styled.div`
@@ -37,10 +56,15 @@ const RightContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  @media only screen and (max-width: 870px) {
+    min-height: 0;
+    padding: 0;
+    width: 100vw;
+  }
 `;
 
 const FormContainer = styled.div`
-  /* border: 1px solid red; */
+  border: 1px solid red;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -48,10 +72,15 @@ const FormContainer = styled.div`
   justify-content: center;
   padding: 58px 0;
   width: 80%;
-
+  
   border: 2px solid #d5d9eb;
   border-radius: 28px;
   margin: auto;
+  
+  @media only screen and (max-width: 870px) {
+    border: none;
+    width: 100%;
+  }
 
   span.login {
     color: #666666;

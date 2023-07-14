@@ -7,12 +7,9 @@ import {
 import charts from "../../assets/charts.png";
 
 const Section = styled.div`
-  background-color: #0d1c2e;
   background-color: #094067;
   border-radius: 24px;
   padding: 15vh 2.5rem 20vh 4rem;
-  /* padding: 10vh 2.5rem 10vh 4rem; */
-  /* width: 80%; */
   position: relative;
   overflow: hidden;
   z-index: -3;
@@ -21,6 +18,15 @@ const Section = styled.div`
     width: 300px;
     height: 300px;
     object-fit: contain;
+  }
+
+  @media only screen and (max-width: 870px) {
+    width: 100%;
+    padding: 8vh 2.5rem 5vh 4rem;
+  }
+  @media only screen and (max-width: 450px) {
+    /* width: 100%; */
+    padding: 8vh 1rem 5vh 1.5rem;
   }
 `;
 
@@ -36,6 +42,13 @@ const UpperCircle = styled.div`
     width: 150vw;
     height: 65vh;
   }
+
+  @media only screen and (max-width: 450px) {
+    svg {
+      width: 100vw;
+      height: 30vh;
+    }
+  }
 `;
 
 const LowerCircle = styled.div`
@@ -50,6 +63,13 @@ const LowerCircle = styled.div`
     width: 150vw;
     height: 85vh;
   }
+
+  @media only screen and (max-width: 450px) {
+    svg {
+      width: 140vw;
+      height: 40vh;
+    }
+  }
 `;
 
 const Description = styled.div`
@@ -63,6 +83,7 @@ const Description = styled.div`
   }
 
   svg {
+    /* border: 1px solid red; */
     width: 40px;
     height: 44px;
     margin-bottom: 0.5rem;
@@ -97,6 +118,115 @@ const Description = styled.div`
     font-size: 20px;
     line-height: 27px;
   }
+  div.quote {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  div.mobile-text {
+    display: none;
+    /* border: 1px solid red; */
+    p {
+      text-indent: 0px;
+    }
+  }
+
+  @media only screen and (max-width: 1100px) {
+    /* border: 1px solid red; */
+    h4 {
+      font-size: 32px;
+    }
+
+    svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    span {
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 36px;
+      line-height: 48px;
+    }
+  }
+  @media only screen and (max-width: 950px) {
+    /* border: 1px solid red; */
+    h4 {
+      font-size: 28px;
+    }
+
+    svg {
+      width: 30px;
+      height: 30px;
+    }
+
+    span {
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 32px;
+      line-height: 40px;
+    }
+  }
+
+  @media only screen and (max-width: 870px) {
+    h4 {
+      font-size: 48px;
+      margin-bottom: 8vh;
+    }
+
+    svg {
+      width: 30px;
+      height: 30px;
+    }
+
+    span {
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 32px;
+      line-height: 56px;
+    }
+  }
+  @media only screen and (max-width: 550px) {
+    h4 {
+      font-size: 38px;
+      margin-bottom: 4vh;
+    }
+
+    svg {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 0rem;
+    }
+
+    span {
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 26px;
+      line-height: 36px;
+      margin-bottom: 0.5rem;
+      text-indent: 50px;
+    }
+  }
+  @media only screen and (max-width: 450px) {
+    h4 {
+      font-size: 44px;
+    }
+    div.mobile-text {
+      display: flex;
+    }
+    div.quote {
+      display: none;
+    }
+  }
 `;
 
 interface descriptionProps {
@@ -114,11 +244,15 @@ const DescriptionBox = (props: descriptionProps) => {
       </LowerCircle>
       <Description>
         <h4>{props.heading}</h4>
-        {/* <img src={charts} alt="" /> */}
-        <DoubleQuoteIcon />
-        <p>If you want to master something, teach it.</p>
-        <div>
-          <span>- Richard Feynman</span>
+        <div className="quote">
+          <DoubleQuoteIcon />
+          <p>If you want to master something, teach it.</p>
+          <div>
+            <span>- Richard Feynman</span>
+          </div>
+        </div>
+        <div className="mobile-text">
+          <p>Login to your account</p>
         </div>
       </Description>
     </Section>
