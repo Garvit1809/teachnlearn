@@ -4,7 +4,6 @@ import {
   CircleIcon2,
   DoubleQuoteIcon,
 } from "../general-components/svg";
-import charts from "../../assets/charts.png";
 
 const Section = styled.div`
   background-color: #094067;
@@ -26,7 +25,7 @@ const Section = styled.div`
   }
   @media only screen and (max-width: 450px) {
     /* width: 100%; */
-    padding: 8vh 1rem 5vh 1.5rem;
+    padding: 8vh 2rem 5vh 2.5rem;
   }
 `;
 

@@ -19,15 +19,6 @@ const Section = styled.div`
   font-family: "Nunito";
   padding-right: 2rem;
 
-  @media only screen and (max-width: 1000px) {
-    /* font-size: 26px; */
-    /* line-height: 32px; */
-  }
-
-  @media only screen and (max-width: 600px) {
-    /* width: 100%; */
-  }
-
   @media only screen and (max-width: 870px) {
     display: flex;
     flex-direction: column-reverse;
