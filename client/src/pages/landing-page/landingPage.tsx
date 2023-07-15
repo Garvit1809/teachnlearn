@@ -443,7 +443,7 @@ const LandingPage = () => {
       <YoutubeWrapper>
         <YoutubeCarousel />
       </YoutubeWrapper>
-      {/* <DescContainer>
+      <DescContainer>
         <h2>Richard Feynman</h2>
         <div className="main-container">
           <div className="content">
@@ -467,9 +467,9 @@ const LandingPage = () => {
               Create an account
             </button>
           </div>
-          <img src={feynaman} alt="" />
+          <img src={feynaman} alt="feynman-img" />
         </div>
-      </DescContainer> */}
+      </DescContainer>
       <Footer />
     </>
   );
