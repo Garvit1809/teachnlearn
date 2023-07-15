@@ -96,7 +96,8 @@ const CreateTeachCardBtn = styled.div<createTeachCardStyleProps>`
     gap: 10px;
     width: fit-content;
     background: #332ad5;
-    background: ${(p) => (p.isDisabled ? "rgba(51, 42, 213, 0.6)" : "#332ad5")};
+    background: ${(p) =>
+      p.isDisabled ? "rgba(239, 69, 101, 0.6)" : "rgba(239, 69, 101, 1)"};
     border-radius: 8px;
     border: none;
     outline: none;
@@ -162,6 +163,7 @@ const InterestedCont = styled.div`
 
 interface interestedBtnProps {
   isInterested: boolean;
+  isDisabled: boolean;
 }
 
 const BottonContainer = styled.div<interestedBtnProps>`
@@ -171,6 +173,7 @@ const BottonContainer = styled.div<interestedBtnProps>`
   align-items: center;
   justify-content: flex-end;
   margin-top: 4rem;
+  margin-bottom: 0.5rem;
 
   button {
     display: flex;
@@ -183,7 +186,11 @@ const BottonContainer = styled.div<interestedBtnProps>`
 
     /* background: rgba(51, 42, 213, 0.6); */
     background-color: ${(p) =>
-      p.isInterested ? "rgba(51, 42, 213, 0.6)" : "rgba(51, 42, 213, 1)"};
+      p.isDisabled
+        ? "rgba(239, 69, 101, 0.6)"
+        : p.isInterested
+        ? "rgba(239, 69, 101, 0.6)"
+        : "rgba(239, 69, 101, 1)"};
     /* background-color: white; */
     border-radius: 8px;
     outline: none;
@@ -247,6 +254,16 @@ const IDWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   /* align-items: flex-end; */
+`;
+
+const InterestedWrapper = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  span.text {
+    color: #ef4565;
+  }
 `;
 
 const LearnCardOverview = () => {
@@ -440,33 +457,49 @@ const LearnCardOverview = () => {
               <CardOverview>
                 <ChipContainer>
                   <UserChip
-                    name={learnCard.createdBy.name}
+                    name={learnCard.createdBy.userName}
                     photo={learnCard.createdBy.photo}
                     imgBorder="white"
                     textColor="black"
                     userId={learnCard.createdBy._id}
+                    imgSize="28px"
+                    textSize="20px"
                   />
                   <InterestedCont>
                     <InterestedIcon />
-                    {/* <h3>{learnCard.interestedStudents.length} Interested</h3> */}
                     <h3>{totalInterestedStudents} Interested</h3>
                   </InterestedCont>
                 </ChipContainer>
                 <DetailsContainer desciption={learnCard.description} />
-                {userId &&
-                  (userId === learnCard.createdBy._id ? null : (
-                    <BottonContainer
-                      isInterested={learnCard.interestedStudents.includes(
-                        userId
+                <InterestedWrapper>
+                  {userId &&
+                    (userId === learnCard.createdBy._id ? null : (
+                      <BottonContainer
+                        isInterested={learnCard.interestedStudents.includes(
+                          userId
+                        )}
+                        isDisabled={userRole == "teach"}
+                      >
+                        <button
+                          onClick={interestedHandler}
+                          disabled={userRole == "teach"}
+                        >
+                          Interested
+                        </button>
+                      </BottonContainer>
+                    ))}
+                  {learnCardCreaterCheck()
+                    ? null
+                    : userRole == "teach" && (
+                        <span className="text">
+                          Cannot show interest in Teach Mode
+                        </span>
                       )}
-                    >
-                      <button onClick={interestedHandler}>Interested</button>
-                    </BottonContainer>
-                  ))}
+                </InterestedWrapper>
                 <IDWrapper>
                   <ClassIDCont onClick={classIdHandler}>
-                    <Copy />
-                    <span className="id">{learnCard._id}</span>
+                    <span className="id">Card Id :- {learnCard._id}</span>
+                    <Copy color="white" />
                   </ClassIDCont>
                 </IDWrapper>
               </CardOverview>

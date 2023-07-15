@@ -19,21 +19,70 @@ import { learnCardProps } from "../../pages/requests/requests";
 import { teachinCardProps } from "../../types/teachingCardType";
 import NavSearchDropdown from "../profile-comp/navbar/navSearchDropdown";
 
-const Section = styled.div`
+interface sideNavProps {
+  showNav: boolean;
+}
+
+const Section = styled.div<sideNavProps>`
   /* border: 1px solid red; */
-  /* padding: 1.75rem 3.5vw 0rem 3.5vw; */
+  position: relative;
   padding-top: 1.75rem;
   display: grid;
   grid-template-columns: 1.8fr 6fr 2fr;
-  /* display: flex; */
   box-sizing: border-box;
   column-gap: 2.5rem;
   align-items: center;
   font-family: "Nunito";
   margin: 0 6.3vw 2.5rem 6.3vw;
 
-  @media only screen and (max-width: 1000px) {
+  div.side-bar {
+    /* width: 100%; */
+    /* border: 1px solid red; */
+    margin: 0;
     display: none;
+  }
+
+  div.side-nav {
+    border: 1px solid red;
+    position: absolute;
+    width: 0;
+    height: 100vh;
+    /* right: -100vw; */
+    right: ${(p) => (p.showNav ? "0" : "-50vw")};
+    background-color: white;
+    transform: ${(p) => (p.showNav ? "translateX(0%)" : "translateX(100%)")};
+    top: 0;
+    transition: all 0.45s linear;
+    z-index: 100;
+    /* display: ${(p) => (p.showNav ? "flex" : "none")}; */
+    display: none;
+  }
+
+  @media only screen and (max-width: 950px) {
+    /* border: 1px solid red; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 0;
+    position: relative;
+
+    div.side-bar {
+      display: flex;
+      svg {
+        width: 1.6rem;
+        height: 1.6rem;
+      }
+    }
+
+    div.side-nav {
+      display: flex;
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    div.side-nav {
+      width: 50vw;
+    }
   }
 `;
 
@@ -42,6 +91,10 @@ const SearchContainer = styled.div`
   display: flex;
   align-items: center;
   /* width: 100%; */
+
+  @media only screen and (max-width: 950px) {
+    display: none;
+  }
 `;
 
 const ImageContainer = styled.div`
@@ -53,6 +106,11 @@ const ImageContainer = styled.div`
     width: 100%;
     height: 100%;
     object-fit: contain;
+  }
+
+  @media only screen and (max-width: 600px) {
+    width: 160px;
+    height: 70px;
   }
 `;
 
@@ -68,6 +126,10 @@ const UserWrapper = styled.div`
   padding: 1rem 1.25rem;
   cursor: pointer;
   position: relative;
+
+  @media only screen and (max-width: 950px) {
+    display: none;
+  }
 `;
 
 const UserOptions = styled.div`
@@ -203,9 +265,12 @@ const Navbar = () => {
   const closeSearchBox = () => {
     setshowDropDown(false);
   };
+
+  const [showSideBar, setshowSideBar] = useState<boolean>(false);
+
   return (
     <>
-      <Section>
+      <Section showNav={showSideBar}>
         <ImageContainer onClick={() => navigationHandler("/")}>
           <img src={TNL_Logo} alt="tnl_logo" />
         </ImageContainer>
@@ -247,7 +312,7 @@ const Navbar = () => {
               <UserOptions>
                 <ul>
                   <li onClick={() => navigationHandler("/me")}>
-                    <span>View Profile</span>
+                    <span>My Profile</span>
                     <MyProfileIcon />
                   </li>
                   <li onClick={signoutHandler}>
@@ -259,6 +324,15 @@ const Navbar = () => {
             )}
           </UserWrapper>
         )}
+        <div className="side-bar" onClick={() => setshowSideBar(true)}>
+          <Bars />
+        </div>
+        <div className="side-nav">
+          <ul>
+            <li onClick={() => setshowSideBar(false)}>Close</li>
+            <li>Home</li>
+          </ul>
+        </div>
       </Section>
       <ModeWrapper>
         {localUser && (
@@ -267,6 +341,14 @@ const Navbar = () => {
       </ModeWrapper>
       <NavbarLinks />
     </>
+  );
+};
+
+const Bars = () => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
+      <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z" />
+    </svg>
   );
 };
 

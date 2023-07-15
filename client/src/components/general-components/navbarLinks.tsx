@@ -4,7 +4,7 @@ import { topNavigator } from "../../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
 
 const Menu = styled.div`
-  margin: 0 6.3vw;
+  margin: 0 6.3vw 2.5rem;
   padding: 1.25rem;
   display: flex;
   justify-content: space-between;
@@ -13,10 +13,6 @@ const Menu = styled.div`
   background: #d8eefe;
 
   @media only screen and (max-width: 1000px) {
-    /* body { */
-    /* background-color: lightblue; */
-    /* }
-  d */
     display: none;
   }
 `;
@@ -48,11 +44,11 @@ const navOptions = [
     link: "/",
   },
   {
-    title: "Classes",
+    title: "Teach Cards",
     link: "/classes",
   },
   {
-    title: "Requests",
+    title: "Learn Cards",
     link: "/requests",
   },
   {

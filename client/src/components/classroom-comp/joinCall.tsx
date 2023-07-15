@@ -10,7 +10,7 @@ const Section = styled.div`
   justify-content: center;
   padding: 16px 20px;
   gap: 8px;
-  background: #332ad5;
+  background: #ef4565;
   border-radius: 4px;
   width: fit-content;
   cursor: pointer;

@@ -42,10 +42,10 @@ const sendErrorDev = (err, res) => {
 const sendErrorProd = (err, res) => {
   // Operational, trusted error: send message to client
   if (err.isOperational) {
-    console.log(err.message);
+    // console.log(err.message);
     res.status(err.statusCode).json({
       status: err.status,
-      message: err.message,
+      message: err.errorMessage,
       lol: "lol",
     });
 
@@ -63,7 +63,8 @@ const sendErrorProd = (err, res) => {
 };
 
 module.exports = (err, req, res, next) => {
-  // console.log(err.stack)
+  // console.log("ERR STACK");
+  // console.log(err.stack);
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
 
@@ -72,6 +73,7 @@ module.exports = (err, req, res, next) => {
   } else if (process.env.NODE_ENV === "production") {
     let error = { ...err };
 
+    // console.log("ERR");
     // console.log(err);
     // console.log(Object.keys(err));
 

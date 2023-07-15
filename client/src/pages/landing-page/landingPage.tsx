@@ -325,7 +325,7 @@ const slideData = [
     img: img2,
   },
   {
-    heading: "Organize bite sized classes. Schedule as you want.",
+    heading: "Organize bite-sized classes. Schedule as you want.",
     description:
       "Flexible scheduling allows you to organize and attend bite-sized classes according to your preferences.",
     img: img3,
@@ -343,7 +343,7 @@ const slideData = [
     img: img6,
   },
   {
-    heading: "Teach and Learn",
+    heading: "Teach and Learn!",
     description:
       "Unlock the power of teaching and learning to achieve mastery in any concept, fostering a dynamic exchange of knowledge and growth.",
     img: img4,
@@ -443,7 +443,7 @@ const LandingPage = () => {
       <YoutubeWrapper>
         <YoutubeCarousel />
       </YoutubeWrapper>
-      <DescContainer>
+      {/* <DescContainer>
         <h2>Richard Feynman</h2>
         <div className="main-container">
           <div className="content">
@@ -469,7 +469,7 @@ const LandingPage = () => {
           </div>
           <img src={feynaman} alt="" />
         </div>
-      </DescContainer>
+      </DescContainer> */}
       <Footer />
     </>
   );

@@ -173,7 +173,7 @@ const Forum = () => {
         <TopBar>
           <SearchBar
             updateSearch={handleSearch}
-            placeholderText="Search n forums..."
+            placeholderText="Search in forum..."
             elem={
               searchResults.length == 0 ? undefined : showDropDown &&
                 userToken ? (

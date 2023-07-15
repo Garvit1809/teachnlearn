@@ -303,6 +303,7 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
       { subject: { $regex: modifiedSearch } },
       { topic: { $regex: modifiedSearch } },
       { description: { $regex: modifiedSearch } },
+      { programme: { $regex: modifiedSearch } },
       { tags: { $elemMatch: { $eq: modifiedSearch } } },
     ],
     // dueDate: { $gte: currentDate },
@@ -311,8 +312,10 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
   const classes = await TeachingCard.find({
     $or: [
       { _id: search },
+      { referredLearningCard: search },
       { subject: { $regex: modifiedSearch } },
       { topic: { $regex: modifiedSearch } },
+      { programme: { $regex: modifiedSearch } },
       { description: { $regex: modifiedSearch } },
       { tags: { $elemMatch: { $eq: modifiedSearch } } },
     ],
@@ -336,7 +339,7 @@ exports.getUserBalance = catchAsync(async (req, res, next) => {
   const user = await User.findById(userId).select("coins forumCoins");
 
   if (!user) {
-    next(new AppError("No such user exists wotrh this id"));
+    next(new AppError("No such user exists with this id"));
   }
 
   res.status(200).json({

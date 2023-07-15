@@ -1,6 +1,8 @@
 import React, { ReactElement, useState } from "react";
 import styled from "styled-components";
 import DeleteProfileModal from "./deleteProfileModal";
+import ReportUser from "./userProfile/reportUser";
+import FavouriteUser from "./userProfile/favouriteUser";
 
 const Section = styled.div`
   box-sizing: border-box;
@@ -19,7 +21,7 @@ const Menu = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 0.8rem;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
 `;
 
 interface menuOptionsProps {
@@ -80,6 +82,8 @@ const ProfileOptions = ({
         })}
       </Menu>
       {!isOtherUser && <DeleteProfileModal />}
+      {isOtherUser && <FavouriteUser />}
+      {isOtherUser && <ReportUser />}
     </Section>
   );
 };

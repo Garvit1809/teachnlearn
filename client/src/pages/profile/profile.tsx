@@ -31,7 +31,7 @@ const Profile = () => {
     console.log(selectedLeftScreen);
     if (selectedLeftScreen == "MyProfile") {
       setElement(<MyProfile />);
-    } else if (selectedLeftScreen == "Balance") {
+    } else if (selectedLeftScreen == "MyWallet") {
       setElement(<UserBalance />);
     }
     // } else if (selectedLeftScreen == "InviteFriends") {
@@ -48,8 +48,8 @@ const Profile = () => {
       icon: <MyProfileIcon />,
     },
     {
-      option: "Balance",
-      label: "Balance",
+      option: "My Wallet",
+      label: "MyWallet",
       icon: <CoinsIcon />,
     },
   ];

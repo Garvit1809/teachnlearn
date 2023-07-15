@@ -18,19 +18,19 @@ const Section = styled.div`
 
   @media only screen and (max-width: 1100px) {
     /* background-color: lightblue; */
-    padding: 3.75rem 5.25rem 1.5rem;
+    padding: 3.75rem 4.25rem 1.5rem;
   }
 `;
 
 const Links = styled.div`
   display: grid;
-  grid-template-columns: 2.2fr 1.2fr 1.2fr 1fr;
+  grid-template-columns: 2fr 1fr 1.4fr 1fr;
   border-bottom: 1px solid #d0d5dd;
   padding-bottom: 2.5rem;
 
   @media only screen and (max-width: 1000px) {
     /* background-color: lightblue; */
-    grid-template-columns: 1.8fr 1.1fr 1.2fr 1fr;
+    grid-template-columns: 1.8fr 1.2fr 1.2fr 1fr;
   }
 `;
 

@@ -101,7 +101,7 @@ const UserBalance = () => {
   ) : (
     <Section>
       <header>
-        <h4>Totol Balance</h4>
+        <h4>Total Balance</h4>
         <div>
           <PurchaseCoinIcon color="black" />
           <h2>{userCoins + userForumCoins}</h2>
@@ -113,7 +113,7 @@ const UserBalance = () => {
           <h3>{userCoins}</h3>
         </CoinContainer>
         <CoinContainer>
-          <h4>Forum Coins</h4>
+          <h4>Coins from Forum</h4>
           <h3>{userForumCoins}</h3>
         </CoinContainer>
       </div>

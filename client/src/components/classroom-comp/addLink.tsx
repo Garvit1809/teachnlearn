@@ -17,7 +17,6 @@ export const LinkContainer = styled.div`
   padding: 16px 22px;
   gap: 10px;
   width: fit-content;
-  background: #054f31;
   background: #ef4565;
   border-radius: 30px;
 

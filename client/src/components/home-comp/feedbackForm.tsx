@@ -99,9 +99,17 @@ const FeedbackForm = (props: feedbackProps) => {
     draggable: true,
   };
 
+  const checkWordLimit = () => {
+    const arr = feedback.split(" ");
+    return arr.length > 140;
+  };
+
   const handleValidation = () => {
     if (feedback == "") {
       toast.error("Feedback cannot be empty", toastOptions);
+      return false;
+    } else if (checkWordLimit()) {
+      toast.error("Feedback cannot be more than 140 words", toastOptions);
       return false;
     }
     return true;
@@ -146,7 +154,7 @@ const FeedbackForm = (props: feedbackProps) => {
         value={feedback}
         areaHeight="15rem"
         updateSingleField={updateFields}
-        placeholderText="Your Feedback"
+        placeholderText="Your Feedback (not more than 140 words)"
       />
       <button onClick={feedbackHandler}>Submit Feedback</button>
     </Section>

@@ -14,10 +14,12 @@ interface styleProps {
 const Section = styled.div<styleProps>`
   display: flex;
   align-items: center;
+  /* background-color: grey; */
   /* border: 1px solid red; */
+  /* border-radius: 4px; */
+  /* padding: 12px 16px; */
 
   img {
-    display: block;
     width: ${(p) => p.imgSize || "28px"};
     height: ${(p) => p.imgSize || "28px"};
     border: ${(p) => `1px solid ${p.imgBorder}`};
@@ -32,7 +34,7 @@ const Section = styled.div<styleProps>`
     font-family: "Nunito";
     font-style: normal;
     font-weight: 500;
-    font-size: ${(p) => p.textSize || "20px"};
+    font-size: ${(p) => (p.textSize ? p.textSize : "20px")};
     line-height: 27px;
     color: ${(p) => p.textColor};
     /* transition: 0.15s all ease; */

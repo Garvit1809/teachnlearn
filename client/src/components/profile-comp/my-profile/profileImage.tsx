@@ -217,7 +217,7 @@ const ProfileImage = (props: modalProps) => {
               {isLoading ? (
                 <Loader loaderHeight="1.6rem" color="white" />
               ) : (
-                "Edit Profile Image"
+                "Ok"
               )}
             </button>
           </SubmitButton>

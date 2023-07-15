@@ -63,11 +63,11 @@ const FormContainer = styled.div`
   justify-content: center;
   padding: 58px 0;
   width: 80%;
-  
+
   border: 2px solid #d5d9eb;
   border-radius: 28px;
   margin: auto;
-  
+
   @media only screen and (max-width: 870px) {
     border: none;
     width: 100%;
@@ -176,6 +176,7 @@ const Signin = () => {
           navigationHandler("/");
         })
         .catch((data) => {
+          // console.log(data.response);
           const errMsg = data.response.data.message;
           console.log(errMsg);
           toast.error(errMsg, toastOptions);

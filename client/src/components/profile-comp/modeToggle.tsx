@@ -149,7 +149,7 @@ const ModeToggle = (props: toggleProps) => {
 
   const toastOptions = {
     position: toast.POSITION.BOTTOM_RIGHT,
-    autoClose: 6000,
+    autoClose: 1000,
     pauseOnHover: true,
     draggable: true,
   };
@@ -175,7 +175,8 @@ const ModeToggle = (props: toggleProps) => {
           toast.success("Mode updated", toastOptions);
         })
         .catch((data) => {
-          toast.error(data.response.data.message, toastOptions);
+          toast.error("Mode couldn't be updated", toastOptions);
+          // toast.error(data.response.data.message, toastOptions);
         });
       setMode("teach");
     } else {

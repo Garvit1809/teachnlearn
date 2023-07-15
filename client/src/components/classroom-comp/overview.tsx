@@ -57,7 +57,7 @@ const ChipContainer = styled.div`
 `;
 
 export const ClassIDCont = styled.div`
-  background-color: #b3b8db;
+  background-color: #094067;
   display: flex;
   align-items: center;
   padding: 14px 18px;
@@ -65,6 +65,16 @@ export const ClassIDCont = styled.div`
   gap: 10px;
   cursor: pointer;
   border-radius: 30px;
+
+  span {
+    color: white;
+  }
+
+  svg {
+    /* border: 1px solid red; */
+    width: 1.5rem;
+    height: 1.3rem;
+  }
 `;
 
 const TagCont = styled.div`
@@ -283,18 +293,18 @@ const Overview = (props: overallOverviewProps) => {
                 userId={props.createdBy._id}
               />
               <ClassIDCont onClick={classIdHandler}>
-                <Copy />
-                <span className="id">{props._id}</span>
+                <span className="id">Card ID :- {props._id}</span>
+                <Copy color="white" />
               </ClassIDCont>
             </ChipContainer>
             <DetailsContainer desciption={props.description} />
           </ClassOverview>
         </OverviewContainer>
-        <ReviewContainr>
-          <h2>Reviews :-</h2>
-          <ReviewGrid>
-            {reviews &&
-              reviews.map((review, index) => {
+        {reviews && (
+          <ReviewContainr>
+            <h2>Reviews :-</h2>
+            <ReviewGrid>
+              {reviews.map((review, index) => {
                 return (
                   <ReviewCard>
                     <div className="head">
@@ -325,8 +335,9 @@ const Overview = (props: overallOverviewProps) => {
                   </ReviewCard>
                 );
               })}
-          </ReviewGrid>
-        </ReviewContainr>
+            </ReviewGrid>
+          </ReviewContainr>
+        )}
         <ToastContainer theme="dark" />
       </>
     )
