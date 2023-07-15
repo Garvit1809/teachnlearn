@@ -9,15 +9,12 @@ interface styleProps {
   textColor?: string;
   imgSize?: string;
   textSize?: string;
+  hasUnderline?: boolean;
 }
 
 const Section = styled.div<styleProps>`
   display: flex;
   align-items: center;
-  /* background-color: grey; */
-  /* border: 1px solid red; */
-  /* border-radius: 4px; */
-  /* padding: 12px 16px; */
 
   img {
     width: ${(p) => p.imgSize || "28px"};
@@ -37,11 +34,7 @@ const Section = styled.div<styleProps>`
     font-size: ${(p) => (p.textSize ? p.textSize : "20px")};
     line-height: 27px;
     color: ${(p) => p.textColor};
-    /* transition: 0.15s all ease; */
-
-    /* &:hover { */
-    /* text-decoration: underline; */
-    /* } */
+    text-decoration: ${(p) => (p.hasUnderline ? "underline" : "none")};
   }
 `;
 
@@ -54,6 +47,7 @@ interface userchipProps {
   textSize?: string;
   userId: string;
   shouldntNavigate?: boolean;
+  hasUnderline?: boolean;
 }
 
 const UserChip = ({
@@ -65,6 +59,7 @@ const UserChip = ({
   textSize,
   userId,
   shouldntNavigate,
+  hasUnderline,
 }: userchipProps) => {
   const [localUserId, setLocalUserId] = useState<string>("");
 
@@ -98,6 +93,7 @@ const UserChip = ({
       textColor={textColor}
       imgSize={imgSize}
       textSize={textSize}
+      hasUnderline={hasUnderline}
     >
       <img src={photo} alt="user-img" />
       <span>{name}</span>

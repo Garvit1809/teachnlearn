@@ -4,12 +4,14 @@ import {
   getHeaders,
   getReadableDate,
   getReadableTime,
+  getToastOptions,
 } from "../../utils/helperFunctions";
 import ModalField from "./modalField";
 import { Arrow, InfoIcon, PurchaseCoinIcon } from "../general-components/svg";
 import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Section = styled.div`
   display: flex;
@@ -153,6 +155,13 @@ const EnrollModal = (props: enrollProps) => {
 
   const navigate = useNavigate();
 
+  const toastOptions = {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 6000,
+    pauseOnHover: true,
+    draggable: true,
+  };
+
   const enrollHandler = async () => {
     await axios
       .patch(
@@ -169,6 +178,11 @@ const EnrollModal = (props: enrollProps) => {
             classroomId: props.teachCardId,
           },
         });
+      })
+      .catch((data) => {
+        // console.log(data);
+        const err = data.response.data.message;
+        toast.error(err, toastOptions);
       });
   };
 
@@ -198,7 +212,7 @@ const EnrollModal = (props: enrollProps) => {
           value={
             <TimeContainer>
               <PurchaseCoinIcon color="#000000" />
-              <span>{props.price}</span>
+              <span>10</span>
             </TimeContainer>
           }
         />

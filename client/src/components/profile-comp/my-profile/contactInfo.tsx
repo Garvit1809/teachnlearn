@@ -76,6 +76,8 @@ interface ContactProps {
 }
 
 const ContactInfo = (props: ContactProps) => {
+  console.log("Checking");
+
   const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {

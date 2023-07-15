@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-
-import ModeToggle from "../modeToggle";
 import EditBtn from "./editBtn";
 import ContactInfo, { customStyles } from "./contactInfo";
 import AcademicInfo from "./academicInfo";
@@ -13,10 +11,10 @@ import { getHeaders } from "../../../utils/helperFunctions";
 import { UserCookie } from "../../../utils/userCookie";
 import ProfileStats from "./profileStats";
 import ProfileImage from "./profileImage";
-import { localStorageUser } from "../../../utils/globalConstants";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../general-components/loader";
+import StudentRating from "./studentRating";
 
 export const UserProfileSection = styled.div`
   /* border: 1px solid red; */
@@ -30,8 +28,8 @@ export const UserProfileSection = styled.div`
 const Header = styled.div`
   /* border: 1px solid red; */
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  /* align-items: center; */
+  /* justify-content: space-between; */
 `;
 
 const Heading = styled.h3`
@@ -195,7 +193,7 @@ const MyProfile = () => {
     <UserProfileSection>
       <Header>
         <Heading>My profile</Heading>
-        <ModeToggle userToken={localUser.token} role={localUser.role} />
+        {/* <ModeToggle userToken={localUser.token} role={localUser.role} /> */}
       </Header>
       <UserContainer>
         <ProfileImage
@@ -228,11 +226,11 @@ const MyProfile = () => {
         </Modal>
       </UserContainer>
       <ProfileStats
-        attended={localUser.classesEnrolled.length}
         taught={localUser.classesTaken.length}
         userId={localUser._id}
         userToken={localUser.token}
       />
+      <StudentRating attended={localUser.classesEnrolled.length} />
       <ContactInfo
         username={localUser.userName}
         email={localUser.email}

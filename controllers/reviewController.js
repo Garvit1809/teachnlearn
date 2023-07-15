@@ -1,3 +1,4 @@
+const ReviewGift = require("../models/reviewGiftModel");
 const Review = require("../models/reviewModel");
 const TeachingCard = require("../models/teachingCardModel");
 const User = require("../models/userModel");
@@ -86,6 +87,13 @@ exports.postReview = catchAsync(async (req, res, next) => {
     new AppError("Review couldnt be created!!");
   }
 
+  const newTransaction = await ReviewGift.create({
+    reviewFrom: userId,
+    amount: rating,
+    transferredTo: teacherID,
+    cardEnrolled: teachCardId,
+  });
+
   const updateTeachCard = await TeachingCard.findByIdAndUpdate(
     teachCardId,
     {
@@ -98,6 +106,13 @@ exports.postReview = catchAsync(async (req, res, next) => {
       runValidators: true,
     }
   );
+
+  const updatedTeacher = await User.findByIdAndUpdate(teacherID, {
+    $inc: { reviewCoins: rating },
+    $push: {
+      transactionHistory: newTransaction.id,
+    },
+  });
 
   const updatedUser = await User.updateOne(
     {
@@ -116,5 +131,6 @@ exports.postReview = catchAsync(async (req, res, next) => {
     newReview,
     updateTeachCard,
     updatedUser,
+    updatedTeacher,
   });
 });

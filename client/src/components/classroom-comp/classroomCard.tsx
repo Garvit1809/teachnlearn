@@ -339,9 +339,9 @@ const ClassroomCard = (props: classCardProps) => {
 
   return (
     <Section hasAnimation={props.cssArr?.hasAnimation}>
-      <ImageContainer imgHeight={props.cssArr?.imageHeight}>
+      {/* <ImageContainer imgHeight={props.cssArr?.imageHeight}>
         <img src={props.teachCard.cardBanner} alt="card-banner" />
-      </ImageContainer>
+      </ImageContainer> */}
       <DetailContainer gapSize={props.cssArr?.gap}>
         <Header headerSize={props.cssArr?.headerSize}>
           <h4>{props.teachCard.subject}</h4>

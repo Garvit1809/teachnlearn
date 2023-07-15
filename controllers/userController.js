@@ -236,6 +236,11 @@ exports.updateUserAcademicInfo = catchAsync(async (req, res, next) => {
 
 exports.getUserRatings = catchAsync(async (req, res, next) => {
   const id = req.params.userId;
+
+  if (!id) {
+    return next(new AppError("Please provide user id for ratings!!"));
+  }
+
   var userId = new mongoose.Types.ObjectId(id);
 
   console.log(typeof userId);
@@ -336,14 +341,69 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
 exports.getUserBalance = catchAsync(async (req, res, next) => {
   const userId = req.user.id;
 
-  const user = await User.findById(userId).select("coins forumCoins");
+  const user = await User.findById(userId).select(
+    "coins forumCoins reviewCoins"
+  );
 
   if (!user) {
-    next(new AppError("No such user exists with this id"));
+    return next(new AppError("No such user exists with this id"));
   }
 
   res.status(200).json({
     status: "success",
     user,
+  });
+});
+
+exports.addUserToFavourites = catchAsync(async (req, res, next) => {
+  const userId = req.user.id;
+
+  const otherUserId = req.params.userId;
+  console.log(otherUserId);
+
+  if (!otherUserId) {
+    return next(new AppError("Please provide the ID of user to add"));
+  }
+
+  const favouriteUsersArr = req.user.favouriteUsers;
+
+  const isAlreadyFavourite = favouriteUsersArr.includes(otherUserId);
+
+  let updatedUser;
+  if (isAlreadyFavourite) {
+    updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        $pull: {
+          favouriteUsers: otherUserId,
+        },
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+  } else {
+    updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        $push: {
+          favouriteUsers: otherUserId,
+        },
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+  }
+
+  if (!updatedUser) {
+    return next(new AppError("User couldnt be updated!!"));
+  }
+
+  res.status(200).json({
+    status: "success",
+    updatedUser,
   });
 });

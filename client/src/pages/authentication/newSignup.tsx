@@ -135,6 +135,7 @@ interface USERDATA {
   photo: string;
   number: string;
   course: string;
+  standard: string;
   interestedSubject: string;
   interestedSubjects: string[];
   strongSubject: string;
@@ -152,6 +153,7 @@ const initialData: USERDATA = {
   photo: "",
   number: "",
   course: "",
+  standard: "",
   interestedSubject: "",
   interestedSubjects: [],
   strongSubject: "",
@@ -239,6 +241,7 @@ const NewSignup = () => {
             photo: userData.photo,
             phoneNumber: userData.number,
             enrolledProgramme: userData.course,
+            standard: userData.standard,
             interestedSubjects: userData.interestedSubjects,
             strongSubjects: userData.strongSubjects,
             preferredLanguages: userData.preferredLanguages,

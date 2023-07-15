@@ -225,7 +225,7 @@ const Intro = () => {
             }
           >
             <span>
-              {role == "learn" ? "See all classes" : "See all requests"}
+              {role == "learn" ? "See all Teach Cards" : "See all Learn Cards"}
             </span>
             <Arrow strokeColor="white" />
           </button>
@@ -233,7 +233,9 @@ const Intro = () => {
             className="request"
             onClick={() => navigationHandler(`/create-${role}-request`)}
           >
-            <span>Create a {role == "learn" ? "request" : "class"}</span>
+            <span>
+              Create a {role == "learn" ? "Learn Card" : "Teach Card"}
+            </span>
             <Arrow strokeColor="#ffffff" />
           </button>
         </Buttons>

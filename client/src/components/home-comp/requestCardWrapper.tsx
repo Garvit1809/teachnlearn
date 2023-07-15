@@ -5,6 +5,7 @@ import RequestCard from "./requestCard";
 import { useNavigate } from "react-router-dom";
 import { topNavigator } from "../../utils/helperFunctions";
 import Loader from "../general-components/loader";
+import LearnCard from "../request-comp/learnCard";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -94,7 +95,8 @@ const RequestCardWrapper = (props: requestWrapperProps) => {
       ) : (
         <CardGrid>
           {props.requestCard.map((card, index) => {
-            return <RequestCard key={index} {...card} />;
+            // return <RequestCard key={index} {...card} />;
+            return <LearnCard key={index} {...card} />;
           })}
         </CardGrid>
       )}

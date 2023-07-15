@@ -462,8 +462,9 @@ const LearnCardOverview = () => {
                     imgBorder="white"
                     textColor="black"
                     userId={learnCard.createdBy._id}
-                    imgSize="28px"
+                    imgSize="42px"
                     textSize="20px"
+                    hasUnderline={true}
                   />
                   <InterestedCont>
                     <InterestedIcon />

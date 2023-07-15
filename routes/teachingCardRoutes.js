@@ -35,10 +35,10 @@ router.get(
   teachingCardController.getTeachCardOverview
 );
 
-router.patch(
-  "/:teachCardId/interested",
-  teachingCardController.interestedInTeachCard
-);
+// router.patch(
+//   "/:teachCardId/interested",
+//   teachingCardController.interestedInTeachCard
+// );
 router.patch(
   "/:teachingCardId/callLink",
   announcementController.restricToAdmin,

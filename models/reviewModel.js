@@ -12,7 +12,7 @@ const reviewSchema = new mongoose.Schema(
       type: Number,
       required: [true, "User must provide a rating to teacher"],
       min: [1, "Rating must be above 1.0"],
-      max: [5, "Rating must be below 5.0"],
+      max: [10, "Rating must be below 10.0"],
     },
     classroom: {
       type: mongoose.Schema.ObjectId,

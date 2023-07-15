@@ -40,7 +40,7 @@ const Rating = ({ rating, onRating }: ratingProps) => {
   };
 
   const starRating = useMemo(() => {
-    return Array(5)
+    return Array(10)
       .fill(0)
       .map((_, i) => i + 1)
       .map((idx) => (

@@ -160,7 +160,7 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
   const teachCardId = req.params.teachCardId;
 
   const teachCard = await TeachingCard.findById(teachCardId);
-  const classPrice = teachCard.price;
+  // const classPrice = teachCard.price;
   const teacher = teachCard.createdBy._id;
 
   const currentDate = new Date();
@@ -295,43 +295,44 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.interestedInTeachCard = catchAsync(async (req, res, next) => {
-  const userId = req.user.id;
+// not ready
+// exports.interestedInTeachCard = catchAsync(async (req, res, next) => {
+//   const userId = req.user.id;
 
-  const teachCardId = req.params.teachCardId;
+//   const teachCardId = req.params.teachCardId;
 
-  const teachCard = await TeachingCard.findById(teachCardId);
-  const interestedStudents = teachCard.interestedStudents;
-  const isAlreadyInterested = interestedStudents.includes(userId);
+//   const teachCard = await TeachingCard.findById(teachCardId);
+//   const interestedStudents = teachCard.interestedStudents;
+//   const isAlreadyInterested = interestedStudents.includes(userId);
 
-  if (isAlreadyInterested) {
-    return next(
-      new AppError(
-        "User is already in the interested users for the Learn Card!!"
-      )
-    );
-  }
+//   if (isAlreadyInterested) {
+//     return next(
+//       new AppError(
+//         "User is already in the interested users for the Learn Card!!"
+//       )
+//     );
+//   }
 
-  const updatedLearnCard = await LearningCard.findByIdAndUpdate(
-    teachCardId,
-    {
-      $push: { interestedStudents: userId },
-    },
-    {
-      new: true,
-      runValidators: true,
-    }
-  );
+//   const updatedLearnCard = await LearningCard.findByIdAndUpdate(
+//     teachCardId,
+//     {
+//       $push: { interestedStudents: userId },
+//     },
+//     {
+//       new: true,
+//       runValidators: true,
+//     }
+//   );
 
-  if (!updatedLearnCard) {
-    return next(new AppError("Learn Card couldnt be updated!! Try again!"));
-  }
+//   if (!updatedLearnCard) {
+//     return next(new AppError("Learn Card couldnt be updated!! Try again!"));
+//   }
 
-  res.status(200).json({
-    status: "success",
-    updatedLearnCard,
-  });
-});
+//   res.status(200).json({
+//     status: "success",
+//     updatedLearnCard,
+//   });
+// });
 
 exports.updateClassLink = catchAsync(async (req, res, next) => {
   const { callLink } = req.body;

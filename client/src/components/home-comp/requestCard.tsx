@@ -5,6 +5,7 @@ import UserChip from "../general-components/userChip";
 import { learnCardProps } from "../../pages/requests/requests";
 import { getReadableDate, topNavigator } from "../../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
+import { TagBox } from "../request-comp/learnCard";
 
 const Section = styled.div`
   display: flex;
@@ -162,6 +163,15 @@ const RequestCard = (props: learnCardProps) => {
           <span>Due - {getReadableDate(props.dueDate)}</span>
         </DueCont>
       </Stats>
+      <TagBox>
+        {props.tags.map((tag, index) => {
+          return (
+            <div key={index}>
+              <span>{tag}</span>
+            </div>
+          );
+        })}
+      </TagBox>
     </Section>
   );
 };

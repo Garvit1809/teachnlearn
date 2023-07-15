@@ -4,18 +4,23 @@ import Footer from "../../components/general-components/footer/footer";
 import ProfileOptions from "../../components/profile-comp/profileOptions";
 import UserProfileDetails from "../../components/profile-comp/userProfile/userProfileDetails";
 import { ProfileContainer, ProfileSection } from "./profile";
-import { UserCookie } from "../../utils/userCookie";
+import { UserCookie, userProps } from "../../utils/userCookie";
 import { MyProfileIcon } from "../../components/general-components/svg";
 
 const UserProfile = () => {
-  const [userToken, setUserToken] = useState<string>("");
+  const [localUser, setLocalUser] = useState<userProps>();
 
   const { fetchLocalUserData } = UserCookie();
 
   useEffect(() => {
     fetchLocalUserData().then((data) => {
-      setUserToken(data.token);
-      console.log("TOKEN :- " + data.token);
+      setLocalUser(data);
+    });
+
+    window.addEventListener("storage", () => {
+      fetchLocalUserData().then((data) => {
+        setLocalUser(data);
+      });
     });
   }, []);
 
@@ -45,11 +50,15 @@ const UserProfile = () => {
     <>
       <Navbar />
       <ProfileSection>
-        <ProfileOptions
-          profileOptions={profileOptions}
-          setSelectedLeftScreen={setSelectedLeftScreen}
-          isOtherUser={true}
-        />
+        {localUser && (
+          <ProfileOptions
+            profileOptions={profileOptions}
+            setSelectedLeftScreen={setSelectedLeftScreen}
+            isOtherUser={true}
+            userToken={localUser.token}
+            favouriteUsers={localUser.favouriteUsers}
+          />
+        )}
         <ProfileContainer>{element}</ProfileContainer>
       </ProfileSection>
       <Footer />

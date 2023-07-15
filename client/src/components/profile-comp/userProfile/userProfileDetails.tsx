@@ -10,6 +10,7 @@ import styled from "styled-components";
 import ProfileStats from "../my-profile/profileStats";
 import AcademicContainer from "../my-profile/academicContainer";
 import ContactContainer from "../my-profile/contactContainer";
+import StudentRating from "../my-profile/studentRating";
 
 const UserContainer = styled.div`
   width: 100%;
@@ -71,8 +72,6 @@ const UserProfileDetails = () => {
   const [userDetails, setUserDetails] = useState<userProps>();
 
   const fetchUserDetails = async () => {
-    console.log("Heelo");
-
     await axios
       .get(`${BASE_URL}${apiVersion}/user/${userId}`, {
         headers: getHeaders(userToken),
@@ -109,11 +108,11 @@ const UserProfileDetails = () => {
             </UserDetails>
           </UserContainer>
           <ProfileStats
-            attended={userDetails.classesEnrolled.length}
             taught={userDetails.classesTaken.length}
             userId={userDetails._id}
             userToken={userToken}
           />
+          <StudentRating attended={userDetails.classesEnrolled.length} />
           <AcademicContainer
             course={userDetails.enrolledProgramme}
             interstedSubjects={userDetails.interestedSubjects}

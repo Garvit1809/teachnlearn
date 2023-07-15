@@ -313,7 +313,7 @@ const YoutubeWrapper = styled.div`
 
 const slideData = [
   {
-    heading: "Connect with students from all across the globe",
+    heading: "Connect with students from all across the globe.",
     description:
       "Leverage our interactive platform to foster cross cultural connections and collaborative learning with students from all around the world.",
     img: img1,

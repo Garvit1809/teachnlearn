@@ -52,12 +52,16 @@ interface optionsProps {
   setSelectedLeftScreen: React.Dispatch<React.SetStateAction<string>>;
   profileOptions: Array<any>;
   isOtherUser: boolean;
+  userToken?: string;
+  favouriteUsers?: string[];
 }
 
 const ProfileOptions = ({
   setSelectedLeftScreen,
   profileOptions,
   isOtherUser,
+  userToken,
+  favouriteUsers,
 }: optionsProps) => {
   const [selectedOption, setSelectedOption] = useState(profileOptions[0].label);
 
@@ -65,6 +69,7 @@ const ProfileOptions = ({
     setSelectedOption(label);
     setSelectedLeftScreen(label);
   };
+  
   return (
     <Section>
       <Menu>
@@ -82,7 +87,9 @@ const ProfileOptions = ({
         })}
       </Menu>
       {!isOtherUser && <DeleteProfileModal />}
-      {isOtherUser && <FavouriteUser />}
+      {isOtherUser && userToken && favouriteUsers && (
+        <FavouriteUser userToken={userToken} favouriteUsers={favouriteUsers} />
+      )}
       {isOtherUser && <ReportUser />}
     </Section>
   );

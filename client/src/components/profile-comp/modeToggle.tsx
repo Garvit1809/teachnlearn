@@ -207,7 +207,7 @@ const ModeToggle = (props: toggleProps) => {
 
   return (
     <Section>
-      <LearnText isChecked={mode == "learn"}>Teach Mode</LearnText>
+      <LearnText isChecked={mode == "learn"}>Teach</LearnText>
       <ToggleBtn>
         <input
           type="checkbox"
@@ -216,7 +216,7 @@ const ModeToggle = (props: toggleProps) => {
         />
         <Slider className="slider" isChecked={mode == "learn"} />
       </ToggleBtn>
-      <TeachText isChecked={mode == "learn"}>Learn Mode</TeachText>
+      <TeachText isChecked={mode == "learn"}>Learn</TeachText>
       <ToastContainer theme="dark" />
     </Section>
   );

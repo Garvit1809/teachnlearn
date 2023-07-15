@@ -75,7 +75,7 @@ const Stats = styled.div`
   }
 `;
 
-const TagBox = styled.div`
+export const TagBox = styled.div`
   /* border: 1px solid white; */
   width: 100%;
   margin-top: 0.6rem;
@@ -146,7 +146,7 @@ const LearnCard = (props: learnCardProps) => {
   };
 
   return (
-    <Section>
+    <Section onClick={leanrCardOverviewNavigator} >
       <Subject>
         <h4>{props.subject}</h4>
       </Subject>
@@ -184,12 +184,12 @@ const LearnCard = (props: learnCardProps) => {
           );
         })}
       </TagBox>
-      <ExpandButton>
+      {/* <ExpandButton>
         <button type="button" onClick={leanrCardOverviewNavigator}>
           <span>Expand</span>
           <RightArrowIcon />
         </button>
-      </ExpandButton>
+      </ExpandButton> */}
     </Section>
   );
 };

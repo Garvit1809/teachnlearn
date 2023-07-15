@@ -22,5 +22,6 @@ router.get("/mybalance", userController.getUserBalance);
 router.get("/search", userController.searchInApplication);
 router.get("/:userId", userController.getOtherUser);
 router.get("/:userId/myratings", userController.getUserRatings);
+router.patch("/:userId/addfavourite", userController.addUserToFavourites);
 
 module.exports = router;

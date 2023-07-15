@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { BASE_URL, apiVersion } from "../../../utils/apiRoutes";
 import { getHeaders } from "../../../utils/helperFunctions";
 
-const Section = styled.div`
+export const ProfileSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -14,7 +14,7 @@ const Section = styled.div`
   border-radius: 36px;
 `;
 
-const Header = styled.div`
+export const ProfileHeader = styled.div`
   display: flex;
   align-items: flex-start;
   width: 100%;
@@ -29,7 +29,7 @@ const Header = styled.div`
   }
 `;
 
-const StatContainer = styled.div`
+export const ProfileStatContainer = styled.div`
   /* border: 1px solid white; */
   /* width: 100%; */
   display: flex;
@@ -72,12 +72,13 @@ const StatContainer = styled.div`
 
 interface profileStatProps {
   taught: number;
-  attended: number;
   userToken: string;
   userId: string;
 }
 
 const ProfileStats = (props: profileStatProps) => {
+  console.log(props.userId);
+
   const [userRating, setUserRating] = useState<number>(0);
   const [userTotalRatings, setUserTotalRatings] = useState<number>(0);
 
@@ -87,7 +88,7 @@ const ProfileStats = (props: profileStatProps) => {
         headers: getHeaders(props.userToken),
       })
       .then(({ data }) => {
-        console.log(data.stats[0]);
+        console.log(data);
         if (data.stats[0]) {
           setUserTotalRatings(data.stats[0].nRatings);
           setUserRating(data.stats[0].avgRating);
@@ -96,40 +97,31 @@ const ProfileStats = (props: profileStatProps) => {
   }
 
   useEffect(() => {
-    if (props.userToken) {
+    if (props.userToken && props.userId) {
       fetchUserRating();
     }
-  }, [props.userToken]);
+  }, [props.userToken, props.userId]);
 
   return (
-    <Section>
-      <Header>
-        <h4>Profile Stats</h4>
-      </Header>
-      <StatContainer>
+    <ProfileSection>
+      <ProfileHeader>
+        <h4>Stats as a Teacher</h4>
+      </ProfileHeader>
+      <ProfileStatContainer>
         <div>
           <h5>Taught</h5>
           <h3>{props.taught}</h3>
         </div>
         <div>
-          <h5>Attended</h5>
-          <h3>{props.attended}</h3>
-        </div>
-        {/* {userTotalRatings ? ( */}
-        <div>
           <h5>Total Ratings</h5>
-          {/* {userTotalRatings ? <h3>{userTotalRatings}</h3> : <h3>0</h3>} */}
           <h3>{userTotalRatings}</h3>
         </div>
-        {/* ) : null} */}
-        {/* {userRating ? ( */}
         <div>
           <h5>Average Rating</h5>
-          <h3>{Math.round(userRating * 10) / 10}</h3>
+          <h3>{Math.round(userRating * 10) / 10} / 10</h3>
         </div>
-        {/* ) : null} */}
-      </StatContainer>
-    </Section>
+      </ProfileStatContainer>
+    </ProfileSection>
   );
 };
 

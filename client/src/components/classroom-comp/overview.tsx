@@ -291,6 +291,9 @@ const Overview = (props: overallOverviewProps) => {
                 imgBorder="white"
                 textColor="black"
                 userId={props.createdBy._id}
+                imgSize="42px"
+                textSize="20px"
+                hasUnderline={true}
               />
               <ClassIDCont onClick={classIdHandler}>
                 <span className="id">Card ID :- {props._id}</span>

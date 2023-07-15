@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { months } from "./globalConstants";
 import { useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const getHeaders = (token: string) => {
   return {
@@ -78,3 +79,12 @@ export async function autoGenerateImage(topic: string) {
   }
   return img;
 }
+
+export const getToastOptions = () => {
+  return {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 6000,
+    pauseOnHover: true,
+    draggable: true,
+  };
+};

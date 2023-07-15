@@ -44,6 +44,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  standard: {
+    type: String,
+    trim: true,
+  },
   interestedSubjects: [
     {
       type: String,
@@ -72,6 +76,10 @@ const userSchema = new mongoose.Schema({
     default: 1000000,
   },
   forumCoins: {
+    type: Number,
+    default: 0,
+  },
+  reviewCoins: {
     type: Number,
     default: 0,
   },
@@ -128,6 +136,12 @@ const userSchema = new mongoose.Schema({
       message: "Passwords are not the same!",
     },
   },
+  favouriteUsers: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
+    },
+  ],
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,

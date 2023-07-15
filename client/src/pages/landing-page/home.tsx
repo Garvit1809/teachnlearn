@@ -133,7 +133,7 @@ const Home = () => {
         <YoutubeCarousel />
         <FeedbackForm userToken={userToken} />
       </Section>
-      {/* <Footer /> */}
+      <Footer />
     </>
   ) : null;
 };

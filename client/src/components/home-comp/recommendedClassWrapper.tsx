@@ -6,6 +6,7 @@ import RecommendedClassCard from "./recommendedClassCard";
 import { topNavigator } from "../../utils/helperFunctions";
 import { teachinCardProps } from "../../types/teachingCardType";
 import Loader from "../general-components/loader";
+import ClassroomCard from "../classroom-comp/classroomCard";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -129,11 +130,12 @@ const RecommendedClassWrapper = (props: wrapperProps) => {
         <CardGrid>
           {props.cardArr.map((card, index) => {
             return (
-              <RecommendedClassCard
-                key={index}
-                card={card}
-                userId={props.userId}
-              />
+              // <RecommendedClassCard
+              //   key={index}
+              //   card={card}
+              //   userId={props.userId}
+              // />
+              <ClassroomCard teachCard={card} />
             );
           })}
         </CardGrid>

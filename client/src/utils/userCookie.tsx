@@ -18,6 +18,7 @@ export interface userProps {
   strongSubjects: string[];
   preferredLanguages: string[];
   token: string;
+  favouriteUsers: string[];
 }
 
 export interface classroom {

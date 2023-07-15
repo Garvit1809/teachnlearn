@@ -41,6 +41,8 @@ const Section = styled.div`
     display: flex;
     width: 100%;
     column-gap: 2rem;
+    /* display: grid; */
+    /* grid-template-columns: auto auto; */
   }
 `;
 
@@ -50,6 +52,7 @@ const CoinContainer = styled.div`
   padding: 32px 54px;
   border-radius: 8px;
   display: flex;
+  width: fit-content;
   flex-direction: column;
   /* row-gap: 6px; */
 
@@ -66,6 +69,7 @@ const CoinContainer = styled.div`
 const UserBalance = () => {
   const [userCoins, setUserCoins] = useState<number>(0);
   const [userForumCoins, setUserForumCoins] = useState<number>(0);
+  const [userReviewCoins, setUserReviewCoins] = useState<number>(0);
   const [userToken, setUserToken] = useState<string>("");
   const [isLoading, setisLoading] = useState(false);
   const { fetchLocalUserToken } = UserCookie();
@@ -86,6 +90,7 @@ const UserBalance = () => {
         const user = data.user;
         setUserCoins(user.coins);
         setUserForumCoins(user.forumCoins);
+        setUserReviewCoins(user.reviewCoins);
         setisLoading(false);
       });
   };
@@ -104,13 +109,13 @@ const UserBalance = () => {
         <h4>Total Balance</h4>
         <div>
           <PurchaseCoinIcon color="black" />
-          <h2>{userCoins + userForumCoins}</h2>
+          <h2>{userCoins + userForumCoins + userReviewCoins}</h2>
         </div>
       </header>
       <div className="coin-cont">
         <CoinContainer>
-          <h4>Coins</h4>
-          <h3>{userCoins}</h3>
+          <h4>Coins from Class Reviews</h4>
+          <h3>{userReviewCoins}</h3>
         </CoinContainer>
         <CoinContainer>
           <h4>Coins from Forum</h4>

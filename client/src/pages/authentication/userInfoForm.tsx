@@ -40,6 +40,7 @@ interface UserInfo {
   photo: string;
   number: string;
   course: string;
+  standard: string;
   interestedSubject: string;
   interestedSubjects: string[];
   strongSubject: string;
@@ -67,15 +68,25 @@ const UserInfoForm = (props: UserInfoFormProps) => {
         />
         <Inputholder
           type="text"
-          label="Exam/Standard/Board/Degree"
+          label="Course/Exam/Board/Degree"
           value={props.course}
           name="course"
           updateFields={props.updateFields}
           // hasDropdown={true}
           // dropdownData={}
           isRequired={true}
-          placeholderText="Exam/Standard/Board/Degree"
+          placeholderText="Course/Exam/Board/Degree you are currently preparing for"
         />
+        <Inputholder
+          type="text"
+          label="Standard/Year"
+          value={props.standard}
+          name="standard"
+          updateFields={props.updateFields}
+          isRequired={false}
+          placeholderText="Standard/Year"
+        />
+        {/* standard */}
         <InputWrapper>
           <MultipleInput
             label="Subjects you mostly need help in"
