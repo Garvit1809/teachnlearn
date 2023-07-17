@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import RatingContainer from "./ratingContainer";
+import { topNavigator } from "../../utils/helperFunctions";
+import { useNavigate } from "react-router-dom";
 
 interface styleProps {
   noAnswers: boolean;
@@ -72,6 +74,21 @@ interface questionProps {
 }
 
 const QuestionContainer = (props: questionProps) => {
+
+  const navigate = useNavigate();
+  const userNavigationHandler = () => {
+    topNavigator();
+    if (props.userId == props.createdBy._id) {
+      navigate("/me");
+    } else {
+      navigate(`/user/${props.createdBy._id}`, {
+        state: {
+          userId: props.createdBy._id,
+        },
+      });
+    }
+  };
+
   return (
     <Section noAnswers={props.noAnswers}>
       <RatingContainer
@@ -90,7 +107,7 @@ const QuestionContainer = (props: questionProps) => {
         </div>
       </Question>
       <UserWrapper>
-        <img src={props.createdBy.photo} alt="" />
+        <img src={props.createdBy.photo} alt="question-user-img" onClick={userNavigationHandler} />
       </UserWrapper>
     </Section>
   );

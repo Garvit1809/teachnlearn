@@ -5,8 +5,8 @@ import styled from "styled-components";
 import MyProfile from "../../components/profile-comp/my-profile/myProfile";
 import Footer from "../../components/general-components/footer/footer";
 import {
-  CoinsIcon,
   MyProfileIcon,
+  RedeemIcon,
 } from "../../components/general-components/svg";
 import UserBalance from "../../components/profile-comp/my-profile/userBalance";
 
@@ -50,7 +50,7 @@ const Profile = () => {
     {
       option: "My Wallet",
       label: "MyWallet",
-      icon: <CoinsIcon />,
+      icon: <RedeemIcon />,
     },
   ];
 

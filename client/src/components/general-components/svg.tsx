@@ -571,7 +571,7 @@ export const SignoutIcon = () => {
   );
 };
 
-// export const GetAppIcon = () => {
+// export const WalletIcon = () => {
 //   return (
 
 //   )

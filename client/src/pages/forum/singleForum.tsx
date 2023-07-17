@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../../components/general-components/navbar";
-import FooterWrapper from "../../components/general-components/footer/footerWrapper";
 import UserChip from "../../components/general-components/userChip";
 import { useLocation } from "react-router-dom";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
