@@ -53,7 +53,7 @@ const FormButtonCont = styled.div`
     gap: 10px;
     outline: none;
     border: none;
-    background: #332ad5;
+    background: #094067;
     border-radius: 8px;
     cursor: pointer;
 

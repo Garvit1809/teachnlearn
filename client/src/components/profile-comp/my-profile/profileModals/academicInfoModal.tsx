@@ -51,8 +51,7 @@ export const SubmitButton = styled.div`
     align-items: center;
     padding: 16px 40px;
     gap: 10px;
-    background: #332ad5;
-    /* background: #094067; */
+    background: #094067;
     /* background: #ef4565; */
     border-radius: 8px;
     outline: none;
