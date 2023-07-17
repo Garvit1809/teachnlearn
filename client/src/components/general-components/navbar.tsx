@@ -240,12 +240,15 @@ const Navbar = () => {
     }
 
     await axios
-      .get(`${BASE_URL}${apiVersion}/user/search`, {
-        params: {
+      .post(
+        `${BASE_URL}${apiVersion}/user/search`,
+        {
           search: query,
         },
-        headers: getHeaders(localUser?.token || ""),
-      })
+        {
+          headers: getHeaders(localUser?.token || ""),
+        }
+      )
       .then(({ data }) => {
         console.log(data);
         const classes = data.classes;

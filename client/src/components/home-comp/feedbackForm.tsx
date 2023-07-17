@@ -145,8 +145,8 @@ const FeedbackForm = (props: feedbackProps) => {
     <Section>
       <h2>Please share your feedback</h2>
       <h4>
-        Let us know how we can improve our platform and any additional features
-        you would like to see
+        We are under continuous development. Please let us know how we can
+        improve our platform and any additional features you would like to see.
       </h4>
       <Textarea
         label="Your Feedback"

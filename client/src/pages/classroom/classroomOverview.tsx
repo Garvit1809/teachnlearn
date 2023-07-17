@@ -15,12 +15,21 @@ import DetailsContainer from "../../components/classroom-comp/detailsContainer";
 import EnrollBtn from "../../components/classroom-comp/enrollBtn";
 import {
   Copy,
+  FilledIcon,
   PurchaseCoinIcon,
 } from "../../components/general-components/svg";
 import BackBtn from "../../components/request-comp/backBtn";
 import Footer from "../../components/general-components/footer/footer";
-import { ClassIDCont } from "../../components/classroom-comp/overview";
+import {
+  ClassIDCont,
+  IconWrapper,
+  ReviewCard,
+  ReviewContainr,
+  ReviewGrid,
+} from "../../components/classroom-comp/overview";
 import { toast } from "react-toastify";
+import moment from "moment";
+import { classReview } from "../../types/classReviewProps";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -58,13 +67,13 @@ const ChipContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  img {
+  /* img {
     width: 40px;
     height: 40px;
     margin-right: 0.6rem;
-  }
+  } */
 
-  span {
+  /* span {
     font-weight: 600;
     font-size: 22px;
     line-height: 35px;
@@ -72,7 +81,7 @@ const ChipContainer = styled.div`
   }
   span.id {
     font-size: 16px;
-  }
+  } */
 `;
 
 // const PriceCont = styled.div`
@@ -161,11 +170,11 @@ const ClassroomOverview = () => {
   }
 
   useEffect(() => {
-    if (teachCardId) {
-      console.log(location.state);
+    if (teachCardId && userToken) {
+      // console.log(location.state);
       fetchClassOverview();
     }
-  }, [teachCardId]);
+  }, [teachCardId, userToken]);
 
   const checkEnrollTimeLimit = () => {
     const currentDate = new Date();
@@ -190,6 +199,33 @@ const ClassroomOverview = () => {
       toast.success("ID copied to clipboard", toastOptions);
     }
   };
+
+  const checkIsCompleted = () => {
+    const date = new Date();
+    if (teachCard) {
+      const classEndingDate = teachCard?.classEndsAt;
+      const ISOstring = new Date(classEndingDate);
+      return date > ISOstring;
+    }
+  };
+
+  const [reviews, setReviews] = useState<Array<classReview>>();
+  const fetchClassReviews = async () => {
+    await axios
+      .get(`${BASE_URL}${apiVersion}/teach/${teachCard?._id}/reviews`, {
+        headers: getHeaders(userToken ?? ""),
+      })
+      .then(({ data }) => {
+        console.log(data);
+        setReviews(data.reviews);
+      });
+  };
+
+  useEffect(() => {
+    if (userToken && checkIsCompleted() && teachCard?._id) {
+      fetchClassReviews();
+    }
+  }, [userToken, teachCard]);
 
   return (
     <>
@@ -238,15 +274,56 @@ const ClassroomOverview = () => {
                   imgBorder="white"
                   textColor="black"
                   userId={userId}
+                  imgSize="42px"
+                  textSize="20px"
+                  hasUnderline={true}
                 />
                 <ClassIDCont onClick={classIdHandler}>
-                  <Copy />
+                  <Copy color="white" />
                   <span className="id">{teachCard._id}</span>
                 </ClassIDCont>
               </ChipContainer>
               <DetailsContainer desciption={teachCard.description} />
             </ClassOverview>
           </OverviewContainer>
+          {reviews && reviews?.length != 0 && (
+            <ReviewContainr>
+              <h2>Reviews :-</h2>
+              <ReviewGrid>
+                {reviews.map((review, index) => {
+                  return (
+                    <ReviewCard>
+                      <div className="head">
+                        <img src={review.user.photo} alt="reviewer-img" />
+                        <div className="user">
+                          <h4>{review.user.name}</h4>
+                          <div className="rating">
+                            {Array(10)
+                              .fill(0)
+                              .map((_, i) => i + 1)
+                              .map((idx) => (
+                                <IconWrapper
+                                  key={idx}
+                                  colored={idx <= review.rating}
+                                >
+                                  <FilledIcon />
+                                </IconWrapper>
+                              ))}
+                          </div>
+                        </div>
+                        <div className="time">
+                          {moment(review.createdAt).fromNow()}
+                        </div>
+                      </div>
+                      <div className="review">
+                        <p>{review.review}</p>
+                      </div>
+                    </ReviewCard>
+                  );
+                })}
+              </ReviewGrid>
+            </ReviewContainr>
+          )}
         </Section>
       )}
       <Footer />

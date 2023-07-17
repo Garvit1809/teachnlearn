@@ -284,15 +284,16 @@ exports.postUserFeedback = catchAsync(async (req, res, next) => {
 });
 
 exports.searchInApplication = catchAsync(async (req, res, next) => {
-  const search = req.query.search;
+  const { search } = req.body;
   const userId = req.user.id;
-  const currentDate = new Date();
+  // const currentDate = new Date();
 
   const modifiedSearch = new RegExp(search, "i");
+  const objectId = mongoose.isObjectIdOrHexString(search);
+  console.log(objectId);
 
   const users = await User.find({
     $or: [
-      { _id: search },
       { name: { $regex: modifiedSearch } },
       { userName: { $regex: modifiedSearch } },
       { strongSubjects: { $elemMatch: { $eq: modifiedSearch } } },
@@ -302,30 +303,43 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
     .find({ _id: { $ne: userId } })
     .select("name userName tagline photo");
 
-  const learnCards = await LearningCard.find({
-    $or: [
-      { _id: search },
-      { subject: { $regex: modifiedSearch } },
-      { topic: { $regex: modifiedSearch } },
-      { description: { $regex: modifiedSearch } },
-      { programme: { $regex: modifiedSearch } },
-      { tags: { $elemMatch: { $eq: modifiedSearch } } },
-    ],
-    // dueDate: { $gte: currentDate },
-  }).select("topic createdBy");
+  let learnCards;
+  if (objectId) {
+    learnCards = await LearningCard.find({
+      $or: [{ _id: search }],
+      // dueDate: { $gte: currentDate },
+    }).select("topic createdBy");
+  } else {
+    learnCards = await LearningCard.find({
+      $or: [
+        { subject: { $regex: modifiedSearch } },
+        { topic: { $regex: modifiedSearch } },
+        { description: { $regex: modifiedSearch } },
+        { programme: { $regex: modifiedSearch } },
+        { tags: { $elemMatch: { $eq: modifiedSearch } } },
+      ],
+      // dueDate: { $gte: currentDate },
+    }).select("topic createdBy");
+  }
 
-  const classes = await TeachingCard.find({
-    $or: [
-      { _id: search },
-      { referredLearningCard: search },
-      { subject: { $regex: modifiedSearch } },
-      { topic: { $regex: modifiedSearch } },
-      { programme: { $regex: modifiedSearch } },
-      { description: { $regex: modifiedSearch } },
-      { tags: { $elemMatch: { $eq: modifiedSearch } } },
-    ],
-    // classStartsAt: { $gte: currentDate },
-  }).select("topic createdBy -reviews");
+  let classes;
+  if (objectId) {
+    classes = await TeachingCard.find({
+      $or: [{ _id: search }, { referredLearningCard: search }],
+      // classStartsAt: { $gte: currentDate },
+    }).select("topic createdBy -reviews");
+  } else {
+    classes = await TeachingCard.find({
+      $or: [
+        { subject: { $regex: modifiedSearch } },
+        { topic: { $regex: modifiedSearch } },
+        { programme: { $regex: modifiedSearch } },
+        { description: { $regex: modifiedSearch } },
+        { tags: { $elemMatch: { $eq: modifiedSearch } } },
+      ],
+      // classStartsAt: { $gte: currentDate },
+    }).select("topic createdBy -reviews");
+  }
 
   res.status(200).json({
     status: "success",

@@ -125,11 +125,6 @@ interface toggleProps {
 }
 
 const ModeToggle = (props: toggleProps) => {
-  // console.log("ROLE :- " + props.role);
-
-  // const [mode, setMode] = useState(props.role);
-
-  // const [localUser, setLocalUser] = useState<userProps>();
   const [mode, setMode] = useState<string>();
 
   const { fetchLocalUserData } = UserCookie();
@@ -172,11 +167,10 @@ const ModeToggle = (props: toggleProps) => {
           console.log(user);
           localStorage.setItem(localStorageUser, JSON.stringify(user));
           window.dispatchEvent(new Event("storage"));
-          toast.success("Mode updated", toastOptions);
+          // toast.success("Mode updated", toastOptions);
         })
         .catch((data) => {
           toast.error("Mode couldn't be updated", toastOptions);
-          // toast.error(data.response.data.message, toastOptions);
         });
       setMode("teach");
     } else {
@@ -193,10 +187,10 @@ const ModeToggle = (props: toggleProps) => {
         .then(({ data }) => {
           const user = data.updatedUser;
           user.token = props.userToken;
-          console.log(user);
+          // console.log(user);
           localStorage.setItem(localStorageUser, JSON.stringify(user));
           window.dispatchEvent(new Event("storage"));
-          toast.success("Mode updated", toastOptions);
+          // toast.success("Mode updated", toastOptions);
         })
         .catch((data) => {
           toast.error(data.response.data.message);

@@ -396,7 +396,7 @@ const ClassroomCard = (props: classCardProps) => {
             </span>
             <Arrow strokeColor="white" />
           </EnrollBtn>
-          {checkClassTeacher() ? null : checkEnrolledClass() == 0 ? (
+          {/* {checkClassTeacher() ? null : checkEnrolledClass() == 0 ? (
             <Coins
               svgSize={props.cssArr?.svgSize}
               btnSize={props.cssArr?.btnSize}
@@ -404,7 +404,7 @@ const ClassroomCard = (props: classCardProps) => {
               <PurchaseCoinIcon color="white" />
               <span>{props.teachCard.price} Coins</span>
             </Coins>
-          ) : null}
+          ) : null} */}
         </EnrollCont>
       </DetailContainer>
     </Section>

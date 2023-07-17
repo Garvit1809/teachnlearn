@@ -98,7 +98,7 @@ const TagCont = styled.div`
   }
 `;
 
-const ReviewContainr = styled.div`
+export const ReviewContainr = styled.div`
   /* border: 1px solid red; */
 
   h2 {
@@ -113,7 +113,7 @@ const ReviewContainr = styled.div`
   }
 `;
 
-const ReviewGrid = styled.div`
+export const ReviewGrid = styled.div`
   /* border: 1px solid red; */
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -121,7 +121,7 @@ const ReviewGrid = styled.div`
   row-gap: 1.5rem;
 `;
 
-const ReviewCard = styled.div`
+export const ReviewCard = styled.div`
   border: 1px solid #d5d9eb;
   /* background-color: #094067; */
   display: flex;
@@ -173,7 +173,7 @@ interface svgColorProps {
   colored: boolean;
 }
 
-const IconWrapper = styled.div<svgColorProps>`
+export const IconWrapper = styled.div<svgColorProps>`
   /* border: 1px solid red; */
   padding: 0;
   margin-right: 0.4rem;
@@ -303,7 +303,7 @@ const Overview = (props: overallOverviewProps) => {
             <DetailsContainer desciption={props.description} />
           </ClassOverview>
         </OverviewContainer>
-        {reviews && (
+        {reviews && reviews?.length != 0 && (
           <ReviewContainr>
             <h2>Reviews :-</h2>
             <ReviewGrid>
@@ -315,7 +315,7 @@ const Overview = (props: overallOverviewProps) => {
                       <div className="user">
                         <h4>{review.user.name}</h4>
                         <div className="rating">
-                          {Array(5)
+                          {Array(10)
                             .fill(0)
                             .map((_, i) => i + 1)
                             .map((idx) => (

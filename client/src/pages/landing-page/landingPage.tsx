@@ -337,7 +337,7 @@ const slideData = [
     img: img5,
   },
   {
-    heading: "Based on tried and tested Feynman Technique of learning!",
+    heading: "Based on the tried and tested Feynman Technique of learning!",
     description:
       "Experience the best of both worlds with free, reliable classes that you can attend at your own pace and convenience.",
     img: img6,

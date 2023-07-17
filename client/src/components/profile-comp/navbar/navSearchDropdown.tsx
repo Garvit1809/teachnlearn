@@ -223,23 +223,27 @@ const NavSearchDropdown = (props: searchprops) => {
 
   return (
     <Section ref={wrapperRef}>
-      <h3>Users</h3>
-      <ul>
-        {props.searchedUsers.map((user, index) => {
-          return (
-            <UserCard onClick={() => userNavigationHandler(user._id)}>
-              <img src={user.photo} alt="user-img" />
-              <div className="details">
-                <div className="user-name">
-                  <h4>{user.name}</h4>
-                  <h5>@ {user.userName}</h5>
-                </div>
-                <p>{user.tagline}</p>
-              </div>
-            </UserCard>
-          );
-        })}
-      </ul>
+      {props.searchedUsers.length != 0 && (
+        <>
+          <h3>Users</h3>
+          <ul>
+            {props.searchedUsers.map((user, index) => {
+              return (
+                <UserCard onClick={() => userNavigationHandler(user._id)}>
+                  <img src={user.photo} alt="user-img" />
+                  <div className="details">
+                    <div className="user-name">
+                      <h4>{user.name}</h4>
+                      <h5>@ {user.userName}</h5>
+                    </div>
+                    <p>{user.tagline}</p>
+                  </div>
+                </UserCard>
+              );
+            })}
+          </ul>
+        </>
+      )}
       {props.searchedLearnCards.length != 0 && (
         <>
           <h3>Learn Cards</h3>

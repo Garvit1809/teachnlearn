@@ -96,8 +96,9 @@ const CreateTeachCardBtn = styled.div<createTeachCardStyleProps>`
     gap: 10px;
     width: fit-content;
     background: #332ad5;
-    background: ${(p) =>
-      p.isDisabled ? "rgba(239, 69, 101, 0.6)" : "rgba(239, 69, 101, 1)"};
+    /* background: ${(p) =>
+      p.isDisabled ? "rgba(239, 69, 101, 0.6)" : "rgba(239, 69, 101, 1)"}; */
+    background-color: rgba(239, 69, 101, 1);
     border-radius: 8px;
     border: none;
     outline: none;
@@ -184,14 +185,13 @@ const BottonContainer = styled.div<interestedBtnProps>`
     gap: 10px;
     cursor: pointer;
 
-    /* background: rgba(51, 42, 213, 0.6); */
-    background-color: ${(p) =>
+    background: rgba(239, 69, 101, 1);
+    /* background-color: ${(p) =>
       p.isDisabled
         ? "rgba(239, 69, 101, 0.6)"
         : p.isInterested
         ? "rgba(239, 69, 101, 0.6)"
-        : "rgba(239, 69, 101, 1)"};
-    /* background-color: white; */
+        : "rgba(239, 69, 101, 1)"}; */
     border-radius: 8px;
     outline: none;
     border: none;
@@ -433,25 +433,26 @@ const LearnCardOverview = () => {
                   </TagCont>
                 </LearnCardDetailContainer>
                 <TeachCardWrapper>
-                  {learnCardCreaterCheck() ? null : (
+                  {learnCardCreaterCheck() ? null : userRole ==
+                    "learn" ? null : (
                     <CreateTeachCardBtn isDisabled={userRole == "learn"}>
                       <button
                         type="button"
                         onClick={teachCardNavigator}
-                        disabled={userRole == "learn"}
+                        // disabled={userRole == "learn"}
                       >
                         <span>Create teach Card</span>
                         <Arrow strokeColor="#FFFFFF" />
                       </button>
                     </CreateTeachCardBtn>
                   )}
-                  {learnCardCreaterCheck()
+                  {/* {learnCardCreaterCheck()
                     ? null
                     : userRole == "learn" && (
                         <span className="text">
                           Cannot create Teach Card in Learn Mode
                         </span>
-                      )}
+                      )} */}
                 </TeachCardWrapper>
               </LeftContainer>
               <CardOverview>
@@ -474,7 +475,8 @@ const LearnCardOverview = () => {
                 <DetailsContainer desciption={learnCard.description} />
                 <InterestedWrapper>
                   {userId &&
-                    (userId === learnCard.createdBy._id ? null : (
+                    (userId === learnCard.createdBy._id ? null : userRole ==
+                      "teach" ? null : (
                       <BottonContainer
                         isInterested={learnCard.interestedStudents.includes(
                           userId
@@ -483,19 +485,19 @@ const LearnCardOverview = () => {
                       >
                         <button
                           onClick={interestedHandler}
-                          disabled={userRole == "teach"}
+                          // disabled={userRole == "teach"}
                         >
                           Interested
                         </button>
                       </BottonContainer>
                     ))}
-                  {learnCardCreaterCheck()
+                  {/* {learnCardCreaterCheck()
                     ? null
                     : userRole == "teach" && (
                         <span className="text">
                           Cannot show interest in Teach Mode
                         </span>
-                      )}
+                      )} */}
                 </InterestedWrapper>
                 <IDWrapper>
                   <ClassIDCont onClick={classIdHandler}>
