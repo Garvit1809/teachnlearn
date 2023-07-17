@@ -1,5 +1,6 @@
 const Feedback = require("../models/feedbackModel");
 const LearningCard = require("../models/learningCardModel");
+const ReportUser = require("../models/reportUser");
 const Review = require("../models/reviewModel");
 const TeachingCard = require("../models/teachingCardModel");
 const User = require("../models/userModel");

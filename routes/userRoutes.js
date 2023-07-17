@@ -22,7 +22,7 @@ router.get("/mybalance", userController.getUserBalance);
 router.post("/search", userController.searchInApplication);
 router.get("/:userId", userController.getOtherUser);
 router.get("/:userId/myratings", userController.getUserRatings);
+router.post("/:userId/report", userController.reportUser);
 router.patch("/:userId/addfavourite", userController.addUserToFavourites);
-router.post(":/userId/report", userController.reportUser);
 
 module.exports = router;

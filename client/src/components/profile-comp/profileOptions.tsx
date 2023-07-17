@@ -69,7 +69,7 @@ const ProfileOptions = ({
     setSelectedOption(label);
     setSelectedLeftScreen(label);
   };
-  
+
   return (
     <Section>
       <Menu>
@@ -90,7 +90,7 @@ const ProfileOptions = ({
       {isOtherUser && userToken && favouriteUsers && (
         <FavouriteUser userToken={userToken} favouriteUsers={favouriteUsers} />
       )}
-      {isOtherUser && <ReportUser />}
+      {isOtherUser && userToken && <ReportUser userToken={userToken} />}
     </Section>
   );
 };

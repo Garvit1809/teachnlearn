@@ -18,7 +18,7 @@ const reportUserSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-feedbackSchema.pre(/^find/, function (next) {
+reportUserSchema.pre(/^find/, function (next) {
   this.populate({
     path: "reportedBy",
     select: "name userName email",
