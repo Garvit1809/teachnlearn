@@ -108,62 +108,6 @@ const carouselData = [
     ),
     text: "The Feynman Technique of Learning",
   },
-  {
-    iframe: (
-      <iframe
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/Dj49m3dC1yk"
-        title="YouTube video player"
-        frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowFullScreen
-      ></iframe>
-    ),
-    text: "The Feynman Technique of Learning",
-  },
-  {
-    iframe: (
-      <iframe
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/Dj49m3dC1yk"
-        title="YouTube video player"
-        frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowFullScreen
-      ></iframe>
-    ),
-    text: "The Feynman Technique of Learning",
-  },
-  {
-    iframe: (
-      <iframe
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/Dj49m3dC1yk"
-        title="YouTube video player"
-        frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowFullScreen
-      ></iframe>
-    ),
-    text: "The Feynman Technique of Learning",
-  },
-  {
-    iframe: (
-      <iframe
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/Dj49m3dC1yk"
-        title="YouTube video player"
-        frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowFullScreen
-      ></iframe>
-    ),
-    text: "The Feynman Technique of Learning",
-  },
 ];
 
 const items = carouselData.map((data, index) => {

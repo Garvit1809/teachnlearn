@@ -25,7 +25,9 @@ exports.getOtherUser = catchAsync(async (req, res, next) => {
     return next(new AppError("Please provide a user id.", 404));
   }
 
-  const user = await User.findById(userId).select("-role -coins");
+  const user = await User.findById(userId).select(
+    "-email -phoneNumber -role -coins -forumCoins -reviewCoins -transactionHistory -favouriteUsers"
+  );
 
   if (!user) {
     return next(new AppError("There is no user with such ID.", 404));
@@ -419,5 +421,30 @@ exports.addUserToFavourites = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     updatedUser,
+  });
+});
+
+exports.reportUser = catchAsync(async (req, res, next) => {
+  const userId = req.user.id;
+  const reportedUserId = req.params.userId;
+  const { feedback } = req.body;
+
+  if (!feedback && !reportedUserId) {
+    return next(new AppError("Please provide sufficient information!!"));
+  }
+
+  const report = await ReportUser.create({
+    reportedBy: userId,
+    reported: reportedUserId,
+    feedback,
+  });
+
+  if (!report) {
+    return next(new AppError("Couldnt submit user report!!"));
+  }
+
+  res.status(201).json({
+    status: "success",
+    report,
   });
 });

@@ -20,7 +20,12 @@ const Section = styled.div`
   line-height: 30px;
 `
 
+
+
 const ReportUser = () => {
+
+  // user id, localuserid
+
   return (
     <Section>
       Report User

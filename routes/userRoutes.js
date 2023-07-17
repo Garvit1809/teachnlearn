@@ -23,5 +23,6 @@ router.post("/search", userController.searchInApplication);
 router.get("/:userId", userController.getOtherUser);
 router.get("/:userId/myratings", userController.getUserRatings);
 router.patch("/:userId/addfavourite", userController.addUserToFavourites);
+router.post(":/userId/report", userController.reportUser);
 
 module.exports = router;
