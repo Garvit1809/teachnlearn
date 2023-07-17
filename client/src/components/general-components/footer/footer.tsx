@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import TNLLogo from "../../../assets/tnl-logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FooterLinks from "./footerLinks";
 import { Facebook, Instagram, Twitter, Youtube } from "../svg";
+import GetAppImg from "../../../assets/GetApp.png";
+import { topNavigator } from "../../../utils/helperFunctions";
 
 const Section = styled.div`
   /* border-top: 1px solid #7d89b0; */
@@ -27,6 +29,7 @@ const Links = styled.div`
   grid-template-columns: 2fr 1fr 1.4fr 1fr;
   border-bottom: 1px solid #d0d5dd;
   padding-bottom: 2.5rem;
+  align-items: flex-start;
 
   @media only screen and (max-width: 1000px) {
     /* background-color: lightblue; */
@@ -72,12 +75,24 @@ const Socials = styled.div`
 `;
 
 const GetApp = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+
+  img {
+    width: 120px;
+    height: 80px;
+    object-fit: contain;
+    display: block;
+    cursor: pointer;
+  }
+
   h5 {
     font-weight: 700;
     font-size: 18px;
     line-height: 25px;
-    color: #000000;
     color: #d8eefe;
+    margin-bottom: 1rem;
   }
 `;
 
@@ -119,6 +134,13 @@ const socialData = [
 ];
 
 const Footer = () => {
+  const navigate = useNavigate();
+
+  const navgationhandler = () => {
+    topNavigator();
+    navigate("/app-coming-soon");
+  };
+
   return (
     <Section>
       <Links>
@@ -133,6 +155,7 @@ const Footer = () => {
         </div>
         <GetApp>
           <h5>Get the app</h5>
+          <img src={GetAppImg} alt="app-link" onClick={navgationhandler} />
         </GetApp>
       </Links>
       <Copyright>

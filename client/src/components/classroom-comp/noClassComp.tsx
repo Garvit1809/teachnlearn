@@ -32,7 +32,7 @@ const Section = styled.div`
     align-items: center;
     gap: 0.625rem;
     border-radius: 0.5rem;
-    background: #332ad5;
+    background: #ef4565;
     color: #fff;
     border: none;
     cursor: pointer;

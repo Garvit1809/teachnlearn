@@ -13,12 +13,9 @@ import CreateLearnCard from "./components/request-comp/createLearnCard";
 import CreateTeachCard from "./components/request-comp/createTeachCard";
 import Requests from "./pages/requests/requests";
 import LearnCardOverview from "./components/request-comp/learnCardOverview";
-import { UserCookie } from "./utils/userCookie";
-import { useEffect, useState } from "react";
 import LandingPage from "./pages/landing-page/landingPage";
 import ClassroomOverview from "./pages/classroom/classroomOverview";
 import CreateForum from "./components/forum-components/createForum";
-import { userProps } from "./components/profile-comp/my-profile/myProfile";
 import Blogs from "./pages/blogs/blogs";
 import Groups from "./pages/groups/groups";
 import MyAI from "./pages/ai/myAI";
@@ -58,6 +55,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/terms-and-privacy" element={<Terms />} />
+        <Route path="/app-coming-soon" element={<FreeBlogs />} />
       </Routes>
     </div>
   );
