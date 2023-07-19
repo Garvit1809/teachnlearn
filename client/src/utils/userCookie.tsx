@@ -37,12 +37,13 @@ export function UserCookie() {
 
   async function fetchLocalUserData() {
     const user = localStorage.getItem(localStorageUser);
-    let data;
+    let data = undefined;
     if (user) {
       data = await JSON.parse(user);
+      setLocalUser(data);
+      return data;
     }
-    setLocalUser(data);
-    return data;
+    throw new Error("User session expired!!");
   }
 
   async function fetchLocalUserToken() {

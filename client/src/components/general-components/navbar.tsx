@@ -192,16 +192,29 @@ const Navbar = (props: navProps) => {
 
   const { fetchLocalUserData } = UserCookie();
 
+  const [renderNav, setRenderNav] = useState(false);
+
   useEffect(() => {
-    fetchLocalUserData().then((user) => {
-      setLocalUser(user);
-    });
+    console.log("CHECKING");
+
+    fetchLocalUserData()
+      .then((user) => {
+        setLocalUser(user);
+        setRenderNav(true);
+      })
+      .catch(() => {
+        setRenderNav(false);
+      });
 
     window.addEventListener("storage", () => {
-      console.log("Change to local storage!");
-      fetchLocalUserData().then((user) => {
-        setLocalUser(user);
-      });
+      fetchLocalUserData()
+        .then((user) => {
+          setLocalUser(user);
+          setRenderNav(true);
+        })
+        .catch(() => {
+          setRenderNav(false);
+        });
     });
   }, []);
 
@@ -300,7 +313,7 @@ const Navbar = (props: navProps) => {
 
   const [showSideBar, setshowSideBar] = useState<boolean>(false);
 
-  return (
+  return renderNav ? (
     <>
       <Section showNav={showSideBar}>
         <ImageContainer onClick={() => navigationHandler("/")}>
@@ -377,7 +390,7 @@ const Navbar = (props: navProps) => {
       </ModeWrapper>
       <NavbarLinks />
     </>
-  );
+  ) : null;
 };
 
 const Bars = () => {

@@ -36,26 +36,25 @@ const Home = () => {
     Array<teachinCardProps>
   >([]);
   const [learnCards, setLearnCards] = useState<Array<learnCardProps>>([]);
+  const [renderHome, setRenderHome] = useState(false);
+  const [recommendedIsLoading, setRecommendedIsLoading] = useState(true);
+  const [upcomingIsLoading, setUpcomingIsLoading] = useState(true);
+  const [requestIsLoading, setRequestIsLoading] = useState(true);
 
   const { fetchLocalUserData } = UserCookie();
 
   const navigate = useNavigate();
 
-  const [renderHome, setRenderHome] = useState(false);
-
-  const [recommendedIsLoading, setRecommendedIsLoading] = useState(true);
-  const [upcomingIsLoading, setUpcomingIsLoading] = useState(true);
-  const [requestIsLoading, setRequestIsLoading] = useState(true);
-
   useEffect(() => {
     fetchLocalUserData()
       .then((data) => {
+        console.log(data);
         setUserToken(data.token);
         setuserId(data._id);
         setUserRole(data.role);
         setRenderHome(true);
       })
-      .catch(() => {
+      .catch((err) => {
         navigate("/teachNlearn");
       });
   }, []);
