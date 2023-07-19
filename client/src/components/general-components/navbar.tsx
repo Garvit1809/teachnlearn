@@ -181,7 +181,9 @@ const ModeWrapper = styled.div`
 `;
 
 interface navProps {
-  setSearchFeedQuery?: any;
+  // setSearchFeedQuery?: any;
+  updateSearchFeedProps?: any;
+  dontShowSearchDropDown?: boolean;
 }
 
 const Navbar = (props: navProps) => {
@@ -237,13 +239,15 @@ const Navbar = (props: navProps) => {
   const [query, setQuery] = useState("");
 
   const searchHandler = async (query: string) => {
-    props.setSearchFeedQuery(query);
     setshowDropDown(true);
     setQuery(query);
     if (query === "") {
       setSearchedUsers([]);
       setSearchedLearnCards([]);
       setSearchedTeachCards([]);
+      if (props.updateSearchFeedProps) {
+        props.updateSearchFeedProps(query, [], [], []);
+      }
       return;
     }
 
@@ -265,6 +269,9 @@ const Navbar = (props: navProps) => {
         setSearchedUsers(users);
         setSearchedLearnCards(learnCards);
         setSearchedTeachCards(classes);
+        if (props.updateSearchFeedProps) {
+          props.updateSearchFeedProps(query, users, learnCards, classes);
+        }
       })
       .catch((data) => {
         console.log(data);
@@ -277,6 +284,9 @@ const Navbar = (props: navProps) => {
       navigate("/search/feed", {
         state: {
           keyword: query,
+          searchedUsers: searchedUsers,
+          searchedLearnCards: searchedLearnCards,
+          searchedTeachCards: searchedTeachCards,
         },
       });
     }
@@ -307,14 +317,16 @@ const Navbar = (props: navProps) => {
               searchedLearnCards.length == 0 &&
               searchedTeachCards.length == 0 ? undefined : localUser &&
                 showDropDown ? (
-                <NavSearchDropdown
-                  searchedUsers={searchedUsers}
-                  searchedLearnCards={searchedLearnCards}
-                  searchedTeachCards={searchedTeachCards}
-                  closeSearchBox={closeSearchBox}
-                  localUserId={localUser._id}
-                  localUserClassesEnrolled={localUser.classesEnrolled}
-                />
+                props.dontShowSearchDropDown ? undefined : (
+                  <NavSearchDropdown
+                    searchedUsers={searchedUsers}
+                    searchedLearnCards={searchedLearnCards}
+                    searchedTeachCards={searchedTeachCards}
+                    closeSearchBox={closeSearchBox}
+                    localUserId={localUser._id}
+                    localUserClassesEnrolled={localUser.classesEnrolled}
+                  />
+                )
               ) : undefined
             }
           />

@@ -13,6 +13,7 @@ import { getHeaders } from "../../utils/helperFunctions";
 import ClassroomGrid from "../classroom-comp/classroomGrid";
 import LearnCardGrid from "../request-comp/learnCardGrid";
 import { styled } from "styled-components";
+import UserList from "../profile-comp/my-profile/userList";
 
 const SearchFeedWrapper = styled.div`
   margin: 0 6.3vw 0 6.3vw;
@@ -36,52 +37,23 @@ const SearchFeed = () => {
     Array<teachinCardProps>
   >([]);
 
-  const searchHandler = async (token: string) => {
-    await axios
-      .post(
-        `${BASE_URL}${apiVersion}/user/search`,
-        {
-          search: query,
-        },
-        {
-          headers: getHeaders(token),
-        }
-      )
-      .then(({ data }) => {
-        console.log("searchfeeddata");
-        console.log(data);
-        const classes = data.classes;
-        const learnCards = data.learnCards;
-        const users = data.users;
-        setSearchedUsers(users);
-        setSearchedLearnCards(learnCards);
-        setSearchedTeachCards(classes);
-      })
-      .catch((data) => {
-        console.log(data);
-      });
-  };
-
   useEffect(() => {
     const keyword = location.state.keyword;
+    const users = location.state.searchedUsers;
+    const learnCards = location.state.searchedLearnCards;
+    const teachCards = location.state.searchedTeachCards;
     setquery(keyword);
+    setSearchedUsers(users);
+    setSearchedLearnCards(learnCards);
+    setSearchedTeachCards(teachCards);
 
     fetchLocalUserData().then((user) => {
       setLocalUser(user);
     });
   }, []);
 
-  useEffect(() => {
-    if (localUser && query != "") {
-      console.log("CHECKING");
-
-      searchHandler(localUser.token);
-    }
-  }, [query, localUser]);
-
   const [activeLink, setActiveLink] = useState("users");
   const labels = ["users", "learn cards", "teach cards"];
-
   const navigationHandler = (navigateTo: string) => {
     setActiveLink(navigateTo);
   };
@@ -90,22 +62,35 @@ const SearchFeed = () => {
 
   useEffect(() => {
     if (activeLink == "users") {
-      // setElement();
+      localUser &&
+        setElement(
+          <UserList localUserId={localUser._id} userArr={searchedUsers} />
+        );
     } else if (activeLink == "learn cards") {
       setElement(<LearnCardGrid learnCards={searchedLearnCards} />);
     } else if (activeLink == "teach cards") {
       setElement(<ClassroomGrid teachCards={searchedTeachCards} />);
     }
-  }, [activeLink]);
+  }, [activeLink, query]);
 
-  const navSearchHandler = (keyword: string) => {
-    console.log(keyword);
+  const updateFunc = (
+    keyword: string,
+    users: Array<userProps>,
+    learnCards: Array<learnCardProps>,
+    classes: Array<teachinCardProps>
+  ) => {
     setquery(keyword);
+    setSearchedUsers(users);
+    setSearchedLearnCards(learnCards);
+    setSearchedTeachCards(classes);
   };
 
   return (
     <>
-      <Navbar setSearchFeedQuery={navSearchHandler} />
+      <Navbar
+        updateSearchFeedProps={updateFunc}
+        dontShowSearchDropDown={true}
+      />
       <SearchFeedWrapper>
         <HorizontalNavigator
           activeLink={activeLink}

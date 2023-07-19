@@ -5,10 +5,12 @@ import styled from "styled-components";
 import MyProfile from "../../components/profile-comp/my-profile/myProfile";
 import Footer from "../../components/general-components/footer/footer";
 import {
+  FavouriteIcon,
   MyProfileIcon,
   RedeemIcon,
 } from "../../components/general-components/svg";
 import UserBalance from "../../components/profile-comp/my-profile/userBalance";
+import UserList from "../../components/profile-comp/my-profile/favouriteUserList";
 
 export const ProfileSection = styled.div`
   border: 2px solid #d5d9eb;
@@ -33,10 +35,9 @@ const Profile = () => {
       setElement(<MyProfile />);
     } else if (selectedLeftScreen == "MyWallet") {
       setElement(<UserBalance />);
+    } else if (selectedLeftScreen == "MyFavourites") {
+      setElement(<UserList />);
     }
-    // } else if (selectedLeftScreen == "InviteFriends") {
-    //   setElement(<InviteFriends />);
-    // }
   }, [selectedLeftScreen]);
 
   const [element, setElement] = useState<ReactElement>(<MyProfile />);
@@ -51,6 +52,11 @@ const Profile = () => {
       option: "My Wallet",
       label: "MyWallet",
       icon: <RedeemIcon />,
+    },
+    {
+      option: "My Favourites",
+      label: "MyFavourites",
+      icon: <FavouriteIcon />,
     },
   ];
 

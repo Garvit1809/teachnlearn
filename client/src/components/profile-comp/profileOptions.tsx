@@ -13,6 +13,8 @@ const Section = styled.div`
   border: 1px solid #d5d9eb;
   border-radius: 32px;
   height: max-content;
+  position: sticky;
+  top: 1rem;
 `;
 
 const Menu = styled.div`

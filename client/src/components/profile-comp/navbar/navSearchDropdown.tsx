@@ -229,7 +229,7 @@ const NavSearchDropdown = (props: searchprops) => {
           <ul>
             {props.searchedUsers.map((user, index) => {
               return (
-                <UserCard onClick={() => userNavigationHandler(user._id)}>
+                <UserCard key={index} onClick={() => userNavigationHandler(user._id)}>
                   <img src={user.photo} alt="user-img" />
                   <div className="details">
                     <div className="user-name">

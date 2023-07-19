@@ -11,6 +11,7 @@ router.get("/me", userController.getMe, userController.getUser);
 router.get("/myclasses", teachingCardController.getUserEnrolledClasses);
 router.get("/myclasses/completed", teachingCardController.getCompletedClasses);
 router.get("/myclasses/upcoming", teachingCardController.getUpcomingClasses);
+router.get("/myfavourites", userController.getFavouriteUsers);
 router.post("/my-feedback", userController.postUserFeedback);
 router.patch("/deleteMe", userController.deleteMe);
 router.patch("/myMode", userController.updateUserMode);

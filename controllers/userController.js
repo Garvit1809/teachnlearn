@@ -373,6 +373,22 @@ exports.getUserBalance = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getFavouriteUsers = catchAsync(async (req, res, next) => {
+  const userId = req.user.id;
+
+  const userFavourites = await User.findById(userId)
+    .select("favouriteUsers")
+    .populate({
+      path: "favouriteUsers",
+      select: "name userName photo tagline",
+    });
+
+  res.status(200).json({
+    status: "success",
+    userFavourites,
+  });
+});
+
 exports.addUserToFavourites = catchAsync(async (req, res, next) => {
   const userId = req.user.id;
 
