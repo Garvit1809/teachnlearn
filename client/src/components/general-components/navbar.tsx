@@ -180,7 +180,11 @@ const ModeWrapper = styled.div`
   }
 `;
 
-const Navbar = () => {
+interface navProps {
+  setSearchFeedQuery?: any;
+}
+
+const Navbar = (props: navProps) => {
   const [localUser, setLocalUser] = useState<userProps>();
   const [showProfileOptions, setShowProfileOptions] = useState(false);
 
@@ -212,7 +216,7 @@ const Navbar = () => {
 
   const signoutHandler = () => {
     localStorage.clear();
-    navigate("/signin");
+    navigate("/teachNlearn");
   };
 
   const closeDropDown = () => {
@@ -230,8 +234,12 @@ const Navbar = () => {
     Array<teachinCardProps>
   >([]);
 
+  const [query, setQuery] = useState("");
+
   const searchHandler = async (query: string) => {
+    props.setSearchFeedQuery(query);
     setshowDropDown(true);
+    setQuery(query);
     if (query === "") {
       setSearchedUsers([]);
       setSearchedLearnCards([]);
@@ -263,6 +271,17 @@ const Navbar = () => {
       });
   };
 
+  const searchNavigator = () => {
+    if (query != "") {
+      topNavigator();
+      navigate("/search/feed", {
+        state: {
+          keyword: query,
+        },
+      });
+    }
+  };
+
   const [showDropDown, setshowDropDown] = useState(true);
 
   const closeSearchBox = () => {
@@ -281,6 +300,8 @@ const Navbar = () => {
           <SearchBar
             placeholderText="Search for a request, class, card id, topic, subject, person, course etc."
             updateSearch={searchHandler}
+            showButton={true}
+            onEnterFunc={searchNavigator}
             elem={
               searchedUsers.length == 0 &&
               searchedLearnCards.length == 0 &&

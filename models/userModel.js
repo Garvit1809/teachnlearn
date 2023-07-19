@@ -98,6 +98,10 @@ const userSchema = new mongoose.Schema({
         type: Date,
         required: [true, "Please specify the end timing of the class!!"],
       },
+      isCancelled: {
+        type: Boolean,
+        default: false,
+      },
     },
   ],
   classesTaken: [

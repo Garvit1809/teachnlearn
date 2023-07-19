@@ -8,12 +8,12 @@ const Section = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 2rem;
-  row-gap: 4rem;
+  row-gap: 3.2rem;
 `;
 
 interface gridProps {
   teachCards: Array<teachinCardProps>;
-  elemType: string,
+  elemType?: string,
 }
 
 export const cardSizes = {

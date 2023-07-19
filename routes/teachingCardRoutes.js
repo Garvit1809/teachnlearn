@@ -23,28 +23,21 @@ router.use("/:teachingCardId/reviews", reviewRouter);
 router.use(protect);
 
 router.get("/recommended-classes", teachingCardController.topTeachCards);
-
 router
   .route("/")
   .get(teachingCardController.getAllTeachCards)
   .post(teachingCardController.createTeachCard);
-
 router.get("/:teachCardId", teachingCardController.getOneTeachCard);
 router.get(
   "/:teachCardId/overview",
   teachingCardController.getTeachCardOverview
 );
-
-// router.patch(
-//   "/:teachCardId/interested",
-//   teachingCardController.interestedInTeachCard
-// );
+router.patch("/:teachCardId/cancel", teachingCardController.cancelClass);
 router.patch(
   "/:teachingCardId/callLink",
   announcementController.restricToAdmin,
   teachingCardController.updateClassLink
 );
-
 router.patch("/:teachCardId/enroll", teachingCardController.enrollInClass);
 
 module.exports = router;

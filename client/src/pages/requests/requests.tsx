@@ -12,6 +12,7 @@ import { DATA_LIMIT } from "../../utils/globalConstants";
 import { UserCookie } from "../../utils/userCookie";
 import { getHeaders } from "../../utils/helperFunctions";
 import Loader from "../../components/general-components/loader";
+import LearnCardGrid from "../../components/request-comp/learnCardGrid";
 
 const Section = styled.div`
   padding: 0 6.3vw;
@@ -84,9 +85,9 @@ const Requests = () => {
         params: {
           limit: DATA_LIMIT,
           page: requestPageSet,
-          // dueDate: {
-          //   $gte: curentDate,
-          // },
+          dueDate: {
+            $gte: curentDate,
+          },
         },
         headers: getHeaders(userToken ?? ""),
       })
@@ -121,11 +122,7 @@ const Requests = () => {
         {isLoading ? (
           <Loader />
         ) : learnCards.length != 0 ? (
-          <CardGrid>
-            {learnCards.map((card, index) => {
-              return <LearnCard key={index} {...card} />;
-            })}
-          </CardGrid>
+          <LearnCardGrid learnCards={learnCards} />
         ) : null}
         {learnCards && hasMoreData && (
           <LoadMore loaderLoading={loaderLoading} onClick={fetchLearnCards} />

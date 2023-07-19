@@ -295,44 +295,61 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
   });
 });
 
-// not ready
-// exports.interestedInTeachCard = catchAsync(async (req, res, next) => {
-//   const userId = req.user.id;
+exports.cancelClass = catchAsync(async (req, res, next) => {
+  const userId = req.user.id;
+  const teachCardId = req.params.teachCardId;
 
-//   const teachCardId = req.params.teachCardId;
+  const teachCard = await TeachingCard.findByIdAndUpdate(teachCardId, {
+    hasCancelled: true,
+  });
+  console.log(teachCard);
+  const teacher = teachCard.createdBy._id;
 
-//   const teachCard = await TeachingCard.findById(teachCardId);
-//   const interestedStudents = teachCard.interestedStudents;
-//   const isAlreadyInterested = interestedStudents.includes(userId);
+  // teacher check
+  if (userId != teacher) {
+    return next(new AppError("Only class teacher can cancel class!!"));
+  }
 
-//   if (isAlreadyInterested) {
-//     return next(
-//       new AppError(
-//         "User is already in the interested users for the Learn Card!!"
-//       )
-//     );
-//   }
+  const currentDate = new Date();
+  const endDate = teachCard.classEndsAt;
 
-//   const updatedLearnCard = await LearningCard.findByIdAndUpdate(
-//     teachCardId,
-//     {
-//       $push: { interestedStudents: userId },
-//     },
-//     {
-//       new: true,
-//       runValidators: true,
-//     }
-//   );
+  // date check
+  if (endDate < currentDate) {
+    return next(
+      new AppError("Cannot cancel the class, class has already ended!!")
+    );
+  }
 
-//   if (!updatedLearnCard) {
-//     return next(new AppError("Learn Card couldnt be updated!! Try again!"));
-//   }
+  const enrolledUsers = teachCard.studentsEnrolled;
+  const classPrice = 10;
+  console.log(enrolledUsers);
 
-//   res.status(200).json({
-//     status: "success",
-//     updatedLearnCard,
-//   });
-// });
+  enrolledUsers.forEach(async (student) => {
+    await User.updateOne(
+      {
+        _id: student._id,
+        "classesEnrolled.class": teachCardId,
+      },
+      {
+        $inc: { coins: classPrice },
+        $set: {
+          "classesEnrolled.$.isCancelled": true,
+        },
+      }
+    );
+  });
+
+  const teacherCoinDecrement = classPrice * enrolledUsers.length;
+
+  const updatedTeacher = await User.findByIdAndUpdate(teacher, {
+    $inc: { coins: -teacherCoinDecrement },
+  });
+
+  res.status(200).json({
+    status: "success",
+    updatedTeacher,
+  });
+});
 
 exports.updateClassLink = catchAsync(async (req, res, next) => {
   const { callLink } = req.body;

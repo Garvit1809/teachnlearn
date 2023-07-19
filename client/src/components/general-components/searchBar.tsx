@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react";
 import styled from "styled-components";
 import { Arrow, SearchIcon } from "./svg";
+import { useNavigate } from "react-router-dom";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -10,9 +11,9 @@ const Section = styled.div`
     display: flex;
     width: 100%;
     align-items: center;
-    /* justify-content: ; */
+    /* column-gap: 1rem; */
 
-    /* button {
+    button {
       display: flex;
       flex-direction: row;
       justify-content: center;
@@ -22,15 +23,15 @@ const Section = styled.div`
 
       width: 47px;
       height: 47px;
+      margin-left: 1rem;
 
-      background: #000000;
       background: #094067;
       border-radius: 8px;
 
       border: 0;
       outline: none;
       cursor: pointer;
-    } */
+    }
   }
 `;
 
@@ -70,14 +71,19 @@ const SearchBox = styled.div`
 interface searchProps {
   placeholderText?: string;
   updateSearch?: any;
-  // searchResults?: Array<any>;
   elem?: ReactElement;
+  showButton?: boolean;
+  onEnterFunc?: any;
 }
 
 const SearchBar = (props: searchProps) => {
   return (
     <Section>
-      <form onSubmit={(e) => e.preventDefault()}>
+      <form
+        onSubmit={
+          props.onEnterFunc ? props.onEnterFunc : (e) => e.preventDefault()
+        }
+      >
         <SearchBox>
           <SearchIcon />
           <input
@@ -86,9 +92,11 @@ const SearchBar = (props: searchProps) => {
             onChange={(e) => props.updateSearch(e.target.value)}
           />
         </SearchBox>
-        {/* <button type="button">
-          <Arrow strokeColor="white" />
-        </button> */}
+        {props.showButton && (
+          <button type="button" onClick={props.onEnterFunc}>
+            <Arrow strokeColor="white" />
+          </button>
+        )}
       </form>
       {props.elem}
     </Section>

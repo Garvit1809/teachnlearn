@@ -302,9 +302,8 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
       { strongSubjects: { $elemMatch: { $eq: modifiedSearch } } },
       { preferredLanguages: { $elemMatch: { $eq: modifiedSearch } } },
     ],
-  })
-    .find({ _id: { $ne: userId } })
-    .select("name userName tagline photo");
+  }).find({ _id: { $ne: userId } });
+  // .select("name userName tagline photo");
 
   let learnCards;
   if (objectId) {
@@ -322,7 +321,8 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
         { tags: { $elemMatch: { $eq: modifiedSearch } } },
       ],
       // dueDate: { $gte: currentDate },
-    }).select("topic createdBy");
+    });
+    // .select("topic createdBy");
   }
 
   let classes;
@@ -341,7 +341,8 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
         { tags: { $elemMatch: { $eq: modifiedSearch } } },
       ],
       // classStartsAt: { $gte: currentDate },
-    }).select("topic createdBy -reviews");
+    });
+    // .select("topic createdBy -reviews");
   }
 
   res.status(200).json({

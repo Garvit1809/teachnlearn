@@ -24,6 +24,7 @@ import Contact from "./pages/contact/contact";
 import Terms from "./pages/terms/terms";
 import UserProfile from "./pages/profile/userProfile";
 import FreeBlogs from "./pages/blogs/freeBlogs";
+import SearchFeed from "./components/general-components/searchFeed";
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/terms-and-privacy" element={<Terms />} />
         <Route path="/app-coming-soon" element={<FreeBlogs />} />
+        <Route path="/search/feed" element={<SearchFeed />} />
       </Routes>
     </div>
   );

@@ -20,7 +20,7 @@ const Section = styled.div`
   gap: 2.5rem;
 `;
 
-const ElementWrapper = styled.div`
+export const ElementWrapper = styled.div`
   margin: 2rem 0 0;
   /* border: 2px solid green; */
 `;

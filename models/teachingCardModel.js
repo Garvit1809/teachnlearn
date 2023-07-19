@@ -116,6 +116,10 @@ const teachingCardSchema = new mongoose.Schema(
         ref: "Announcement",
       },
     ],
+    hasCancelled: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
