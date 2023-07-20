@@ -14,7 +14,10 @@ const teachingCardSchema = new mongoose.Schema(
     topic: {
       type: String,
       required: [true, "Please provide the topic to be taught"],
-      min: [30, "Topic should be briefly explained with 30 characters"],
+      minlength: [
+        30,
+        "Topic should be briefly explained with atleast 50 characters",
+      ],
     },
     programme: {
       type: String,
