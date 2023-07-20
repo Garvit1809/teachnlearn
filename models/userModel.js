@@ -14,12 +14,12 @@ const userSchema = new mongoose.Schema({
     required: [true, "Please provide a username!!"],
     trim: true,
     unique: true,
-    max: [22, "Username must be less than 22 characters"],
+    maxlength: [22, "Username must be less than 22 characters"],
   },
   tagline: {
     type: String,
     trim: true,
-    min: [30, "Tagline should be atleast 30 characters long"],
+    minlength: [30, "Tagline should be atleast 30 characters long"],
   },
   // can change in 60 days
   email: {

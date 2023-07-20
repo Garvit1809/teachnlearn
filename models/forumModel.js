@@ -9,12 +9,12 @@ const forumSchema = mongoose.Schema(
     topic: {
       type: String,
       required: [true, "A forum must have  a topic"],
-      maxLength: [25, "Tagline mustn't be more than 25 characters!!"],
+      maxlength: [25, "Tagline mustn't be more than 25 characters!!"],
     },
     tagline: {
       type: String,
       required: [true, "A forum must have a short tagline"],
-      maxLength: [250, "Tagline mustn't be more than 250 characters!!"],
+      maxlength: [250, "Tagline mustn't be more than 250 characters!!"],
       trim: true,
     },
     question: {
