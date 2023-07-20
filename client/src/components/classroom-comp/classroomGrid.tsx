@@ -26,7 +26,7 @@ export const cardSizes = {
   btnSize: "16px",
   svgSize: "18px",
   userChipImgSize: "26px",
-  userChipTextSize: "16px",
+  userChipTextSize: "18px",
 };
 
 const ClassroomGrid = (props: gridProps) => {
