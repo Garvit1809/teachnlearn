@@ -10,6 +10,7 @@ import { isValidEmail, topNavigator } from "../../utils/helperFunctions";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "../../components/general-components/loader";
 
 const Section = styled.div`
   display: flex;
@@ -92,10 +93,13 @@ const FormContainer = styled.div`
 
 const ButtonContainer = styled.div`
   /* border: 1px solid red; */
-  width: 70%;
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   button {
-    background: #332ad5;
     background: #094067;
     border-radius: 8px;
     outline: none;
@@ -106,6 +110,8 @@ const ButtonContainer = styled.div`
     line-height: 27px;
     cursor: pointer;
     width: 100%;
+    margin: 0rem auto;
+    box-sizing: border-box;
   }
 `;
 
@@ -161,8 +167,11 @@ const Signin = () => {
     return true;
   };
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const loginHandler = async (e: any) => {
     e.preventDefault();
+    setIsLoading(true);
     if (handleValidation()) {
       await axios
         .post(`${BASE_URL}${apiVersion}/auth/login`, {
@@ -173,12 +182,14 @@ const Signin = () => {
           const user = data.data.user;
           user.token = data.token;
           localStorage.setItem(localStorageUser, JSON.stringify(user));
+          setIsLoading(false);
           navigationHandler("/");
         })
         .catch((data) => {
           // console.log(data.response);
           const errMsg = data.response.data.message;
           console.log(errMsg);
+          setIsLoading(false);
           toast.error(errMsg, toastOptions);
         });
     }
@@ -191,7 +202,7 @@ const Signin = () => {
           <LoginForm {...loginData} updateFields={updateFields} />
           <ButtonContainer>
             <button type="submit" onClick={loginHandler}>
-              Login
+              {isLoading ? <Loader color="white" loaderHeight="2rem"/> : "Login"}
             </button>
           </ButtonContainer>
           <span className="login">

@@ -13,6 +13,7 @@ import { UserCookie } from "../../utils/userCookie";
 import { isValidEmail, topNavigator } from "../../utils/helperFunctions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "../../components/general-components/loader";
 
 const Section = styled.div`
   display: flex;
@@ -106,7 +107,6 @@ const ButtonContainer = styled.div`
   justify-content: center;
 
   button {
-    background: #332ad5;
     background: #094067;
     border-radius: 8px;
     outline: none;
@@ -224,12 +224,15 @@ const NewSignup = () => {
     return true;
   };
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!isLastStep) return next();
     else {
-      e.preventDefault();
       // console.log(userData);
+      e.preventDefault();
+      setIsLoading(true);
       if (handleValidation()) {
         await axios
           .post(`${BASE_URL}${apiVersion}/auth/signup`, {
@@ -254,6 +257,7 @@ const NewSignup = () => {
               localStorageUser,
               JSON.stringify(data.data.user)
             );
+            setIsLoading(false);
             navigateLink("/");
           })
           .catch((data) => {
@@ -263,6 +267,7 @@ const NewSignup = () => {
               return;
             }
             const error = data.response.data.message;
+            setIsLoading(false);
             toast.error(error, toastOptions);
             // const errors = data.response.data.error.errors;
             // Object.keys(errors).forEach(function (err, index) {
@@ -287,7 +292,15 @@ const NewSignup = () => {
           {step}
           <ButtonContainer>
             <button type={isLastStep ? "submit" : "button"} onClick={onSubmit}>
-              {isLastStep ? "Signup" : "Next"}
+              {isLastStep ? (
+                isLoading ? (
+                  <Loader color="white" loaderHeight="2rem" />
+                ) : (
+                  "Signup"
+                )
+              ) : (
+                "Next"
+              )}
             </button>
             {isLastStep && (
               <button type="button" onClick={back}>

@@ -3,23 +3,21 @@ import styled from "styled-components";
 import Inputholder from "../general-components/input/inputholder";
 
 const Section = styled.div`
+  /* border: 1px solid red; */
   display: flex;
   align-items: center;
   justify-content: center;
   width: 75%;
   margin: auto;
   margin-bottom: 2rem;
-  /* border: 1px solid red; */
 
   form {
-    width: 90%;
+    width: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* padding: 0px; */
-    padding-right: 10px;
     gap: 20px;
   }
 `;
