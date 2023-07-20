@@ -4,15 +4,24 @@ import Footer from "../../components/general-components/footer/footer";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Arrow, Copy } from "../../components/general-components/svg";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import LandingpageNav from "../../components/profile-comp/landingpageNav";
 
 const Section = styled.div`
-  padding: 6rem 6.3vw 3rem;
+  /* border: 1px solid red; */
+  padding: 4rem 6.3vw 3rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  /* border: 1px solid red; */
   width: 70%;
+
+  h2 {
+    font-size: 2.8rem;
+    font-weight: 500;
+    border-bottom: 2px solid black;
+    width: fit-content;
+    line-height: 1;
+  }
 `;
 
 const LinkContainer = styled.div`
@@ -88,7 +97,7 @@ const contactData = [
 const Contact = () => {
   const toastOptions = {
     position: toast.POSITION.BOTTOM_RIGHT,
-    autoClose: 6000,
+    autoClose: 2000,
     pauseOnHover: true,
     draggable: true,
   };
@@ -100,8 +109,10 @@ const Contact = () => {
 
   return (
     <>
+      <LandingpageNav />
       <Navbar />
       <Section>
+        <h2>Contact us through</h2>
         {contactData.map((data, index) => {
           return (
             <LinkContainer>
@@ -127,6 +138,7 @@ const Contact = () => {
         })}
       </Section>
       <Footer />
+      <ToastContainer theme="dark" />
     </>
   );
 };

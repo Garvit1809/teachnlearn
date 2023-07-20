@@ -19,6 +19,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
 import feynaman from "../../assets/feynman.png";
+import LandingpageNav from "../../components/profile-comp/landingpageNav";
 
 const Section = styled.div`
   display: flex;
@@ -61,60 +62,6 @@ const Section = styled.div`
       background: #094067;
     }
   }
-`;
-const Header = styled.div`
-  width: 100%;
-  /* border: 1px solid red; */
-  display: flex;
-  justify-content: space-between;
-  /* padding: 20px 4vw 0; */
-  padding-top: 20px;
-`;
-
-const ImageContainer = styled.div`
-  /* border: 1px solid red; */
-  width: 160px;
-  height: 60px;
-  margin-left: 4vw;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-`;
-
-const AuthButtons = styled.div`
-  /* border: 1px solid red; */
-  display: flex;
-  margin-right: 4vw;
-  align-items: center;
-  justify-content: center;
-  /* margin-right: 4rem; */
-  gap: 20px;
-
-  div.signup {
-    background: #3da9fc;
-    color: #fffffe;
-  }
-`;
-
-const AuthButton = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  padding: 12px 26px;
-  gap: 10px;
-  background: #ffffff;
-  border-radius: 2px;
-  margin-right: 10px;
-
-  font-family: "Nunito";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 22px;
-  color: #2b2c34;
-  cursor: pointer;
 `;
 
 const BlogHeader = styled.div`
@@ -165,8 +112,6 @@ const SlideContainer = styled.div`
 `;
 
 const InfoContainer = styled.div`
-  /* border: 1px solid red; */
-  /* width: 60%; */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -401,22 +346,7 @@ const LandingPage = () => {
   return (
     <>
       <Section>
-        <Header>
-          <ImageContainer>
-            <img src={TNLLogo} alt="tnl-logo" />
-          </ImageContainer>
-          <AuthButtons>
-            <AuthButton onClick={() => navigationHandler("/signin")}>
-              Login
-            </AuthButton>
-            <AuthButton
-              className="signup"
-              onClick={() => navigationHandler("/signup")}
-            >
-              Signup
-            </AuthButton>
-          </AuthButtons>
-        </Header>
+        <LandingpageNav />
         <BlogHeader onClick={() => navigationHandler("/teachNlearn-blogs")}>
           <span>
             Check out our <span className="bold">blog</span> for free guidance

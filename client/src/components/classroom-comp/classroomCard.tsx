@@ -382,7 +382,9 @@ const ClassroomCard = (props: classCardProps) => {
             btnSize={props.cssArr?.btnSize}
           >
             <span>
-              {checkClassTeacher()
+              {props.teachCard.hasCancelled
+                ? "Class Cancelled"
+                : checkClassTeacher()
                 ? "Check Class"
                 : checkEnrolledClass() == 1
                 ? !checkIsCompleted()

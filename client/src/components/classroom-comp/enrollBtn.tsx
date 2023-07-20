@@ -40,7 +40,7 @@ interface enrollProps {
   date: string;
   classStartsAt: string;
   classEndsAt: string;
-  userCredit: number;
+  // userCredit: number;
   teachCardId: string;
   userToken: string; 
 }

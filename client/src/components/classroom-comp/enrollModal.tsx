@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   getHeaders,
@@ -12,6 +12,7 @@ import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Loader from "../general-components/loader";
 
 const Section = styled.div`
   display: flex;
@@ -28,11 +29,13 @@ const Section = styled.div`
 `;
 
 const ModalBody = styled.div`
+  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   row-gap: 1rem;
   margin-bottom: 1rem;
+  width: 100%;
 
   h2 {
     margin-bottom: 0.5rem;
@@ -72,13 +75,17 @@ const DotContainer = styled.div`
   border-radius: 50%;
 `;
 
-const EnrollBtn = styled.div`
+interface enrollBtnProps {
+  isDisabled: boolean;
+}
+
+const EnrollBtn = styled.div<enrollBtnProps>`
   /* border: 1px solid red; */
   width: 100%;
   display: flex;
   justify-content: flex-end;
   button {
-    cursor: pointer;
+    cursor: ${(p) => (p.isDisabled ? "auto" : "pointer")};
     outline: none;
     border: none;
     display: flex;
@@ -88,6 +95,7 @@ const EnrollBtn = styled.div`
     padding: 18px 40px;
     gap: 10px;
     background: #332ad5;
+    background: ${(p) => (p.isDisabled ? "rgba(51, 42, 213, 0.6)" : "#332ad5")};
     border-radius: 8px;
 
     font-family: "Nunito";
@@ -111,9 +119,9 @@ const CoinAlertCont = styled.div`
   border-radius: 8px;
   margin: auto;
   margin-bottom: 1rem;
+  /* border: 1px solid red; */
 
   div.info-cont {
-    /* border: 1px solid red; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -145,14 +153,11 @@ interface enrollProps {
   date: string;
   classStartsAt: string;
   classEndsAt: string;
-  userCredit: number;
   teachCardId: string;
   userToken: string;
 }
 
 const EnrollModal = (props: enrollProps) => {
-  console.log(props.userToken);
-
   const navigate = useNavigate();
 
   const toastOptions = {
@@ -162,28 +167,55 @@ const EnrollModal = (props: enrollProps) => {
     draggable: true,
   };
 
-  const enrollHandler = async () => {
+  const [totalCoins, setTotalCoins] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const fetchUserBalance = async () => {
+    setIsLoading(true);
     await axios
-      .patch(
-        `${BASE_URL}${apiVersion}/teach/${props.teachCardId}/enroll`,
-        {},
-        {
-          headers: getHeaders(props.userToken ?? ""),
-        }
-      )
-      .then(({ data }) => {
-        console.log(data);
-        navigate(`/classes/class/${props.teachCardId}`, {
-          state: {
-            classroomId: props.teachCardId,
-          },
-        });
+      .get(`${BASE_URL}${apiVersion}/user/mybalance`, {
+        headers: getHeaders(props.userToken),
       })
-      .catch((data) => {
-        // console.log(data);
-        const err = data.response.data.message;
-        toast.error(err, toastOptions);
+      .then(({ data }) => {
+        const user = data.user;
+        setTotalCoins(user.coins + user.forumCoins + user.reviewCoins);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setIsLoading(true);
       });
+  };
+
+  useEffect(() => {
+    if (props.userToken) {
+      fetchUserBalance();
+    }
+  }, [props.userToken]);
+
+  const enrollHandler = async () => {
+    // if (props.price < totalCoins) {
+      await axios
+        .patch(
+          `${BASE_URL}${apiVersion}/teach/${props.teachCardId}/enroll`,
+          {},
+          {
+            headers: getHeaders(props.userToken ?? ""),
+          }
+        )
+        .then(({ data }) => {
+          console.log(data);
+          navigate(`/classes/class/${props.teachCardId}`, {
+            state: {
+              classroomId: props.teachCardId,
+            },
+          });
+        })
+        .catch((data) => {
+          // console.log(data);
+          const err = data.response.data.message;
+          toast.error(err, toastOptions);
+        });
+    // }
   };
 
   return (
@@ -217,18 +249,26 @@ const EnrollModal = (props: enrollProps) => {
           }
         />
       </ModalBody>
-      <CoinAlertCont>
-        <div className="info-cont">
-          <InfoIcon />
-        </div>
-        <span>You have</span>
-        <PurchaseCoinIcon color="#000000" />
-        <span>
-          <h3>{props.userCredit}</h3> coins right now
-        </span>
-      </CoinAlertCont>
-      <EnrollBtn>
-        <button type="submit" onClick={enrollHandler}>
+      {isLoading ? (
+        <Loader loaderHeight="2rem" />
+      ) : (
+        <CoinAlertCont>
+          <div className="info-cont">
+            <InfoIcon />
+          </div>
+          <span>You have</span>
+          <PurchaseCoinIcon color="#000000" />
+          <span>
+            <h3>{totalCoins}</h3> coins right now
+          </span>
+        </CoinAlertCont>
+      )}
+      <EnrollBtn isDisabled={isLoading ? true : props.price > totalCoins}>
+        <button
+          type="submit"
+          onClick={enrollHandler}
+          // disabled={isLoading ? true : props.price > totalCoins ? true : false}
+        >
           <span>Buy Class</span>
           <Arrow strokeColor="white" />
         </button>

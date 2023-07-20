@@ -2,9 +2,10 @@ import React from "react";
 import Navbar from "../../components/general-components/navbar";
 import Footer from "../../components/general-components/footer/footer";
 import styled from "styled-components";
+import LandingpageNav from "../../components/profile-comp/landingpageNav";
 
 const Section = styled.div`
-  padding: 6rem 6.3vw 3rem;
+  padding: 4rem 6.3vw 3rem;
   display: flex;
   flex-direction: column;
   gap: 3rem;
@@ -122,6 +123,7 @@ const TermsAndPolicyData = [
 const Terms = () => {
   return (
     <>
+      <LandingpageNav />
       <Navbar />
       <Section>
         <header>

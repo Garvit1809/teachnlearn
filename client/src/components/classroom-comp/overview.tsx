@@ -15,6 +15,7 @@ import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunctions";
 import { classReview } from "../../types/classReviewProps";
 import moment from "moment";
+import CancelClass from "./cancelClass";
 
 const OverviewContainer = styled.div`
   /* border: 1px solid red; */
@@ -250,8 +251,9 @@ const Overview = (props: overallOverviewProps) => {
               date={props.date}
               classStartsAt={props.classStartsAt}
               classEndsAt={props.classEndsAt}
+              hasCanelled={props.hasCancelled}
             />
-            {!checkIsCompleted() ? (
+            {!props.hasCancelled && !checkIsCompleted() ? (
               props.userId == props.createdBy._id ? (
                 <AddLink
                   callLink={props.callLink}
@@ -282,6 +284,14 @@ const Overview = (props: overallOverviewProps) => {
                 );
               })}
             </TagCont>
+            {!props.hasCancelled && props.userId === props.createdBy._id ? (
+              !checkIsCompleted() ? (
+                <CancelClass
+                  teachCardId={props._id}
+                  userToken={props.userToken}
+                />
+              ) : null
+            ) : null}
           </CallDetailContainer>
           <ClassOverview>
             <ChipContainer>

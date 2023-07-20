@@ -122,7 +122,7 @@ const ClassroomOverview = () => {
   const [teachCardId, setTeachCardId] = useState<string>();
   const [userToken, setUserToken] = useState<string>();
   const [userId, setUserId] = useState<string>("");
-  const [userCredit, setUserCredit] = useState<number>();
+  // const [userCredit, setUserCredit] = useState<number>();
   const [backLink, setBackLink] = useState<string>("/classes");
   const [learnCardId, setlearnCardId] = useState<string>("");
 
@@ -153,10 +153,10 @@ const ClassroomOverview = () => {
       setUserToken(data.token);
       setUserId(data._id);
     });
-    fetchUserCredit().then((coins) => {
-      console.log(coins);
-      setUserCredit(coins);
-    });
+    // fetchUserCredit().then((coins) => {
+    //   console.log(coins);
+    //   setUserCredit(coins);
+    // });
   }, []);
 
   async function fetchClassOverview() {
@@ -241,14 +241,14 @@ const ClassroomOverview = () => {
                 classEndsAt={teachCard.classEndsAt}
                 classStartsAt={teachCard.classStartsAt}
               />
-              {userCredit && userToken && checkEnrollTimeLimit() && (
+              {userToken && checkEnrollTimeLimit() && (
                 <EnrollBtn
                   title={teachCard.topic}
                   price={teachCard.price}
                   date={teachCard.date}
                   classStartsAt={teachCard.classStartsAt}
                   classEndsAt={teachCard.classEndsAt}
-                  userCredit={userCredit}
+                  // userCredit={userCredit}
                   teachCardId={teachCard._id}
                   userToken={userToken}
                 />

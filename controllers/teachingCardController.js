@@ -184,9 +184,11 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
   enrolledCLasses.forEach((elem) => {
     if (currentDate > elem.endsAt) {
       if (!elem.isReviewed) {
-        return next(
-          new AppError("Please review every completed class first!!")
-        );
+        if (!elem.isCancelled) {
+          return next(
+            new AppError("Please review every completed class first!!")
+          );
+        }
       }
     }
   });

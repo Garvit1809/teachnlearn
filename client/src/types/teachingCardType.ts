@@ -15,6 +15,7 @@ export interface teachinCardProps {
   };
   date: string;
   description: string;
+  hasCancelled: boolean;
   interestedStudents: string[];
   isLearningCardReferred: boolean;
   preferredLanguage: string;

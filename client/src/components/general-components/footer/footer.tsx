@@ -38,6 +38,7 @@ const Links = styled.div`
 `;
 
 const LogoContainer = styled.div`
+  cursor: pointer;
   /* border: 1px solid red; */
   img {
     width: 200px;
@@ -136,15 +137,15 @@ const socialData = [
 const Footer = () => {
   const navigate = useNavigate();
 
-  const navgationhandler = () => {
+  const navgationhandler = (link: string) => {
     topNavigator();
-    navigate("/app-coming-soon");
+    navigate(link);
   };
 
   return (
     <Section>
       <Links>
-        <LogoContainer>
+        <LogoContainer onClick={() => navgationhandler("/")}>
           <img src={TNLLogo} alt="" />
         </LogoContainer>
         <div>
@@ -155,7 +156,11 @@ const Footer = () => {
         </div>
         <GetApp>
           <h5>Get the app</h5>
-          <img src={GetAppImg} alt="app-link" onClick={navgationhandler} />
+          <img
+            src={GetAppImg}
+            alt="app-link"
+            onClick={() => navgationhandler("/app-coming-soon")}
+          />
         </GetApp>
       </Links>
       <Copyright>

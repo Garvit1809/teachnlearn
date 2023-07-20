@@ -19,7 +19,7 @@ const Section = styled.div`
   color: #054f31;
   color: white;
   /* margin-bottom: 1.5rem; */
-  
+
   div {
     width: 4px;
     height: 4px;
@@ -28,12 +28,19 @@ const Section = styled.div`
     border-radius: 50%;
     /* border: 1px solid red; */
   }
+
+  span.cancelled{
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
 `;
 
 interface capsuleProps {
   date: string;
   classStartsAt?: string;
   classEndsAt?: string;
+  hasCanelled?: boolean;
 }
 
 const TimeCapsule = (props: capsuleProps) => {
@@ -47,7 +54,9 @@ const TimeCapsule = (props: capsuleProps) => {
 
   return (
     <Section>
-      {props.classStartsAt && props.classEndsAt ? (
+      {props.hasCanelled ? (
+        <span className="cancelled" >Class cancelled</span>
+      ) : props.classStartsAt && props.classEndsAt ? (
         <>
           <span>{getReadableDate(props.date)}</span>
           <div></div>
