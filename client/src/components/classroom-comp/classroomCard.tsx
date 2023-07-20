@@ -14,14 +14,13 @@ import {
   topNavigator,
 } from "../../utils/helperFunctions";
 import { teachinCardProps } from "../../types/teachingCardType";
+import { CardStats, TagBox } from "../request-comp/learnCard";
 
 const Section = styled.div<cardAnimationProps>`
   box-shadow: 0px 20px 24px -4px rgba(16, 24, 40, 0.08),
     0px 8px 8px -4px rgba(16, 24, 40, 0.03);
   border-radius: 16px;
   overflow: hidden;
-  background: #f6f6f6;
-  background: #d8eefe;
   background: #094067;
   transition: all 0.15s linear;
 
@@ -54,30 +53,27 @@ interface titleProps {
   titleLineHeight?: string;
 }
 
-const ImageContainer = styled.div<imageProps>`
-  height: ${(p) => p.imgHeight || "232px"};
+// const ImageContainer = styled.div<imageProps>`
+//   height: ${(p) => p.imgHeight || "232px"};
 
-  img {
-    margin: 0;
-    border-top-right-radius: 16px;
-    border-top-left-radius: 16px;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    /* border: 1px solid red; */
-  }
-`;
+//   img {
+//     margin: 0;
+//     border-top-right-radius: 16px;
+//     border-top-left-radius: 16px;
+//     width: 100%;
+//     height: 100%;
+//     object-fit: cover;
+//     /* border: 1px solid red; */
+//   }
+// `;
 
 const DetailContainer = styled.div<detailProps>`
   /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 20px 20px 32px;
-  gap: 24px;
+  padding: 22px;
   gap: ${(p) => p.gapSize || "24px"};
-  background: #f6f6f6;
-  background: #d8eefe;
   background: #094067;
   font-family: "Nunito";
 `;
@@ -92,11 +88,10 @@ const Header = styled.div<headerProps>`
   h4 {
     font-weight: 700;
     font-size: ${(props) => props.headerSize || "18px"};
-    line-height: 1;
-    line-height: 25px;
+    /* font-size: 18px; */
+    line-height: 22px;
     letter-spacing: 0.02em;
     text-transform: uppercase;
-    color: #000000;
     color: #ef4565;
   }
 `;
@@ -110,7 +105,7 @@ const Interested = styled.div<headerProps>`
   span {
     font-weight: 500;
     font-size: ${(props) => props.headerSize || "18px"};
-    line-height: 25px;
+    line-height: 22px;
     color: #000000;
     color: white;
     text-transform: capitalize;
@@ -123,8 +118,6 @@ const Title = styled.p<titleProps>`
   font-weight: 700;
   font-size: ${(p) => p.titleSize || "24px"};
   line-height: ${(p) => p.titleLineHeight || "35px"};
-  color: #000000;
-  color: white;
   color: #d8eefe;
 `;
 
@@ -133,6 +126,7 @@ const EnrollCont = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  margin-top: 0.4rem;
 `;
 
 const EnrollBtn = styled.div<buttonProps>`
@@ -339,16 +333,9 @@ const ClassroomCard = (props: classCardProps) => {
 
   return (
     <Section hasAnimation={props.cssArr?.hasAnimation}>
-      {/* <ImageContainer imgHeight={props.cssArr?.imageHeight}>
-        <img src={props.teachCard.cardBanner} alt="card-banner" />
-      </ImageContainer> */}
       <DetailContainer gapSize={props.cssArr?.gap}>
         <Header headerSize={props.cssArr?.headerSize}>
           <h4>{props.teachCard.subject}</h4>
-          <Interested headerSize={props.cssArr?.headerSize}>
-            <InterestedIcon />
-            <span>{props.teachCard.studentsEnrolled.length} enrolled</span>
-          </Interested>
         </Header>
         <Title
           titleSize={props.cssArr?.titleSize}
@@ -368,6 +355,12 @@ const ClassroomCard = (props: classCardProps) => {
             textSize={props.cssArr?.userChipTextSize}
             userId={props.teachCard.createdBy._id}
           />
+        </UserWrapper>
+        <CardStats>
+          <Interested headerSize={props.cssArr?.headerSize}>
+            <InterestedIcon />
+            <span>{props.teachCard.studentsEnrolled.length} enrolled</span>
+          </Interested>
           <TimeCont>
             {getReadableDate(props.teachCard.date) +
               ", " +
@@ -375,7 +368,16 @@ const ClassroomCard = (props: classCardProps) => {
               " - " +
               getReadableTime(props.teachCard.classEndsAt)}
           </TimeCont>
-        </UserWrapper>
+        </CardStats>
+        <TagBox>
+          {props.teachCard.tags.map((tag, index) => {
+            return (
+              <div key={index}>
+                <span>{tag}</span>
+              </div>
+            );
+          })}
+        </TagBox>
         <EnrollCont>
           <EnrollBtn
             onClick={enrollClassNavigator}

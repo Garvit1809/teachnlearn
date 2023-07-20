@@ -455,6 +455,7 @@ exports.getCompletedClasses = catchAsync(async (req, res, next) => {
 
 exports.topTeachCards = catchAsync(async (req, res, next) => {
   const currentDate = new Date();
+  console.log(currentDate);
   const stats = await TeachingCard.aggregate([
     {
       $match: {

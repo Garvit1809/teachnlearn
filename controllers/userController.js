@@ -289,18 +289,21 @@ exports.postUserFeedback = catchAsync(async (req, res, next) => {
 exports.searchInApplication = catchAsync(async (req, res, next) => {
   const { search } = req.body;
   const userId = req.user.id;
+  console.log("TYPE OF SEARCH");
+  console.log(typeof search);
   // const currentDate = new Date();
 
   const modifiedSearch = new RegExp(search, "i");
   const objectId = mongoose.isObjectIdOrHexString(search);
-  console.log(objectId);
+  // console.log(objectId);
 
   const users = await User.find({
     $or: [
       { name: { $regex: modifiedSearch } },
       { userName: { $regex: modifiedSearch } },
-      { strongSubjects: { $elemMatch: { $eq: modifiedSearch } } },
-      { preferredLanguages: { $elemMatch: { $eq: modifiedSearch } } },
+      { strongSubjects: { $elemMatch: { $eq: search } } },
+      { interestedSubjects: { $elemMatch: { $eq: search } } },
+      { preferredLanguages: { $elemMatch: { $eq: search } } },
     ],
   }).find({ _id: { $ne: userId } });
   // .select("name userName tagline photo");
@@ -316,9 +319,9 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
       $or: [
         { subject: { $regex: modifiedSearch } },
         { topic: { $regex: modifiedSearch } },
-        { description: { $regex: modifiedSearch } },
         { programme: { $regex: modifiedSearch } },
-        { tags: { $elemMatch: { $eq: modifiedSearch } } },
+        { description: { $regex: modifiedSearch } },
+        { tags: { $elemMatch: { $eq: search } } },
       ],
       // dueDate: { $gte: currentDate },
     });
@@ -338,7 +341,7 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
         { topic: { $regex: modifiedSearch } },
         { programme: { $regex: modifiedSearch } },
         { description: { $regex: modifiedSearch } },
-        { tags: { $elemMatch: { $eq: modifiedSearch } } },
+        { tags: { $elemMatch: { $ed: search } } },
       ],
       // classStartsAt: { $gte: currentDate },
     });

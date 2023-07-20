@@ -16,14 +16,11 @@ const Section = styled.div`
   align-items: flex-start;
   padding: 22px;
   gap: 18px;
-  background: #674ff1;
   background: #094067;
   border-radius: 16px;
-  /* cursor: pointer; */
-  font-family: "Nunito";
-  transition: all 0.15s linear;
   font-family: "Nunito";
   font-style: normal;
+  transition: all 0.15s linear;
 
   &:hover {
     transform: translateY(-10px);
@@ -37,7 +34,6 @@ const Subject = styled.div`
     line-height: 22px;
     letter-spacing: 0.02em;
     text-transform: uppercase;
-    color: #ffffff;
     color: #ef4565;
   }
 `;
@@ -45,17 +41,15 @@ const Subject = styled.div`
 const Topic = styled.div`
   font-family: "Nunito";
   font-style: normal;
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 33px;
-  color: #ffffff;
-  /* max-height: 65px; */
-  /*  */
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  color: #d8eefe;
   /* border: 1px solid white; */
   white-space: wrap;
 `;
 
-const Stats = styled.div`
+export const CardStats = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -69,7 +63,7 @@ const Stats = styled.div`
     span {
       font-weight: 500;
       font-size: 16px;
-      line-height: 22px;
+      /* line-height: 30px; */
       color: #ffffff;
     }
   }
@@ -78,10 +72,8 @@ const Stats = styled.div`
 export const TagBox = styled.div`
   /* border: 1px solid white; */
   width: 100%;
-  margin-top: 0.6rem;
-
+  margin-top: 0.2rem;
   display: flex;
-  /* align-items: center; */
   column-gap: 12px;
   row-gap: 16px;
   flex-wrap: wrap;
@@ -101,7 +93,7 @@ const DateCont = styled.div`
   /* border: 1px solid white; */
   font-weight: 500;
   font-size: 16px;
-  line-height: 22px;
+  line-height: 20px;
   color: #ffffff;
 `;
 
@@ -146,7 +138,7 @@ const LearnCard = (props: learnCardProps) => {
   };
 
   return (
-    <Section onClick={leanrCardOverviewNavigator} >
+    <Section onClick={leanrCardOverviewNavigator}>
       <Subject>
         <h4>{props.subject}</h4>
       </Subject>
@@ -163,8 +155,11 @@ const LearnCard = (props: learnCardProps) => {
         imgBorder="#FFFFFF"
         textColor="#FFFFFF"
         userId={props.createdBy._id}
+        hasUnderline={false}
+        imgSize="26px"
+        textSize="18px"
       />
-      <Stats>
+      <CardStats>
         <div>
           <InterestedIcon />
           <span>{props.interestedStudents.length} Interested</span>
@@ -174,7 +169,7 @@ const LearnCard = (props: learnCardProps) => {
             <span>Due - {getReadableDate(props.dueDate)}</span>
           </DateCont>
         </div>
-      </Stats>
+      </CardStats>
       <TagBox>
         {props.tags.map((tag, index) => {
           return (
