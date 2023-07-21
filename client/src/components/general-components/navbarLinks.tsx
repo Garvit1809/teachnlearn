@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { topNavigator } from "../../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
+import { navOptions } from "../../utils/globalConstants";
 
 const Menu = styled.div`
   margin: 0 6.3vw 2.5rem;
@@ -37,37 +38,6 @@ const MenuItem = styled.div<menuItemProps>`
   cursor: pointer;
   transition: all 0.15s linear;
 `;
-
-const navOptions = [
-  {
-    title: "Home",
-    link: "/",
-  },
-  {
-    title: "Teach Cards",
-    link: "/classes",
-  },
-  {
-    title: "Learn Cards",
-    link: "/requests",
-  },
-  {
-    title: "Forum",
-    link: "/forums",
-  },
-  {
-    title: "Blog",
-    link: "/blogs",
-  },
-  {
-    title: "My Groups",
-    link: "/groups",
-  },
-  {
-    title: "My AI Assistant",
-    link: "/myai",
-  },
-];
 
 const NavbarLinks = () => {
   const [currentPath, setCurrentPath] = useState("");
