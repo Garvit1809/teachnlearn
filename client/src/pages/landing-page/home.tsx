@@ -107,7 +107,7 @@ const Home = () => {
 
   return renderHome ? (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <Section>
         <Intro />
         {/* <Popular /> */}

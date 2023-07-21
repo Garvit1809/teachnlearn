@@ -4,16 +4,6 @@ import styled from "styled-components";
 import { topNavigator } from "../../../utils/helperFunctions";
 
 const Section = styled.div`
-  /* border: 1px solid red; */
-
-  @media only screen and (max-width: 1000px) {
-    /* ul {
-      li {
-        font-size: 10px;
-      }
-    } */
-  }
-
   h4 {
     font-weight: 600;
     font-size: 17px;
@@ -26,15 +16,6 @@ const Section = styled.div`
   ul {
     list-style: none;
 
-    @media only screen and (max-width: 1000px) {
-      /* border: 1px solid red; */
-      li {
-        span {
-          font-size: 20px;
-        }
-      }
-    }
-
     li {
       font-family: "Nunito";
       font-style: normal;
@@ -45,6 +26,23 @@ const Section = styled.div`
       color: #ffffff;
       margin-bottom: 0.7rem;
       cursor: pointer;
+    }
+
+    @media only screen and (max-width: 1000px) {
+      /* border: 1px solid red; */
+      li {
+        span {
+          font-size: 20px;
+        }
+      }
+    }
+    @media only screen and (max-width: 600px) {
+      /* border: 1px solid red; */
+      li {
+        span {
+          font-size: 16px;
+        }
+      }
     }
   }
 `;
