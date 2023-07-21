@@ -289,8 +289,6 @@ exports.postUserFeedback = catchAsync(async (req, res, next) => {
 exports.searchInApplication = catchAsync(async (req, res, next) => {
   const { search } = req.body;
   const userId = req.user.id;
-  console.log("TYPE OF SEARCH");
-  console.log(typeof search);
   // const currentDate = new Date();
 
   const modifiedSearch = new RegExp(search, "i");
@@ -306,14 +304,12 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
       { preferredLanguages: { $elemMatch: { $eq: search } } },
     ],
   }).find({ _id: { $ne: userId } });
-  // .select("name userName tagline photo");
 
   let learnCards;
   if (objectId) {
     learnCards = await LearningCard.find({
       $or: [{ _id: search }],
-      // dueDate: { $gte: currentDate },
-    }).select("topic createdBy");
+    });
   } else {
     learnCards = await LearningCard.find({
       $or: [
@@ -323,17 +319,14 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
         { description: { $regex: modifiedSearch } },
         { tags: { $elemMatch: { $eq: search } } },
       ],
-      // dueDate: { $gte: currentDate },
     });
-    // .select("topic createdBy");
   }
 
-  let classes;
+  let classes = [];
   if (objectId) {
     classes = await TeachingCard.find({
       $or: [{ _id: search }, { referredLearningCard: search }],
-      // classStartsAt: { $gte: currentDate },
-    }).select("topic createdBy -reviews");
+    });
   } else {
     classes = await TeachingCard.find({
       $or: [
@@ -341,11 +334,9 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
         { topic: { $regex: modifiedSearch } },
         { programme: { $regex: modifiedSearch } },
         { description: { $regex: modifiedSearch } },
-        { tags: { $elemMatch: { $ed: search } } },
+        { tags: { $elemMatch: { $eq: search } } },
       ],
-      // classStartsAt: { $gte: currentDate },
     });
-    // .select("topic createdBy -reviews");
   }
 
   res.status(200).json({
