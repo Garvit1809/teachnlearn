@@ -4,8 +4,9 @@ import TNLLogo from "../../../assets/tnl-logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import FooterLinks from "./footerLinks";
 import { Facebook, Instagram, Twitter, Youtube } from "../svg";
-import GetAppImg from "../../../assets/GetApp.png";
 import { topNavigator } from "../../../utils/helperFunctions";
+import PlayStore from "../../../assets/getAppOnPlayStore.png";
+import AppleStore from "../../../assets/getOnApple.png";
 
 const Section = styled.div`
   /* border-top: 1px solid #7d89b0; */
@@ -81,8 +82,9 @@ const GetApp = styled.div`
   flex-direction: column;
 
   img {
-    width: 120px;
-    height: 80px;
+    /* border: 1px solid red; */
+    width: 150px;
+    height: 60px;
     object-fit: contain;
     display: block;
     cursor: pointer;
@@ -93,7 +95,7 @@ const GetApp = styled.div`
     font-size: 18px;
     line-height: 25px;
     color: #d8eefe;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
   }
 `;
 
@@ -157,7 +159,12 @@ const Footer = () => {
         <GetApp>
           <h5>Get the app</h5>
           <img
-            src={GetAppImg}
+            src={PlayStore}
+            alt="app-link"
+            onClick={() => navgationhandler("/app-coming-soon")}
+          />
+          <img
+            src={AppleStore}
             alt="app-link"
             onClick={() => navgationhandler("/app-coming-soon")}
           />
