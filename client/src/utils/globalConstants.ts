@@ -16,3 +16,34 @@ export const months = [
 ];
 
 export const DATA_LIMIT = 10;
+
+export const navOptions = [
+  {
+    title: "Home",
+    link: "/",
+  },
+  {
+    title: "Teach Cards",
+    link: "/classes",
+  },
+  {
+    title: "Learn Cards",
+    link: "/requests",
+  },
+  {
+    title: "Forum",
+    link: "/forums",
+  },
+  {
+    title: "Blog",
+    link: "/blogs",
+  },
+  {
+    title: "My Groups",
+    link: "/groups",
+  },
+  {
+    title: "My AI Assistant",
+    link: "/myai",
+  },
+];

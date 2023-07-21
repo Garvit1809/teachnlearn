@@ -18,12 +18,12 @@ import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { learnCardProps } from "../../pages/requests/requests";
 import { teachinCardProps } from "../../types/teachingCardType";
 import NavSearchDropdown from "../profile-comp/navbar/navSearchDropdown";
+import Drawer from "react-modern-drawer";
+import SideDrawer from "./sideDrawer";
+import ProfileDrawer from "./profileDrawer";
+import SearchDrawer from "./searchDrawer";
 
-interface sideNavProps {
-  showNav: boolean;
-}
-
-const Section = styled.div<sideNavProps>`
+const Section = styled.div`
   /* border: 1px solid red; */
   position: relative;
   padding-top: 1.75rem;
@@ -35,54 +35,19 @@ const Section = styled.div<sideNavProps>`
   font-family: "Nunito";
   margin: 0 6.3vw 2.5rem 6.3vw;
 
-  div.side-bar {
-    /* width: 100%; */
-    /* border: 1px solid red; */
-    margin: 0;
-    display: none;
+  @media only screen and (max-width: 1050px) {
+    grid-template-columns: 1.6fr 6fr 0.6fr;
+    column-gap: 1.8rem;
   }
 
-  div.side-nav {
-    border: 1px solid red;
-    position: absolute;
-    width: 0;
-    height: 100vh;
-    /* right: -100vw; */
-    right: ${(p) => (p.showNav ? "0" : "-50vw")};
-    background-color: white;
-    transform: ${(p) => (p.showNav ? "translateX(0%)" : "translateX(100%)")};
-    top: 0;
-    transition: all 0.45s linear;
-    z-index: 100;
-    /* display: ${(p) => (p.showNav ? "flex" : "none")}; */
-    display: none;
-  }
-
-  @media only screen and (max-width: 950px) {
-    /* border: 1px solid red; */
+  @media only screen and (max-width: 880px) {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    column-gap: 0;
-    position: relative;
-
-    div.side-bar {
-      display: flex;
-      svg {
-        width: 1.6rem;
-        height: 1.6rem;
-      }
-    }
-
-    div.side-nav {
-      display: flex;
-    }
   }
 
-  @media only screen and (max-width: 600px) {
-    div.side-nav {
-      width: 50vw;
-    }
+  div.options {
+    display: flex;
+    column-gap: 1rem;
   }
 `;
 
@@ -93,6 +58,9 @@ const SearchContainer = styled.div`
   /* width: 100%; */
 
   @media only screen and (max-width: 950px) {
+  }
+
+  @media only screen and (max-width: 880px) {
     display: none;
   }
 `;
@@ -106,6 +74,11 @@ const ImageContainer = styled.div`
     width: 100%;
     height: 100%;
     object-fit: contain;
+  }
+
+  @media only screen and (max-width: 950px) {
+    width: 170px;
+    height: 70px;
   }
 
   @media only screen and (max-width: 600px) {
@@ -127,7 +100,7 @@ const UserWrapper = styled.div`
   cursor: pointer;
   position: relative;
 
-  @media only screen and (max-width: 950px) {
+  @media only screen and (max-width: 1050px) {
     display: none;
   }
 `;
@@ -151,10 +124,8 @@ const UserOptions = styled.div`
       font-size: 1rem;
       font-weight: 600;
       padding: 0.5rem 1.125rem;
-      /* margin: 0 1.125rem; */
       border-radius: 8px;
       display: flex;
-      /* flex-direction: ; */
       align-items: center;
       justify-content: space-between;
       transition: all 0.15s linear;
@@ -311,11 +282,14 @@ const Navbar = (props: navProps) => {
     setshowDropDown(false);
   };
 
-  const [showSideBar, setshowSideBar] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleDrawer = () => {
+    setIsOpen((prevState) => !prevState);
+  };
 
   return renderNav ? (
     <>
-      <Section showNav={showSideBar}>
+      <Section>
         <ImageContainer onClick={() => navigationHandler("/")}>
           <img src={TNL_Logo} alt="tnl_logo" />
         </ImageContainer>
@@ -373,14 +347,10 @@ const Navbar = (props: navProps) => {
             )}
           </UserWrapper>
         )}
-        <div className="side-bar" onClick={() => setshowSideBar(true)}>
-          <Bars />
-        </div>
-        <div className="side-nav">
-          <ul>
-            <li onClick={() => setshowSideBar(false)}>Close</li>
-            <li>Home</li>
-          </ul>
+        <div className="options">
+          <SearchDrawer />
+          {localUser && <ProfileDrawer img={localUser.photo} />}
+          <SideDrawer />
         </div>
       </Section>
       <ModeWrapper>
@@ -391,14 +361,6 @@ const Navbar = (props: navProps) => {
       <NavbarLinks />
     </>
   ) : null;
-};
-
-const Bars = () => {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
-      <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z" />
-    </svg>
-  );
 };
 
 export default Navbar;
