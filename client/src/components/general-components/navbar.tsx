@@ -115,6 +115,7 @@ const UserOptions = styled.div`
   box-sizing: border-box;
   padding: 1rem 0;
   background-color: white;
+  /* pointer-events: ; */
 
   ul {
     list-style: none;
@@ -279,12 +280,13 @@ const Navbar = (props: navProps) => {
   const [showDropDown, setshowDropDown] = useState(true);
 
   const closeSearchBox = () => {
+    console.log("HANDLING");
     setshowDropDown(false);
   };
 
-  const [isOpen, setIsOpen] = useState(false);
-  const toggleDrawer = () => {
-    setIsOpen((prevState) => !prevState);
+  const userWrapperhandler = () => {
+    console.log("HANDLING");
+    setShowProfileOptions(!showProfileOptions);
   };
 
   return renderNav ? (
@@ -319,10 +321,7 @@ const Navbar = (props: navProps) => {
           />
         </SearchContainer>
         {localUser && (
-          <UserWrapper
-            onClick={() => setShowProfileOptions(!showProfileOptions)}
-            ref={wrapperRef}
-          >
+          <UserWrapper onClick={userWrapperhandler} ref={wrapperRef}>
             <UserChip
               name={localUser.userName}
               photo={localUser.photo}
@@ -348,8 +347,22 @@ const Navbar = (props: navProps) => {
           </UserWrapper>
         )}
         <div className="options">
-          <SearchDrawer />
-          {localUser && <ProfileDrawer img={localUser.photo} />}
+          {localUser && (
+            <>
+              <SearchDrawer
+                closeSearchBox={closeSearchBox}
+                localUser={localUser}
+                searchHandler={searchHandler}
+                searchNavigator={searchNavigator}
+                searchedLearnCards={searchedLearnCards}
+                searchedTeachCards={searchedTeachCards}
+                searchedUsers={searchedUsers}
+                showDropDown={showDropDown}
+                dontShowSearchDropDown={props.dontShowSearchDropDown}
+              />
+              <ProfileDrawer img={localUser.photo} />
+            </>
+          )}
           <SideDrawer />
         </div>
       </Section>

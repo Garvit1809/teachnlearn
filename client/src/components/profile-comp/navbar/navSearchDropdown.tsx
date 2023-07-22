@@ -9,7 +9,11 @@ import {
 } from "../../../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
 
-const Section = styled.div`
+interface styleProps {
+  dropDownHeight?: string;
+}
+
+const Section = styled.div<styleProps>`
   /* border: 1px solid red; */
   width: 100%;
   border-radius: 4px;
@@ -18,8 +22,9 @@ const Section = styled.div`
   padding: 1rem 0 0;
   background-color: white;
   position: absolute;
-  z-index: 100;
+  z-index: 200;
   max-height: 50vh;
+  max-height: ${(p) => (p.dropDownHeight ? p.dropDownHeight : "50vh")};
   overflow-y: auto;
 
   h3 {
@@ -151,6 +156,8 @@ interface searchprops {
   closeSearchBox: any;
   localUserId: string;
   localUserClassesEnrolled: classroom[];
+  dropDownHeight?: string;
+  removeDrawer?: any;
 }
 
 const NavSearchDropdown = (props: searchprops) => {
@@ -161,6 +168,9 @@ const NavSearchDropdown = (props: searchprops) => {
 
   const userNavigationHandler = (userId: string) => {
     topNavigator();
+    console.log(props.localUserId);
+    console.log(userId);
+
     if (props.localUserId == userId) {
       navigate("/me");
     } else {
@@ -222,7 +232,7 @@ const NavSearchDropdown = (props: searchprops) => {
   };
 
   return (
-    <Section ref={wrapperRef}>
+    <Section ref={wrapperRef} dropDownHeight={props.dropDownHeight}>
       {props.searchedUsers.length != 0 && (
         <>
           <h3>Users</h3>
