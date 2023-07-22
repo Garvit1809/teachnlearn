@@ -16,6 +16,14 @@ const CommingSoonContainer = styled.div`
     font-weight: 500;
     padding: 4rem 0;
   }
+
+  
+  @media only screen and (max-width: 600px) {
+    h3{
+      font-size: 1.7rem;
+      text-align: center;
+    }
+  }
 `;
 
 interface comingProps {
