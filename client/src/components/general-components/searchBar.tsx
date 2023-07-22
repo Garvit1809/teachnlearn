@@ -47,6 +47,12 @@ const SearchBox = styled.div`
   border: 1px solid #7d89b0;
   border-radius: 8px;
 
+  svg{
+    /* border: 1px solid red; */
+    /* width: 20px; */
+    /* height: 20px; */
+  }
+
   input {
     width: 100%;
     font-family: "Nunito";
@@ -56,7 +62,7 @@ const SearchBox = styled.div`
     line-height: 111.4%;
     color: #98a2b3;
     border: none;
-    min-width: 340px;
+    /* min-width: 340px; */
 
     &::placeholder {
       color: #98a2b3;
