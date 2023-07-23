@@ -94,7 +94,8 @@ exports.searchForum = catchAsync(async (req, res, next) => {
       { tagline: { $regex: modifiedSearch } },
       // { "createdBy.name": { $regex: modifiedSearch } },
     ],
-  }).select("createdBy topic tagline");
+  });
+  // .select("createdBy topic tagline");
 
   res.status(200).json({
     status: "success",

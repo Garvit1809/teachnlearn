@@ -14,29 +14,27 @@ const Section = styled.div`
 
   h3 {
     font-size: 22px;
-    opacity: 0.8;
-    margin-bottom: 0.8rem;
-  }
-
-  ul {
-    padding-left: 1rem;
-    li {
-      font-weight: 500;
-      color: #4a5578;
-      font-size: 18px;
-      line-height: 26px;
-      margin-bottom: 0.5rem;
-    }
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px;
+    /* color: #4a5578; */
+    margin-bottom: 0.5rem;
   }
 `;
 
 interface detailProps {
   desciption: string;
+  programme: string;
+  standard: string;
 }
 
 const DetailsContainer = (props: detailProps) => {
   return (
     <Section>
+      <h3>
+        For :- {props.programme} | {props.standard}
+      </h3>
       <p>{props.desciption}</p>
     </Section>
   );

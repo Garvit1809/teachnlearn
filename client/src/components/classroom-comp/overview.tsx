@@ -310,7 +310,11 @@ const Overview = (props: overallOverviewProps) => {
                 <Copy color="white" />
               </ClassIDCont>
             </ChipContainer>
-            <DetailsContainer desciption={props.description} />
+            <DetailsContainer
+              programme={props.programme}
+              standard={props.standard}
+              desciption={props.description}
+            />
           </ClassOverview>
         </OverviewContainer>
         {reviews && reviews?.length != 0 && (
