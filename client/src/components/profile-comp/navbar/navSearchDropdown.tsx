@@ -43,7 +43,6 @@ const Section = styled.div<styleProps>`
 
     &:last-child {
       border-bottom: none;
-
       margin-bottom: 0rem;
     }
   }
@@ -168,6 +167,8 @@ const NavSearchDropdown = (props: searchprops) => {
 
   const userNavigationHandler = (userId: string) => {
     topNavigator();
+    console.log("USER NAVIGATOR");
+
     console.log(props.localUserId);
     console.log(userId);
 
@@ -180,6 +181,7 @@ const NavSearchDropdown = (props: searchprops) => {
         },
       });
     }
+    props.closeSearchBox();
   };
 
   const leanrCardOverviewNavigator = (cardId: string) => {
@@ -187,6 +189,7 @@ const NavSearchDropdown = (props: searchprops) => {
     navigate(`/learncard-overview/${cardId}`, {
       state: { learnCardId: cardId, backLink: "/" },
     });
+    props.closeSearchBox();
   };
 
   const checkClassTeacher = (creatorId: string) => {
@@ -229,10 +232,11 @@ const NavSearchDropdown = (props: searchprops) => {
         },
       });
     }
+    props.closeSearchBox();
   };
 
   return (
-    <Section ref={wrapperRef} dropDownHeight={props.dropDownHeight}>
+    <Section dropDownHeight={props.dropDownHeight}>
       {props.searchedUsers.length != 0 && (
         <>
           <h3>Users</h3>

@@ -301,6 +301,7 @@ const Navbar = (props: navProps) => {
             updateSearch={searchHandler}
             showButton={true}
             onEnterFunc={searchNavigator}
+            searchQuery={query}
             elem={
               searchedUsers.length == 0 &&
               searchedLearnCards.length == 0 &&

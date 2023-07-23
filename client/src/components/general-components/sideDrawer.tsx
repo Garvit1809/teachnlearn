@@ -10,7 +10,7 @@ const Section = styled.div`
   /* border: 1px solid red; */
   display: none;
 
-  @media only screen and (max-width: 950px) {
+  @media only screen and (max-width: 1000px) {
     display: flex;
     align-items: center;
     justify-content: center;

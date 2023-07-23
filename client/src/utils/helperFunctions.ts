@@ -50,7 +50,7 @@ export function useOutsideAlerter(ref: any, func: any) {
 
       // }
       if (ref.current && !ref.current.contains(event.target)) {
-        // console.log("SHOOOOOO");
+        console.log("SHOOOOOO");
         func();
       }
     }

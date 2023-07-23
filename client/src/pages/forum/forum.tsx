@@ -5,7 +5,7 @@ import styled from "styled-components";
 import ForumCard from "../../components/forum-components/forumCard";
 import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
-import { getHeaders } from "../../utils/helperFunctions";
+import { getHeaders, topNavigator } from "../../utils/helperFunctions";
 import { UserCookie } from "../../utils/userCookie";
 import { useNavigate } from "react-router-dom";
 import { PostBtn } from "./singleForum";
@@ -128,10 +128,12 @@ const Forum = () => {
     navigate("/forums/create-forum");
   };
 
+  const [query, setQuery] = useState<string>("");
   const [searchResults, setSearchResults] = useState<Array<forumProps>>([]);
 
   const handleSearch = async (query: string) => {
     setshowDropDown(true);
+    setQuery(query);
     if (query === "") {
       setSearchResults([]);
       return;
@@ -160,6 +162,18 @@ const Forum = () => {
     setshowDropDown(false);
   };
 
+  const searchNavigator = () => {
+    if (query != "") {
+      topNavigator();
+      navigate("/forum/search/feed", {
+        state: {
+          keyword: query,
+          searchedForums: searchResults,
+        },
+      });
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -174,6 +188,9 @@ const Forum = () => {
           <SearchBar
             updateSearch={handleSearch}
             placeholderText="Search in forum..."
+            searchQuery={query}
+            showButton={true}
+            onEnterFunc={searchNavigator}
             elem={
               searchResults.length == 0 ? undefined : showDropDown &&
                 userToken ? (

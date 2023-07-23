@@ -47,7 +47,7 @@ const SearchBox = styled.div`
   border: 1px solid #7d89b0;
   border-radius: 8px;
 
-  svg{
+  svg {
     /* border: 1px solid red; */
     /* width: 20px; */
     /* height: 20px; */
@@ -80,6 +80,7 @@ interface searchProps {
   elem?: ReactElement;
   showButton?: boolean;
   onEnterFunc?: any;
+  searchQuery?: string;
 }
 
 const SearchBar = (props: searchProps) => {
@@ -95,6 +96,7 @@ const SearchBar = (props: searchProps) => {
           <input
             type="text"
             placeholder={props.placeholderText}
+            value={props.searchQuery}
             onChange={(e) => props.updateSearch(e.target.value)}
           />
         </SearchBox>
