@@ -299,9 +299,21 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
     $or: [
       { name: { $regex: modifiedSearch } },
       { userName: { $regex: modifiedSearch } },
-      { strongSubjects: { $elemMatch: { $eq: search } } },
-      { interestedSubjects: { $elemMatch: { $eq: search } } },
-      { preferredLanguages: { $elemMatch: { $eq: search } } },
+      {
+        strongSubjects: {
+          $elemMatch: { $regex: `^${search}$`, $options: "i" },
+        },
+      },
+      {
+        interestedSubjects: {
+          $elemMatch: { $regex: `^${search}$`, $options: "i" },
+        },
+      },
+      {
+        preferredLanguages: {
+          $elemMatch: { $regex: `^${search}$`, $options: "i" },
+        },
+      },
     ],
   }).find({ _id: { $ne: userId } });
 
@@ -317,7 +329,7 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
         { topic: { $regex: modifiedSearch } },
         { programme: { $regex: modifiedSearch } },
         { description: { $regex: modifiedSearch } },
-        { tags: { $elemMatch: { $eq: search } } },
+        { tags: { $elemMatch: { $regex: `^${search}$`, $options: "i" } } },
       ],
     });
   }
@@ -334,7 +346,7 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
         { topic: { $regex: modifiedSearch } },
         { programme: { $regex: modifiedSearch } },
         { description: { $regex: modifiedSearch } },
-        { tags: { $elemMatch: { $eq: search } } },
+        { tags: { $elemMatch: { $regex: `^${search}$`, $options: "i" } } },
       ],
     });
   }

@@ -107,7 +107,7 @@ const Home = () => {
 
   return renderHome ? (
     <>
-      <Navbar />
+      <Navbar dontShowSearchDropDown={false} />
       <Section>
         <Intro />
         {/* <Popular /> */}
