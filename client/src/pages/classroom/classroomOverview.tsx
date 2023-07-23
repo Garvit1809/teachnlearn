@@ -283,7 +283,11 @@ const ClassroomOverview = () => {
                   <span className="id">{teachCard._id}</span>
                 </ClassIDCont>
               </ChipContainer>
-              <DetailsContainer desciption={teachCard.description} />
+              <DetailsContainer
+                programme={teachCard.programme}
+                standard={teachCard.standard}
+                desciption={teachCard.description}
+              />
             </ClassOverview>
           </OverviewContainer>
           {reviews && reviews?.length != 0 && (

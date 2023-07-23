@@ -472,7 +472,11 @@ const LearnCardOverview = () => {
                     <h3>{totalInterestedStudents} Interested</h3>
                   </InterestedCont>
                 </ChipContainer>
-                <DetailsContainer desciption={learnCard.description} />
+                <DetailsContainer
+                  programme={learnCard.programme}
+                  standard={learnCard.standard}
+                  desciption={learnCard.description}
+                />
                 <InterestedWrapper>
                   {userId &&
                     (userId === learnCard.createdBy._id ? null : userRole ==
