@@ -192,11 +192,11 @@ const Inputholder = (props: inputProps) => {
     }
   };
 
-  const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef, closeDropDown);
+  const wrapperRef = useRef<HTMLInputElement | null>(null);
+  useOutsideAlerter(wrapperRef, closeDropDown, false, null, false, null);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
-  useOutsideAlerter(inputRef, removeInputFocus);
+  useOutsideAlerter(inputRef, null, true, removeInputFocus, false, null);
 
   const hideUnhideHandler = () => {
     if (inputType == "password") {

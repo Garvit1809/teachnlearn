@@ -43,15 +43,43 @@ export const topNavigator = () => {
   document.body.scrollTop = document.documentElement.scrollTop = 0;
 };
 
-export function useOutsideAlerter(ref: any, func: any) {
+export function useOutsideAlerter(
+  ref: any,
+  divFunc: any,
+  isInput: boolean,
+  inputFunc: any,
+  isNavSearch: boolean,
+  navFunc: any
+) {
   useEffect(() => {
     function handleClickOutside(event: any) {
-      // if (ref.current && !ref.current.contains(event.target)) {
-
-      // }
-      if (ref.current && !ref.current.contains(event.target)) {
-        console.log("SHOOOOOO");
-        func();
+      if (
+        !isInput &&
+        !isNavSearch &&
+        ref.current &&
+        !ref.current.contains(event.target)
+      ) {
+        console.log("OUTSIDE DIV");
+        console.log(navFunc);
+        divFunc();
+      } else if (
+        !isInput &&
+        isNavSearch &&
+        ref.current &&
+        !ref.current.contains(event.target)
+      ) {
+        console.log("OUTSIDE NAV");
+        console.log(divFunc);
+        navFunc();
+      } else if (
+        isInput &&
+        !isNavSearch &&
+        ref.current &&
+        !ref.current.contains(event.target)
+      ) {
+        console.log("OUTSIDE INPUT");
+        console.log(inputFunc);
+        inputFunc();
       }
     }
     document.addEventListener("mousedown", handleClickOutside);

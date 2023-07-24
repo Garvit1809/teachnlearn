@@ -22,12 +22,12 @@ const Section = styled.div<styleProps>`
   padding: 1rem 0 0;
   background-color: white;
   position: absolute;
-  z-index: 200;
-  max-height: 50vh;
+  z-index: 101;
   max-height: ${(p) => (p.dropDownHeight ? p.dropDownHeight : "50vh")};
   overflow-y: auto;
 
   h3 {
+    z-index: 200;
     font-size: 1.4rem;
     margin-bottom: 0.5rem;
     font-weight: 500;
@@ -35,8 +35,9 @@ const Section = styled.div<styleProps>`
   }
 
   ul {
-    list-style: none;
     /* border: 1px solid red; */
+    z-index: 200;
+    list-style: none;
     padding-bottom: 1rem;
     border-bottom: 1px solid #d5d9eb;
     margin-bottom: 1rem;
@@ -160,18 +161,14 @@ interface searchprops {
 }
 
 const NavSearchDropdown = (props: searchprops) => {
-  const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef, props.closeSearchBox);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  useOutsideAlerter(wrapperRef, null, false, null, true, props.closeSearchBox);
 
   const navigate = useNavigate();
 
   const userNavigationHandler = (userId: string) => {
     topNavigator();
     console.log("USER NAVIGATOR");
-
-    console.log(props.localUserId);
-    console.log(userId);
-
     if (props.localUserId == userId) {
       navigate("/me");
     } else {
@@ -236,7 +233,7 @@ const NavSearchDropdown = (props: searchprops) => {
   };
 
   return (
-    <Section dropDownHeight={props.dropDownHeight}>
+    <Section ref={wrapperRef} dropDownHeight={props.dropDownHeight}>
       {props.searchedUsers.length != 0 && (
         <>
           <h3>Users</h3>

@@ -161,7 +161,7 @@ const MultipleInput = (props: inputProps) => {
   };
 
   const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef, closeDropDown);
+  useOutsideAlerter(wrapperRef, closeDropDown, false, null, false, null);
 
   return (
     <Section>

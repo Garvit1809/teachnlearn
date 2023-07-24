@@ -111,7 +111,7 @@ const Textarea = (props: inputProps) => {
   };
 
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
-  useOutsideAlerter(inputRef, removeInputFocus);
+  useOutsideAlerter(inputRef, null, true, removeInputFocus, false, null);
 
   return (
     <Section areaHeight={props.areaHeight ? props.areaHeight : undefined}>
