@@ -18,7 +18,6 @@ import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { learnCardProps } from "../../pages/requests/requests";
 import { teachinCardProps } from "../../types/teachingCardType";
 import NavSearchDropdown from "../profile-comp/navbar/navSearchDropdown";
-import Drawer from "react-modern-drawer";
 import SideDrawer from "./sideDrawer";
 import ProfileDrawer from "./profileDrawer";
 import SearchDrawer from "./searchDrawer";
@@ -211,7 +210,7 @@ const Navbar = (props: navProps) => {
   };
 
   const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef, closeDropDown);
+  useOutsideAlerter(wrapperRef, closeDropDown, false, null, false, null);
 
   const [searchedUsers, setSearchedUsers] = useState<Array<userProps>>([]);
   const [searchedLearnCards, setSearchedLearnCards] = useState<

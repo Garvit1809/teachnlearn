@@ -10,7 +10,7 @@ const Section = styled.div`
   border-radius: 4px;
   border: 1px solid #d5d9eb;
   box-sizing: border-box;
-  padding: 1rem 0 1rem;
+  padding: 1rem 0;
   background-color: white;
   position: absolute;
   z-index: 100;
@@ -70,8 +70,8 @@ interface searchProps {
 }
 
 const ForumSearchDropdown = (props: searchProps) => {
-  const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef, props.closeSearchBox);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  useOutsideAlerter(wrapperRef, props.closeSearchBox, false, null, false, undefined);
 
   const navigate = useNavigate();
 

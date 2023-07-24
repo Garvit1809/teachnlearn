@@ -2,6 +2,8 @@ import React, { ReactElement } from "react";
 import styled from "styled-components";
 import { Arrow, SearchIcon } from "./svg";
 import { useNavigate } from "react-router-dom";
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -81,6 +83,7 @@ interface searchProps {
   showButton?: boolean;
   onEnterFunc?: any;
   searchQuery?: string;
+  
 }
 
 const SearchBar = (props: searchProps) => {
