@@ -32,6 +32,10 @@ const app = express();
 app.use(cors());
 app.use(express.json({ limit: "10kb" }));
 
+app.use('/', (req,res) => {
+  res.send("Welcome to Teach and learn")
+})
+
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/learn", learningRouter);
