@@ -209,8 +209,15 @@ const Navbar = (props: navProps) => {
     setShowProfileOptions(false);
   };
 
-  const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef, closeDropDown, false, null, false, null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  useOutsideAlerter(
+    wrapperRef,
+    closeDropDown,
+    false,
+    undefined,
+    false,
+    undefined
+  );
 
   const [searchedUsers, setSearchedUsers] = useState<Array<userProps>>([]);
   const [searchedLearnCards, setSearchedLearnCards] = useState<
@@ -279,12 +286,12 @@ const Navbar = (props: navProps) => {
   const [showDropDown, setshowDropDown] = useState(true);
 
   const closeSearchBox = () => {
-    console.log("HANDLING");
+    console.log("CHECK NAV DROPDOWN");
     setshowDropDown(false);
   };
 
   const userWrapperhandler = () => {
-    console.log("HANDLING");
+    // console.log("HANDLING");
     setShowProfileOptions(!showProfileOptions);
   };
 

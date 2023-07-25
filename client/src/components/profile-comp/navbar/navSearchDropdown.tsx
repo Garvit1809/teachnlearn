@@ -4,6 +4,7 @@ import { classroom, userProps } from "../../../utils/userCookie";
 import { learnCardProps } from "../../../pages/requests/requests";
 import { teachinCardProps } from "../../../types/teachingCardType";
 import {
+  navOutsideAlerter,
   topNavigator,
   useOutsideAlerter,
 } from "../../../utils/helperFunctions";
@@ -22,7 +23,7 @@ const Section = styled.div<styleProps>`
   padding: 1rem 0 0;
   background-color: white;
   position: absolute;
-  z-index: 101;
+  z-index: 201;
   max-height: ${(p) => (p.dropDownHeight ? p.dropDownHeight : "50vh")};
   overflow-y: auto;
 
@@ -162,7 +163,15 @@ interface searchprops {
 
 const NavSearchDropdown = (props: searchprops) => {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
-  useOutsideAlerter(wrapperRef, null, false, null, true, props.closeSearchBox);
+  // useOutsideAlerter(
+  //   wrapperRef,
+  //   undefined,
+  //   false,
+  //   undefined,
+  //   true,
+  //   props.closeSearchBox
+  // );
+  navOutsideAlerter(wrapperRef, props.closeSearchBox);
 
   const navigate = useNavigate();
 
@@ -233,7 +242,7 @@ const NavSearchDropdown = (props: searchprops) => {
   };
 
   return (
-    <Section ref={wrapperRef} dropDownHeight={props.dropDownHeight}>
+    <Section dropDownHeight={props.dropDownHeight}>
       {props.searchedUsers.length != 0 && (
         <>
           <h3>Users</h3>
