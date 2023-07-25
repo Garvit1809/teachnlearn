@@ -96,8 +96,7 @@ const Textarea = (props: inputProps) => {
   };
 
   const removeInputFocus = () => {
-    console.log("CHECK");
-
+    // console.log("CHECK");
     if (inputRef.current) {
       const value = inputRef.current.value;
       console.log(value);

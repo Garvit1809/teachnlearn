@@ -60,7 +60,7 @@ export function useOutsideAlerter(
         !ref.current.contains(event.target)
       ) {
         console.log("OUTSIDE DIV");
-        console.log(navFunc);
+        console.log(divFunc);
         divFunc();
       } else if (
         !isInput &&
@@ -68,8 +68,9 @@ export function useOutsideAlerter(
         ref.current &&
         !ref.current.contains(event.target)
       ) {
+        console.log(isNavSearch);
         console.log("OUTSIDE NAV");
-        console.log(divFunc);
+        console.log(navFunc);
         navFunc();
       } else if (
         isInput &&
@@ -84,6 +85,22 @@ export function useOutsideAlerter(
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref]);
+}
+
+export function navOutsideAlerter(ref:any, func: any) {
+  useEffect(() => {
+    function handleClickOutside(event: any) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        func()
+      }
+    }
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [ref]);
