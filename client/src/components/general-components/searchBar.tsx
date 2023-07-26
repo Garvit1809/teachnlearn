@@ -1,12 +1,13 @@
 import React, { ReactElement } from "react";
 import styled from "styled-components";
-import { Arrow, SearchIcon } from "./svg";
+import { Arrow, CrossIcon, SearchIcon } from "./svg";
 import { useNavigate } from "react-router-dom";
 
 const Section = styled.div`
   /* border: 1px solid red; */
   width: 100%;
   position: relative;
+  z-index: 10;
   form {
     display: flex;
     width: 100%;
@@ -33,24 +34,46 @@ const Section = styled.div`
       cursor: pointer;
     }
   }
+
+  @media only screen and (max-width: 750px) {
+    form {
+      button {
+        margin-left: 0.4rem;
+      }
+    }
+  }
 `;
 
 const SearchBox = styled.div`
-  box-sizing: border-box;
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 16px 14px;
   gap: 12px;
+  padding: 16px 14px;
   width: 100%;
   height: 52px;
   border: 1px solid #7d89b0;
   border-radius: 8px;
+  background-color: #fff;
+  box-sizing: border-box;
 
+  div {
+    /* border: 1px solid red; */
+    height: fit-content;
+    display: flex;
+    border-radius: 50%;
+    cursor: pointer;
+  }
   svg {
     /* border: 1px solid red; */
-    /* width: 20px; */
-    /* height: 20px; */
+    width: 20px;
+    height: 20px;
+    &:last-child {
+      /* border: 1px solid red; */
+      width: 18px;
+      height: 18px;
+      padding: 4px;
+    }
   }
 
   input {
@@ -66,10 +89,27 @@ const SearchBox = styled.div`
 
     &::placeholder {
       color: #98a2b3;
+      border: 1ox solid red;
     }
 
     &:focus {
       outline: none;
+    }
+  }
+
+  @media only screen and (max-width: 750px) {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    input {
+      /* font-size: 18px; */
+      line-height: 1;
+    }
+
+    svg {
+      /* border: 1px solid red; */
+      width: 20px;
+      height: 20px;
     }
   }
 `;
@@ -81,9 +121,15 @@ interface searchProps {
   showButton?: boolean;
   onEnterFunc?: any;
   searchQuery?: string;
+  closeDropdown: any;
 }
 
 const SearchBar = (props: searchProps) => {
+  const cancelhandler = () => {
+    props.closeDropdown();
+    props.updateSearch("");
+  };
+
   return (
     <Section>
       <form
@@ -99,6 +145,11 @@ const SearchBar = (props: searchProps) => {
             value={props.searchQuery}
             onChange={(e) => props.updateSearch(e.target.value)}
           />
+          {props.searchQuery != "" && (
+            <div onClick={cancelhandler}>
+              <CrossIcon />
+            </div>
+          )}
         </SearchBox>
         {props.showButton && (
           <button type="button" onClick={props.onEnterFunc}>

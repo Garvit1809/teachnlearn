@@ -32,9 +32,10 @@ const DrawerBody = styled.div`
   /* border: 1px solid red; */
   width: 100%;
   height: 100%;
-  /* background: #d8eefe; */
+  background: #d8eefe;
   padding: 1rem;
   box-sizing: border-box;
+  z-index: 5;
 `;
 
 interface searchDrawerProps {
@@ -46,6 +47,7 @@ interface searchDrawerProps {
   showDropDown: boolean;
   dontShowSearchDropDown?: boolean;
   localUser: userProps;
+  searchQuery: string;
   closeSearchBox: any;
 }
 
@@ -74,6 +76,8 @@ const SearchDrawer = (props: searchDrawerProps) => {
             updateSearch={props.searchHandler}
             showButton={false}
             onEnterFunc={props.searchNavigator}
+            closeDropdown={props.closeSearchBox}
+            searchQuery={props.searchQuery}
             elem={
               props.searchedUsers.length == 0 &&
               props.searchedLearnCards.length == 0 &&

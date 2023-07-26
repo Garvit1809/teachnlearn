@@ -162,7 +162,7 @@ interface searchprops {
 }
 
 const NavSearchDropdown = (props: searchprops) => {
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  // const wrapperRef = useRef<HTMLDivElement | null>(null);
   // useOutsideAlerter(
   //   wrapperRef,
   //   undefined,
@@ -171,7 +171,15 @@ const NavSearchDropdown = (props: searchprops) => {
   //   true,
   //   props.closeSearchBox
   // );
-  navOutsideAlerter(wrapperRef, props.closeSearchBox);
+  // navOutsideAlerter(wrapperRef, props.closeSearchBox);
+  // useOutsideAlerter(
+  //   wrapperRef,
+  //   props.closeSearchBox,
+  //   false,
+  //   null,
+  //   false,
+  //   undefined
+  // );
 
   const navigate = useNavigate();
 

@@ -308,6 +308,7 @@ const Navbar = (props: navProps) => {
             showButton={true}
             onEnterFunc={searchNavigator}
             searchQuery={query}
+            closeDropdown={closeSearchBox}
             elem={
               searchedUsers.length == 0 &&
               searchedLearnCards.length == 0 &&
@@ -363,6 +364,7 @@ const Navbar = (props: navProps) => {
                 searchNavigator={searchNavigator}
                 searchedLearnCards={searchedLearnCards}
                 searchedTeachCards={searchedTeachCards}
+                searchQuery={query}
                 searchedUsers={searchedUsers}
                 showDropDown={showDropDown}
                 dontShowSearchDropDown={props.dontShowSearchDropDown}

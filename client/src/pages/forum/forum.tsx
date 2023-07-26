@@ -23,20 +23,30 @@ const Section = styled.div`
 `;
 
 const HeaderBtn = styled.div`
+  /* border: 1px solid red; */
   display: flex;
   margin-top: 2rem;
   justify-content: flex-end;
-  width: 90%;
+  width: 95%;
+  @media only screen and (max-width: 1000px) {
+  }
 `;
 
 const TopBar = styled.div`
   /* border: 1px solid red; */
-  width: 50%;
+  width: 60%;
   margin: 1rem auto;
+  margin-top: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 26px;
+
+  @media only screen and (max-width: 950px) {
+    width: 80%;
+  }
+  @media only screen and (max-width: 600px) {
+    width: 85%;
+  }
 `;
 
 const ForumGrid = styled.div`
@@ -45,6 +55,30 @@ const ForumGrid = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: 2rem 2.5rem;
   margin: 4rem 15vw;
+
+  @media only screen and (max-width: 1100px) {
+    margin: 4rem 10vw;
+  }
+  @media only screen and (max-width: 950px) {
+    margin: 4rem 5vw;
+    gap: 1.5rem 1rem;
+  }
+  @media only screen and (max-width: 680px) {
+    grid-template-columns: 1fr;
+    margin: 4rem 12vw;
+    gap: 1.5rem;
+  }
+  @media only screen and (max-width: 600px) {
+    margin: 4rem 10vw;
+  }
+  @media only screen and (max-width: 500px) {
+    margin: 3rem 5vw 2rem;
+    gap: 1.5rem;
+  }
+`;
+
+const LoaderWrapper = styled.div`
+  margin-top: 4rem;
 `;
 
 export interface forumProps {
@@ -188,9 +222,10 @@ const Forum = () => {
           <SearchBar
             updateSearch={handleSearch}
             placeholderText="Search in forum..."
-            searchQuery={query}
             showButton={true}
             onEnterFunc={searchNavigator}
+            closeDropdown={closeSearchBox}
+            searchQuery={query}
             elem={
               searchResults.length == 0 ? undefined : showDropDown &&
                 userToken ? (
@@ -204,7 +239,9 @@ const Forum = () => {
           />
         </TopBar>
         {isLoading ? (
-          <Loader />
+          <LoaderWrapper>
+            <Loader />
+          </LoaderWrapper>
         ) : (
           <ForumGrid>
             {forums &&
