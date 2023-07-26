@@ -32,16 +32,16 @@ const app = express();
 app.use(cors());
 app.use(express.json({ limit: "10kb" }));
 
-app.use('/', (req,res) => {
-  res.send("Welcome to Teach and learn")
-})
-
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/learn", learningRouter);
 app.use("/api/v1/teach", teachingRouter);
 app.use("/api/v1/announcement", announcementRouter);
 app.use("/api/v1/forum", ForumRouter);
+
+app.use('/', (req,res) => {
+  res.send("Welcome to Teach and learn")
+})
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
