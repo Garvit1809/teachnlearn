@@ -56,7 +56,6 @@ export const PostBtn = styled.div`
   align-items: center;
   padding: 14px 30px;
   gap: 10px;
-  background: rgb(51, 42, 213);
   background: #ef4565;
   border-radius: 8px;
   outline: none;
@@ -68,6 +67,11 @@ export const PostBtn = styled.div`
   line-height: 25px;
   color: #ffffff;
   cursor: pointer;
+
+  @media only screen and (max-width: 450px) {
+    font-size: 16px;
+    padding: 10px 18px;
+  }
 `;
 
 const ForumContainer = styled.div`
