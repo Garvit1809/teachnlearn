@@ -123,11 +123,11 @@ interface loginDataProps {
 const Signin = () => {
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (localStorage.getItem(localStorageUser)) {
-  //     navigate("/");
-  //   }
-  // }, [navigate]);
+  useEffect(() => {
+    if (localStorage.getItem(localStorageUser)) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const [loginData, setLoginData] = useState<loginDataProps>({
     email: "",

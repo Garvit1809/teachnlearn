@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import TNLLogo from "../../assets/tnl-logo.png";
@@ -20,6 +20,8 @@ import "react-multi-carousel/lib/styles.css";
 
 import feynaman from "../../assets/feynman.png";
 import LandingpageNav from "../../components/profile-comp/landingpageNav";
+import { localStorageUser } from "../../utils/globalConstants";
+import FeynmanDescription from "../../components/home-comp/feynmanDescription";
 
 const Section = styled.div`
   display: flex;
@@ -34,6 +36,7 @@ const Section = styled.div`
     /* border: 1px solid red; */
     width: 90vw;
     position: relative;
+    /* box-sizing: border-box; */
   }
 
   .carousel-container {
@@ -48,18 +51,20 @@ const Section = styled.div`
 
     .react-multiple-carousel__arrow--left {
       left: calc(-4% + 2px);
-      /* width: 2rem; */
-      /* height: 2rem; */
       border-radius: 2.6875rem;
       background: #094067;
     }
 
     .react-multiple-carousel__arrow--right {
       right: calc(-4% + 1px);
-      /* width: 2rem; */
-      /* height: 2rem; */
       border-radius: 2.6875rem;
       background: #094067;
+    }
+  }
+
+  @media only screen and (max-width: 750px) {
+    div.carousel-wrapper {
+      width: 92vw;
     }
   }
 `;
@@ -74,6 +79,7 @@ const BlogHeader = styled.div`
   width: 85%;
   background: #094067;
   border-radius: 4px;
+  box-sizing: border-box;
 
   font-family: "Nunito";
   font-style: normal;
@@ -99,6 +105,12 @@ const BlogHeader = styled.div`
     span.bold {
       color: #ffffff;
     }
+  }
+
+  @media only screen and (max-width: 750px) {
+    font-size: 14px;
+    width: 100%;
+    text-align: center;
   }
 `;
 
@@ -126,13 +138,32 @@ const InfoContainer = styled.div`
 
 const Diagram = styled.div`
   /* border: 1px solid green; */
-  width: 20.1875rem;
-  height: 18.75rem;
+  /* width: 20.1875rem; */
+  /* height: 18.75rem; */
 
   img {
     width: 20.1875rem;
     height: 18.75rem;
     object-fit: contain;
+  }
+
+  @media only screen and (max-width: 900px) {
+    img {
+      width: 18rem;
+      /* height: 18.75rem; */
+    }
+  }
+  @media only screen and (max-width: 750px) {
+    img {
+      width: 15rem;
+      height: 15.75rem;
+    }
+  }
+  @media only screen and (max-width: 550px) {
+    img {
+      width: 12rem;
+      height: 14.75rem;
+    }
   }
 `;
 
@@ -145,6 +176,28 @@ const Headings = styled.div`
     font-family: "Nunito";
     font-weight: 700;
     line-height: 124.9%;
+  }
+
+  @media only screen and (max-width: 900px) {
+    h2 {
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 120%;
+    }
+  }
+  @media only screen and (max-width: 750px) {
+    h2 {
+      font-size: 2.4rem;
+      font-weight: 600;
+      line-height: 110%;
+    }
+  }
+  @media only screen and (max-width: 550px) {
+    h2 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      line-height: 110%;
+    }
   }
 `;
 
@@ -168,85 +221,6 @@ const Indicator = styled.div`
     transition: all 0.15s linear;
     width: 32px;
     height: 10px;
-  }
-`;
-
-const DescContainer = styled.div`
-  display: flex;
-  /* width: 77.5rem; */
-  width: 90%;
-  margin: 4rem auto 8rem;
-  padding: 3.75rem 0rem 3rem;
-  flex-direction: column;
-  align-items: center;
-  gap: 2.5rem;
-  border-radius: 10px;
-  background: #d8eefe;
-
-  h2 {
-    color: #2b2c34;
-    font-size: 3.625rem;
-    font-family: "Nunito";
-    font-weight: 500;
-
-    span {
-      color: #3da9fc;
-      font-weight: 700;
-    }
-  }
-
-  p {
-    width: 100%;
-    color: #2b2c34;
-    text-align: center;
-    font-size: 1.25rem;
-    font-family: "Nunito";
-    line-height: 141.9%;
-    font-weight: 500;
-  }
-
-  button {
-    display: flex;
-    padding: 1.375rem 2.125rem;
-    align-items: flex-start;
-    gap: 0.625rem;
-    border-radius: 2px;
-    background: #3da9fc;
-    color: #fffffe;
-    font-size: 1.125rem;
-    font-family: "Nunito";
-    font-weight: 700;
-    border: none;
-    cursor: pointer;
-    margin-top: 2rem;
-  }
-
-  div.main-container {
-    /* border: 1px solid red; */
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 0 2rem;
-
-    div.content {
-      /* border: 1px solid red; */
-      width: 70%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 0 2rem 0 0;
-    }
-
-    img {
-      /* border: 1px solid red; */
-      /* padding-bottom: 5rem; */
-      /* margin-bottom: 1rem; */
-      width: 400px;
-      height: 100%;
-      object-fit: cover;
-      transform: translateY(-10%);
-    }
   }
 `;
 
@@ -338,6 +312,13 @@ const slides = slideData.map((data, index) => {
 
 const LandingPage = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem(localStorageUser)) {
+      navigate("/");
+    }
+  }, [navigate]);
+
   const navigationHandler = (link: string) => {
     topNavigator();
     navigate(link);
@@ -373,33 +354,7 @@ const LandingPage = () => {
       <YoutubeWrapper>
         <YoutubeCarousel />
       </YoutubeWrapper>
-      <DescContainer>
-        <h2>Richard Feynman</h2>
-        <div className="main-container">
-          <div className="content">
-            <p>
-              Richard Feynman was a Nobel-prize winning US theoretical
-              physicist. Famed for his brilliant mind and mercurial personality,
-              his main work was in quantum physics and particle physics, where
-              he is particularly known for the Feynman diagram, a way of
-              depicting particle processes graphically. But he was a prolific
-              writer and thinker who also pioneered ideas in quantum computing
-              and nanotechnology.
-              <br />
-              <br />
-              We, in Teach and Learn, have made a platform where students from
-              all across the globe and all sections of society can come
-              together, collaborate and elevate each other’s level of knowledge
-              by using the Feynman Technique of learning to teach each other and
-              learn from each other.
-            </p>
-            <button type="button" onClick={() => navigationHandler("/signup")}>
-              Create an account
-            </button>
-          </div>
-          <img src={feynaman} alt="feynman-img" />
-        </div>
-      </DescContainer>
+      <FeynmanDescription />
       <Footer />
     </>
   );

@@ -165,11 +165,11 @@ const initialData: USERDATA = {
 const NewSignup = () => {
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (localStorage.getItem(localStorageUser)) {
-  //     navigate("/");
-  //   }
-  // }, [navigate]);
+  useEffect(() => {
+    if (localStorage.getItem(localStorageUser)) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const [userData, setUserData] = useState<USERDATA>(initialData);
 

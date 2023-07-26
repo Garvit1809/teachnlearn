@@ -6,11 +6,10 @@ import TNLLogo from "../../assets/tnl-logo.png";
 import { UserCookie } from "../../utils/userCookie";
 
 const Header = styled.div`
-  width: 100%;
   /* border: 1px solid red; */
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  /* padding: 20px 4vw 0; */
   padding-top: 20px;
 `;
 
@@ -25,6 +24,12 @@ const ImageContainer = styled.div`
     height: 100%;
     object-fit: contain;
   }
+
+  @media only screen and (max-width: 450px) {
+    width: 140px;
+    height: 52px;
+    margin-left: 3vw;
+  }
 `;
 
 const AuthButtons = styled.div`
@@ -34,7 +39,7 @@ const AuthButtons = styled.div`
   align-items: center;
   justify-content: center;
   /* margin-right: 4rem; */
-  gap: 20px;
+  gap: 26px;
 
   div.signup {
     background: #3da9fc;
@@ -44,6 +49,11 @@ const AuthButtons = styled.div`
   div.signin {
     background: #ef4565;
     color: #fffffe;
+  }
+
+  @media only screen and (max-width: 450px) {
+    gap: 10px;
+    margin-right: 3vw;
   }
 `;
 
@@ -55,7 +65,6 @@ const AuthButton = styled.div`
   gap: 10px;
   background: #ffffff;
   border-radius: 2px;
-  margin-right: 10px;
 
   font-family: "Nunito";
   font-style: normal;
@@ -64,6 +73,11 @@ const AuthButton = styled.div`
   line-height: 22px;
   color: #2b2c34;
   cursor: pointer;
+
+  @media only screen and (max-width: 450px) {
+    font-size: 12px;
+    padding: 8px 18px;
+  }
 `;
 
 const LandingpageNav = () => {
@@ -74,7 +88,7 @@ const LandingpageNav = () => {
 
   useEffect(() => {
     fetchLocalUserData()
-      .then((user) => {
+      .then(() => {
         setRenderNav(false);
       })
       .catch(() => {

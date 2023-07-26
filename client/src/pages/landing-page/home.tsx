@@ -16,6 +16,7 @@ import FeedbackForm from "../../components/home-comp/feedbackForm";
 import YoutubeCarousel from "../../components/home-comp/youtubeCarousel";
 import { useNavigate } from "react-router-dom";
 import { teachinCardProps } from "../../types/teachingCardType";
+import { localStorageUser } from "../../utils/globalConstants";
 
 const Section = styled.div`
   /* border: 1px solid brown; */
@@ -26,6 +27,14 @@ const Section = styled.div`
 `;
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem(localStorageUser)) {
+      navigate("/teachNlearn");
+    }
+  }, [navigate]);
+
   const [userToken, setUserToken] = useState<string>("");
   const [userRole, setUserRole] = useState<string>("");
   const [userId, setuserId] = useState<string>("");
@@ -42,8 +51,6 @@ const Home = () => {
   const [requestIsLoading, setRequestIsLoading] = useState(true);
 
   const { fetchLocalUserData } = UserCookie();
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchLocalUserData()
