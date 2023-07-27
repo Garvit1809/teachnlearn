@@ -5,7 +5,7 @@ const ClassroomRouter = styled.div`
   border-bottom: 1px solid #b4b4b4;
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   transition: all 0.15s linear;
   width: 100%;
   margin: 2rem auto 0;
@@ -33,10 +33,13 @@ const ClassNavOption = styled.div`
   line-height: 22px;
   text-align: center;
   padding: 0 4.5rem 0.5rem;
+  padding: 0 0rem 0.5rem;
   position: relative;
   color: #979797;
   cursor: pointer;
   text-transform: capitalize;
+  /* border: 1px solid red; */
+  width: 100%;
 `;
 
 interface navigatorProps {

@@ -9,11 +9,25 @@ const Section = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 2rem;
   row-gap: 3.2rem;
+
+  @media only screen and (max-width: 1100px) {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1.6rem;
+    row-gap: 1.6rem;
+  }
+  /* @media only screen and (max-width: 750px) {
+    column-gap: 1.5rem;
+    row-gap: 1.5rem;
+  } */
+  @media only screen and (max-width: 750px) {
+    grid-template-columns: 1fr;
+    row-gap: 1.5rem;
+  }
 `;
 
 interface gridProps {
   teachCards: Array<teachinCardProps>;
-  elemType?: string,
+  elemType?: string;
 }
 
 export const cardSizes = {
@@ -34,7 +48,12 @@ const ClassroomGrid = (props: gridProps) => {
     <Section>
       {props.teachCards.map((teachCard, index) => {
         return (
-          <ClassroomCard cssArr={cardSizes} teachCard={teachCard} key={index} elemType={props.elemType} />
+          <ClassroomCard
+            cssArr={cardSizes}
+            teachCard={teachCard}
+            key={index}
+            elemType={props.elemType}
+          />
         );
       })}
     </Section>
