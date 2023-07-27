@@ -21,6 +21,7 @@ const Section = styled.div`
   font-family: "Nunito";
   font-style: normal;
   transition: all 0.15s linear;
+  min-width: 200px;
 
   &:hover {
     transform: translateY(-10px);
@@ -45,8 +46,8 @@ const Topic = styled.div`
   font-size: 20px;
   line-height: 30px;
   color: #d8eefe;
-  /* border: 1px solid white; */
-  white-space: wrap;
+  overflow-wrap: break-word;
+  width: 100%;
 `;
 
 export const CardStats = styled.div`

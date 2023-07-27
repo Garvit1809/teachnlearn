@@ -15,7 +15,7 @@ const learningCardSchema = new mongoose.Schema({
   topic: {
     type: String,
     required: [true, "Please provide the topic you need to learn"],
-    minlength: [35, "TOpic must be of atleast 35 characters"],
+    minlength: [35, "Topic must be of atleast 35 characters"],
   },
   programme: {
     type: String,
