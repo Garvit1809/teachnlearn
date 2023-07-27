@@ -23,6 +23,7 @@ const Section = styled.div`
     font-weight: 600;
     margin-bottom: 1rem;
     color: #98a2b3;
+    text-align: center;
   }
 
   button {
@@ -41,6 +42,10 @@ const Section = styled.div`
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+  }
+
+  @media only screen and (max-width: 600px) {
+    padding: 0 2vw;
   }
 `;
 

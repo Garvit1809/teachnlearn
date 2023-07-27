@@ -1,4 +1,3 @@
-import React from "react";
 import { styled } from "styled-components";
 import LearnCard from "./learnCard";
 import { learnCardProps } from "../../pages/requests/requests";

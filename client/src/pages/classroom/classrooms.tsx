@@ -11,13 +11,14 @@ import CompletedClasses from "../../components/classroom-comp/classpage-comp/com
 import { useLocation } from "react-router-dom";
 
 const Section = styled.div`
-  /* display: grid; */
-  /* grid-template-columns: auto auto auto; */
-  /* gap: 20px; */
   padding: 0 6.3vw;
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
+
+  /* @media only screen and (max-width: 600px) {
+    padding: 0 2vw;
+  } */
 `;
 
 export const ElementWrapper = styled.div`
