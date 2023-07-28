@@ -7,12 +7,21 @@ interface stylingProps {
 }
 
 const Section = styled.div<stylingProps>`
+  /* border: 1px solid red; */
   display: grid;
   grid-template-columns: 2fr 4fr;
-  /* border: 1px solid red; */
+  overflow-wrap: break-word;
+  /* wid */
+
+  @media only screen and (max-width: 1100px) {
+    display: flex;
+    flex-direction: column;
+  }
 
   h3 {
     /* border: 1px solid red; */
+    width: 100%;
+    overflow-wrap: break-word;
     margin-top: ${(p) => (p.marginTop ? p.marginTop : "1rem")};
     display: flex;
     align-items: ${(p) => (p.alignCenter ? "center" : "flex-start")};
@@ -30,6 +39,11 @@ const ElementWrapper = styled.div`
   /* width: 100%; */
   display: flex;
   margin-left: 32px;
+  
+  @media only screen and (max-width: 1100px) {
+    margin-left: 0px;
+    margin-top: 1rem;
+  }
 `;
 
 interface fieldProps {
