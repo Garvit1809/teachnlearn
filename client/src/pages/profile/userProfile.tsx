@@ -5,7 +5,11 @@ import ProfileOptions from "../../components/profile-comp/profileOptions";
 import UserProfileDetails from "../../components/profile-comp/userProfile/userProfileDetails";
 import { ProfileContainer, ProfileSection } from "./profile";
 import { UserCookie, userProps } from "../../utils/userCookie";
-import { MyProfileIcon } from "../../components/general-components/svg";
+import {
+  MessageIcon,
+  MyProfileIcon,
+} from "../../components/general-components/svg";
+import Message from "../../components/profile-comp/userProfile/message";
 
 const UserProfile = () => {
   const [localUser, setLocalUser] = useState<userProps>();
@@ -33,9 +37,9 @@ const UserProfile = () => {
     if (selectedLeftScreen == "Profile") {
       setElement(<UserProfileDetails />);
     }
-    // else if (selectedLeftScreen == "PurchaseCoins") {
-    //   setElement(<PurchaseCoins />);
-    // }
+    else if (selectedLeftScreen == "Message") {
+      setElement(<Message />);
+    }
   }, [selectedLeftScreen]);
 
   const profileOptions = [
@@ -43,6 +47,11 @@ const UserProfile = () => {
       option: "Profile",
       label: "Profile",
       icon: <MyProfileIcon />,
+    },
+    {
+      option: "Message",
+      label: "Message",
+      icon: <MessageIcon />,
     },
   ];
 
