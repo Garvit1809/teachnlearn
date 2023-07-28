@@ -121,13 +121,15 @@ interface searchProps {
   showButton?: boolean;
   onEnterFunc?: any;
   searchQuery?: string;
-  closeDropdown: any;
+  closeDropdown?: any;
 }
 
 const SearchBar = (props: searchProps) => {
   const cancelhandler = () => {
-    props.closeDropdown();
-    props.updateSearch("");
+    if (props.closeDropdown) {
+      props.closeDropdown();
+      props.updateSearch("");
+    }
   };
 
   return (
@@ -145,7 +147,7 @@ const SearchBar = (props: searchProps) => {
             value={props.searchQuery}
             onChange={(e) => props.updateSearch(e.target.value)}
           />
-          {props.searchQuery != "" && (
+          {props.closeDropdown && props.searchQuery != "" && (
             <div onClick={cancelhandler}>
               <CrossIcon />
             </div>
