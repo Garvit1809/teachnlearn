@@ -36,6 +36,15 @@ const Section = styled.div`
   flex-direction: column;
   gap: 2rem;
 
+  @media only screen and (max-width: 800px) {
+    width: 90%;
+    padding: 48px 48px;
+  }
+  @media only screen and (max-width: 500px) {
+    width: 95%;
+    padding: 48px 26px;
+  }
+
   h2 {
     font-family: "Nunito";
     font-style: normal;
@@ -79,7 +88,7 @@ const FormButtonCont = styled.div`
     gap: 10px;
     outline: none;
     border: none;
-    background: #332ad5;
+    background: #094067;
     border-radius: 8px;
     cursor: pointer;
 
@@ -89,6 +98,15 @@ const FormButtonCont = styled.div`
     font-size: 18px;
     line-height: 25px;
     color: #ffffff;
+  }
+
+  @media only screen and (max-width: 500px) {
+    justify-content: center;
+
+    button {
+      padding: 16px 26px;
+      font-size: 16px;
+    }
   }
 `;
 

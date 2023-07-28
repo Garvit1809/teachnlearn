@@ -25,7 +25,7 @@ import Loader from "../general-components/loader";
 import { useNavigate } from "react-router-dom";
 
 const Section = styled.div`
-  border: 1px solid red;
+  /* border: 1px solid red; */
 
   border: 1px solid #d5d9eb;
   border-radius: 26px;
@@ -36,6 +36,15 @@ const Section = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+
+  @media only screen and (max-width: 800px) {
+    width: 90%;
+    padding: 48px 48px;
+  }
+  @media only screen and (max-width: 500px) {
+    width: 95%;
+    padding: 48px 26px;
+  }
 
   h2 {
     font-family: "Nunito";
@@ -80,7 +89,7 @@ const FormButtonCont = styled.div`
     gap: 10px;
     outline: none;
     border: none;
-    background: #332ad5;
+    background: #094067;
     border-radius: 8px;
     cursor: pointer;
 
@@ -91,68 +100,14 @@ const FormButtonCont = styled.div`
     line-height: 25px;
     color: #ffffff;
   }
-`;
 
-const ExpectationWrapper = styled.div`
-  /* border: 1px solid red; */
-  width: 100%;
-`;
-
-const AddExpecBtn = styled.div`
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  margin-top: 0.5rem;
-  button {
-    cursor: pointer;
-    display: flex;
-    flex-direction: row;
+  @media only screen and (max-width: 500px) {
     justify-content: center;
-    align-items: center;
-    padding: 16px 24px;
-    gap: 10px;
-    background: #332ad5;
-    border-radius: 8px;
-    border: none;
 
-    font-family: "Nunito";
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    /* line-height: px; */
-    color: #ffffff;
-  }
-`;
-
-const ExpectationsContainer = styled.ul`
-  /* border: 1px solid red; */
-  margin-top: 1rem;
-  margin-left: 1rem;
-  display: flex;
-  flex-direction: column;
-  row-gap: 0.4rem;
-`;
-
-const Expectation = styled.div`
-  /* border: 1px solid red; */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  li {
-    /* border: 1px solid red; */
-    font-family: "Nunito";
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-  }
-
-  span {
-    font-family: "Nunito";
-    font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
-    cursor: pointer;
+    button {
+      padding: 16px 26px;
+      font-size: 16px;
+    }
   }
 `;
 
