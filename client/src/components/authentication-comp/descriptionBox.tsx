@@ -22,9 +22,9 @@ const Section = styled.div`
   @media only screen and (max-width: 870px) {
     width: 100%;
     padding: 8vh 2.5rem 5vh 4rem;
-    border-radius: 8px;
-    /* border-top-right-radius: 0; */
-    /* border-top-left-radius: 0; */
+    /* border-radius: 8px; */
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
   }
   @media only screen and (max-width: 450px) {
     /* width: 100%; */
