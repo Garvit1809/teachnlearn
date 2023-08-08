@@ -8,14 +8,14 @@ import {
 import { InterestedIcon, PurchaseCoinIcon } from "../general-components/svg";
 import { useNavigate } from "react-router-dom";
 import { teachinCardProps } from "../../types/teachingCardType";
+import { TagBox } from "../request-comp/learnCard";
 
 const Section = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 24px;
-  gap: 22px;
-  background: #674ff1;
+  padding: 22px;
+  gap: 24px;
   background: #094067;
   border-radius: 16px;
   box-sizing: border-box;
@@ -34,10 +34,9 @@ const Section = styled.div`
 
 const Tag = styled.div`
   h4 {
-    font-weight: 800;
+    font-weight: 700;
     font-size: 16px;
-    /* line-height: 22px; */
-    /* line-height: 1; */
+    line-height: 22px;
     letter-spacing: 0.02em;
     text-transform: uppercase;
     color: #ef4565;
@@ -51,15 +50,15 @@ const Tag = styled.div`
 `;
 
 const Topic = styled.div`
-  font-weight: 600;
+  font-weight: 700;
   font-size: 22px;
-  color: #ffffff;
+  color: #d8eefe;
+  overflow-wrap: break-word;
+  width: 100%;
 
   font-family: "Nunito";
   font-style: normal;
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 33px;
+  line-height: 30px;
 
   @media only screen and (max-width: 800px) {
     font-size: 20px;
@@ -127,7 +126,7 @@ export const DueCont = styled.div`
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
-  line-height: 19px;
+  line-height: 20px;
   color: #ffffff;
 
   @media only screen and (max-width: 800px) {
@@ -234,6 +233,8 @@ const RecommendedClassCard = ({ card, userId }: cardProps) => {
           imgBorder="#FFFFFF"
           textColor="#FFFFFF"
           userId={card.createdBy._id}
+          imgSize="26px"
+          textSize="18px"
         />
       </UserWrapper>
       <Stats>
@@ -255,6 +256,15 @@ const RecommendedClassCard = ({ card, userId }: cardProps) => {
           </span>
         </DueCont>
       </Stats>
+      <TagBox>
+        {card.tags.map((tag, index) => {
+          return (
+            <div key={index}>
+              <span>{tag}</span>
+            </div>
+          );
+        })}
+      </TagBox>
     </Section>
   );
 };

@@ -85,7 +85,7 @@ const Home = () => {
       })
       .then(({ data }) => {
         const classes = data.upcomingClasses;
-        console.log(classes);
+        // console.log(classes);
         setUpcomingClasses(classes);
         setUpcomingIsLoading(false);
       });
@@ -97,7 +97,7 @@ const Home = () => {
         headers: getHeaders(userToken),
       })
       .then(({ data }) => {
-        console.log(data.stats);
+        // console.log(data.stats);
         const learnCardData = data.stats;
         setLearnCards(learnCardData);
         setRequestIsLoading(false);
@@ -118,12 +118,14 @@ const Home = () => {
       <Section>
         <Intro />
         {/* <Popular /> */}
-        <RecommendedClassWrapper
-          heading="Classes recommended for you!"
-          cardArr={recommendedClasses}
-          userId={userId}
-          loading={recommendedIsLoading}
-        />
+        {recommendedClasses && recommendedClasses.length != 0 && (
+          <RecommendedClassWrapper
+            heading="Classes recommended for you!"
+            cardArr={recommendedClasses}
+            userId={userId}
+            loading={recommendedIsLoading}
+          />
+        )}
         {upcomingClasses && upcomingClasses.length != 0 && (
           <EnrolledClassWrapper
             heading="Upcoming Enrolled Classes!"

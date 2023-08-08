@@ -43,7 +43,7 @@ const Topic = styled.div`
   font-family: "Nunito";
   font-style: normal;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 22px;
   line-height: 30px;
   color: #d8eefe;
   overflow-wrap: break-word;

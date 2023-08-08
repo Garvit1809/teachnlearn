@@ -31,17 +31,18 @@ const YoutubeVideoContainer = styled.div`
   /* border: 1px solid red; */
   display: flex;
   max-width: 25rem;
-  height: 20em;
+  /* height: 18rem; */
   margin-right: 1rem;
   flex-direction: column;
   align-items: flex-start;
+  /* border: 1px solid red; */
 
   iframe {
-    /* border: 1px solid red; */
     width: 100%;
-    height: 100%;
+    height: 17rem;
     border: none;
-    border-radius: 20px 20px 0px 0px;
+    /* border-radius: 20px 20px 0px 0px; */
+    border-radius: 20px;
   }
 
   @media only screen and (max-width: 600px) {
@@ -53,19 +54,17 @@ const YoutubeVideoContainer = styled.div`
 `;
 
 const FrameDetails = styled.div`
-  /* border: 1px solid red; */
+  border: 1px solid red;
   display: flex;
   padding: 1.25rem;
   box-sizing: border-box;
   width: 100%;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.5rem;
-  align-self: stretch;
   border-radius: 0px 0px 20px 20px;
   background: #094067;
   color: #fff;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-family: "Nunito";
   font-weight: 600;
   letter-spacing: -0.07rem;
@@ -99,6 +98,20 @@ const carouselData = [
       <iframe
         width="560"
         height="315"
+        src="https://www.youtube.com/embed/QK4rMgtSaqk"
+        title="YouTube video player"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+      ></iframe>
+    ),
+    text: "Why use Teach and Learn?",
+  },
+  {
+    iframe: (
+      <iframe
+        width="560"
+        height="315"
         src="https://www.youtube.com/embed/Dj49m3dC1yk"
         title="YouTube video player"
         frameBorder="0"
@@ -114,7 +127,7 @@ const items = carouselData.map((data, index) => {
   return (
     <YoutubeVideoContainer>
       {data.iframe}
-      <FrameDetails>{data.text}</FrameDetails>
+      {/* <FrameDetails>{data.text}</FrameDetails> */}
     </YoutubeVideoContainer>
   );
 });
@@ -123,7 +136,7 @@ const YoutubeCarousel = () => {
   return (
     <Section>
       <h3>Watch these videos to know how and why to use Teach and Learn</h3>
-      <Carousel responsive={responsive}>{items}</Carousel>;
+      <Carousel responsive={responsive}>{items}</Carousel>
     </Section>
   );
 };
