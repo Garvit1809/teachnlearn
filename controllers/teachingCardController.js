@@ -12,9 +12,9 @@ exports.getAllTeachCards = catchAsync(async (req, res, next) => {
 
   const features = new APIFeatures(
     TeachingCard.find({
-      classEndsAt: {
-        $gte: curentDate,
-      },
+      // classEndsAt: {
+      //   // $gte: curentDate,
+      // },
     }),
     req.query
   )
