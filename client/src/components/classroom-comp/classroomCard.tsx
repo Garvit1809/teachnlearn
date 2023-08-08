@@ -264,6 +264,7 @@ const ClassroomCard = (props: classCardProps) => {
 
     let hasReviewed = false;
 
+    // console.log(reviews);
     reviews.forEach((element) => {
       if (element.user._id == userId) {
         hasReviewed = true;

@@ -130,12 +130,12 @@ const RecommendedClassWrapper = (props: wrapperProps) => {
         <CardGrid>
           {props.cardArr.map((card, index) => {
             return (
-              // <RecommendedClassCard
-              //   key={index}
-              //   card={card}
-              //   userId={props.userId}
-              // />
-              <ClassroomCard teachCard={card} />
+              <RecommendedClassCard
+                key={index}
+                card={card}
+                userId={props.userId}
+              />
+              // <ClassroomCard teachCard={card} />
             );
           })}
         </CardGrid>
