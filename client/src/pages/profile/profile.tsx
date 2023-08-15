@@ -10,7 +10,7 @@ import {
   RedeemIcon,
 } from "../../components/general-components/svg";
 import UserBalance from "../../components/profile-comp/my-profile/userBalance";
-import UserList from "../../components/profile-comp/my-profile/favouriteUserList";
+import FavouriteUserList from "../../components/profile-comp/my-profile/favouriteUserList";
 
 export const ProfileSection = styled.div`
   border: 2px solid #d5d9eb;
@@ -36,7 +36,7 @@ const Profile = () => {
     } else if (selectedLeftScreen == "MyWallet") {
       setElement(<UserBalance />);
     } else if (selectedLeftScreen == "MyFavourites") {
-      setElement(<UserList />);
+      setElement(<FavouriteUserList />);
     }
   }, [selectedLeftScreen]);
 

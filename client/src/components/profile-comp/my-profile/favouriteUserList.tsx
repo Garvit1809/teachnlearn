@@ -15,6 +15,10 @@ const FavouriteUserWrapper = styled.div`
   /* flex-direction: column; */
   /* row-gap: 1.6rem; */
   margin-left: 1rem;
+
+  h2.nouser {
+    font-weight: 500;
+  }
 `;
 
 const FavouriteUserList = () => {
@@ -59,10 +63,10 @@ const FavouriteUserList = () => {
     <FavouriteUserWrapper>
       {isLoading ? (
         <Loader />
+      ) : favouriteusers && favouriteusers?.length != 0 ? (
+        <UserList userArr={favouriteusers} localUserId={localUserId} />
       ) : (
-        favouriteusers && (
-          <UserList userArr={favouriteusers} localUserId={localUserId} />
-        )
+        <h2 className="nouser">No Favourite Users</h2>
       )}
     </FavouriteUserWrapper>
   );
