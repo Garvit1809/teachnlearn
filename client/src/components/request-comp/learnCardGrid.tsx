@@ -2,6 +2,18 @@ import { styled } from "styled-components";
 import LearnCard from "./learnCard";
 import { learnCardProps } from "../../pages/requests/requests";
 
+const Section = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  h2{
+    font-weight: 500;
+
+  }
+`;
+
 const CardGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -31,12 +43,16 @@ interface learnCardGridProps {
 }
 
 const LearnCardGrid = ({ learnCards }: learnCardGridProps) => {
-  return (
+  return learnCards.length != 0 ? (
     <CardGrid>
       {learnCards.map((card, index) => {
         return <LearnCard key={index} {...card} />;
       })}
     </CardGrid>
+  ) : (
+    <Section>
+      <h2>No Learn Cards for this search</h2>
+    </Section>
   );
 };
 

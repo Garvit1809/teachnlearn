@@ -132,7 +132,7 @@ interface USERDATA {
   email: string;
   password: string;
   confirmPassword: string;
-  photo: string;
+  photo?: string;
   number: string;
   course: string;
   standard: string;
@@ -150,7 +150,7 @@ const initialData: USERDATA = {
   email: "",
   password: "",
   confirmPassword: "",
-  photo: "",
+  photo: undefined,
   number: "",
   course: "",
   standard: "",

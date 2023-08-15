@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ClassroomCard from "./classroomCard";
 import { teachinCardProps } from "../../types/teachingCardType";
 
-const Section = styled.div`
+const CardGrid = styled.div`
   /* border: 1px solid red; */
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -22,6 +22,17 @@ const Section = styled.div`
   @media only screen and (max-width: 750px) {
     grid-template-columns: 1fr;
     row-gap: 1.5rem;
+  }
+`;
+
+const Section = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  h2 {
+    font-weight: 500;
   }
 `;
 
@@ -44,8 +55,8 @@ export const cardSizes = {
 };
 
 const ClassroomGrid = (props: gridProps) => {
-  return (
-    <Section>
+  return props.teachCards.length != 0 ? (
+    <CardGrid>
       {props.teachCards.map((teachCard, index) => {
         return (
           <ClassroomCard
@@ -56,6 +67,10 @@ const ClassroomGrid = (props: gridProps) => {
           />
         );
       })}
+    </CardGrid>
+  ) : (
+    <Section>
+      <h2>No Teach Cards for this search</h2>
     </Section>
   );
 };

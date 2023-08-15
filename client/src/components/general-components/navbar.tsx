@@ -152,9 +152,9 @@ const ModeWrapper = styled.div`
 `;
 
 interface navProps {
-  // setSearchFeedQuery?: any;
   updateSearchFeedProps?: any;
   dontShowSearchDropDown?: boolean;
+  showSearchNavButton?: boolean;
 }
 
 const Navbar = (props: navProps) => {
@@ -305,7 +305,11 @@ const Navbar = (props: navProps) => {
           <SearchBar
             placeholderText="Search for a request, class, card id, topic, subject, person, course etc."
             updateSearch={searchHandler}
-            showButton={true}
+            showButton={
+              props.showSearchNavButton != undefined
+                ? props.showSearchNavButton
+                : true
+            }
             onEnterFunc={searchNavigator}
             searchQuery={query}
             closeDropdown={closeSearchBox}

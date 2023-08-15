@@ -133,11 +133,13 @@ const Home = () => {
             loading={upcomingIsLoading}
           />
         )}
-        <RequestCardWrapper
-          heading="Rising Requests"
-          requestCard={learnCards}
-          loading={requestIsLoading}
-        />
+        {learnCards && learnCards.length != 0 && (
+          <RequestCardWrapper
+            heading="Rising Requests"
+            requestCard={learnCards}
+            loading={requestIsLoading}
+          />
+        )}
         <YoutubeCarousel />
         <FeedbackForm userToken={userToken} />
       </Section>

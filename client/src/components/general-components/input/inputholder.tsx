@@ -124,7 +124,7 @@ const RequiredText = styled.div`
 `;
 
 interface inputProps {
-  value: string | number;
+  value: string | number | undefined;
   type: string;
   label: string;
   name: string;

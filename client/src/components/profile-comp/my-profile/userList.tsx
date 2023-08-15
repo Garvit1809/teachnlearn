@@ -47,6 +47,17 @@ const UserContainer = styled.div`
   }
 `;
 
+const Section = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  h2 {
+    font-weight: 500;
+  }
+`;
+
 interface listProps {
   userArr: Array<userListProps>;
   localUserId: string;
@@ -69,23 +80,29 @@ const UserList = ({ userArr, localUserId }: listProps) => {
 
   return (
     <div>
-      {userArr.map((user, index) => {
-        return (
-          <UserContainer
-            key={index}
-            onClick={() => userNavigationHandler(user._id)}
-          >
-            <img src={user.photo} alt="user-img" />
-            <div className="user">
-            <div className="names" >
-              <h4>{user.name}</h4>
-              <h5>@{user.userName}</h5>
-            </div>
-              <p>{user.tagline}</p>
-            </div>
-          </UserContainer>
-        );
-      })}
+      {userArr.length != 0 ? (
+        userArr.map((user, index) => {
+          return (
+            <UserContainer
+              key={index}
+              onClick={() => userNavigationHandler(user._id)}
+            >
+              <img src={user.photo} alt="user-img" />
+              <div className="user">
+                <div className="names">
+                  <h4>{user.name}</h4>
+                  <h5>@{user.userName}</h5>
+                </div>
+                <p>{user.tagline}</p>
+              </div>
+            </UserContainer>
+          );
+        })
+      ) : (
+        <Section>
+          <h2>No Users for this search</h2>
+        </Section>
+      )}
     </div>
   );
 };
