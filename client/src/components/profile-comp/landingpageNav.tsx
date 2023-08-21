@@ -102,7 +102,7 @@ const LandingpageNav = () => {
   };
   return renderNav ? (
     <Header>
-      <ImageContainer onClick={() => navigationHandler("/teachNlearn")}>
+      <ImageContainer onClick={() => navigationHandler("/")}>
         <img src={TNLLogo} alt="tnl-logo" />
       </ImageContainer>
       <AuthButtons>

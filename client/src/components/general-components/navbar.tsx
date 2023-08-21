@@ -202,7 +202,7 @@ const Navbar = (props: navProps) => {
 
   const signoutHandler = () => {
     localStorage.clear();
-    navigate("/teachNlearn");
+    navigate("/");
   };
 
   const closeDropDown = () => {
@@ -291,7 +291,6 @@ const Navbar = (props: navProps) => {
   };
 
   const userWrapperhandler = () => {
-    // console.log("HANDLING");
     setShowProfileOptions(!showProfileOptions);
   };
 
