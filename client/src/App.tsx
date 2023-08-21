@@ -26,7 +26,6 @@ import UserProfile from "./pages/profile/userProfile";
 import FreeBlogs from "./pages/blogs/freeBlogs";
 import SearchFeed from "./components/general-components/searchFeed";
 import ForumSearch from "./pages/forum/forumSearch";
-import MainHome from "./pages/landing-page/mainHome";
 
 function App() {
   return (
