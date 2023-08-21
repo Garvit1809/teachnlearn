@@ -212,7 +212,7 @@ const Overview = (props: overallOverviewProps) => {
 
   const toastOptions = {
     position: toast.POSITION.BOTTOM_RIGHT,
-    autoClose: 6000,
+    autoClose: 1000,
     pauseOnHover: true,
     draggable: true,
   };

@@ -35,8 +35,6 @@ const Section = styled.div<styleProps>`
 `;
 
 const TimeContainer = styled.div<styleProps>`
-  background: rgba(0, 0, 0, 0.1);
-  background: #094067;
   background-color: ${(p) =>
     p.isFirstCard ? "rgba(255, 255, 255, 0.15)" : "#094067"};
   border-radius: 46px;
@@ -68,9 +66,14 @@ const Topic = styled.div<styleProps>`
 interface enrolledClassCardProps {
   card: teachinCardProps;
   isFirstCard: boolean;
+  isSingleCard?: boolean;
 }
 
-const EnrolledClassCard = ({ card, isFirstCard }: enrolledClassCardProps) => {
+const EnrolledClassCard = ({
+  card,
+  isFirstCard,
+  isSingleCard,
+}: enrolledClassCardProps) => {
   const navigate = useNavigate();
   const classNavigator = () => {
     topNavigator();
@@ -81,10 +84,12 @@ const EnrolledClassCard = ({ card, isFirstCard }: enrolledClassCardProps) => {
       },
     });
   };
-  
+
+  const firstCardCondn = isSingleCard ? false : isFirstCard;
+
   return (
-    <Section isFirstCard={isFirstCard} onClick={classNavigator}>
-      <TimeContainer isFirstCard={isFirstCard}>
+    <Section isFirstCard={firstCardCondn} onClick={classNavigator}>
+      <TimeContainer isFirstCard={firstCardCondn}>
         <Calender color="#FFFFFF" />
         <span>
           {getReadableTime(card.classStartsAt) +
@@ -92,7 +97,7 @@ const EnrolledClassCard = ({ card, isFirstCard }: enrolledClassCardProps) => {
             getReadableTime(card.classEndsAt)}
         </span>
       </TimeContainer>
-      <Topic isFirstCard={isFirstCard}>
+      <Topic isFirstCard={firstCardCondn}>
         <span>
           {card.topic.length > 50
             ? card.topic.slice(0, 50) + " ..."
@@ -103,8 +108,8 @@ const EnrolledClassCard = ({ card, isFirstCard }: enrolledClassCardProps) => {
         <UserChip
           name={card.createdBy.userName}
           photo={card.createdBy.photo}
-          imgBorder={isFirstCard ? "white" : "black"}
-          textColor={isFirstCard ? "white" : "black"}
+          imgBorder={firstCardCondn ? "white" : "black"}
+          textColor={firstCardCondn ? "white" : "black"}
           userId={card.createdBy._id}
         />
       </UserWrapper>

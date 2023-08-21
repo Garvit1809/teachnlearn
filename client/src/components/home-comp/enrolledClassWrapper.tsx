@@ -105,6 +105,7 @@ const EnrolledClassWrapper = (props: wrapperProps) => {
                 key={index}
                 card={card}
                 isFirstCard={index == 0}
+                isSingleCard={props.cardArr.length == 1}
               />
             );
           })}
