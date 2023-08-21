@@ -315,7 +315,7 @@ const LandingPage = () => {
 
   useEffect(() => {
     if (localStorage.getItem(localStorageUser)) {
-      navigate("/");
+      navigate("/home");
     }
   }, [navigate]);
 

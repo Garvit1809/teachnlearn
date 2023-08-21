@@ -182,8 +182,7 @@ const Signin = () => {
           const user = data.data.user;
           user.token = data.token;
           localStorage.setItem(localStorageUser, JSON.stringify(user));
-          setIsLoading(false);
-          navigationHandler("/");
+          navigationHandler("/home");
         })
         .catch((data) => {
           // console.log(data.response);
@@ -202,7 +201,11 @@ const Signin = () => {
           <LoginForm {...loginData} updateFields={updateFields} />
           <ButtonContainer>
             <button type="submit" onClick={loginHandler}>
-              {isLoading ? <Loader color="white" loaderHeight="2rem"/> : "Login"}
+              {isLoading ? (
+                <Loader color="white" loaderHeight="2rem" />
+              ) : (
+                "Login"
+              )}
             </button>
           </ButtonContainer>
           <span className="login">

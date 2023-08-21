@@ -7,6 +7,7 @@ import UploadImage from "../../components/general-components/input/uploadImage";
 // import { } from '../../data/PROGRAMME_LIST.json'
 import { subjects } from "../../data/SUBJECT_LIST.json";
 import { languages } from "../../data/LANGUAGE_LIST.json";
+import { standard } from "../../data/STANDARD_LIST.json";
 
 const Section = styled.div`
   display: flex;
@@ -85,8 +86,9 @@ const UserInfoForm = (props: UserInfoFormProps) => {
           updateFields={props.updateFields}
           isRequired={false}
           placeholderText="Standard/Year"
+          hasDropdown={true}
+          dropdownData={standard}
         />
-        {/* standard */}
         <InputWrapper>
           <MultipleInput
             label="Subjects you mostly need help in"

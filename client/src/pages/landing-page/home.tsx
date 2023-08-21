@@ -31,7 +31,7 @@ const Home = () => {
 
   useEffect(() => {
     if (!localStorage.getItem(localStorageUser)) {
-      navigate("/teachNlearn");
+      navigate("/");
     }
   }, [navigate]);
 
@@ -62,7 +62,7 @@ const Home = () => {
         setRenderHome(true);
       })
       .catch((err) => {
-        navigate("/teachNlearn");
+        navigate("/");
       });
   }, []);
 
@@ -118,14 +118,14 @@ const Home = () => {
       <Section>
         <Intro />
         {/* <Popular /> */}
-        {recommendedClasses && recommendedClasses.length != 0 && (
-          <RecommendedClassWrapper
-            heading="Classes recommended for you!"
-            cardArr={recommendedClasses}
-            userId={userId}
-            loading={recommendedIsLoading}
-          />
-        )}
+        {/* { recommendedClasses.length != 0 && ( */}
+        <RecommendedClassWrapper
+          heading="Classes recommended for you!"
+          cardArr={recommendedClasses}
+          userId={userId}
+          loading={recommendedIsLoading}
+        />
+        {/* )} */}
         {upcomingClasses && upcomingClasses.length != 0 && (
           <EnrolledClassWrapper
             heading="Upcoming Enrolled Classes!"
@@ -133,13 +133,13 @@ const Home = () => {
             loading={upcomingIsLoading}
           />
         )}
-        {learnCards && learnCards.length != 0 && (
-          <RequestCardWrapper
-            heading="Rising Requests"
-            requestCard={learnCards}
-            loading={requestIsLoading}
-          />
-        )}
+        {/* {learnCards && learnCards.length != 0 && ( */}
+        <RequestCardWrapper
+          heading="Rising Requests"
+          requestCard={learnCards}
+          loading={requestIsLoading}
+        />
+        {/* )} */}
         <YoutubeCarousel />
         <FeedbackForm userToken={userToken} />
       </Section>

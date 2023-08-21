@@ -20,7 +20,7 @@ export const DATA_LIMIT = 10;
 export const navOptions = [
   {
     title: "Home",
-    link: "/",
+    link: "/home",
   },
   {
     title: "Teach Cards",

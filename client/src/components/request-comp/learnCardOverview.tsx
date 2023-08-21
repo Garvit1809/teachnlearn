@@ -183,27 +183,22 @@ const BottonContainer = styled.div<interestedBtnProps>`
     align-items: center;
     padding: 18px 40px;
     gap: 10px;
-    cursor: pointer;
-
-    background: rgba(239, 69, 101, 1);
-    /* background-color: ${(p) =>
+    background-color: ${(p) =>
       p.isDisabled
         ? "rgba(239, 69, 101, 0.6)"
         : p.isInterested
         ? "rgba(239, 69, 101, 0.6)"
-        : "rgba(239, 69, 101, 1)"}; */
+        : "rgba(239, 69, 101, 1)"};
     border-radius: 8px;
     outline: none;
     border: none;
+    cursor: pointer;
 
-    /* border: 1px solid #332ad5; */
     font-family: "Nunito";
     font-style: normal;
     font-weight: 600;
     font-size: 18px;
     line-height: 25px;
-    /* identical to box height */
-
     color: #ffffff;
   }
 `;
@@ -363,7 +358,11 @@ const LearnCardOverview = () => {
     });
   }, []);
 
+  const [isInterestedLoading, setisInterestedLoading] =
+    useState<boolean>(false);
+
   const interestedHandler = async () => {
+    setisInterestedLoading(true);
     await axios
       .patch(
         `${BASE_URL}${apiVersion}/learn/${learnCard?._id}/interested`,
@@ -376,12 +375,16 @@ const LearnCardOverview = () => {
         console.log(data.updatedLearnCard.interestedStudents);
         const newInterestedStudents: string[] =
           data.updatedLearnCard.interestedStudents;
+        setisInterestedLoading(false);
         if (learnCard) {
           const newLearnCard = learnCard;
           newLearnCard.interestedStudents = newInterestedStudents;
           setlearnCard(newLearnCard);
           setTotalInterestedStudents(newInterestedStudents.length);
         }
+      })
+      .catch(() => {
+        toast.error("Something went wrong. Try again!!", toastOptions);
       });
   };
 
@@ -460,7 +463,7 @@ const LearnCardOverview = () => {
                   <UserChip
                     name={learnCard.createdBy.userName}
                     photo={learnCard.createdBy.photo}
-                    imgBorder="white"
+                    imgBorder="black"
                     textColor="black"
                     userId={learnCard.createdBy._id}
                     imgSize="42px"
@@ -491,7 +494,15 @@ const LearnCardOverview = () => {
                           onClick={interestedHandler}
                           // disabled={userRole == "teach"}
                         >
-                          Interested
+                          {isInterestedLoading ? (
+                            <Loader
+                              loaderHeight="26px"
+                              loaderWidth="26px"
+                              color="white"
+                            />
+                          ) : (
+                            "Interested"
+                          )}
                         </button>
                       </BottonContainer>
                     ))}

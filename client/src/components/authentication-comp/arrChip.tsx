@@ -32,7 +32,6 @@ const Chip = styled.div`
   font-size: 14px;
   line-height: 19px;
   letter-spacing: 0.02em;
-  color: #ffffff;
   color: #000;
 
   svg {

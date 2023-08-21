@@ -10,6 +10,7 @@ const teachingCardSchema = new mongoose.Schema(
     subject: {
       type: String,
       required: [true, "Please provide the subject you need to learn from"],
+      trim: true,
     },
     topic: {
       type: String,
@@ -18,6 +19,7 @@ const teachingCardSchema = new mongoose.Schema(
         30,
         "Topic should be briefly explained with atleast 50 characters",
       ],
+      trim: true,
     },
     programme: {
       type: String,
