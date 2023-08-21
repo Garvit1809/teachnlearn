@@ -7,6 +7,7 @@ import { Facebook, Instagram, Twitter, Youtube } from "../svg";
 import { topNavigator } from "../../../utils/helperFunctions";
 import PlayStore from "../../../assets/getAppOnPlayStore.png";
 import AppleStore from "../../../assets/getOnApple.png";
+import { localStorageUser } from "../../../utils/globalConstants";
 
 const Section = styled.div`
   /* border-top: 1px solid #7d89b0; */
@@ -207,10 +208,20 @@ const Footer = () => {
     navigate(link);
   };
 
+  const logoNavigator = () => {
+    if (localStorage.getItem(localStorageUser)) {
+      topNavigator();
+      navigate("/home");
+    } else {
+      topNavigator();
+      navigate("/");
+    }
+  };
+
   return (
     <Section>
       <Links>
-        <LogoContainer onClick={() => navgationhandler("/")}>
+        <LogoContainer onClick={logoNavigator}>
           <img src={TNLLogo} alt="" />
         </LogoContainer>
         <div className="lists">
