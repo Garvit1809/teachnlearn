@@ -311,11 +311,14 @@ const slides = slideData.map((data, index) => {
 });
 
 const LandingPage = () => {
+  const [renderLandingPage, setRenderLandingPage] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (localStorage.getItem(localStorageUser)) {
       navigate("/home");
+    } else {
+      setRenderLandingPage(true);
     }
   }, [navigate]);
 
@@ -325,38 +328,40 @@ const LandingPage = () => {
   };
 
   return (
-    <>
-      <Section>
-        <LandingpageNav />
-        <BlogHeader onClick={() => navigationHandler("/teachNlearn-blogs")}>
-          <span>
-            Check out our <span className="bold">blog</span> for free guidance
-            on how to improve in your studies.
-          </span>
-          <Arrow strokeColor="#FFFFFF" />
-        </BlogHeader>
-        <div className="carousel-wrapper">
-          <Carousel
-            containerClass="carousel-container"
-            responsive={responsive}
-            infinite={true}
-            showDots={true}
-            autoPlay={true}
-            autoPlaySpeed={3500}
-            customTransition="all 1s"
-            transitionDuration={1000}
-            customDot={<CustomDot />}
-          >
-            {slides}
-          </Carousel>
-        </div>
-      </Section>
-      <YoutubeWrapper>
-        <YoutubeCarousel />
-      </YoutubeWrapper>
-      <FeynmanDescription />
-      <Footer />
-    </>
+    renderLandingPage && (
+      <>
+        <Section>
+          <LandingpageNav />
+          <BlogHeader onClick={() => navigationHandler("/teachNlearn-blogs")}>
+            <span>
+              Check out our <span className="bold">blog</span> for free guidance
+              on how to improve in your studies.
+            </span>
+            <Arrow strokeColor="#FFFFFF" />
+          </BlogHeader>
+          <div className="carousel-wrapper">
+            <Carousel
+              containerClass="carousel-container"
+              responsive={responsive}
+              infinite={true}
+              showDots={true}
+              autoPlay={true}
+              autoPlaySpeed={3500}
+              customTransition="all 1s"
+              transitionDuration={1000}
+              customDot={<CustomDot />}
+            >
+              {slides}
+            </Carousel>
+          </div>
+        </Section>
+        <YoutubeWrapper>
+          <YoutubeCarousel />
+        </YoutubeWrapper>
+        <FeynmanDescription />
+        <Footer />
+      </>
+    )
   );
 };
 
