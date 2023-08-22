@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { Calender } from "../general-components/svg";
 import {
@@ -63,6 +62,15 @@ const Topic = styled.div<styleProps>`
   line-height: 33px;
 `;
 
+const DateContainer = styled.div<styleProps>`
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: ${(p) => (p.isFirstCard ? "#FFFFFF" : "#000000")};
+`;
+
 interface enrolledClassCardProps {
   card: teachinCardProps;
   isFirstCard: boolean;
@@ -83,6 +91,13 @@ const EnrolledClassCard = ({
         backPageLink: "/",
       },
     });
+  };
+
+  const dateChecker = () => {
+    const currentDate = new Date().getDate();
+    const classDate = new Date(card.date).getDate();
+    console.log(classDate);
+    return classDate == currentDate;
   };
 
   const firstCardCondn = isSingleCard ? false : isFirstCard;
@@ -112,6 +127,11 @@ const EnrolledClassCard = ({
           textColor={firstCardCondn ? "white" : "black"}
           userId={card.createdBy._id}
         />
+        {dateChecker() ? null : (
+          <DateContainer isFirstCard={firstCardCondn} >
+            <span>{getReadableDate(card.date)}</span>
+          </DateContainer>
+        )}
       </UserWrapper>
     </Section>
   );

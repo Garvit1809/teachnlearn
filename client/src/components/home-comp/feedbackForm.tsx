@@ -47,9 +47,9 @@ const Section = styled.div`
     align-items: flex-end;
     gap: 0.625rem;
     border-radius: 2px;
-    background: #094067;
     background: #ef4565;
     color: #fff;
+    border-radius: 8px;
     font-size: 1.125rem;
     font-family: "Nunito";
     font-weight: 700;

@@ -193,13 +193,13 @@ const CreateLearnCard = () => {
     ) {
       toast.error("Fill in all the details", toastOptions);
       return false;
-    } else if (topic.length < 35) {
+    } else if (topic.trim().length < 35) {
       toast.error("Topic must be greater than 35 characters", toastOptions);
       return false;
     } else if (ISODueDate < currentDate) {
       toast.error("Pick another due date", toastOptions);
       return false;
-    } else if (description.length > 400) {
+    } else if (description.trim().length > 400) {
       toast.error("Description caannot exceed 400 characters!!", toastOptions);
       return false;
     }

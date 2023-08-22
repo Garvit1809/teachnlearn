@@ -14,7 +14,6 @@ export const getReadableDate = (ISODate: string) => {
   const readable = new Date(ISODate);
   const month = readable.getMonth();
   const date = readable.getDate();
-  const year = readable.getFullYear();
 
   const monthLong = months[month];
   const fulldate = monthLong + " " + date;
