@@ -168,6 +168,7 @@ const CreateForum = () => {
                 name="topic"
                 value={forum.topic}
                 updateFields={updateFields}
+                placeholderText="Topic like Physics, App Development, Trading etc"
               />
             }
             inputDesc="Pick a topic for your forum"
@@ -179,6 +180,7 @@ const CreateForum = () => {
                 name="tagline"
                 value={forum.tagline}
                 updateFields={updateFields}
+                placeholderText="A brief tagline for your question"
               />
             }
             inputDesc="Pick a tagline for your forum"
@@ -191,6 +193,7 @@ const CreateForum = () => {
                 value={forum.question}
                 areaHeight="15rem"
                 updateFields={updateFields}
+                placeholderText="Ask your question"
               />
             }
             inputDesc="Question for the forum"
