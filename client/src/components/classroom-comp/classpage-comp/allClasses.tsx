@@ -44,7 +44,7 @@ const AllClasses = (props: classElemProps) => {
     await axios
       .get(`${BASE_URL}${apiVersion}/teach`, {
         params: {
-          sort: "-classStartsAt",
+          sort: "classStartsAt",
           limit: DATA_LIMIT,
           page: classSet,
         },

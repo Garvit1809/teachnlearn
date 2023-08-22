@@ -81,6 +81,10 @@ const Home = () => {
   async function fetchAllUpcomingClasses() {
     await axios
       .get(`${BASE_URL}${apiVersion}/user/myclasses/upcoming`, {
+        params: {
+          sort: "classStartsAt",
+          limit: 6,
+        },
         headers: getHeaders(userToken),
       })
       .then(({ data }) => {

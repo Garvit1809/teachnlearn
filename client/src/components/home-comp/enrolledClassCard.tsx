@@ -65,7 +65,7 @@ const Topic = styled.div<styleProps>`
 const DateContainer = styled.div<styleProps>`
   font-family: "Nunito";
   font-style: normal;
-  font-weight: 500;
+  font-weight: ${(p) => (p.isFirstCard ? 500 : 600)};
   font-size: 16px;
   line-height: 20px;
   color: ${(p) => (p.isFirstCard ? "#FFFFFF" : "#000000")};
@@ -128,7 +128,7 @@ const EnrolledClassCard = ({
           userId={card.createdBy._id}
         />
         {dateChecker() ? null : (
-          <DateContainer isFirstCard={firstCardCondn} >
+          <DateContainer isFirstCard={firstCardCondn}>
             <span>{getReadableDate(card.date)}</span>
           </DateContainer>
         )}

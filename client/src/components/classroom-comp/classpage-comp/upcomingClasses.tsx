@@ -44,7 +44,7 @@ const UpcomingClasses = (props: classElemProps) => {
     await axios
       .get(`${BASE_URL}${apiVersion}/user/myclasses/upcoming`, {
         params: {
-          sort: "-classStartsAt",
+          sort: "classStartsAt",
           limit: DATA_LIMIT,
           page: upcomingClassSet,
         },
