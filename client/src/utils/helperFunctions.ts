@@ -21,20 +21,75 @@ export const getReadableDate = (ISODate: string) => {
   return fulldate;
 };
 
+function toHoursAndMinutes(totalMinutes: number) {
+  const timezoneHours = Math.floor(totalMinutes / 60);
+  const timezoneMinutes = totalMinutes % 60;
+
+  // console.log(timezoneHours, timezoneMinutes);
+
+  return { timezoneHours, timezoneMinutes };
+}
+
 export const getReadableTime = (ISODate: string) => {
   const date = new Date(ISODate);
 
-  const timestampWithOffset = date.getTime();
+  let timestampWithOffset = date.getTime();
+
+  let diff = date.getTimezoneOffset();
+  console.log("DIFF");
+  console.log(diff);
+
+  let unsignedDiff;
+
+  if (diff > 0) {
+    unsignedDiff = diff;
+  } else {
+    unsignedDiff = -diff;
+  }
+
+  const { timezoneHours, timezoneMinutes } = toHoursAndMinutes(unsignedDiff);
+
   const dateWithOffset = new Date(timestampWithOffset);
 
   const hours = dateWithOffset.getHours();
   let minutes = dateWithOffset.getMinutes();
 
-  let concatedTime;
-  if (minutes < 10) {
-    concatedTime = String(hours + ":" + minutes) + "0";
+  let exactHours;
+  let exactMinutes;
+
+  if (timezoneHours > hours) {
+    if (diff < 0) {
+      exactHours = 24 + hours - timezoneHours;
+    } else {
+      exactHours = 24 + hours + timezoneHours;
+    }
   } else {
-    concatedTime = String(hours + ":" + minutes);
+    if (diff < 0) {
+      exactHours = hours - timezoneHours;
+    } else {
+      exactHours = hours + timezoneHours;
+    }
+  }
+
+  if (timezoneMinutes > minutes) {
+    if (diff < 0) {
+      exactMinutes = 60 + minutes - timezoneMinutes;
+    } else {
+      exactMinutes = 60 + minutes + timezoneMinutes;
+    }
+  } else {
+    if (diff < 0) {
+      exactMinutes = minutes - timezoneMinutes;
+    } else {
+      exactMinutes = minutes + timezoneMinutes;
+    }
+  }
+
+  let concatedTime;
+  if (exactMinutes < 10) {
+    concatedTime = String(exactHours + ":" + "0" + exactMinutes);
+  } else {
+    concatedTime = String(exactHours + ":" + exactMinutes);
   }
   return concatedTime;
 };
@@ -90,11 +145,11 @@ export function useOutsideAlerter(
   }, [ref]);
 }
 
-export function navOutsideAlerter(ref:any, func: any) {
+export function navOutsideAlerter(ref: any, func: any) {
   useEffect(() => {
     function handleClickOutside(event: any) {
       if (ref.current && !ref.current.contains(event.target)) {
-        func()
+        func();
       }
     }
     // Bind the event listener

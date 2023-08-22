@@ -302,7 +302,7 @@ const CreateTeachCard = () => {
           console.log(data);
           setTeachCard(initialData);
           setIsLoading(false);
-          toast.error("Teach Card Successfully created!!", toastOptions);
+          toast.success("Teach Card Successfully created!!", toastOptions);
         })
         .catch((data) => {
           // setTeachCard(initialData);
