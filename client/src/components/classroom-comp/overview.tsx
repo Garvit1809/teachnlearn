@@ -298,7 +298,7 @@ const Overview = (props: overallOverviewProps) => {
               <UserChip
                 name={props.createdBy.userName}
                 photo={props.createdBy.photo}
-                imgBorder="white"
+                imgBorder="black"
                 textColor="black"
                 userId={props.createdBy._id}
                 imgSize="42px"

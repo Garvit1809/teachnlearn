@@ -132,7 +132,7 @@ const Home = () => {
         {/* )} */}
         {upcomingClasses && upcomingClasses.length != 0 && (
           <EnrolledClassWrapper
-            heading="Upcoming Enrolled Classes!"
+            heading="My Upcoming Classes!"
             cardArr={upcomingClasses}
             loading={upcomingIsLoading}
           />

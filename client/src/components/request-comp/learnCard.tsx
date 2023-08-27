@@ -180,12 +180,6 @@ const LearnCard = (props: learnCardProps) => {
           );
         })}
       </TagBox>
-      {/* <ExpandButton>
-        <button type="button" onClick={leanrCardOverviewNavigator}>
-          <span>Expand</span>
-          <RightArrowIcon />
-        </button>
-      </ExpandButton> */}
     </Section>
   );
 };

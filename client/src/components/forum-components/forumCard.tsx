@@ -34,7 +34,6 @@ const Header = styled.div`
 `;
 
 const Tag = styled.div`
-  color: #332ad5;
   color: #ef4565;
   font-size: 20px;
   line-height: 27px;

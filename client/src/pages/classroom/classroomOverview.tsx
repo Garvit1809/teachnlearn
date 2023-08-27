@@ -279,8 +279,8 @@ const ClassroomOverview = () => {
                   hasUnderline={true}
                 />
                 <ClassIDCont onClick={classIdHandler}>
+                  <span className="id">Card ID :- {teachCard._id}</span>
                   <Copy color="white" />
-                  <span className="id">{teachCard._id}</span>
                 </ClassIDCont>
               </ChipContainer>
               <DetailsContainer

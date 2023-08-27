@@ -136,7 +136,6 @@ const EnrollBtn = styled.div<buttonProps>`
   justify-content: center;
   padding: 12px 24px;
   gap: 8px;
-  background: #332ad5;
   background: #ef4565;
   border-radius: 4px;
   cursor: pointer;
