@@ -178,20 +178,12 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
     return next(new AppError("Teacher cannot enroll in thier own class"));
   }
 
-  // if any reviews left check
-  const enrolledCLasses = req.user.classesEnrolled;
-
-  enrolledCLasses.forEach((elem) => {
-    if (currentDate > elem.endsAt) {
-      if (!elem.isReviewed) {
-        if (!elem.isCancelled) {
-          return next(
-            new AppError("Please review every completed class first!!")
-          );
-        }
-      }
-    }
-  });
+  // user credit check
+  if (userCoins < 10) {
+    return next(
+      new AppError("User doent have enough coins for attending this class!!")
+    );
+  }
 
   const enrolledCheck = teachCard.studentsEnrolled.filter((student) => {
     console.log(student.id.valueOf());
@@ -210,12 +202,26 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
     );
   }
 
-  // user credit check
-  if (userCoins < 10) {
-    return next(
-      new AppError("User doent have enough coins for attending this class!!")
-    );
+  // if any reviews left check
+  const enrolledCLasses = req.user.classesEnrolled;
+
+  let userReviewClearance = true;
+
+  enrolledCLasses.forEach((elem) => {
+    if (currentDate > elem.endsAt) {
+      if (!elem.isReviewed) {
+        if (!elem.isCancelled) {
+          userReviewClearance = false;
+        }
+      }
+    }
+  });
+
+  if (!userReviewClearance) {
+    return next(new AppError("Please review every completed class first!!"));
   }
+
+  console.log("checking");
 
   const updatedTeachCard = await TeachingCard.findByIdAndUpdate(
     teachCardId,
