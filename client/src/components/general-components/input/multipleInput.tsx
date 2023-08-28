@@ -120,8 +120,9 @@ interface inputProps {
 }
 
 const MultipleInput = (props: inputProps) => {
-  const [isValid, setisValid] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [isValid, setisValid] = useState<boolean>(false);
+  const [showDropdown, setShowDropdown] = useState<boolean>(false);
+  const [instruction, setInstruction] = useState<string>("*Hit Enter to add");
 
   useEffect(() => {
     if (props.value?.trim().length > 0) {
@@ -148,11 +149,13 @@ const MultipleInput = (props: inputProps) => {
       props.arr?.push(props.value);
       console.log(props.arr);
       props.updateFields({ [props.name]: props.arr, [props.elemName]: "" });
+      setInstruction("*Hit Enter to add");
     }
   };
 
   const dropdownMenuhandler = (data: string) => {
     props.updateFields({ [props.elemName]: data });
+    setInstruction("*Hit Enter after selecting to add");
     setShowDropdown(false);
   };
 
@@ -177,7 +180,7 @@ const MultipleInput = (props: inputProps) => {
       <Label isValid={isValid}>{props.label}</Label>
       {props.maxLimit && (
         <MaxLimitContainer>
-          <span>*Hit Enter to add</span>
+          <span>{instruction}</span>
           <span>Max {props.maxLimit}</span>
         </MaxLimitContainer>
       )}
