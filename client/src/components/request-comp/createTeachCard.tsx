@@ -12,7 +12,11 @@ import ArrChip from "../authentication-comp/arrChip";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import axios from "axios";
 import { UserCookie } from "../../utils/userCookie";
-import { autoGenerateImage, getHeaders } from "../../utils/helperFunctions";
+import {
+  autoGenerateImage,
+  getHeaders,
+  getReadableTime,
+} from "../../utils/helperFunctions";
 import { useLocation } from "react-router-dom";
 
 import { languages } from "../../data/LANGUAGE_LIST.json";
@@ -267,7 +271,11 @@ const CreateTeachCard = () => {
   const teachCardHandler = async (e: any) => {
     e.preventDefault();
     console.log(teachCard);
-    const img = await autoGenerateImage(teachCard.subject);
+    // console.log(
+    //   getReadableTime(new Date(teachCard.startingTime).toISOString())
+    // );
+
+    const img = await autoGenerateImage(teachCard.subject, teachCard.tags, teachCard.topic);
     console.log(img);
     if (handleValidation()) {
       if (!img) {
@@ -321,7 +329,7 @@ const CreateTeachCard = () => {
   };
 
   const teachCardOnLeanrCardHandler = async (e: any) => {
-    const img = autoGenerateImage(teachCard.subject);
+    const img = autoGenerateImage(teachCard.subject, teachCard.tags, teachCard.topic);
     if (handleValidation()) {
       setIsLoading(true);
       await axios
