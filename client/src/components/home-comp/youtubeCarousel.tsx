@@ -25,6 +25,38 @@ const Section = styled.div`
       margin-bottom: 1.6rem;
     }
   }
+
+  div.carousel-wrapper {
+    /* border: 1px solid red; */
+    width: 100%;
+    position: relative;
+    /* box-sizing: border-box; */
+  }
+
+  .carousel-container {
+    /* width: 90vw; */
+    position: unset;
+
+    .react-multiple-carousel__arrow {
+      position: absolute;
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .react-multiple-carousel__arrow--left {
+      /* left: calc(-4% + 2px); */
+      border-radius: 2.6875rem;
+      background: #094067;
+      z-index: 100;
+    }
+
+    .react-multiple-carousel__arrow--right {
+      /* right: calc(-4% + 1px); */
+      border-radius: 2.6875rem;
+      background: #094067;
+      z-index: 100;
+    }
+  }
 `;
 
 const YoutubeVideoContainer = styled.div`
@@ -70,6 +102,29 @@ const FrameDetails = styled.div`
 
   @media only screen and (max-width: 880px) {
     font-size: 1.5rem;
+  }
+`;
+
+const Indicator = styled.div`
+  /* border: 1px solid green; */
+  display: flex;
+  align-items: center;
+  padding: 0px;
+  margin-right: 1rem;
+  cursor: pointer;
+
+  div {
+    transition: all 0.15s linear;
+    width: 12px;
+    height: 12px;
+    background: #094067;
+    border-radius: 25px;
+  }
+
+  div.rect {
+    transition: all 0.15s linear;
+    width: 32px;
+    height: 10px;
   }
 `;
 
@@ -131,11 +186,28 @@ const items = carouselData.map((data, index) => {
   );
 });
 
+export const CustomDot = ({ onMove, index, onClick, active }: any) => {
+  return (
+    <Indicator onClick={() => onClick()}>
+      <div className={active ? "rect" : undefined}></div>
+    </Indicator>
+  );
+};
+
 const YoutubeCarousel = () => {
   return (
     <Section>
       <h3>Watch these videos to know how and why to use Teach and Learn</h3>
-      <Carousel responsive={responsive}>{items}</Carousel>
+      <div className="carousel-wrapper">
+        <Carousel
+          responsive={responsive}
+          containerClass="carousel-container"
+          transitionDuration={1000}
+          customDot={<CustomDot />}
+        >
+          {items}
+        </Carousel>
+      </div>
     </Section>
   );
 };
