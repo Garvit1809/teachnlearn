@@ -271,11 +271,17 @@ const CreateTeachCard = () => {
   const teachCardHandler = async (e: any) => {
     e.preventDefault();
     console.log(teachCard);
-    // console.log(
-    //   getReadableTime(new Date(teachCard.startingTime).toISOString())
-    // );
+    console.log(new Date(teachCard.startingTime).toISOString());
 
-    const img = await autoGenerateImage(teachCard.subject, teachCard.tags, teachCard.topic);
+    console.log(
+      getReadableTime(new Date(teachCard.startingTime).toISOString())
+    );
+
+    const img = await autoGenerateImage(
+      teachCard.subject,
+      teachCard.tags,
+      teachCard.topic
+    );
     console.log(img);
     if (handleValidation()) {
       if (!img) {
@@ -297,8 +303,8 @@ const CreateTeachCard = () => {
             date: teachCard.date,
             preferredLanguage: teachCard.preferredLanguage,
             cardBanner: img,
-            classStartsAt: teachCard.startingTime,
-            classEndsAt: teachCard.endingTime,
+            classStartsAt: new Date(teachCard.startingTime).toISOString(),
+            classEndsAt: new Date(teachCard.endingTime).toISOString(),
             description: teachCard.description,
             tags: teachCard.tags,
           },
@@ -329,7 +335,11 @@ const CreateTeachCard = () => {
   };
 
   const teachCardOnLeanrCardHandler = async (e: any) => {
-    const img = autoGenerateImage(teachCard.subject, teachCard.tags, teachCard.topic);
+    const img = autoGenerateImage(
+      teachCard.subject,
+      teachCard.tags,
+      teachCard.topic
+    );
     if (handleValidation()) {
       setIsLoading(true);
       await axios
