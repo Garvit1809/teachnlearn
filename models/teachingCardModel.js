@@ -15,11 +15,11 @@ const teachingCardSchema = new mongoose.Schema(
     topic: {
       type: String,
       required: [true, "Please provide the topic to be taught"],
-      minlength: [
-        30,
-        "Topic should be briefly explained with atleast 50 characters",
-      ],
       trim: true,
+      minlength: [
+        10,
+        "Topic should be briefly explained with atleast 10 characters",
+      ],
     },
     programme: {
       type: String,
@@ -27,9 +27,11 @@ const teachingCardSchema = new mongoose.Schema(
         true,
         "Please provide the level of education needed on this topic",
       ],
+      trim: true,
     },
     standard: {
       type: String,
+      trim: true,
     },
     isLearningCardReferred: {
       type: Boolean,
@@ -42,6 +44,7 @@ const teachingCardSchema = new mongoose.Schema(
     preferredLanguage: {
       type: String,
       required: [true, "Please specify the language you prefer for teaching"],
+      trim: true,
     },
     cardBanner: {
       type: String,
@@ -76,6 +79,8 @@ const teachingCardSchema = new mongoose.Schema(
       {
         type: String,
         required: [true, "Please add tags in the Teach Card!!"],
+        trim: true,
+        maxlength: [32, "a tag cannot exceed a length of 32 characters"],
       },
     ],
     // price: {

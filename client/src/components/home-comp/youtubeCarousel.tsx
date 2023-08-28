@@ -40,9 +40,9 @@ const YoutubeVideoContainer = styled.div`
   iframe {
     width: 100%;
     height: 17rem;
-    border: none;
-    /* border-radius: 20px 20px 0px 0px; */
-    border-radius: 20px;
+    /* border: none; */
+    border-radius: 20px 20px 0px 0px;
+    /* border-radius: 20px; */
   }
 
   @media only screen and (max-width: 600px) {
@@ -54,7 +54,6 @@ const YoutubeVideoContainer = styled.div`
 `;
 
 const FrameDetails = styled.div`
-  border: 1px solid red;
   display: flex;
   padding: 1.25rem;
   box-sizing: border-box;
@@ -64,10 +63,10 @@ const FrameDetails = styled.div`
   border-radius: 0px 0px 20px 20px;
   background: #094067;
   color: #fff;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-family: "Nunito";
-  font-weight: 600;
-  letter-spacing: -0.07rem;
+  font-weight: 500;
+  letter-spacing: 0.02rem;
 
   @media only screen and (max-width: 880px) {
     font-size: 1.5rem;
@@ -127,7 +126,7 @@ const items = carouselData.map((data, index) => {
   return (
     <YoutubeVideoContainer>
       {data.iframe}
-      {/* <FrameDetails>{data.text}</FrameDetails> */}
+      <FrameDetails>{data.text}</FrameDetails>
     </YoutubeVideoContainer>
   );
 });

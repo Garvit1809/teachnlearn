@@ -245,8 +245,8 @@ const CreateTeachCard = () => {
     ) {
       toast.error("Fill in all the details", toastOptions);
       return false;
-    } else if (topic.trim().length < 30) {
-      toast.error("Topic must be greater than 30 characters", toastOptions);
+    } else if (topic.trim().length < 10) {
+      toast.error("Topic must be greater than 10 characters", toastOptions);
       return false;
     } else if (ISODueDate < currentDate) {
       toast.error("Pick another date for class", toastOptions);

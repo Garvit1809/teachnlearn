@@ -83,6 +83,7 @@ const Requests = () => {
     await axios
       .get(`${BASE_URL}${apiVersion}/learn`, {
         params: {
+          sort: "dueDate",
           limit: DATA_LIMIT,
           page: requestPageSet,
           dueDate: {

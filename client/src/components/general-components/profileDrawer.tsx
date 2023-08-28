@@ -36,7 +36,7 @@ const DrawerBody = styled.div`
   padding: 1rem 0;
 
   li {
-    padding: 0.5rem 1.125rem;
+    padding: 1rem 1.125rem;
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -51,6 +51,10 @@ const DrawerBody = styled.div`
 
     &:hover {
       background-color: #094067;
+      color: white;
+      svg {
+        color: white;
+      }
     }
   }
 `;
@@ -74,7 +78,7 @@ const ProfileDrawer = (props: profileDrawerProps) => {
 
   const signoutHandler = () => {
     localStorage.clear();
-    navigate("/teachNlearn");
+    navigate("/");
   };
 
   return (

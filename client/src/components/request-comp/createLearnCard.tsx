@@ -193,8 +193,8 @@ const CreateLearnCard = () => {
     ) {
       toast.error("Fill in all the details", toastOptions);
       return false;
-    } else if (topic.trim().length < 35) {
-      toast.error("Topic must be greater than 35 characters", toastOptions);
+    } else if (topic.trim().length < 10) {
+      toast.error("Topic must be greater than 10 characters", toastOptions);
       return false;
     } else if (ISODueDate < currentDate) {
       toast.error("Pick another due date", toastOptions);

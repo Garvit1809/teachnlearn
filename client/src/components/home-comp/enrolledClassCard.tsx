@@ -55,11 +55,8 @@ const TimeContainer = styled.div<styleProps>`
 const Topic = styled.div<styleProps>`
   font-weight: 600;
   font-size: 22px;
-  line-height: 26px;
-  /* color: #000000; */
+  line-height: 30px;
   color: ${(p) => (p.isFirstCard ? "#FFFFFF" : "#000000")};
-  font-size: 24px;
-  line-height: 33px;
 `;
 
 const DateContainer = styled.div<styleProps>`
