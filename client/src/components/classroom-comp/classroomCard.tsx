@@ -126,7 +126,7 @@ const EnrollCont = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin-top: 0.4rem;
+  /* margin-top: 0.4rem; */
 `;
 
 const EnrollBtn = styled.div<buttonProps>`
@@ -369,15 +369,17 @@ const ClassroomCard = (props: classCardProps) => {
               getReadableTime(props.teachCard.classEndsAt)}
           </TimeCont>
         </CardStats>
-        <TagBox>
-          {props.teachCard.tags.map((tag, index) => {
-            return (
-              <div key={index}>
-                <span>{tag}</span>
-              </div>
-            );
-          })}
-        </TagBox>
+        {props.teachCard.tags.length != 0 && (
+          <TagBox>
+            {props.teachCard.tags.map((tag, index) => {
+              return (
+                <div key={index}>
+                  <span>{tag}</span>
+                </div>
+              );
+            })}
+          </TagBox>
+        )}
         <EnrollCont>
           <EnrollBtn
             onClick={enrollClassNavigator}

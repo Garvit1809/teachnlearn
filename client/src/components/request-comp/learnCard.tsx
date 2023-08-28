@@ -73,7 +73,8 @@ export const CardStats = styled.div`
 export const TagBox = styled.div`
   /* border: 1px solid white; */
   width: 100%;
-  margin-top: 0.2rem;
+  /* margin-top: 0.2rem; */
+  /* margin-bottom: 0.2rem; */
   display: flex;
   column-gap: 12px;
   row-gap: 16px;

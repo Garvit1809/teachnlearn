@@ -33,7 +33,7 @@ const DetailsContainer = (props: detailProps) => {
   return (
     <Section>
       <h3>
-        For :- {props.programme} | {props.standard}
+        For :- {props.programme} {props.standard && "|"} {props.standard}
       </h3>
       <p>{props.desciption}</p>
     </Section>

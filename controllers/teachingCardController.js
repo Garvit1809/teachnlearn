@@ -217,6 +217,8 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
     }
   });
 
+  console.log(userReviewClearance);
+
   if (!userReviewClearance) {
     return next(new AppError("Please review every completed class first!!"));
   }
