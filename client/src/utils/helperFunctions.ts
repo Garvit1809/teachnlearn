@@ -90,10 +90,13 @@ export const getReadableTime = (ISODate: string) => {
   // } else {
   //   concatedTime = String(exactHours + ":" + exactMinutes);
   // }
+
   if (minutes < 10) {
-    concatedTime = String(hours + ":" + "0" + minutes);
+    if (hours < 10) concatedTime = String("0" + hours + ":" + "0" + minutes);
+    else concatedTime = String(hours + ":" + "0" + minutes);
   } else {
-    concatedTime = String(hours + ":" + minutes);
+    if (hours < 10) concatedTime = String("0" + hours + ":" + minutes);
+    else concatedTime = String(hours + ":" + minutes);
   }
   return concatedTime;
 };
