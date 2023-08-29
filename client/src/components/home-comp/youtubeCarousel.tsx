@@ -152,6 +152,20 @@ const carouselData = [
       <iframe
         width="560"
         height="315"
+        src="https://www.youtube.com/embed/Dj49m3dC1yk"
+        title="YouTube video player"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+      ></iframe>
+    ),
+    text: "The Feynman Technique of Learning",
+  },
+  {
+    iframe: (
+      <iframe
+        width="560"
+        height="315"
         src="https://www.youtube.com/embed/QK4rMgtSaqk"
         title="YouTube video player"
         frameBorder="0"
@@ -166,14 +180,14 @@ const carouselData = [
       <iframe
         width="560"
         height="315"
-        src="https://www.youtube.com/embed/Dj49m3dC1yk"
-        title="YouTube video player"
         frameBorder="0"
+        src="https://www.youtube.com/embed/LyAAkyHXgDU?si=9uKh5TSmxSL36s5W"
+        title="YouTube video player"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowFullScreen
       ></iframe>
     ),
-    text: "The Feynman Technique of Learning",
+    text: "How to use Teach and Learn",
   },
 ];
 

@@ -12,13 +12,14 @@ import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunctions";
 import ReviewSubmitted from "./reviewSubmitted";
+import Loader from "../general-components/loader";
 
 const Section = styled.div`
   /* border: 1px solid red; */
   width: 50vw;
   textarea {
     margin-bottom: 2rem;
-    width: 90%;
+    width: 100%;
   }
 `;
 
@@ -82,6 +83,7 @@ const ReviewClass = (props: reviewProps) => {
 
   const [rating, setRating] = useState<number>(1);
   const [review, setReview] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const [hasReviewed, setHasReviewed] = useState(false);
 
@@ -92,10 +94,12 @@ const ReviewClass = (props: reviewProps) => {
   function thanksGiving() {
     setInterval(() => {
       closeModal();
+      window.location.reload();
     }, 2500);
   }
 
   const submitReviewHandler = async () => {
+    setIsLoading(true);
     await axios
       .post(
         `${BASE_URL}${apiVersion}/teach/${props.teachCardId}/reviews`,
@@ -110,8 +114,12 @@ const ReviewClass = (props: reviewProps) => {
       )
       .then(({ data }) => {
         console.log(data);
+        setIsLoading(false);
         setHasReviewed(true);
         thanksGiving();
+      })
+      .catch((data) => {
+        setIsLoading(false);
       });
   };
 
@@ -145,10 +153,15 @@ const ReviewClass = (props: reviewProps) => {
               value={review}
               areaHeight="10rem"
               updateSingleField={updateReview}
+              placeholderText="Tell us what you think of this class"
             />
             <SubmitButton>
               <button type="submit" onClick={submitReviewHandler}>
-                <span>Submit Review</span>
+                {isLoading ? (
+                  <Loader loaderHeight="1.6rem" color="white" />
+                ) : (
+                  <span>Submit Review</span>
+                )}
               </button>
             </SubmitButton>
           </Section>

@@ -48,6 +48,7 @@ const Announcement = (props: announcementProps) => {
           textSize="20px"
           imgSize="32px"
           userId={props.sender._id}
+          imgBorder="black"
         />
         <h4>
           {getReadableDate(props.createdAt) +

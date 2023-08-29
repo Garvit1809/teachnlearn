@@ -7,6 +7,7 @@ import { SubmitButton } from "../profile-comp/my-profile/profileModals/academicI
 import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunctions";
+import { useNavigate } from "react-router-dom";
 
 const Section = styled.div`
   display: flex;
@@ -77,7 +78,10 @@ const CancelClass = (props: cancelClassProps) => {
     setIsOpen(false);
   }
 
+  const navigate = useNavigate();
+
   const cancelClasshandler = async () => {
+    setIsLoading(true);
     await axios
       .patch(
         `${BASE_URL}${apiVersion}/teach/${props.teachCardId}/cancel`,
@@ -88,9 +92,12 @@ const CancelClass = (props: cancelClassProps) => {
       )
       .then(({ data }) => {
         console.log(data);
+        setIsLoading(false);
+        navigate("/classes");
       })
       .catch((err) => {
         console.log(err);
+        setIsLoading(false);
       });
   };
 
@@ -115,7 +122,7 @@ const CancelClass = (props: cancelClassProps) => {
             <button type="button" onClick={closeModal}>
               Go back
             </button>
-            <button type="button" onClick={cancelClasshandler} >
+            <button type="button" onClick={cancelClasshandler}>
               {isLoading ? (
                 <Loader loaderHeight="1.6rem" color="white" />
               ) : (

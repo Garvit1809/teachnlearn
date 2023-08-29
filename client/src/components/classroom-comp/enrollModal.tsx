@@ -95,7 +95,8 @@ const EnrollBtn = styled.div<enrollBtnProps>`
     padding: 18px 40px;
     gap: 10px;
     background: #332ad5;
-    background: ${(p) => (p.isDisabled ? "rgba(51, 42, 213, 0.6)" : "#332ad5")};
+    background: ${(p) =>
+      p.isDisabled ? "rgba(9, 64, 103, 0.6)" : "rgb(9, 64, 103)"};
     border-radius: 8px;
 
     font-family: "Nunito";
@@ -169,6 +170,7 @@ const EnrollModal = (props: enrollProps) => {
 
   const [totalCoins, setTotalCoins] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [enrollLoading, setEnrollLoading] = useState(false);
 
   const fetchUserBalance = async () => {
     setIsLoading(true);
@@ -182,7 +184,7 @@ const EnrollModal = (props: enrollProps) => {
         setIsLoading(false);
       })
       .catch(() => {
-        setIsLoading(true);
+        setIsLoading(false);
       });
   };
 
@@ -194,27 +196,30 @@ const EnrollModal = (props: enrollProps) => {
 
   const enrollHandler = async () => {
     // if (props.price < totalCoins) {
-      await axios
-        .patch(
-          `${BASE_URL}${apiVersion}/teach/${props.teachCardId}/enroll`,
-          {},
-          {
-            headers: getHeaders(props.userToken ?? ""),
-          }
-        )
-        .then(({ data }) => {
-          console.log(data);
-          navigate(`/classes/class/${props.teachCardId}`, {
-            state: {
-              classroomId: props.teachCardId,
-            },
-          });
-        })
-        .catch((data) => {
-          // console.log(data);
-          const err = data.response.data.message;
-          toast.error(err, toastOptions);
+    setEnrollLoading(true);
+    await axios
+      .patch(
+        `${BASE_URL}${apiVersion}/teach/${props.teachCardId}/enroll`,
+        {},
+        {
+          headers: getHeaders(props.userToken ?? ""),
+        }
+      )
+      .then(({ data }) => {
+        console.log(data);
+        setEnrollLoading(false);
+        navigate(`/classes/class/${props.teachCardId}`, {
+          state: {
+            classroomId: props.teachCardId,
+          },
         });
+      })
+      .catch((data) => {
+        // console.log(data);
+        setEnrollLoading(false);
+        const err = data.response.data.message;
+        toast.error(err, toastOptions);
+      });
     // }
   };
 
@@ -269,8 +274,14 @@ const EnrollModal = (props: enrollProps) => {
           onClick={enrollHandler}
           // disabled={isLoading ? true : props.price > totalCoins ? true : false}
         >
-          <span>Buy Class</span>
-          <Arrow strokeColor="white" />
+          {enrollLoading ? (
+            <Loader loaderHeight="1.6rem" color="white" />
+          ) : (
+            <>
+              <span>Buy Class</span>
+              <Arrow strokeColor="white" />
+            </>
+          )}
         </button>
       </EnrollBtn>
     </Section>

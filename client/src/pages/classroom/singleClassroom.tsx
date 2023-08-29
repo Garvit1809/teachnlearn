@@ -28,7 +28,7 @@ const Section = styled.div`
   font-style: normal;
 `;
 
-const ElementWrapper = styled.div`
+export const ElementWrapper = styled.div`
   margin: 3rem 0 0;
 `;
 

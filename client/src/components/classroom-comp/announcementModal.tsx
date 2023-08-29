@@ -8,6 +8,7 @@ import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { UserCookie } from "../../utils/userCookie";
 import { getHeaders } from "../../utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
+import Loader from "../general-components/loader";
 
 const Section = styled.div`
   width: 50vw;
@@ -48,6 +49,7 @@ const AnnouncementModal = (props: announcementModalProps) => {
   console.log(props.classElemType);
 
   const [userToken, setUserToken] = useState<string>();
+  const [isLoading, setIsLoading] = useState(false);
 
   const { fetchLocalUserToken } = UserCookie();
 
@@ -63,10 +65,8 @@ const AnnouncementModal = (props: announcementModalProps) => {
     setContent(content);
   }
 
-  const navigate = useNavigate();
-
   const postAnnouncementHandler = async () => {
-    console.log(content);
+    setIsLoading(true);
     await axios
       .post(
         `${BASE_URL}${apiVersion}/teach/${props.teachCardId}/announcements`,
@@ -79,16 +79,12 @@ const AnnouncementModal = (props: announcementModalProps) => {
       )
       .then(({ data }) => {
         console.log(data);
+        setIsLoading(false);
         window.dispatchEvent(new Event("announcement"));
         props.closeModal();
-        // window.location.reload();
-        // navigate(`/classes/class/${props.teachCardId}`, {
-        //   state: {
-        //     classroomId: props.teachCardId,
-        //     navLink: "classroom",
-        //     elemType: props.classElemType,
-        //   },
-        // });
+      })
+      .catch((data) => {
+        setIsLoading(false);
       });
   };
 
@@ -103,11 +99,18 @@ const AnnouncementModal = (props: announcementModalProps) => {
         value={content}
         updateSingleField={updateFields}
         areaHeight="8rem"
+        placeholderText="Post an announcement"
       />
       <SubmitButton>
         <button type="submit" onClick={postAnnouncementHandler}>
-          <span>Make Announcement</span>
-          <Arrow strokeColor="#FFFFFF" />
+          {isLoading ? (
+            <Loader loaderHeight="1.6rem" color="white" />
+          ) : (
+            <>
+              <span>Make Announcement</span>
+              <Arrow strokeColor="#FFFFFF" />
+            </>
+          )}
         </button>
       </SubmitButton>
     </Section>

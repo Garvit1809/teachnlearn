@@ -17,6 +17,15 @@ const Section = styled.div`
   background: #054f31;
   border-radius: 30px;
 
+  a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    /* padding: 16px 20px; */
+    gap: 8px;
+  }
+
   span {
     font-weight: 500;
     font-size: 18px;
@@ -35,7 +44,6 @@ interface callProps {
 }
 
 const JoinCall = ({ callLink }: callProps) => {
-
   return (
     <>
       {!callLink ? null : (

@@ -67,8 +67,7 @@ const Classroom = (props: classProps) => {
     []
   );
 
-  const [announcementSet, setAnnouncementSet] = useState<number>(1);
-  const [dataLimit, setDataLimit] = useState(2);
+  const [announcementSet, setAnnouncementSet] = useState<number>(0);
   const [hasMoreData, sethasMoreData] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [loaderLoading, setLoaderLoading] = useState(true);
@@ -77,14 +76,14 @@ const Classroom = (props: classProps) => {
     if (arr.length == 0) {
       sethasMoreData(false);
       return;
-    } else if (arr.length % dataLimit != 0) {
+    } else if (arr.length % DATA_LIMIT != 0) {
       sethasMoreData(false);
       return;
     }
     sethasMoreData(true);
   };
 
-  async function fetchAnnouncements() {
+  async function fetchAnnouncements(docSet: number) {
     setLoaderLoading(true);
     await axios
       .get(
@@ -92,7 +91,7 @@ const Classroom = (props: classProps) => {
         {
           params: {
             limit: DATA_LIMIT,
-            page: announcementSet,
+            page: docSet,
           },
           headers: getHeaders(props.userToken ?? ""),
         }
@@ -115,12 +114,15 @@ const Classroom = (props: classProps) => {
 
   useEffect(() => {
     if (props.userToken) {
-      fetchAnnouncements();
+      fetchAnnouncements(announcementSet + 1);
     }
 
     window.addEventListener("announcement", () => {
       console.log("Announcement added!");
-      fetchAnnouncements();
+      setIsLoading(true);
+      setAnnouncementSet(0);
+      setAnnouncements([]);
+      fetchAnnouncements(1);
     });
   }, [props.userToken]);
 
@@ -148,7 +150,10 @@ const Classroom = (props: classProps) => {
         )}
       </ClassroomContainer>
       {announcements && hasMoreData && (
-        <LoadMore loaderLoading={loaderLoading} onClick={fetchAnnouncements} />
+        <LoadMore
+          loaderLoading={loaderLoading}
+          onClick={() => fetchAnnouncements(announcementSet + 1)}
+        />
       )}
     </>
   );

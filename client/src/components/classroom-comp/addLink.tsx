@@ -9,6 +9,7 @@ import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
 import { getHeaders } from "../../utils/helperFunctions";
 import { Link } from "react-router-dom";
+import Loader from "../general-components/loader";
 
 export const LinkContainer = styled.div`
   display: flex;
@@ -59,6 +60,7 @@ interface callProps {
 
 const AddLink = (props: callProps) => {
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   function openModal() {
     setIsOpen(true);
@@ -75,6 +77,7 @@ const AddLink = (props: callProps) => {
   }
 
   const addLinkHandler = async () => {
+    setIsLoading(true);
     await axios
       .patch(
         `${BASE_URL}${apiVersion}/teach/${props.teachCardId}/callLink`,
@@ -87,7 +90,11 @@ const AddLink = (props: callProps) => {
       )
       .then(() => {
         closeModal();
+        setIsLoading(false);
         window.location.reload();
+      })
+      .catch((data) => {
+        setIsLoading(false);
       });
   };
 
@@ -111,14 +118,22 @@ const AddLink = (props: callProps) => {
             name="callLink"
             value={classLink}
             updateSingleField={updateFields}
+            placeholderText="Add link of your class"
+            areaHeight="6rem"
           />
           <ModalBtns>
             {props.callLink ? (
               <>
                 <SubmitButton>
                   <button type="submit" onClick={addLinkHandler}>
-                    <span>Edit Class Link</span>
-                    <Arrow strokeColor="#FFFFFF" />
+                    {isLoading ? (
+                      <Loader loaderHeight="1.6rem" color="white" />
+                    ) : (
+                      <>
+                        <span>Edit Class Link</span>
+                        <Arrow strokeColor="#FFFFFF" />
+                      </>
+                    )}
                   </button>
                 </SubmitButton>
                 <SubmitButton>
@@ -133,8 +148,14 @@ const AddLink = (props: callProps) => {
             ) : (
               <SubmitButton>
                 <button type="submit" onClick={addLinkHandler}>
-                  <span>Add Class Link</span>
-                  <Arrow strokeColor="#FFFFFF" />
+                  {isLoading ? (
+                    <Loader loaderHeight="1.6rem" color="white" />
+                  ) : (
+                    <>
+                      <span>Add Class Link</span>
+                      <Arrow strokeColor="#FFFFFF" />
+                    </>
+                  )}
                 </button>
               </SubmitButton>
             )}

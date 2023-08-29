@@ -30,6 +30,8 @@ import {
 import { toast } from "react-toastify";
 import moment from "moment";
 import { classReview } from "../../types/classReviewProps";
+import Loader from "../../components/general-components/loader";
+import { ElementWrapper } from "./singleClassroom";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -128,6 +130,8 @@ const ClassroomOverview = () => {
 
   const location = useLocation();
 
+  const [isLoading, setIsLoading] = useState(true);
+
   const { fetchLocalUserData, fetchUserCredit } = UserCookie();
 
   useEffect(() => {
@@ -166,6 +170,7 @@ const ClassroomOverview = () => {
       })
       .then(({ data }) => {
         setTeachCard(data.teachCard);
+        setIsLoading(false);
       });
   }
 
@@ -230,105 +235,111 @@ const ClassroomOverview = () => {
   return (
     <>
       <Navbar />
-      {teachCard && (
-        <Section>
-          <BackBtn link={backLink} learnCardId={learnCardId} />
-          <ClassBanner img={teachCard?.cardBanner} title={teachCard.topic} />
-          <OverviewContainer>
-            <CallDetailContainer>
-              <TimeCapsule
-                date={teachCard.date}
-                classEndsAt={teachCard.classEndsAt}
-                classStartsAt={teachCard.classStartsAt}
-              />
-              {userToken && checkEnrollTimeLimit() && (
-                <EnrollBtn
-                  title={teachCard.topic}
-                  price={teachCard.price}
+      {isLoading ? (
+        <ElementWrapper>
+          <Loader />
+        </ElementWrapper>
+      ) : (
+        teachCard && (
+          <Section>
+            <BackBtn link={backLink} learnCardId={learnCardId} />
+            <ClassBanner img={teachCard?.cardBanner} title={teachCard.topic} />
+            <OverviewContainer>
+              <CallDetailContainer>
+                <TimeCapsule
                   date={teachCard.date}
-                  classStartsAt={teachCard.classStartsAt}
                   classEndsAt={teachCard.classEndsAt}
-                  // userCredit={userCredit}
-                  teachCardId={teachCard._id}
-                  userToken={userToken}
+                  classStartsAt={teachCard.classStartsAt}
                 />
-              )}
-              <TagCont>
-                <div className="lang">
-                  <span>{teachCard.preferredLanguage}</span>
-                </div>
-                {teachCard?.tags.map((tag, index) => {
-                  return (
-                    <div key={index}>
-                      <span>{tag}</span>
-                    </div>
-                  );
-                })}
-              </TagCont>
-            </CallDetailContainer>
-            <ClassOverview>
-              <ChipContainer>
-                <UserChip
-                  name={teachCard.createdBy.name}
-                  photo={teachCard.createdBy.photo}
-                  imgBorder="black"
-                  textColor="black"
-                  userId={userId}
-                  imgSize="42px"
-                  textSize="20px"
-                  hasUnderline={true}
+                {userToken && checkEnrollTimeLimit() && (
+                  <EnrollBtn
+                    title={teachCard.topic}
+                    price={teachCard.price}
+                    date={teachCard.date}
+                    classStartsAt={teachCard.classStartsAt}
+                    classEndsAt={teachCard.classEndsAt}
+                    // userCredit={userCredit}
+                    teachCardId={teachCard._id}
+                    userToken={userToken}
+                  />
+                )}
+                <TagCont>
+                  <div className="lang">
+                    <span>{teachCard.preferredLanguage}</span>
+                  </div>
+                  {teachCard?.tags.map((tag, index) => {
+                    return (
+                      <div key={index}>
+                        <span>{tag}</span>
+                      </div>
+                    );
+                  })}
+                </TagCont>
+              </CallDetailContainer>
+              <ClassOverview>
+                <ChipContainer>
+                  <UserChip
+                    name={teachCard.createdBy.name}
+                    photo={teachCard.createdBy.photo}
+                    imgBorder="black"
+                    textColor="black"
+                    userId={userId}
+                    imgSize="42px"
+                    textSize="20px"
+                    hasUnderline={true}
+                  />
+                  <ClassIDCont onClick={classIdHandler}>
+                    <span className="id">Card ID :- {teachCard._id}</span>
+                    <Copy color="white" />
+                  </ClassIDCont>
+                </ChipContainer>
+                <DetailsContainer
+                  programme={teachCard.programme}
+                  standard={teachCard.standard}
+                  desciption={teachCard.description}
                 />
-                <ClassIDCont onClick={classIdHandler}>
-                  <span className="id">Card ID :- {teachCard._id}</span>
-                  <Copy color="white" />
-                </ClassIDCont>
-              </ChipContainer>
-              <DetailsContainer
-                programme={teachCard.programme}
-                standard={teachCard.standard}
-                desciption={teachCard.description}
-              />
-            </ClassOverview>
-          </OverviewContainer>
-          {reviews && reviews?.length != 0 && (
-            <ReviewContainr>
-              <h2>Reviews :-</h2>
-              <ReviewGrid>
-                {reviews.map((review, index) => {
-                  return (
-                    <ReviewCard>
-                      <div className="head">
-                        <img src={review.user.photo} alt="reviewer-img" />
-                        <div className="user">
-                          <h4>{review.user.name}</h4>
-                          <div className="rating">
-                            {Array(10)
-                              .fill(0)
-                              .map((_, i) => i + 1)
-                              .map((idx) => (
-                                <IconWrapper
-                                  key={idx}
-                                  colored={idx <= review.rating}
-                                >
-                                  <FilledIcon />
-                                </IconWrapper>
-                              ))}
+              </ClassOverview>
+            </OverviewContainer>
+            {reviews && reviews?.length != 0 && (
+              <ReviewContainr>
+                <h2>Reviews :-</h2>
+                <ReviewGrid>
+                  {reviews.map((review, index) => {
+                    return (
+                      <ReviewCard>
+                        <div className="head">
+                          <img src={review.user.photo} alt="reviewer-img" />
+                          <div className="user">
+                            <h4>{review.user.name}</h4>
+                            <div className="rating">
+                              {Array(10)
+                                .fill(0)
+                                .map((_, i) => i + 1)
+                                .map((idx) => (
+                                  <IconWrapper
+                                    key={idx}
+                                    colored={idx <= review.rating}
+                                  >
+                                    <FilledIcon />
+                                  </IconWrapper>
+                                ))}
+                            </div>
+                          </div>
+                          <div className="time">
+                            {moment(review.createdAt).fromNow()}
                           </div>
                         </div>
-                        <div className="time">
-                          {moment(review.createdAt).fromNow()}
+                        <div className="review">
+                          <p>{review.review}</p>
                         </div>
-                      </div>
-                      <div className="review">
-                        <p>{review.review}</p>
-                      </div>
-                    </ReviewCard>
-                  );
-                })}
-              </ReviewGrid>
-            </ReviewContainr>
-          )}
-        </Section>
+                      </ReviewCard>
+                    );
+                  })}
+                </ReviewGrid>
+              </ReviewContainr>
+            )}
+          </Section>
+        )
       )}
       <Footer />
     </>
