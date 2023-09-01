@@ -7,8 +7,8 @@ const commentSchema = mongoose.Schema({
   },
   content: {
     type: String,
-    trim: true,
     required: [true, "Please provide the comment content!!"],
+    trim: true,
   },
   announcement: {
     type: mongoose.Schema.ObjectId,

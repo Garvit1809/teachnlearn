@@ -232,8 +232,8 @@ const CreateTeachCard = () => {
       description,
     } = teachCard;
 
-    const currentDate = new Date();
-    const ISODueDate = new Date(date);
+    const currentDate = new Date().getDate();
+    const ISODueDate = new Date(date).getDate();
     const ISOStartingTime = new Date(startingTime);
     const ISOEndingTime = new Date(endingTime);
 

@@ -14,6 +14,7 @@ const forumAnswerSchema = mongoose.Schema(
     answer: {
       type: String,
       required: [true, "Must give an answer"],
+      time: true,
     },
     upvotes: [
       {
@@ -28,7 +29,7 @@ const forumAnswerSchema = mongoose.Schema(
 forumAnswerSchema.pre(/^find/, function (next) {
   this.populate({
     path: "answeredBy",
-    select: "name photo",
+    select: "name photo userName",
   });
   next();
 });

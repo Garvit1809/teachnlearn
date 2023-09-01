@@ -13,6 +13,7 @@ const reportUserSchema = mongoose.Schema(
     feedback: {
       type: String,
       required: [true, "User must provide some feedback"],
+      trim: true,
     },
   },
   { timestamps: true }
