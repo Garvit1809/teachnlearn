@@ -317,6 +317,7 @@ const NewSignup = () => {
       <RightContainer>
         <DescriptionBox
           heading={isFirstStep ? "Get Started!" : "Just a little more..."}
+          mobileText="Register for an account"
         />
       </RightContainer>
       <ToastContainer theme="dark" />

@@ -217,7 +217,10 @@ const Signin = () => {
         </FormContainer>
       </LeftContainer>
       <RightContainer>
-        <DescriptionBox heading="Welcome Back!!" />
+        <DescriptionBox
+          heading="Welcome Back!!"
+          mobileText="Login to your account"
+        />
       </RightContainer>
       <ToastContainer theme="dark" />
     </Section>

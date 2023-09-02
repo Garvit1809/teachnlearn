@@ -233,6 +233,7 @@ const Description = styled.div`
 
 interface descriptionProps {
   heading: string;
+  mobileText: string
 }
 
 const DescriptionBox = (props: descriptionProps) => {
@@ -254,7 +255,7 @@ const DescriptionBox = (props: descriptionProps) => {
           </div>
         </div>
         <div className="mobile-text">
-          <p>Login to your account</p>
+          <p>{props.mobileText}</p>
         </div>
       </Description>
     </Section>

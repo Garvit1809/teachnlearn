@@ -74,7 +74,7 @@ const userSchema = new mongoose.Schema({
   },
   coins: {
     type: Number,
-    default: 1000000,
+    default: 50,
   },
   forumCoins: {
     type: Number,
