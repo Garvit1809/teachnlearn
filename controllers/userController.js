@@ -289,7 +289,7 @@ exports.postUserFeedback = catchAsync(async (req, res, next) => {
 exports.searchInApplication = catchAsync(async (req, res, next) => {
   const { search } = req.body;
   const userId = req.user.id;
-  // const currentDate = new Date();
+  const currentDate = new Date();
 
   const modifiedSearch = new RegExp(search, "i");
   const objectId = mongoose.isObjectIdOrHexString(search);
@@ -331,6 +331,9 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
         { description: { $regex: modifiedSearch } },
         { tags: { $elemMatch: { $regex: `^${search}$`, $options: "i" } } },
       ],
+      dueDate: {
+        $gte: currentDate,
+      },
     });
   }
 
@@ -348,6 +351,9 @@ exports.searchInApplication = catchAsync(async (req, res, next) => {
         { description: { $regex: modifiedSearch } },
         { tags: { $elemMatch: { $regex: `^${search}$`, $options: "i" } } },
       ],
+      classStartsAt: {
+        $gte: currentDate,
+      },
     });
   }
 

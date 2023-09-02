@@ -91,6 +91,7 @@ const SearchFeed = () => {
         updateSearchFeedProps={updateFunc}
         dontShowSearchDropDown={true}
         showSearchNavButton={false}
+        noEnterFunc={true}
       />
       <SearchFeedWrapper>
         <HorizontalNavigator

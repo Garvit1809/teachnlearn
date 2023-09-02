@@ -81,7 +81,7 @@ const ReviewClass = (props: reviewProps) => {
     setIsOpen(false);
   }
 
-  const [rating, setRating] = useState<number>(10);
+  const [rating, setRating] = useState<number>(1);
   const [review, setReview] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 

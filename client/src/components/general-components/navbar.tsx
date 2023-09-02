@@ -155,6 +155,7 @@ interface navProps {
   updateSearchFeedProps?: any;
   dontShowSearchDropDown?: boolean;
   showSearchNavButton?: boolean;
+  noEnterFunc?: boolean;
 }
 
 const Navbar = (props: navProps) => {
@@ -309,7 +310,7 @@ const Navbar = (props: navProps) => {
                 ? props.showSearchNavButton
                 : true
             }
-            onEnterFunc={searchNavigator}
+            onEnterFunc={props.noEnterFunc ? null : searchNavigator}
             searchQuery={query}
             closeDropdown={closeSearchBox}
             elem={
