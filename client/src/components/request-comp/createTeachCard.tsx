@@ -167,6 +167,7 @@ const CreateTeachCard = () => {
           topic: navProps.topic,
           programme: navProps.programme,
           standard: navProps.standard,
+          preferredLanguage: navProps.preferredLanguage,
           description: navProps.description,
           tags: navProps.tags,
         };
@@ -335,12 +336,21 @@ const CreateTeachCard = () => {
   };
 
   const teachCardOnLeanrCardHandler = async (e: any) => {
-    const img = autoGenerateImage(
+    e.preventDefault();
+    const img = await autoGenerateImage(
       teachCard.subject,
       teachCard.tags,
       teachCard.topic
     );
+    console.log(img);
     if (handleValidation()) {
+      if (!img) {
+        toast.error(
+          "A card banner couldnt be generated!! Try again.",
+          toastOptions
+        );
+        return;
+      }
       setIsLoading(true);
       await axios
         .post(
@@ -353,8 +363,8 @@ const CreateTeachCard = () => {
             date: teachCard.date,
             preferredLanguage: teachCard.preferredLanguage,
             cardBanner: img,
-            classStartsAt: teachCard.startingTime,
-            classEndsAt: teachCard.endingTime,
+            classStartsAt: new Date(teachCard.startingTime).toISOString(),
+            classEndsAt: new Date(teachCard.startingTime).toISOString(),
             description: teachCard.description,
             tags: teachCard.tags,
           },

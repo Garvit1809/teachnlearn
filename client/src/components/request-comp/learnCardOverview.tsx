@@ -327,6 +327,7 @@ const LearnCardOverview = () => {
           topic: learnCard.topic,
           programme: learnCard.programme,
           standard: learnCard.standard,
+          preferredLanguage: learnCard.preferredLanguage,
           description: learnCard.description,
           tags: learnCard.tags,
         },
