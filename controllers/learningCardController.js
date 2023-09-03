@@ -3,6 +3,7 @@ const factory = require("./handlerFactory");
 const LearningCard = require("../models/learningCardModel");
 const TeachingCard = require("../models/teachingCardModel");
 const AppError = require("../utils/appError");
+const User = require("../models/userModel");
 
 exports.getAllLearnCards = factory.getAll(LearningCard);
 exports.getOneLearnCard = factory.getOne(LearningCard);
@@ -82,9 +83,7 @@ exports.createTeachCardOnLearnCard = catchAsync(async (req, res, next) => {
     classStartsAt,
     classEndsAt,
     description,
-    expectations,
     tags,
-    price,
   } = req.body;
 
   if (
@@ -97,10 +96,7 @@ exports.createTeachCardOnLearnCard = catchAsync(async (req, res, next) => {
     !date &&
     !classStartsAt &&
     !classEndsAt &&
-    !description &&
-    !expectations &&
-    !tags &&
-    !price
+    !description
   ) {
     return next(
       new AppError(
@@ -123,18 +119,28 @@ exports.createTeachCardOnLearnCard = catchAsync(async (req, res, next) => {
     classStartsAt,
     classEndsAt,
     description,
-    expectations,
     tags,
-    price,
   });
 
   if (!newTeachCard) {
     return next(new AppError("Teach Card couldnt be created, Try Again!!"));
   }
 
+  const newUser = await User.findByIdAndUpdate(
+    userID,
+    {
+      $push: { classesTaken: newTeachCard.id },
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
   res.status(201).json({
     status: "success",
     newTeachCard,
+    newUser,
   });
 });
 

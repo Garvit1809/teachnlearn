@@ -214,8 +214,6 @@ export async function autoGenerateImage(
       }
     }
   }
-  console.log(img);
-
   return img;
 }
 
