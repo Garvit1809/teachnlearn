@@ -278,13 +278,13 @@ const CreateTeachCard = () => {
       getReadableTime(new Date(teachCard.startingTime).toISOString())
     );
 
-    const img = await autoGenerateImage(
-      teachCard.subject,
-      teachCard.tags,
-      teachCard.topic
-    );
-    console.log(img);
     if (handleValidation()) {
+      setIsLoading(true);
+      const img = await autoGenerateImage(
+        teachCard.subject,
+        teachCard.tags,
+        teachCard.topic
+      );
       if (!img) {
         toast.error(
           "A card banner couldnt be generated!! Try again.",
@@ -292,7 +292,6 @@ const CreateTeachCard = () => {
         );
         return;
       }
-      setIsLoading(true);
       await axios
         .post(
           `${BASE_URL}${apiVersion}/teach`,
@@ -337,13 +336,14 @@ const CreateTeachCard = () => {
 
   const teachCardOnLeanrCardHandler = async (e: any) => {
     e.preventDefault();
-    const img = await autoGenerateImage(
-      teachCard.subject,
-      teachCard.tags,
-      teachCard.topic
-    );
-    console.log(img);
     if (handleValidation()) {
+      setIsLoading(true);
+      const img = await autoGenerateImage(
+        teachCard.subject,
+        teachCard.tags,
+        teachCard.topic
+      );
+      console.log(img);
       if (!img) {
         toast.error(
           "A card banner couldnt be generated!! Try again.",
@@ -351,7 +351,6 @@ const CreateTeachCard = () => {
         );
         return;
       }
-      setIsLoading(true);
       await axios
         .post(
           `${BASE_URL}${apiVersion}/learn/${learnCardId}/teach`,
@@ -364,7 +363,7 @@ const CreateTeachCard = () => {
             preferredLanguage: teachCard.preferredLanguage,
             cardBanner: img,
             classStartsAt: new Date(teachCard.startingTime).toISOString(),
-            classEndsAt: new Date(teachCard.startingTime).toISOString(),
+            classEndsAt: new Date(teachCard.endingTime).toISOString(),
             description: teachCard.description,
             tags: teachCard.tags,
           },
