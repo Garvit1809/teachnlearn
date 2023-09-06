@@ -279,11 +279,11 @@ const ClassroomOverview = () => {
               <ClassOverview>
                 <ChipContainer>
                   <UserChip
-                    name={teachCard.createdBy.name}
+                    name={teachCard.createdBy.userName}
                     photo={teachCard.createdBy.photo}
                     imgBorder="black"
                     textColor="black"
-                    userId={userId}
+                    userId={teachCard.createdBy._id}
                     imgSize="42px"
                     textSize="20px"
                     hasUnderline={true}

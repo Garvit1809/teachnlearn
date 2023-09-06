@@ -271,13 +271,6 @@ const CreateTeachCard = () => {
 
   const teachCardHandler = async (e: any) => {
     e.preventDefault();
-    console.log(teachCard);
-    console.log(new Date(teachCard.startingTime).toISOString());
-
-    console.log(
-      getReadableTime(new Date(teachCard.startingTime).toISOString())
-    );
-
     if (handleValidation()) {
       setIsLoading(true);
       const img = await autoGenerateImage(
@@ -319,7 +312,6 @@ const CreateTeachCard = () => {
           toast.success("Teach Card Successfully created!!", toastOptions);
         })
         .catch((data) => {
-          // setTeachCard(initialData);
           setIsLoading(false);
           console.log(data);
           if (data.response.data.error.errors) {
