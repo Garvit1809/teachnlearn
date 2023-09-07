@@ -346,9 +346,11 @@ const Overview = (props: overallOverviewProps) => {
                         {moment(review.createdAt).fromNow()}
                       </div>
                     </div>
-                    <div className="review">
-                      <p>{review.review}</p>
-                    </div>
+                    {review.review && (
+                      <div className="review">
+                        <p>{review.review}</p>
+                      </div>
+                    )}
                   </ReviewCard>
                 );
               })}

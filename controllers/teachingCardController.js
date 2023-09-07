@@ -104,6 +104,28 @@ exports.createTeachCard = catchAsync(async (req, res, next) => {
     );
   }
 
+  const currentDate = new Date();
+
+  const enrolledCLasses = req.user.classesEnrolled;
+
+  let userReviewClearance = true;
+
+  enrolledCLasses.forEach((elem) => {
+    if (currentDate > elem.endsAt) {
+      if (!elem.isReviewed) {
+        if (!elem.isCancelled) {
+          userReviewClearance = false;
+        }
+      }
+    }
+  });
+
+  console.log(userReviewClearance);
+
+  if (!userReviewClearance) {
+    return next(new AppError("Please review every completed class first!!"));
+  }
+
   const newTeachCard = await TeachingCard.create({
     createdBy: userID,
     subject,

@@ -232,14 +232,22 @@ const CreateLearnCard = () => {
           console.log(data);
           setLearnCard(initialData);
           setIsLoading(false);
+          toast.success("Learn Card Successfully created!!", toastOptions);
           navigate("/requests");
         })
         .catch((data) => {
           setIsLoading(false);
-          const errors = data.response.data.error.errors;
-          Object.keys(errors).forEach(function (err, index) {
-            toast.error(errors[err].message, toastOptions);
-          });
+          if (data.response.data.error.errors) {
+            const errors = data.response.data.error.errors;
+            Object.keys(errors).forEach(function (err, index) {
+              toast.error(errors[err].message, toastOptions);
+            });
+          } else if (data.response.data.message) {
+            const msg = data.response.data.message;
+            toast.error(msg, toastOptions);
+          } else {
+            toast.error("Something went wrong", toastOptions);
+          }
         });
     }
   };
