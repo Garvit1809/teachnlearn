@@ -55,7 +55,7 @@ exports.upvoteForum = catchAsync(async (req, res, next) => {
   }
 
   if (userId == answer.answeredBy._id) {
-    return next(new AppError("Ha ye krlo phle!!"));
+    return next(new AppError("Cannot upvote your own answer!!"));
   }
 
   const upvotesOnAnswer = answer.upvotes;
@@ -83,6 +83,7 @@ exports.upvoteForum = catchAsync(async (req, res, next) => {
       answer.answeredBy._id,
       {
         $inc: { forumCoins: -1 },
+        $inc: { coins: -1 },
       },
       {
         new: true,
@@ -107,6 +108,7 @@ exports.upvoteForum = catchAsync(async (req, res, next) => {
       answer.answeredBy._id,
       {
         $inc: { forumCoins: 1 },
+        $inc: { coins: 1 },
       },
       {
         new: true,

@@ -108,7 +108,7 @@ exports.postReview = catchAsync(async (req, res, next) => {
   );
 
   const updatedTeacher = await User.findByIdAndUpdate(teacherID, {
-    $inc: { reviewCoins: rating },
+    $inc: { reviewCoins: rating, coins: rating },
     $push: {
       transactionHistory: newTransaction.id,
     },
