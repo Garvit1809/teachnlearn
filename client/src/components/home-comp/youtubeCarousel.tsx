@@ -62,12 +62,10 @@ const Section = styled.div`
 const YoutubeVideoContainer = styled.div`
   /* border: 1px solid red; */
   display: flex;
-  max-width: 25rem;
-  /* height: 18rem; */
+  /* max-width: 25rem; */
   margin-right: 1rem;
   flex-direction: column;
   align-items: flex-start;
-  /* border: 1px solid red; */
 
   iframe {
     width: 100%;
@@ -129,18 +127,23 @@ const Indicator = styled.div`
 `;
 
 const responsive = {
+  bigScreen: {
+    breakpoint: { max: 3000, min: 1700 },
+    items: 4,
+    slidesToSlide: 1,
+  },
   desktop: {
-    breakpoint: { max: 3000, min: 1024 },
+    breakpoint: { max: 1700, min: 1250 },
     items: 3,
     slidesToSlide: 1,
   },
   tablet: {
-    breakpoint: { max: 1024, min: 600 },
+    breakpoint: { max: 1250, min: 900 },
     items: 2,
     slidesToSlide: 2,
   },
   mobile: {
-    breakpoint: { max: 600, min: 0 },
+    breakpoint: { max: 900, min: 0 },
     items: 1,
     slidesToSlide: 1,
   },
