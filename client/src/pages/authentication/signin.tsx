@@ -171,8 +171,8 @@ const Signin = () => {
 
   const loginHandler = async (e: any) => {
     e.preventDefault();
-    setIsLoading(true);
     if (handleValidation()) {
+      setIsLoading(true);
       await axios
         .post(`${BASE_URL}${apiVersion}/auth/login`, {
           email: loginData.email,
