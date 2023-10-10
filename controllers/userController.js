@@ -4,11 +4,12 @@ const ReportUser = require("../models/reportUser");
 const Review = require("../models/reviewModel");
 const TeachingCard = require("../models/teachingCardModel");
 const User = require("../models/userModel");
+const APIFeatures = require("../utils/apiFeatures");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const factory = require("./handlerFactory");
-
 const mongoose = require("mongoose");
+// const ObjectId = new mongoose.Types.ObjectId();
 
 exports.getMe = (req, res, next) => {
   req.params.userId = req.user.id;
@@ -476,5 +477,82 @@ exports.reportUser = catchAsync(async (req, res, next) => {
   res.status(201).json({
     status: "success",
     report,
+  });
+});
+
+// for classes created by user
+exports.getMyTeachCards = catchAsync(async (req, res, next) => {
+  const userId = req.user.id;
+  const currentDate = new Date();
+
+  const features = new APIFeatures(
+    TeachingCard.find({
+      classEndsAt: { $gte: currentDate },
+      createdBy: userId,
+    }),
+    req.query
+  )
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+  const doc = await features.query;
+
+  res.status(200).json({
+    status: "success",
+    totalCards: doc.length,
+    myCards: doc,
+  });
+});
+
+exports.getMyLearnCards = catchAsync(async (req, res, next) => {
+  const userId = req.user.id;
+  const currentDate = new Date();
+
+  const features = new APIFeatures(
+    LearningCard.find({
+      dueDate: { $gte: currentDate },
+      interestedStudents: { $in: userId },
+    }),
+    req.query
+  )
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+  const doc = await features.query;
+
+  res.status(200).json({
+    status: "success",
+    totalCards: doc.length,
+    myCards: doc,
+  });
+});
+
+exports.getMyUnReviewedClass = catchAsync(async (req, res, next) => {
+  const userClasses = req.user.classesEnrolled;
+  const currentDate = new Date();
+
+  let unreviewedClasses = [];
+  let classes = [];
+
+  userClasses.forEach((classInfo) => {
+    if (!classInfo.isCancelled) {
+      if (classInfo.endsAt < currentDate) {
+        if (!classInfo.isReviewed) {
+          classes.push(classInfo.class);
+        }
+      }
+    }
+  });
+
+  for (let i = 0; i < classes.length; i++) {
+    const card = await TeachingCard.find({ _id: classes[i] });
+    unreviewedClasses.push(card[0]);
+  }
+
+  res.status(200).json({
+    status: "success",
+    unreviewedClasses,
   });
 });

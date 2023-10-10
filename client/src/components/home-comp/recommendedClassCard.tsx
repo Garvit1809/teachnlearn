@@ -215,57 +215,59 @@ const RecommendedClassCard = ({ card, userId }: cardProps) => {
   };
 
   return (
-    <Section onClick={classNavigator}>
-      <Tag>
-        <h4>{card.subject}</h4>
-      </Tag>
-      <Topic>
-        <span>
-          {card.topic.length > 47
-            ? card.topic.slice(0, 46) + " ..."
-            : card.topic}
-        </span>
-      </Topic>
-      <UserWrapper>
-        <UserChip
-          name={card.createdBy.userName}
-          photo={card.createdBy.photo}
-          imgBorder="#FFFFFF"
-          textColor="#FFFFFF"
-          userId={card.createdBy._id}
-          imgSize="26px"
-          textSize="18px"
-        />
-      </UserWrapper>
-      <Stats>
-        <div>
-          <InterestedIcon />
-          <span>{card.studentsEnrolled.length} Enrolled</span>
-        </div>
-        {/* <Coins>
+    card && (
+      <Section onClick={classNavigator}>
+        <Tag>
+          <h4>{card.subject}</h4>
+        </Tag>
+        <Topic>
+          <span>
+            {card.topic.length > 47
+              ? card.topic.slice(0, 46) + " ..."
+              : card.topic}
+          </span>
+        </Topic>
+        <UserWrapper>
+          <UserChip
+            name={card.createdBy.userName}
+            photo={card.createdBy.photo}
+            imgBorder="#FFFFFF"
+            textColor="#FFFFFF"
+            userId={card.createdBy._id}
+            imgSize="26px"
+            textSize="18px"
+          />
+        </UserWrapper>
+        <Stats>
+          <div>
+            <InterestedIcon />
+            <span>{card.studentsEnrolled.length} Enrolled</span>
+          </div>
+          {/* <Coins>
           <PurchaseCoinIcon color="white" />
           <span>{card.price} Coins</span>
         </Coins> */}
-        <DueCont>
-          <span>
-            {getReadableDate(card.date) +
-              " , " +
-              getReadableTime(card.classStartsAt) +
-              " - " +
-              getReadableTime(card.classEndsAt)}
-          </span>
-        </DueCont>
-      </Stats>
-      <TagBox>
-        {card.tags.map((tag, index) => {
-          return (
-            <div key={index}>
-              <span>{tag}</span>
-            </div>
-          );
-        })}
-      </TagBox>
-    </Section>
+          <DueCont>
+            <span>
+              {getReadableDate(card.date) +
+                " , " +
+                getReadableTime(card.classStartsAt) +
+                " - " +
+                getReadableTime(card.classEndsAt)}
+            </span>
+          </DueCont>
+        </Stats>
+        <TagBox>
+          {card.tags.map((tag, index) => {
+            return (
+              <div key={index}>
+                <span>{tag}</span>
+              </div>
+            );
+          })}
+        </TagBox>
+      </Section>
+    )
   );
 };
 

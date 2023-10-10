@@ -124,22 +124,28 @@ const RecommendedClassWrapper = (props: wrapperProps) => {
           <Arrow strokeColor="#384250" />
         </SeeAll>
       </Header>
-      {props.loading ? (
-        <Loader />
-      ) : (
-        <CardGrid>
-          {props.cardArr.map((card, index) => {
-            return (
-              <RecommendedClassCard
-                key={index}
-                card={card}
-                userId={props.userId}
-              />
-              // <ClassroomCard teachCard={card} />
-            );
-          })}
-        </CardGrid>
-      )}
+      {
+        props.loading ? (
+          <Loader />
+        ) : (
+          // props.cardArr && props.cardArr.length != 0 ? (
+          <CardGrid>
+            {props.cardArr.map((card, index) => {
+              return (
+                <RecommendedClassCard
+                  key={index}
+                  card={card}
+                  userId={props.userId}
+                />
+                // <ClassroomCard teachCard={card} />
+              );
+            })}
+          </CardGrid>
+        )
+        // ) : (
+        // <h3>No cards here</h3>
+        // )
+      }
     </Section>
   );
 };
