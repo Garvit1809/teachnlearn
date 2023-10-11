@@ -232,8 +232,8 @@ const NewSignup = () => {
     else {
       // console.log(userData);
       e.preventDefault();
-      setIsLoading(true);
       if (handleValidation()) {
+        setIsLoading(true);
         await axios
           .post(`${BASE_URL}${apiVersion}/auth/signup`, {
             name: userData.fullName,

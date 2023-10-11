@@ -38,6 +38,8 @@ const Home = () => {
   const [userToken, setUserToken] = useState<string>("");
   const [userRole, setUserRole] = useState<string>("");
   const [userId, setuserId] = useState<string>("");
+  const [renderHome, setRenderHome] = useState(false);
+
   const [recommendedClasses, setRecommendedClasses] = useState<
     Array<teachinCardProps>
   >([]);
@@ -45,10 +47,18 @@ const Home = () => {
     Array<teachinCardProps>
   >([]);
   const [learnCards, setLearnCards] = useState<Array<learnCardProps>>([]);
-  const [renderHome, setRenderHome] = useState(false);
+  const [myLearnCards, setMyLearnCards] = useState<Array<learnCardProps>>([]);
+  const [myTeachCards, setMyTeachCards] = useState<Array<teachinCardProps>>([]);
+  const [myUnreviewedClasses, setMyUnreviewedClasses] = useState<
+    Array<teachinCardProps>
+  >([]);
+
   const [recommendedIsLoading, setRecommendedIsLoading] = useState(true);
   const [upcomingIsLoading, setUpcomingIsLoading] = useState(true);
   const [requestIsLoading, setRequestIsLoading] = useState(true);
+  const [unreviewedIsLoading, setUnreviewedIsLoading] = useState(true);
+  const [myLearnCardsIsLoading, setmyLearnCardsIsLoading] = useState(false);
+  const [myTeachCardsIsLoading, setMyTeachCardsIsLoading] = useState(false);
 
   const { fetchLocalUserData } = UserCookie();
 
@@ -108,11 +118,50 @@ const Home = () => {
       });
   };
 
+  const fetchClassesCreatedByme = async () => {
+    await axios
+      .get(`${BASE_URL}${apiVersion}/user/my-teach-cards`, {
+        headers: getHeaders(userToken),
+      })
+      .then(({ data }) => {
+        console.log(data);
+        setMyTeachCards(data.myCards);
+        setMyTeachCardsIsLoading(false);
+      });
+  };
+
+  const fetchMyLearnCards = async () => {
+    await axios
+      .get(`${BASE_URL}${apiVersion}/user/my-learn-cards`, {
+        headers: getHeaders(userToken),
+      })
+      .then(({ data }) => {
+        console.log(data);
+        setMyLearnCards(data.myCards);
+        setmyLearnCardsIsLoading(false);
+      });
+  };
+
+  const fetchMyUnreviewedClasses = async () => {
+    await axios
+      .get(`${BASE_URL}${apiVersion}/user/my-unreviewd-classes`, {
+        headers: getHeaders(userToken),
+      })
+      .then(({ data }) => {
+        console.log(data);
+        setMyUnreviewedClasses(data.unreviewedClasses);
+        setUnreviewedIsLoading(false);
+      });
+  };
+
   useEffect(() => {
     if (userToken) {
       fetchRecommendedTeachCards();
       fetchAllUpcomingClasses();
       fetchTopLearnCards();
+      fetchMyLearnCards();
+      fetchClassesCreatedByme();
+      fetchMyUnreviewedClasses();
     }
   }, [userToken]);
 
@@ -122,14 +171,24 @@ const Home = () => {
       <Section>
         <Intro />
         {/* <Popular /> */}
-        {/* { recommendedClasses.length != 0 && ( */}
         <RecommendedClassWrapper
           heading="Classes recommended for you!"
           cardArr={recommendedClasses}
           userId={userId}
           loading={recommendedIsLoading}
         />
-        {/* )} */}
+        <RecommendedClassWrapper
+          heading="Classes unreviewed!"
+          cardArr={myUnreviewedClasses}
+          userId={userId}
+          loading={unreviewedIsLoading}
+        />
+        <RecommendedClassWrapper
+          heading="Classes created by me!"
+          cardArr={myTeachCards}
+          userId={userId}
+          loading={myTeachCardsIsLoading}
+        />
         {upcomingClasses && upcomingClasses.length != 0 && (
           <EnrolledClassWrapper
             heading="My Upcoming Classes!"
@@ -137,13 +196,16 @@ const Home = () => {
             loading={upcomingIsLoading}
           />
         )}
-        {/* {learnCards && learnCards.length != 0 && ( */}
         <RequestCardWrapper
           heading="Rising Requests"
           requestCard={learnCards}
           loading={requestIsLoading}
         />
-        {/* )} */}
+        <RequestCardWrapper
+          heading="My Learn Cards"
+          requestCard={myLearnCards}
+          loading={myLearnCardsIsLoading}
+        />
         <YoutubeCarousel />
         <FeedbackForm userToken={userToken} />
       </Section>

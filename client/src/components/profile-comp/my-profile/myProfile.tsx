@@ -193,7 +193,6 @@ const MyProfile = () => {
     <UserProfileSection>
       <Header>
         <Heading>My profile</Heading>
-        {/* <ModeToggle userToken={localUser.token} role={localUser.role} /> */}
       </Header>
       <UserContainer>
         <ProfileImage
