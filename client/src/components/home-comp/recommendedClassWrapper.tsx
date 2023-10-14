@@ -129,7 +129,7 @@ const RecommendedClassWrapper = (props: wrapperProps) => {
           <Loader />
         ) : (
           // props.cardArr && props.cardArr.length != 0 ? (
-          props.cardArr.length != 0 && (
+          props.cardArr && props.cardArr.length != 0 && (
             <CardGrid>
               {props.cardArr.map((card, index) => {
                 return (
