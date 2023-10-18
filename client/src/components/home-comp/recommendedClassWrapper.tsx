@@ -1,12 +1,8 @@
-import React, { useState } from "react";
 import styled from "styled-components";
 import { Arrow } from "../general-components/svg";
-import { useNavigate } from "react-router-dom";
 import RecommendedClassCard from "./recommendedClassCard";
-import { topNavigator } from "../../utils/helperFunctions";
 import { teachinCardProps } from "../../types/teachingCardType";
 import Loader from "../general-components/loader";
-import ClassroomCard from "../classroom-comp/classroomCard";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -106,20 +102,15 @@ interface wrapperProps {
   cardArr: Array<teachinCardProps>;
   userId: string;
   loading: boolean;
+  cardSectionNavigator: () => void;
 }
 
 const RecommendedClassWrapper = (props: wrapperProps) => {
-  const navigate = useNavigate();
-  const classNavigator = () => {
-    topNavigator();
-    navigate("/classes");
-  };
-
   return (
     <Section>
       <Header>
         <Heading>{props.heading}</Heading>
-        <SeeAll onClick={classNavigator}>
+        <SeeAll onClick={props.cardSectionNavigator}>
           <span>See All</span>
           <Arrow strokeColor="#384250" />
         </SeeAll>
@@ -129,7 +120,8 @@ const RecommendedClassWrapper = (props: wrapperProps) => {
           <Loader />
         ) : (
           // props.cardArr && props.cardArr.length != 0 ? (
-          props.cardArr && props.cardArr.length != 0 && (
+          props.cardArr &&
+          props.cardArr.length != 0 && (
             <CardGrid>
               {props.cardArr.map((card, index) => {
                 return (

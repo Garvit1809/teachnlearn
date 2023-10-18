@@ -6,7 +6,7 @@ import Footer from "../../components/general-components/footer/footer";
 import Popular from "../../components/home-comp/popular";
 import axios from "axios";
 import { BASE_URL, apiVersion } from "../../utils/apiRoutes";
-import { getHeaders } from "../../utils/helperFunctions";
+import { getHeaders, topNavigator } from "../../utils/helperFunctions";
 import { UserCookie } from "../../utils/userCookie";
 import { learnCardProps } from "../requests/requests";
 import EnrolledClassWrapper from "../../components/home-comp/enrolledClassWrapper";
@@ -74,6 +74,12 @@ const Home = () => {
       .catch((err) => {
         navigate("/");
       });
+
+    window.addEventListener("storage", () => {
+      fetchLocalUserData().then((user) => {
+        setUserRole(user.role);
+      });
+    });
   }, []);
 
   async function fetchRecommendedTeachCards() {
@@ -165,47 +171,81 @@ const Home = () => {
     }
   }, [userToken]);
 
+  const classNavigator = () => {
+    topNavigator();
+    navigate("/classes");
+  };
+
+  const unreviewedClassNavigator = () => {
+    topNavigator();
+    navigate("/classes", {
+      state: {
+        elemLink: "completed",
+      },
+    });
+  };
+
   return renderHome ? (
     <>
       <Navbar dontShowSearchDropDown={false} />
       <Section>
         <Intro />
         {/* <Popular /> */}
-        <RecommendedClassWrapper
-          heading="Classes recommended for you!"
-          cardArr={recommendedClasses}
-          userId={userId}
-          loading={recommendedIsLoading}
-        />
-        <RecommendedClassWrapper
-          heading="Classes unreviewed!"
-          cardArr={myUnreviewedClasses}
-          userId={userId}
-          loading={unreviewedIsLoading}
-        />
-        <RecommendedClassWrapper
+        {userRole == "teach" ? (
+          <>
+            {upcomingClasses && upcomingClasses.length != 0 && (
+              <EnrolledClassWrapper
+                heading="My Upcoming Classes!!"
+                cardArr={upcomingClasses}
+                loading={upcomingIsLoading}
+              />
+            )}
+            <RequestCardWrapper
+              heading="Check Learn Cards!!"
+              requestCard={learnCards}
+              loading={requestIsLoading}
+            />
+          </>
+        ) : (
+          <>
+            {myUnreviewedClasses && myUnreviewedClasses.length != 0 && (
+              <RecommendedClassWrapper
+                heading="Classes UnReviewed!!"
+                cardArr={myUnreviewedClasses}
+                userId={userId}
+                loading={unreviewedIsLoading}
+                cardSectionNavigator={unreviewedClassNavigator}
+              />
+            )}
+            {upcomingClasses && upcomingClasses.length != 0 && (
+              <EnrolledClassWrapper
+                heading="My Upcoming Classes!!"
+                cardArr={upcomingClasses}
+                loading={upcomingIsLoading}
+              />
+            )}
+            {myLearnCards && myLearnCards.length != 0 && (
+              <RequestCardWrapper
+                heading="My Learn Cards!!"
+                requestCard={myLearnCards}
+                loading={myLearnCardsIsLoading}
+              />
+            )}
+            <RecommendedClassWrapper
+              heading="Check Teach Cards!!"
+              cardArr={recommendedClasses}
+              userId={userId}
+              loading={recommendedIsLoading}
+              cardSectionNavigator={classNavigator}
+            />
+          </>
+        )}
+        {/* <RecommendedClassWrapper
           heading="Classes created by me!"
           cardArr={myTeachCards}
           userId={userId}
           loading={myTeachCardsIsLoading}
-        />
-        {upcomingClasses && upcomingClasses.length != 0 && (
-          <EnrolledClassWrapper
-            heading="My Upcoming Classes!"
-            cardArr={upcomingClasses}
-            loading={upcomingIsLoading}
-          />
-        )}
-        <RequestCardWrapper
-          heading="Rising Requests"
-          requestCard={learnCards}
-          loading={requestIsLoading}
-        />
-        <RequestCardWrapper
-          heading="My Learn Cards"
-          requestCard={myLearnCards}
-          loading={myLearnCardsIsLoading}
-        />
+        /> */}
         <YoutubeCarousel />
         <FeedbackForm userToken={userToken} />
       </Section>
