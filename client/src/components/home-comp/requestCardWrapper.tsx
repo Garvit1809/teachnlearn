@@ -94,10 +94,11 @@ const RequestCardWrapper = (props: requestWrapperProps) => {
         <Loader />
       ) : (
         <CardGrid>
-          {props.requestCard.map((card, index) => {
-            // return <RequestCard key={index} {...card} />;
-            return <LearnCard key={index} {...card} />;
-          })}
+          {props.requestCard &&
+            props.requestCard.map((card, index) => {
+              // return <RequestCard key={index} {...card} />;
+              return <LearnCard key={index} {...card} />;
+            })}
         </CardGrid>
       )}
     </Section>

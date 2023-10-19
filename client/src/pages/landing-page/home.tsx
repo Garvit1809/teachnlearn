@@ -162,14 +162,17 @@ const Home = () => {
 
   useEffect(() => {
     if (userToken) {
-      fetchRecommendedTeachCards();
-      fetchAllUpcomingClasses();
-      fetchTopLearnCards();
-      fetchMyLearnCards();
-      fetchClassesCreatedByme();
-      fetchMyUnreviewedClasses();
+      if (userRole == "teach") {
+        fetchAllUpcomingClasses();
+        fetchTopLearnCards();
+      } else if (userRole == "learn") {
+        fetchRecommendedTeachCards();
+        fetchMyLearnCards();
+        fetchClassesCreatedByme();
+        fetchMyUnreviewedClasses();
+      }
     }
-  }, [userToken]);
+  }, [userToken, userRole]);
 
   const classNavigator = () => {
     topNavigator();

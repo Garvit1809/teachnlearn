@@ -39,7 +39,7 @@ const Section = styled.div<styleProps>`
 `;
 
 interface userchipProps {
-  name: string;
+  name?: string;
   photo?: string;
   imgBorder?: string;
   textColor?: string;

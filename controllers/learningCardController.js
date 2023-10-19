@@ -12,6 +12,10 @@ exports.getTeachCardsOnLearnCard = factory.getAll(TeachingCard);
 exports.createLearnCard = catchAsync(async (req, res, next) => {
   const userId = req.user.id;
 
+  if (!userId) {
+    return next(new AppError("Please login to your account first!!"));
+  }
+
   const {
     subject,
     topic,
@@ -93,6 +97,14 @@ exports.createLearnCard = catchAsync(async (req, res, next) => {
 exports.createTeachCardOnLearnCard = catchAsync(async (req, res, next) => {
   const learnCardID = req.params.learnCardId;
   const userID = req.user.id;
+
+  if (!userID) {
+    return next(new AppError("Please login to your account first!!"));
+  }
+
+  if (!learnCardID) {
+    return next(new AppError("Please provide the learn card!!"));
+  }
 
   const {
     subject,

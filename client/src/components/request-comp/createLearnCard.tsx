@@ -209,7 +209,7 @@ const CreateLearnCard = () => {
   const learnCardHandler = async (e: any) => {
     e.preventDefault();
     console.log(learnCard);
-    if (handleValidation()) {
+    if (handleValidation() && token) {
       setIsLoading(true);
       await axios
         .post(
@@ -225,7 +225,7 @@ const CreateLearnCard = () => {
             dueDate: learnCard.dueDate,
           },
           {
-            headers: getHeaders(token ?? ""),
+            headers: getHeaders(token),
           }
         )
         .then(({ data }) => {

@@ -214,6 +214,10 @@ interface obj {
 }
 
 const ClassroomCard = (props: classCardProps) => {
+  console.log("Class Card");
+
+  console.log(props.teachCard);
+
   const navigate = useNavigate();
 
   const { fetchLocalUserData } = UserCookie();

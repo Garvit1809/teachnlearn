@@ -301,7 +301,7 @@ const LearnCardOverview = () => {
     await axios
       .get(`${BASE_URL}${apiVersion}/learn/${learnCardId}/teach`)
       .then(({ data }) => {
-        // console.log(data.data.data);
+        console.log(data.data.data);
         setTeachCards(data.data.data);
         setTeachCardLoader(false);
       });

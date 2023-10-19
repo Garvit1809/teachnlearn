@@ -71,6 +71,10 @@ exports.getOneTeachCard = catchAsync(async (req, res, next) => {
 exports.createTeachCard = catchAsync(async (req, res, next) => {
   const userID = req.user.id;
 
+  if (!userID) {
+    return next(new AppError("Please login to your account first!!"));
+  }
+
   const {
     subject,
     topic,
@@ -187,6 +191,10 @@ exports.enrollInClass = catchAsync(async (req, res, next) => {
 
   const currentDate = new Date();
   const endDate = teachCard.classEndsAt;
+
+  if (!userId) {
+    return next(new AppError("Please login to your account first!!"));
+  }
 
   // date check
   if (endDate < currentDate) {

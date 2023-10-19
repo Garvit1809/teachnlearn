@@ -3,159 +3,164 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, "Please tell us your name!"],
-    trim: true,
-  },
-  userName: {
-    type: String,
-    required: [true, "Please provide a username!!"],
-    trim: true,
-    unique: true,
-    maxlength: [22, "Username must be less than 22 characters"],
-  },
-  tagline: {
-    type: String,
-    trim: true,
-    minlength: [30, "Tagline should be atleast 30 characters long"],
-  },
-  // can change in 60 days
-  email: {
-    type: String,
-    required: [true, "Please provide your email"],
-    unique: true,
-    lowercase: true,
-    validate: [validator.isEmail, "Please provide a valid email"],
-  },
-  photo: {
-    type: String,
-    default:
-      "https://w7.pngwing.com/pngs/442/477/png-transparent-computer-icons-user-profile-avatar-profile-heroes-profile-user.png",
-  },
-  phoneNumber: {
-    type: String,
-    default: null,
-    // required: [true, "Please provide a contact number"],
-    // select: false,
-  },
-  enrolledProgramme: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  standard: {
-    type: String,
-    trim: true,
-  },
-  interestedSubjects: [
-    {
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "Please tell us your name!"],
+      trim: true,
+    },
+    userName: {
+      type: String,
+      required: [true, "Please provide a username!!"],
+      trim: true,
+      unique: true,
+      maxlength: [22, "Username must be less than 22 characters"],
+    },
+    tagline: {
+      type: String,
+      trim: true,
+      minlength: [30, "Tagline should be atleast 30 characters long"],
+    },
+    // can change in 60 days
+    email: {
+      type: String,
+      required: [true, "Please provide your email"],
+      unique: true,
+      lowercase: true,
+      validate: [validator.isEmail, "Please provide a valid email"],
+    },
+    photo: {
+      type: String,
+      default:
+        "https://w7.pngwing.com/pngs/442/477/png-transparent-computer-icons-user-profile-avatar-profile-heroes-profile-user.png",
+    },
+    phoneNumber: {
+      type: String,
+      default: null,
+      // required: [true, "Please provide a contact number"],
+      // select: false,
+    },
+    enrolledProgramme: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    standard: {
       type: String,
       trim: true,
     },
-  ],
-  strongSubjects: [
-    {
+    interestedSubjects: [
+      {
+        type: String,
+        trim: true,
+      },
+    ],
+    strongSubjects: [
+      {
+        type: String,
+        trim: true,
+      },
+    ],
+    preferredLanguages: [
+      {
+        type: String,
+        trim: true,
+      },
+    ],
+    role: {
       type: String,
-      trim: true,
+      enum: ["teach", "learn"],
+      default: "learn",
     },
-  ],
-  preferredLanguages: [
-    {
-      type: String,
-      trim: true,
+    coins: {
+      type: Number,
+      default: 50,
     },
-  ],
-  role: {
-    type: String,
-    enum: ["teach", "learn"],
-    default: "learn",
-  },
-  coins: {
-    type: Number,
-    default: 50,
-  },
-  forumCoins: {
-    type: Number,
-    default: 0,
-  },
-  reviewCoins: {
-    type: Number,
-    default: 0,
-  },
-  classesEnrolled: [
-    {
-      class: {
+    forumCoins: {
+      type: Number,
+      default: 0,
+    },
+    reviewCoins: {
+      type: Number,
+      default: 0,
+    },
+    classesEnrolled: [
+      {
+        class: {
+          type: mongoose.Schema.ObjectId,
+          ref: "TeachingCard",
+          required: [true, "Must specify the classroom ID!!"],
+        },
+        isReviewed: {
+          type: Boolean,
+          default: false,
+        },
+        endsAt: {
+          type: Date,
+          required: [true, "Please specify the end timing of the class!!"],
+        },
+        isCancelled: {
+          type: Boolean,
+          default: false,
+        },
+      },
+    ],
+    classesTaken: [
+      {
         type: mongoose.Schema.ObjectId,
         ref: "TeachingCard",
-        required: [true, "Must specify the classroom ID!!"],
       },
-      isReviewed: {
-        type: Boolean,
-        default: false,
+    ],
+    transactionHistory: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "TransactionHistory",
+        select: false,
       },
-      endsAt: {
-        type: Date,
-        required: [true, "Please specify the end timing of the class!!"],
+    ],
+    referrals: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+        select: false,
       },
-      isCancelled: {
-        type: Boolean,
-        default: false,
-      },
-    },
-  ],
-  classesTaken: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: "TeachingCard",
-    },
-  ],
-  transactionHistory: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: "TransactionHistory",
+    ],
+    password: {
+      type: String,
+      required: [true, "Please provide a password"],
+      minlength: process.env.PASSWORD_MIN_LENGTH,
       select: false,
     },
-  ],
-  referrals: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: "User",
+    passwordConfirm: {
+      type: String,
+      required: [true, "Please confirm your password"],
+      validate: {
+        validator: function (el) {
+          return el === this.password;
+        },
+        message: "Passwords are not the same!",
+      },
+    },
+    favouriteUsers: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+      },
+    ],
+    passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
+    active: {
+      type: Boolean,
+      default: true,
       select: false,
     },
-  ],
-  password: {
-    type: String,
-    required: [true, "Please provide a password"],
-    minlength: process.env.PASSWORD_MIN_LENGTH,
-    select: false,
   },
-  passwordConfirm: {
-    type: String,
-    required: [true, "Please confirm your password"],
-    validate: {
-      validator: function (el) {
-        return el === this.password;
-      },
-      message: "Passwords are not the same!",
-    },
-  },
-  favouriteUsers: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: "User",
-    },
-  ],
-  passwordChangedAt: Date,
-  passwordResetToken: String,
-  passwordResetExpires: Date,
-  active: {
-    type: Boolean,
-    default: true,
-    select: false,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();

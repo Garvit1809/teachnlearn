@@ -271,7 +271,7 @@ const CreateTeachCard = () => {
 
   const teachCardHandler = async (e: any) => {
     e.preventDefault();
-    if (handleValidation()) {
+    if (handleValidation() && token) {
       setIsLoading(true);
       const img = await autoGenerateImage(
         teachCard.subject,
@@ -328,7 +328,7 @@ const CreateTeachCard = () => {
 
   const teachCardOnLeanrCardHandler = async (e: any) => {
     e.preventDefault();
-    if (handleValidation()) {
+    if (handleValidation() && token) {
       setIsLoading(true);
       const img = await autoGenerateImage(
         teachCard.subject,
