@@ -23,7 +23,7 @@ const Menu = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 0.8rem;
-  margin-bottom: 4rem;
+  margin-bottom: 2.8rem;
 `;
 
 interface menuOptionsProps {
@@ -88,7 +88,7 @@ const ProfileOptions = ({
           );
         })}
       </Menu>
-      {!isOtherUser && <DeleteProfileModal />}
+      {/* {!isOtherUser && <DeleteProfileModal />} */}
       {isOtherUser && userToken && favouriteUsers && (
         <FavouriteUser userToken={userToken} favouriteUsers={favouriteUsers} />
       )}
