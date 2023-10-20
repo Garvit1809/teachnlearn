@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { topNavigator } from "../../utils/helperFunctions";
 import { teachinCardProps } from "../../types/teachingCardType";
 import Loader from "../general-components/loader";
+import NoClassComp from "../classroom-comp/noClassComp";
 
 const Section = styled.div`
   /* border: 1px solid red; */
@@ -13,10 +14,11 @@ const Section = styled.div`
   flex-direction: column;
   gap: 2rem;
   margin-top: 2rem;
-  /* margin-bottom: 4rem; */
+  /* margin-bottom: 1rem; */
 `;
 
 const Header = styled.div`
+  /* border: 1px solid red; */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -90,14 +92,16 @@ const EnrolledClassWrapper = (props: wrapperProps) => {
     <Section>
       <Header>
         <Heading>{props.heading}</Heading>
-        <SeeAll onClick={enrolledClassNavigator}>
-          <span>See All</span>
-          <Arrow strokeColor="#384250" />
-        </SeeAll>
+        {!props.loading && props.cardArr.length != 0 && (
+          <SeeAll onClick={enrolledClassNavigator}>
+            <span>See All</span>
+            <Arrow strokeColor="#384250" />
+          </SeeAll>
+        )}
       </Header>
       {props.loading ? (
         <Loader />
-      ) : (
+      ) : props.cardArr.length != 0 ? (
         <CardGrid>
           {props.cardArr.map((card, index) => {
             return (
@@ -110,6 +114,13 @@ const EnrolledClassWrapper = (props: wrapperProps) => {
             );
           })}
         </CardGrid>
+      ) : (
+        <NoClassComp
+          elemLink="all classes"
+          // heading="No upcoming classes"
+          subHeading="You don't have any upcoming classes. Enroll in a class and start your
+        learning"
+        />
       )}
     </Section>
   );

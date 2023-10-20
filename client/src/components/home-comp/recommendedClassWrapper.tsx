@@ -110,10 +110,12 @@ const RecommendedClassWrapper = (props: wrapperProps) => {
     <Section>
       <Header>
         <Heading>{props.heading}</Heading>
-        <SeeAll onClick={props.cardSectionNavigator}>
-          <span>See All</span>
-          <Arrow strokeColor="#384250" />
-        </SeeAll>
+        {!props.loading && props.cardArr.length != 0 && (
+          <SeeAll onClick={props.cardSectionNavigator}>
+            <span>See All</span>
+            <Arrow strokeColor="#384250" />
+          </SeeAll>
+        )}
       </Header>
       {
         props.loading ? (

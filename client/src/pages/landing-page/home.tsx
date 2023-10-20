@@ -105,7 +105,6 @@ const Home = () => {
       })
       .then(({ data }) => {
         const classes = data.upcomingClasses;
-        // console.log(classes);
         setUpcomingClasses(classes);
         setUpcomingIsLoading(false);
       });
@@ -168,7 +167,8 @@ const Home = () => {
       } else if (userRole == "learn") {
         fetchRecommendedTeachCards();
         fetchMyLearnCards();
-        fetchClassesCreatedByme();
+        fetchAllUpcomingClasses();
+        // fetchClassesCreatedByme();
         fetchMyUnreviewedClasses();
       }
     }
@@ -196,13 +196,11 @@ const Home = () => {
         {/* <Popular /> */}
         {userRole == "teach" ? (
           <>
-            {upcomingClasses && upcomingClasses.length != 0 && (
-              <EnrolledClassWrapper
-                heading="My Upcoming Classes!!"
-                cardArr={upcomingClasses}
-                loading={upcomingIsLoading}
-              />
-            )}
+            <EnrolledClassWrapper
+              heading="My Upcoming Classes!!"
+              cardArr={upcomingClasses}
+              loading={upcomingIsLoading}
+            />
             <RequestCardWrapper
               heading="Check Learn Cards!!"
               requestCard={learnCards}
@@ -220,13 +218,11 @@ const Home = () => {
                 cardSectionNavigator={unreviewedClassNavigator}
               />
             )}
-            {upcomingClasses && upcomingClasses.length != 0 && (
-              <EnrolledClassWrapper
-                heading="My Upcoming Classes!!"
-                cardArr={upcomingClasses}
-                loading={upcomingIsLoading}
-              />
-            )}
+            <EnrolledClassWrapper
+              heading="My Upcoming Classes!!"
+              cardArr={upcomingClasses}
+              loading={upcomingIsLoading}
+            />
             {myLearnCards && myLearnCards.length != 0 && (
               <RequestCardWrapper
                 heading="My Learn Cards!!"

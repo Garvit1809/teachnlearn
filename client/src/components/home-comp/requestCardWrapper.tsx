@@ -13,7 +13,7 @@ const Section = styled.div`
   flex-direction: column;
   gap: 2rem;
   margin-top: 2rem;
-  margin-bottom: 2rem;
+  /* margin-bottom: 2rem; */
 `;
 
 const Header = styled.div`

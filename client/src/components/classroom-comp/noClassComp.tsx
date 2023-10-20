@@ -10,8 +10,8 @@ const Section = styled.div`
   align-items: center;
   justify-content: center;
   row-gap: 0.7rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  /* margin-top: 2rem; */
+  /* margin-bottom: 2rem; */
 
   h2 {
     font-size: 2rem;
@@ -51,7 +51,7 @@ const Section = styled.div`
 
 interface noClassProps {
   elemLink: string;
-  heading: string;
+  heading?: string;
   subHeading: string;
 }
 
@@ -66,7 +66,7 @@ const NoClassComp = (props: noClassProps) => {
   };
   return (
     <Section>
-      <h2>{props.heading}</h2>
+      {props.heading && <h2>{props.heading}</h2>}
       <h3>{props.subHeading}</h3>
       <button onClick={checkClassNavigator}>
         <span>Check Classes</span>
